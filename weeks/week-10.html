@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 10 — UI/UX & Responsive Web Design — 07-034-233</title>
+  <title>สัปดาห์ที่ 10 — Supabase Storage — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,19 +18,20 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 10</span>
     <span class="sep">›</span>
-    <span>UI/UX &amp; Responsive</span>
+    <span>Supabase Storage</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 10</div>
-    <h1 class="wh-title">UI/UX &amp; Responsive Web Design</h1>
+    <h1 class="wh-title">Supabase Storage: อัปโหลดไฟล์และจัดการรูปภาพ</h1>
     <div class="wh-clos">
-      <span class="wh-clo">CLO4</span>
+      <span class="wh-clo">CLO3</span>
     </div>
   </div>
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
@@ -48,54 +49,197 @@
       <div class="theory-wrap">
 
         <!-- 1 -->
-        <h3>1. หลักการออกแบบ UI/UX</h3>
-        <p><strong>UI (User Interface)</strong> คือสิ่งที่ผู้ใช้มองเห็นและสัมผัส ได้แก่ สีสัน รูปทรง Typography Layout ปุ่มและองค์ประกอบต่าง ๆ ในขณะที่ <strong>UX (User Experience)</strong> คือประสบการณ์โดยรวมของผู้ใช้ว่าแอปพลิเคชันใช้งานง่าย เข้าใจง่าย มีประสิทธิภาพและน่าพอใจหรือไม่ UI ที่สวยงามแต่ UX แย่ (เช่น ปุ่มหาไม่เจอ, ขั้นตอนซับซ้อน) ก็ถือว่าล้มเหลว</p>
-        <p>หลักการออกแบบพื้นฐานที่ควรรู้: <strong>Visual Hierarchy</strong> คือการจัดลำดับความสำคัญของข้อมูลด้วยขนาด น้ำหนัก และสีเพื่อนำสายตาผู้ใช้, <strong>Color Theory</strong> ใช้ Primary, Secondary, Accent Color ให้สอดคล้องกัน และมี Contrast เพียงพอ (WCAG แนะนำอย่างน้อย 4.5:1 สำหรับ Normal Text), <strong>Typography</strong> เลือก Font ที่อ่านง่าย ขนาดเหมาะสม (Body text ควรไม่ต่ำกว่า 16px), <strong>Whitespace</strong> พื้นที่ว่างช่วยให้เนื้อหาหายใจและลดความอึดอัด</p>
-        <p><strong>8-Point Grid System</strong> คือการออกแบบให้ทุก Spacing, Padding, Margin, Width, Height เป็นคูณของ 8 เช่น 8, 16, 24, 32, 48, 64 px ทำให้ Layout สม่ำเสมอและมีความสอดคล้องกันทั้งหน้า ง่ายต่อการพัฒนาและแก้ไข</p>
-
-        <div class="callout tip"><div class="callout-title">เคล็ดลับ</div><p>ใช้ CSS Custom Properties (Variables) สำหรับสีและขนาดที่ใช้ซ้ำ เช่น <code>--color-primary: #2563eb;</code> และ <code>--spacing-4: 1rem;</code> ทำให้แก้ไข Design ได้ง่ายในจุดเดียว</p></div>
-
-        <!-- 2 -->
-        <h3>2. Responsive Web Design</h3>
-        <p>Responsive Web Design คือการออกแบบเว็บให้แสดงผลได้ดีบนทุก Device ตั้งแต่มือถือ (320-767px), Tablet (768-1023px) ไปจนถึง Desktop (1024px+) โดยใช้ <strong>CSS Media Queries</strong> เพื่อกำหนด Style ที่แตกต่างกันตามขนาดหน้าจอ</p>
-        <p>แนวคิด <strong>Mobile-First</strong> คือการเขียน CSS สำหรับมือถือก่อน แล้วเพิ่ม Media Query สำหรับ Tablet และ Desktop ทีหลัง วิธีนี้ดีกว่า Desktop-First เพราะมือถือมีข้อจำกัดมากกว่า (หน้าจอแคบ, เน็ตช้า) ทำให้คิดถึง Core Content ก่อน และโหลดได้เร็วกว่า เพราะ CSS พื้นฐานเบากว่า</p>
-        <p>อย่าลืม <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> ใน <code>&lt;head&gt;</code> ของทุกหน้า หากขาด Tag นี้ มือถือจะ Scale หน้าเว็บลงให้พอดีหน้าจอ ทำให้ข้อความเล็กและอ่านยาก แม้จะมี Media Query ก็ไม่ทำงานถูกต้อง</p>
+        <h3>1. Supabase Storage — Buckets, Objects และ Policies</h3>
+        <p>
+          <strong>Supabase Storage</strong> คือบริการจัดเก็บไฟล์ (File Storage) ที่มาพร้อม Supabase
+          ช่วยให้เก็บรูปภาพ วิดีโอ เอกสาร หรือไฟล์ใดก็ได้บน Cloud โดยไม่ต้องตั้งค่า S3 หรือ Storage Server เอง
+          ภายในใช้ Amazon S3 ต่อพ่วงกับ PostgreSQL จึงได้ประสิทธิภาพและความปลอดภัยระดับ Production
+        </p>
+        <p>
+          โครงสร้างของ Supabase Storage มี 2 ชั้น: <strong>Bucket</strong> คือ "ถัง" หรือ Container สำหรับจัดกลุ่มไฟล์
+          เช่น bucket ชื่อ <code>service-images</code> สำหรับรูปบริการ หรือ <code>avatars</code> สำหรับรูปโปรไฟล์
+          ภายใน Bucket จะเก็บ <strong>Object</strong> ซึ่งคือตัวไฟล์จริง ๆ พร้อม metadata เช่น ชนิด ขนาด และ path
+        </p>
+        <p>
+          Bucket มี 2 ประเภท: <strong>Public Bucket</strong> ที่ไฟล์ทุกชิ้นมี URL สาธารณะสามารถเข้าถึงได้โดยไม่ต้อง Login
+          เหมาะสำหรับรูปสินค้าหรือ Content ที่ต้องการให้ทุกคนเห็น
+          และ <strong>Private Bucket</strong> ที่ต้องใช้ Signed URL (มีอายุจำกัด) เพื่อเข้าถึงไฟล์
+          เหมาะสำหรับไฟล์ส่วนตัวหรือเอกสารสำคัญ
+        </p>
 
         <div class="diagram-box"><pre>
-  /* Mobile First — ไม่มี Media Query = ใช้กับมือถือ */
-  .card-grid { display: grid; grid-template-columns: 1fr; }
-
-  /* Tablet — หน้าจอ ≥ 768px */
-  @media (min-width: 768px) {
-    .card-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  /* Desktop — หน้าจอ ≥ 1024px */
-  @media (min-width: 1024px) {
-    .card-grid { grid-template-columns: repeat(3, 1fr); }
-  }
+  Supabase Project
+  └── Storage
+      ├── Bucket: service-images  (Public)
+      │   ├── services/1.jpg
+      │   ├── services/2.png
+      │   └── services/3.webp
+      ├── Bucket: avatars         (Public)
+      │   ├── users/abc123.jpg
+      │   └── users/def456.png
+      └── Bucket: documents       (Private)
+          └── contracts/2024-001.pdf
         </pre></div>
 
-        <!-- 3 -->
-        <h3>3. CSS Grid และ Flexbox สำหรับ Layout</h3>
-        <p><strong>Flexbox</strong> เหมาะสำหรับ Layout <strong>1 มิติ</strong> (แถวเดียวหรือคอลัมน์เดียว) เช่น Navigation Bar, Toolbar, Row ของ Card, จัด Align ตัวเองตรงกลาง Flexbox ควบคุมได้ว่าจะจัดตามแนวนอน (<code>flex-direction: row</code>) หรือแนวตั้ง (<code>flex-direction: column</code>) และใช้ <code>justify-content</code>, <code>align-items</code> จัดตำแหน่ง</p>
-        <p><strong>CSS Grid</strong> เหมาะสำหรับ Layout <strong>2 มิติ</strong> (แถวและคอลัมน์พร้อมกัน) เช่น หน้า Product Catalog, Dashboard Layout, Photo Gallery คุณสมบัติที่มีประโยชน์มาก: <code>grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))</code> จะสร้าง Column อัตโนมัติตามพื้นที่ที่มี โดยแต่ละ Column กว้างอย่างน้อย 250px ทำให้ Responsive โดยไม่ต้องเขียน Media Query เพิ่มเลย</p>
-        <p>Unit <code>fr</code> (Fraction) ใน CSS Grid คือการแบ่งพื้นที่ที่เหลือ เช่น <code>grid-template-columns: 1fr 2fr 1fr</code> แบ่งเป็น 3 Column สัดส่วน 1:2:1 <code>fr</code> จะคำนวณจากพื้นที่ที่เหลือหลังหัก Fixed Width และ Gap ออกแล้ว</p>
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — ตั้งชื่อ Path ให้ชัดเจน</div>
+          <p>
+            ใช้ Pattern <code>folder/filename.ext</code> เช่น <code>services/42.jpg</code> หรือ <code>avatars/user_abc.png</code>
+            เพื่อให้จัดการและดูใน Dashboard ได้ง่าย
+            หลีกเลี่ยงการใช้ชื่อไฟล์ภาษาไทยหรืออักขระพิเศษเพราะอาจเกิดปัญหาใน URL
+          </p>
+        </div>
 
-        <div class="callout note"><div class="callout-title">หมายเหตุ</div><p>ในทางปฏิบัติ Flexbox และ Grid ทำงานร่วมกันได้ดีมาก ใช้ Grid สำหรับ Page Layout หลัก และใช้ Flexbox สำหรับ Component ภายใน เช่น ปุ่มหรือ Nav Item</p></div>
+        <!-- 2 -->
+        <h3>2. Upload ไฟล์จาก Browser</h3>
+        <p>
+          การอัปโหลดไฟล์จาก Browser เริ่มต้นที่ <code>&lt;input type="file"&gt;</code>
+          ซึ่งเปิด File Picker ให้ผู้ใช้เลือกไฟล์จากเครื่อง
+          ใช้ <code>accept="image/*"</code> เพื่อกรองให้เลือกได้เฉพาะรูปภาพ
+          หรือ <code>accept=".pdf,.doc"</code> สำหรับเอกสาร
+          เพิ่ม attribute <code>multiple</code> ถ้าต้องการอัปโหลดหลายไฟล์พร้อมกัน
+        </p>
+        <p>
+          เมื่อผู้ใช้เลือกไฟล์แล้ว event <code>change</code> จะถูก trigger
+          และดึงข้อมูลไฟล์ได้จาก <code>event.target.files[0]</code>
+          ซึ่งคือ <strong>File object</strong> ที่มี property สำคัญได้แก่:
+          <code>name</code> (ชื่อไฟล์ต้นฉบับ), <code>size</code> (ขนาดเป็น byte),
+          <code>type</code> (MIME type เช่น <code>image/jpeg</code>), และ <code>lastModified</code>
+        </p>
+        <p>
+          ก่อนอัปโหลดควรตรวจสอบไฟล์ก่อนเสมอ:
+          ตรวจ <strong>ประเภทไฟล์</strong> ด้วย <code>file.type.startsWith('image/')</code>
+          ตรวจ <strong>ขนาดไฟล์</strong> เช่น <code>file.size &lt;= 5 * 1024 * 1024</code> (ไม่เกิน 5MB)
+          การตรวจสอบฝั่ง Frontend ช่วย UX แต่ต้องมี Storage Policy ฝั่ง Supabase ด้วย
+        </p>
+        <p>
+          <strong>Object URL</strong> จาก <code>URL.createObjectURL(file)</code>
+          ใช้แสดง Preview รูปได้ทันทีโดยไม่ต้องอัปโหลดก่อน
+          เป็น URL ชั่วคราวที่ชี้ไปยัง binary ใน memory ของ Browser
+          ควรเรียก <code>URL.revokeObjectURL(url)</code> เมื่อไม่ใช้แล้วเพื่อคืน memory
+        </p>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — ขนาดไฟล์ที่ Supabase อนุญาต</div>
+          <p>
+            Free tier ของ Supabase รองรับไฟล์สูงสุด <strong>50MB ต่อไฟล์</strong>
+            และ Storage รวมสูงสุด 1GB ต่อ Project
+            ถ้าต้องการ Limit เพิ่มเติมสามารถกำหนดได้ใน Storage Policy
+          </p>
+        </div>
+
+        <!-- 3 -->
+        <h3>3. supabase.storage.from(bucket).upload(path, file)</h3>
+        <p>
+          API หลักสำหรับอัปโหลดคือ <code>supabase.storage.from(bucket).upload(path, file, options)</code>
+          โดย <code>bucket</code> คือชื่อ Bucket ที่สร้างไว้, <code>path</code> คือ path ภายใน Bucket
+          เช่น <code>'services/42.jpg'</code>, และ <code>file</code> คือ File object จาก input
+        </p>
+        <p>
+          <code>options</code> ที่ควรรู้: <strong><code>upsert: true</code></strong>
+          คือให้ทับไฟล์เดิมถ้า path ซ้ำกัน (ค่า default คือ false — จะ error ถ้า path ซ้ำ)
+          <strong><code>contentType</code></strong> กำหนด MIME type ของไฟล์ (ควรส่ง <code>file.type</code> ไป)
+          <strong><code>cacheControl</code></strong> กำหนด Cache header เช่น <code>'3600'</code> (1 ชั่วโมง)
+        </p>
+        <p>
+          API คืน <code>{ data, error }</code> เหมือนกับ Supabase API ทั้งหมด
+          เมื่อสำเร็จ <code>data.path</code> จะเป็น path ของไฟล์ที่อัปโหลด
+          ซึ่งสามารถนำไปใช้กับ <code>getPublicUrl()</code> ในขั้นตอนถัดไป
+          ถ้าเกิด error <code>data</code> จะเป็น <code>null</code>
+        </p>
+
+        <div class="diagram-box"><pre>
+  const { data, error } = await supabase.storage
+    .from('service-images')   // ชื่อ Bucket
+    .upload(
+      'services/42.jpg',      // path ใน Bucket
+      file,                   // File object
+      { upsert: true,         // ทับไฟล์เดิมถ้ามี
+        contentType: file.type }
+    );
+
+  // data.path === 'services/42.jpg'  ← เก็บไว้ใช้กับ getPublicUrl
+        </pre></div>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — upsert: false (ค่า default)</div>
+          <p>
+            ถ้าไม่ตั้ง <code>upsert: true</code> และมีไฟล์ที่ path เดิมอยู่แล้ว
+            Supabase จะคืน error <code>The resource already exists</code>
+            สำหรับฟีเจอร์เปลี่ยนรูปบริการ ควรตั้ง <code>upsert: true</code> เสมอ
+            หรือลบไฟล์เก่าก่อนด้วย <code>.remove([path])</code>
+          </p>
+        </div>
 
         <!-- 4 -->
-        <h3>4. Bootstrap เบื้องต้น</h3>
-        <p>Bootstrap คือ CSS Framework ที่ได้รับความนิยมสูงสุดในโลก ช่วยให้สร้าง UI ที่ดูสวยงามได้รวดเร็วโดยไม่ต้องเขียน CSS เองมาก นำเข้าผ่าน CDN ด้วย <code>&lt;link&gt;</code> และ <code>&lt;script&gt;</code> ไม่กี่บรรทัด</p>
-        <p>ระบบ Grid ของ Bootstrap ใช้ Container → Row → Col เพื่อจัด Layout ซึ่งมี Breakpoint 5 ขนาด: <code>sm</code> (≥576px), <code>md</code> (≥768px), <code>lg</code> (≥992px), <code>xl</code> (≥1200px), <code>xxl</code> (≥1400px) เช่น <code>col-12 col-md-6 col-lg-4</code> หมายความว่า มือถือเต็มแถว, Tablet ครึ่งแถว, Desktop 1 ใน 3</p>
-        <p>Utility Classes ที่ใช้บ่อย: <code>d-flex</code>, <code>justify-content-between</code>, <code>align-items-center</code>, <code>text-center</code>, <code>mt-3</code> (margin-top), <code>p-4</code> (padding), <code>shadow</code>, <code>rounded</code>, <code>bg-primary text-white</code> เป็นต้น Component พร้อมใช้ได้แก่ Navbar, Card, Button, Modal, Alert, Badge, Table</p>
+        <h3>4. getPublicUrl() — URL สำหรับแสดงรูป</h3>
+        <p>
+          หลังอัปโหลดสำเร็จ ต้องการ URL จริงเพื่อแสดงรูปภาพใน <code>&lt;img src="..."&gt;</code>
+          ใช้ <code>supabase.storage.from(bucket).getPublicUrl(path)</code>
+          ซึ่ง <strong>ไม่ใช่ async</strong> (ไม่ต้อง await) เพราะคำนวณ URL จาก path โดยตรงโดยไม่ต้องเรียก API
+        </p>
+        <p>
+          <code>getPublicUrl()</code> คืน <code>{ data: { publicUrl } }</code>
+          โดย <code>publicUrl</code> จะมีรูปแบบประมาณ
+          <code>https://&lt;project-id&gt;.supabase.co/storage/v1/object/public/&lt;bucket&gt;/&lt;path&gt;</code>
+          URL นี้ใช้งานได้เฉพาะ Bucket ที่ตั้งเป็น Public เท่านั้น
+          ถ้า Bucket เป็น Private ต้องใช้ <code>createSignedUrl(path, expiresIn)</code> แทน
+        </p>
+        <p>
+          หลังได้ <code>publicUrl</code> แล้ว ขั้นตอนต่อไปคือเก็บ URL นั้นลงในฐานข้อมูล
+          เช่น อัปเดต column <code>image_url</code> ใน <code>services</code> table
+          เพื่อให้ Component อื่นสามารถ query ข้อมูลและแสดงรูปได้โดยอัตโนมัติ
+        </p>
+
+        <div class="diagram-box"><pre>
+  getPublicUrl (synchronous — ไม่ต้อง await)
+  ─────────────────────────────────────────────
+  const { data } = supabase.storage
+    .from('service-images')
+    .getPublicUrl('services/42.jpg');
+
+  console.log(data.publicUrl);
+  // https://abc.supabase.co/storage/v1/object/public/service-images/services/42.jpg
+
+  createSignedUrl (async — สำหรับ Private Bucket)
+  ─────────────────────────────────────────────────
+  const { data, error } = await supabase.storage
+    .from('documents')
+    .createSignedUrl('contracts/001.pdf', 3600); // หมดอายุใน 1 ชม.
+        </pre></div>
 
         <!-- 5 -->
-        <h3>5. การออกแบบ Form ที่ดี</h3>
-        <p>Form ที่ดีต้องใช้งานได้ง่าย ไม่สร้างความสับสน ปัจจัยสำคัญ: (1) <strong>Label ชัดเจน</strong> ทุกช่อง Input ต้องมี Label ที่อ่านแล้วรู้ทันทีว่าต้องกรอกอะไร ไม่ควรใช้ Placeholder แทน Label เพราะ Placeholder หายไปเมื่อเริ่มพิมพ์ (2) <strong>Error States</strong> แสดง Error ที่ใกล้ชิดกับ Input ที่ผิด ไม่ใช่ยิงรวมไว้ด้านบนทั้งหมด และ Highlight Input ที่มี Error ด้วยสีแดง (3) <strong>Success States</strong> แสดง Checkmark หรือสีเขียวเมื่อข้อมูลถูกต้อง (4) <strong>Disabled State</strong> ปุ่ม Submit ควร Disable ระหว่างกำลัง Submit เพื่อป้องกัน Double Submit</p>
-        <p>Accessibility สำคัญมาก: ใช้ <code>for</code> attribute บน Label เชื่อมกับ <code>id</code> ของ Input, ใช้ <code>aria-label</code> สำหรับ Input ที่ไม่มี Label แสดงผล, ใช้ <code>aria-describedby</code> เชื่อม Input กับข้อความ Error, ตรวจสอบว่าสามารถใช้งานได้ด้วยแป้นพิมพ์เท่านั้น (Tab, Enter, Escape)</p>
+        <h3>5. Storage RLS Policies — ควบคุมสิทธิ์อัปโหลดและดาวน์โหลด</h3>
+        <p>
+          Supabase Storage ใช้ระบบ Policy คล้ายกับ Row Level Security ของ Table
+          แต่ทำงานระดับไฟล์แทนที่จะเป็นระดับแถวข้อมูล
+          Policy จะกำหนดว่าใครทำอะไรกับไฟล์ได้บ้าง:
+          <code>SELECT</code> (ดาวน์โหลด/ดู), <code>INSERT</code> (อัปโหลด), <code>UPDATE</code> (อัปเดต),
+          <code>DELETE</code> (ลบ)
+        </p>
+        <p>
+          รูปแบบ Policy ที่ใช้บ่อยที่สุดสำหรับแอปทั่วไป:
+          <strong>Public Read</strong> ให้ทุกคนดูรูปภาพได้โดยไม่ต้อง Login
+          <strong>Authenticated Insert</strong> ให้เฉพาะผู้ใช้ที่ Login แล้วอัปโหลดได้
+          สร้าง Policy ได้ใน Supabase Dashboard → Storage → เลือก Bucket → Policies
+          หรือใช้ SQL ผ่าน Storage schema โดยตรง
+        </p>
+        <p>
+          ใน Supabase Dashboard จะมี Policy Template พร้อมใช้ เช่น
+          "Allow public read access" และ "Allow authenticated users to upload"
+          ซึ่งตั้งค่าได้ภายใน 2-3 คลิก โดยไม่ต้องเขียน SQL เอง
+          แต่ถ้าต้องการควบคุมละเอียดเช่น "อัปโหลดได้เฉพาะ folder ของตัวเอง"
+          จำเป็นต้องเขียน Policy condition เพิ่มเอง
+        </p>
 
-        <div class="callout warning"><div class="callout-title">ข้อควรระวัง</div><p>อย่าพึ่งพา Client-Side Validation เพียงอย่างเดียว (HTML5 required, pattern) ผู้ใช้สามารถ Bypass ได้ด้วย Browser DevTools เสมอต้องมี Server-Side Validation ด้วย</p></div>
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — Public Bucket ไม่ได้หมายความว่าอัปโหลดได้เสรี</div>
+          <p>
+            การตั้ง Bucket เป็น Public แค่เปิดให้ดาวน์โหลดไฟล์ได้โดยไม่ต้อง Auth
+            แต่การอัปโหลด แก้ไข และลบยังต้องมี Policy ควบคุมอยู่
+            ถ้าไม่สร้าง INSERT Policy ผู้ใช้จะอัปโหลดไม่ได้ แม้ Bucket จะเป็น Public
+          </p>
+        </div>
 
       </div>
     </div>
@@ -106,411 +250,123 @@
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Example 1: Responsive CSS Grid -->
+      <!-- Snippet 1: สร้าง bucket และ upload ไฟล์ -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">responsive-grid.css + catalog.html</span>
-          <span class="code-lang">CSS</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-css">/* ── CSS: Mobile-First Responsive Card Grid ── */
-
-:root {
-  --color-primary:   #2563eb;
-  --color-text:      #1e293b;
-  --color-surface:   #f8fafc;
-  --color-border:    #e2e8f0;
-  --radius:          12px;
-  --shadow:          0 2px 8px rgba(0,0,0,.08);
-  --spacing-2:       0.5rem;
-  --spacing-4:       1rem;
-  --spacing-6:       1.5rem;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background: var(--color-surface); }
-
-/* Card Grid — Mobile: 1 Column (default) */
-.card-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4);
-}
-
-/* Tablet ≥ 640px: 2 Columns */
-@media (min-width: 640px) {
-  .card-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* Desktop ≥ 1024px: 3 Columns */
-@media (min-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-6);
-    padding: var(--spacing-6);
-  }
-}
-
-/* Product Card */
-.product-card {
-  background: #fff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  transition: transform .2s, box-shadow .2s;
-}
-.product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
-
-.product-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-
-.product-info { padding: var(--spacing-4); }
-.product-name  { font-size: 1.1rem; font-weight: 600; margin-bottom: var(--spacing-2); }
-.product-price { color: var(--color-primary); font-size: 1.25rem; font-weight: 700; }
-
-.btn-add {
-  display: block; width: 100%; margin-top: var(--spacing-4);
-  padding: .75rem; border: none; border-radius: 8px;
-  background: var(--color-primary); color: #fff;
-  font-size: 1rem; cursor: pointer; transition: background .2s;
-}
-.btn-add:hover { background: #1d4ed8; }</code></pre>
-      </div>
-
-      <!-- Example 1b: HTML -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">catalog.html — ใช้ Card Grid ด้านบน</span>
-          <span class="code-lang">HTML</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-html"><!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สินค้าทั้งหมด</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="responsive-grid.css">
-</head>
-<body>
-
-  <header style="background:#fff; border-bottom:1px solid #e2e8f0; padding:1rem 1.5rem; display:flex; align-items:center; justify-content:space-between;">
-    <div style="font-size:1.25rem; font-weight:700; color:#2563eb;">ร้านค้าออนไลน์</div>
-    <nav style="display:flex; gap:1rem;">
-      <a href="#">หน้าหลัก</a>
-      <a href="#">สินค้า</a>
-      <a href="#">ตะกร้า</a>
-    </nav>
-  </header>
-
-  <main>
-    <div style="padding:1.5rem; text-align:center;">
-      <h1 style="font-size:1.8rem; font-weight:700;">สินค้าทั้งหมด</h1>
-      <p style="color:#64748b; margin-top:0.5rem;">พบ 6 รายการ</p>
-    </div>
-
-    <div class="card-grid">
-      <!-- สินค้า 1 -->
-      <div class="product-card">
-        <img src="https://via.placeholder.com/400x200/e2e8f0/64748b?text=สินค้า+1" alt="สินค้า 1">
-        <div class="product-info">
-          <div class="product-name">สมุดโน้ต A4</div>
-          <div class="product-price">฿45.00</div>
-          <button class="btn-add">เพิ่มลงตะกร้า</button>
-        </div>
-      </div>
-      <!-- เพิ่ม Card อีกตามต้องการ -->
-    </div>
-  </main>
-
-</body>
-</html></code></pre>
-      </div>
-
-      <!-- Example 2: Bootstrap Navbar + Hero + Cards -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">bootstrap-layout.html</span>
-          <span class="code-lang">HTML</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-html"><!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap Layout</title>
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous">
-</head>
-<body>
-
-<!-- ── Navbar ── -->
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">MyShop</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">หน้าหลัก</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">สินค้า</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">ติดต่อ</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-light text-primary ms-2 px-3" href="#">เข้าสู่ระบบ</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- ── Hero Section ── -->
-<section class="bg-primary bg-gradient text-white py-5">
-  <div class="container text-center py-4">
-    <h1 class="display-5 fw-bold">ยินดีต้อนรับสู่ MyShop</h1>
-    <p class="lead mt-3 mb-4">สินค้าคุณภาพดี ราคาเป็นมิตร จัดส่งทั่วไทย</p>
-    <a href="#" class="btn btn-light btn-lg me-2">ดูสินค้า</a>
-    <a href="#" class="btn btn-outline-light btn-lg">ลงทะเบียน</a>
-  </div>
-</section>
-
-<!-- ── Stats Cards ── -->
-<section class="py-5">
-  <div class="container">
-    <h2 class="text-center mb-4">ภาพรวมร้านค้า</h2>
-    <div class="row g-4">
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card text-center shadow-sm border-0">
-          <div class="card-body py-4">
-            <div style="font-size:2.5rem;">📦</div>
-            <div class="fs-2 fw-bold text-primary mt-2">128</div>
-            <div class="text-muted">สินค้าทั้งหมด</div>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card text-center shadow-sm border-0">
-          <div class="card-body py-4">
-            <div style="font-size:2.5rem;">👥</div>
-            <div class="fs-2 fw-bold text-success mt-2">1,024</div>
-            <div class="text-muted">สมาชิก</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card text-center shadow-sm border-0">
-          <div class="card-body py-4">
-            <div style="font-size:2.5rem;">🛒</div>
-            <div class="fs-2 fw-bold text-warning mt-2">356</div>
-            <div class="text-muted">คำสั่งซื้อ</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card text-center shadow-sm border-0">
-          <div class="card-body py-4">
-            <div style="font-size:2.5rem;">⭐</div>
-            <div class="fs-2 fw-bold text-danger mt-2">4.8</div>
-            <div class="text-muted">คะแนนเฉลี่ย</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmcFqEU5teSCaGa5O+SxuQlKKhud"
-        crossorigin="anonymous"></script>
-</body>
-</html></code></pre>
-      </div>
-
-      <!-- Example 3: Custom Form with Floating Labels -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">modern-form.html + form.css</span>
-          <span class="code-lang">CSS</span>
+          <span class="code-filename">src/lib/storage.js — upload &amp; getPublicUrl</span>
+          <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-css">/* form.css — Modern Form with Floating Labels & Validation States */
+        <pre><code class="language-javascript">// snippet 1: สร้าง bucket และ upload ไฟล์
+import { supabase } from '../lib/supabase';
 
-.form-card {
-  max-width: 480px;
-  margin: 3rem auto;
-  padding: 2.5rem;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,.10);
-}
+// upload รูปภาพบริการ
+async function uploadServiceImage(file, serviceId) {
+  const ext = file.name.split('.').pop();
+  const path = `services/${serviceId}.${ext}`;
 
-.form-card h2 { font-size: 1.6rem; font-weight: 700; text-align: center; margin-bottom: 2rem; }
-
-/* Floating Label Group */
-.field {
-  position: relative;
-  margin-bottom: 1.5rem;
-}
-
-.field input {
-  width: 100%;
-  padding: 1.25rem 1rem 0.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: border-color .2s;
-  background: transparent;
-  outline: none;
-}
-
-.field label {
-  position: absolute;
-  top: 50%;
-  left: 1rem;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  color: #94a3b8;
-  pointer-events: none;
-  transition: all .2s;
-}
-
-/* เมื่อ input มี focus หรือมีค่า */
-.field input:focus,
-.field input:not(:placeholder-shown) {
-  border-color: #2563eb;
-}
-
-.field input:focus + label,
-.field input:not(:placeholder-shown) + label {
-  top: 0.6rem;
-  transform: none;
-  font-size: 0.75rem;
-  color: #2563eb;
-  font-weight: 600;
-}
-
-/* Error State */
-.field.is-error input  { border-color: #ef4444; }
-.field.is-error label  { color: #ef4444; }
-.field .error-msg { display: none; color: #ef4444; font-size: 0.8rem; margin-top: 4px; }
-.field.is-error .error-msg { display: block; }
-
-/* Success State */
-.field.is-success input { border-color: #22c55e; }
-.field.is-success label { color: #22c55e; }
-
-/* Submit Button */
-.btn-submit {
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity .2s, transform .15s;
-}
-.btn-submit:hover { opacity: .9; }
-.btn-submit:active { transform: scale(.98); }
-.btn-submit:disabled { opacity: .6; cursor: not-allowed; }</code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">modern-form.html — HTML ของ Form</span>
-          <span class="code-lang">HTML</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-html"><!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เข้าสู่ระบบ</title>
-  <link rel="stylesheet" href="form.css">
-</head>
-<body style="background:#f1f5f9; min-height:100vh; display:flex; align-items:center;">
-
-  <div class="form-card">
-    <h2>เข้าสู่ระบบ</h2>
-
-    <form id="loginForm" novalidate>
-      <!-- Email Field -->
-      <div class="field" id="emailField">
-        <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required>
-        <label for="email">อีเมล</label>
-        <div class="error-msg" id="emailError">กรุณากรอกอีเมลที่ถูกต้อง</div>
-      </div>
-
-      <!-- Password Field -->
-      <div class="field" id="passwordField">
-        <input type="password" id="password" name="password" placeholder=" " autocomplete="current-password" required minlength="8">
-        <label for="password">รหัสผ่าน</label>
-        <div class="error-msg" id="passwordError">รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร</div>
-      </div>
-
-      <button type="submit" class="btn-submit">เข้าสู่ระบบ</button>
-    </form>
-
-    <p style="text-align:center; margin-top:1.5rem; color:#64748b;">
-      ยังไม่มีบัญชี? <a href="register.html" style="color:#2563eb; font-weight:600;">สมัครสมาชิก</a>
-    </p>
-  </div>
-
-  <script>
-    const form = document.getElementById('loginForm');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      let valid = true;
-
-      // ตรวจสอบ Email
-      const emailInput = document.getElementById('email');
-      const emailField = document.getElementById('emailField');
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(emailInput.value.trim())) {
-        emailField.classList.add('is-error');
-        emailField.classList.remove('is-success');
-        valid = false;
-      } else {
-        emailField.classList.remove('is-error');
-        emailField.classList.add('is-success');
-      }
-
-      // ตรวจสอบ Password
-      const passwordInput = document.getElementById('password');
-      const passwordField = document.getElementById('passwordField');
-      if (passwordInput.value.length < 8) {
-        passwordField.classList.add('is-error');
-        passwordField.classList.remove('is-success');
-        valid = false;
-      } else {
-        passwordField.classList.remove('is-error');
-        passwordField.classList.add('is-success');
-      }
-
-      if (valid) {
-        // ส่งฟอร์มไป Server จริง (ตัวอย่างนี้แสดง alert แทน)
-        alert('ข้อมูลถูกต้อง — ส่งไปยัง Server...');
-        form.submit();
-      }
+  const { data, error } = await supabase.storage
+    .from('service-images')  // ชื่อ bucket
+    .upload(path, file, {
+      upsert: true,          // ทับไฟล์เดิมถ้ามี
+      contentType: file.type,
     });
-  </script>
-</body>
-</html></code></pre>
+
+  if (error) throw error;
+  return data.path;
+}
+
+// ดึง public URL
+function getImageUrl(path) {
+  const { data } = supabase.storage
+    .from('service-images')
+    .getPublicUrl(path);
+  return data.publicUrl;
+}</code></pre>
+      </div>
+
+      <!-- Snippet 2: Image Upload Component -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/components/ImageUpload.jsx — Preview &amp; Upload</span>
+          <span class="code-lang">JSX</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-jsx">// snippet 2: Image Upload Component
+import { useState } from 'react';
+import { uploadServiceImage, getImageUrl } from '../lib/storage';
+
+function ImageUpload({ serviceId, onUploaded }) {
+  const [uploading, setUploading] = useState(false);
+  const [preview, setPreview] = useState(null);
+
+  async function handleFileChange(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // แสดง preview ก่อน upload
+    setPreview(URL.createObjectURL(file));
+    setUploading(true);
+
+    try {
+      const path = await uploadServiceImage(file, serviceId);
+      const url = getImageUrl(path);
+      onUploaded(url);
+    } catch (err) {
+      alert('อัปโหลดล้มเหลว: ' + err.message);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    &lt;div>
+      {preview &amp;&amp; &lt;img src={preview} alt="preview" style={{ width: 200 }} />}
+      &lt;input type="file" accept="image/*" onChange={handleFileChange} />
+      {uploading &amp;&amp; &lt;p>กำลังอัปโหลด...&lt;/p>}
+    &lt;/div>
+  );
+}</code></pre>
+      </div>
+
+      <!-- Snippet 3: อัปเดต image_url ใน services table หลัง upload -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/pages/AdminPage.jsx — อัปเดต image_url ใน DB</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">// snippet 3: อัปเดต image_url ใน services table หลัง upload
+async function updateServiceImage(serviceId, imageUrl) {
+  const { error } = await supabase
+    .from('services')
+    .update({ image_url: imageUrl })
+    .eq('id', serviceId);
+
+  if (error) throw error;
+  return true;
+}
+
+// ใช้ใน Admin page
+async function handleImageUploaded(url) {
+  await updateServiceImage(currentServiceId, url);
+  queryClient.invalidateQueries({ queryKey: ['services'] });
+}</code></pre>
       </div>
 
     </div>
@@ -520,8 +376,12 @@ body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background:
     ══════════════════════════════════════════ -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 9 — UI/UX &amp; Responsive Web</h2>
-        <p>ออกแบบหน้าเว็บที่สวยงามและใช้งานได้บนทุกหน้าจอ ตั้งแต่ Product Catalog, Navigation, Dashboard ไปจนถึงการทดสอบด้วย DevTools</p>
+        <h2>🧪 ปฏิบัติการ Lab 9 — BookEasy: อัปโหลดรูปภาพบริการ</h2>
+        <p>เพิ่มฟีเจอร์ Admin สำหรับอัปโหลดรูปภาพให้แต่ละบริการใน BookEasy ตั้งแต่สร้าง Storage Bucket, Admin Page ไปจนถึง ImageUpload Component และแสดงรูปใน ServiceCard</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 8</div>
+          <p>ต่อยอดจาก Lab 8 — เพิ่มฟีเจอร์ Admin อัปโหลดรูปภาพให้แต่ละบริการ</p>
+        </div>
       </div>
       <div class="lab-body">
 
@@ -529,13 +389,60 @@ body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background:
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">ออกแบบ Responsive Product Catalog</div>
+            <div class="task-title">ตั้งค่า Storage Bucket</div>
           </div>
           <div class="task-body">
-            <p>สร้างหน้า <code>catalog.html</code> ที่แสดงสินค้าอย่างน้อย 6 ชิ้นใน Card Layout โดยใช้ CSS Grid + Media Query แบบ Mobile-First: <strong>1 Column</strong> บนมือถือ (ไม่มี Media Query), <strong>2 Columns</strong> บน Tablet (≥640px), <strong>3 Columns</strong> บน Desktop (≥1024px)</p>
-            <p>แต่ละ Card ต้องมี: รูปภาพสินค้า (ใช้ placeholder image ได้), ชื่อสินค้า, ราคา, และปุ่ม "เพิ่มลงตะกร้า" ที่ Hover แล้วเปลี่ยนสี Card ทั้งหมดต้องมีความสูงสม่ำเสมอ (ใช้ <code>grid-row: span</code> หรือ Flexbox ภายใน Card)</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>ลดขนาดหน้าต่าง Browser: Desktop เห็น 3 คอลัมน์ / 640px เห็น 2 คอลัมน์ / &lt;640px เห็น 1 คอลัมน์ / Card มีรูป ชื่อ ราคา ปุ่ม / Hover Card มี Effect</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>เริ่มจาก CSS ที่ไม่มี Media Query ก่อน (Mobile) แล้วค่อยเพิ่ม <code>@media (min-width: 640px)</code> ทดสอบระหว่างทำโดยลดขนาดหน้าต่าง Browser ให้แคบลง</p></div>
+            <p>สร้าง Bucket และตั้งค่า Policy ใน Supabase Dashboard เพื่อให้ Admin อัปโหลดรูปภาพบริการได้</p>
+            <ul>
+              <li>เปิด Supabase Dashboard → Storage → คลิก "New bucket"</li>
+              <li>ตั้งชื่อ Bucket ว่า <code>service-images</code> และเลือก <strong>Public bucket</strong> → คลิก "Save"</li>
+              <li>ไปที่ Bucket <code>service-images</code> → คลิก "Policies" → "New policy"</li>
+              <li>เลือก template <strong>"Allow access to authenticated users only"</strong> สำหรับ INSERT</li>
+              <li>ตรวจสอบว่า Policy condition ใช้ <code>auth.role() = 'authenticated'</code></li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">Storage Policy — ตั้งค่าใน SQL Editor</span>
+                <span class="code-lang">JavaScript</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-javascript">// ถ้าต้องการตั้งค่าผ่าน Dashboard UI:
+// Storage → service-images → Policies → New policy
+// เลือก: "Give users access to a folder only they can access"
+// หรือสร้าง custom policy ด้วย condition ด้านล่าง
+
+// Policy สำหรับ Public read (ทุกคนดูรูปได้)
+// Operation: SELECT
+// Target roles: public
+// USING expression: true
+
+// Policy สำหรับ Authenticated upload (เฉพาะ user ที่ Login)
+// Operation: INSERT
+// Target roles: authenticated
+// WITH CHECK expression: true</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                Supabase Dashboard แสดง Bucket <code>service-images</code> ที่มีสถานะ Public
+                มี Policy สำหรับ SELECT (public) และ INSERT (authenticated)
+                ทดสอบอัปโหลดไฟล์ผ่าน Dashboard → Storage → service-images → Upload → อัปโหลดสำเร็จ
+                คลิก "Get URL" และเปิด URL ในเบราว์เซอร์เห็นรูปได้
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้าอัปโหลดแล้วได้ error <code>new row violates row-level security policy</code>
+                แสดงว่า INSERT Policy ยังไม่ถูกต้อง ให้ตรวจสอบว่า target role เป็น <code>authenticated</code>
+                และ WITH CHECK expression เป็น <code>true</code> หรือ condition ที่ต้องการ
+              </p>
+            </div>
           </div>
         </div>
 
@@ -543,13 +450,80 @@ body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background:
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">Responsive Navigation Bar</div>
+            <div class="task-title">สร้าง Admin Page</div>
           </div>
           <div class="task-body">
-            <p>สร้าง Navigation Bar ที่: <strong>Desktop</strong> แสดงเมนูแนวนอนทั้งหมด, <strong>Mobile</strong> ซ่อนเมนูและแสดงปุ่ม Hamburger (☰) เมื่อกด Hamburger ให้เมนูเด้งออกมา (Toggle)</p>
-            <p>สามารถใช้ Pure CSS Checkbox Hack หรือ JavaScript Toggle Class ก็ได้ Nav ต้องติด (sticky/fixed) อยู่บนสุดขณะ Scroll ด้วย</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Desktop: เห็นเมนูทั้งหมด / Mobile (&lt;768px): เห็นแค่ Logo + Hamburger / กด Hamburger → เมนูเด้งออกมา / Nav ติดบนสุดขณะ Scroll ลง</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>วิธีง่ายที่สุดคือใช้ Bootstrap 5 Navbar ที่มี Collapse built-in แต่ถ้าต้องการทำเองให้ใช้ JavaScript: <code>document.querySelector('.nav-menu').classList.toggle('open')</code> แล้วกำหนด CSS สำหรับ class <code>open</code></p></div>
+            <p>สร้างหน้า Admin ที่แสดงรายการบริการทั้งหมดและป้องกันด้วยการตรวจสอบ email</p>
+            <ul>
+              <li>
+                สร้างไฟล์ <code>src/pages/AdminPage.jsx</code> — ใช้ <code>useQuery</code> ดึง services ทั้งหมด
+                แสดงเป็นรายการพร้อมชื่อบริการและปุ่ม "เปลี่ยนรูป" สำหรับแต่ละรายการ
+              </li>
+              <li>
+                เพิ่ม route <code>/admin</code> ใน <code>src/router.js</code>
+                ห่อ <code>AdminPage</code> ด้วย <code>ProtectedRoute</code> และตรวจสอบ email เพิ่มเติม:
+                ถ้า <code>user.email !== 'admin@bookeasy.com'</code> ให้แสดงข้อความ "ไม่มีสิทธิ์เข้าถึง"
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/pages/AdminPage.jsx</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { useQuery } from '@tanstack/react-query';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
+
+export function AdminPage() {
+  const { user } = useAuth();
+
+  const { data: services } = useQuery({
+    queryKey: ['services'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('services').select('*');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  if (user?.email !== 'admin@bookeasy.com') {
+    return &lt;p>ไม่มีสิทธิ์เข้าถึงหน้านี้&lt;/p>;
+  }
+
+  return (
+    &lt;div>
+      &lt;h1>Admin — จัดการรูปภาพบริการ&lt;/h1>
+      {services?.map(service => (
+        &lt;div key={service.id}>
+          &lt;span>{service.name}&lt;/span>
+          {/* ImageUpload Component จะเพิ่มใน Task 3 */}
+        &lt;/div>
+      ))}
+    &lt;/div>
+  );
+}</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                Login ด้วย <code>admin@bookeasy.com</code> แล้วเปิด <code>/admin</code> → เห็นรายการบริการทั้งหมด
+                Login ด้วย email อื่น แล้วเปิด <code>/admin</code> → เห็นข้อความ "ไม่มีสิทธิ์เข้าถึง"
+                ไม่ Login แล้วเปิด <code>/admin</code> → redirect ไป <code>/login</code>
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                สร้าง account <code>admin@bookeasy.com</code> ใน Supabase Dashboard → Authentication → Users → "Add user"
+                หรือสมัครผ่านหน้า Register ก่อน แล้วตรวจสอบว่า email ตรงกันใน AdminPage
+              </p>
+            </div>
           </div>
         </div>
 
@@ -557,13 +531,107 @@ body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background:
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">Bootstrap Dashboard Layout</div>
+            <div class="task-title">เพิ่ม ImageUpload Component</div>
           </div>
           <div class="task-body">
-            <p>สร้างหน้า <code>dashboard_bs.html</code> โดยใช้ Bootstrap 5 นำเข้าผ่าน CDN ออกแบบ Layout ที่มี: Navbar บนสุด, Sidebar ซ้าย (ซ่อนบน Mobile), Main Content ขวา</p>
-            <p>ใน Main Content ให้มี Stats Cards อย่างน้อย 4 ใบ (เช่น สินค้า, สมาชิก, ยอดขาย, คำสั่งซื้อ) และตาราง "สินค้าล่าสุด" อย่างน้อย 5 แถว ใช้ Bootstrap Grid (<code>col-*</code>), Card Component, และ Table Component</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Desktop: เห็น Sidebar + Main Content / Mobile: Sidebar ซ่อน เห็นแต่ Main Content / Stats Cards แสดง 2 ต่อแถวบน Mobile, 4 ต่อแถวบน Desktop / ตารางมี Responsive Scroll</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>d-none d-md-block</code> เพื่อซ่อน Sidebar บน Mobile และใช้ <code>table-responsive</code> ครอบตาราง เพื่อให้เลื่อนซ้าย-ขวาได้บนจอแคบ</p></div>
+            <p>สร้าง <code>ImageUpload</code> Component ตาม snippet 2 และนำไปใช้ใน AdminPage เพื่ออัปโหลดและอัปเดต image_url</p>
+            <ul>
+              <li>
+                สร้างไฟล์ <code>src/components/ImageUpload.jsx</code> ตาม snippet 2 ด้านบน
+                Component รับ <code>serviceId</code> และ callback <code>onUploaded(url)</code>
+              </li>
+              <li>
+                เพิ่มในไฟล์ <code>src/lib/storage.js</code> function <code>uploadServiceImage</code>
+                และ <code>getImageUrl</code> ตาม snippet 1
+              </li>
+              <li>
+                ใน <code>AdminPage.jsx</code> เพิ่ม <code>&lt;ImageUpload&gt;</code> ให้แต่ละบริการ
+                เมื่อ callback <code>onUploaded</code> ถูกเรียก ให้เรียก <code>updateServiceImage</code>
+                แล้ว <code>invalidateQueries({ queryKey: ['services'] })</code>
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/pages/AdminPage.jsx — เพิ่ม ImageUpload</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
+import { ImageUpload } from '../components/ImageUpload';
+
+async function updateServiceImage(serviceId, imageUrl) {
+  const { error } = await supabase
+    .from('services')
+    .update({ image_url: imageUrl })
+    .eq('id', serviceId);
+  if (error) throw error;
+}
+
+export function AdminPage() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  const { data: services } = useQuery({
+    queryKey: ['services'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('services').select('*');
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  if (user?.email !== 'admin@bookeasy.com') {
+    return &lt;p>ไม่มีสิทธิ์เข้าถึงหน้านี้&lt;/p>;
+  }
+
+  async function handleImageUploaded(serviceId, url) {
+    await updateServiceImage(serviceId, url);
+    queryClient.invalidateQueries({ queryKey: ['services'] });
+  }
+
+  return (
+    &lt;div>
+      &lt;h1>Admin — จัดการรูปภาพบริการ&lt;/h1>
+      {services?.map(service => (
+        &lt;div key={service.id} style={{ marginBottom: '1rem' }}>
+          &lt;strong>{service.name}&lt;/strong>
+          {service.image_url &amp;&amp; (
+            &lt;img src={service.image_url} alt={service.name} style={{ width: 100, display: 'block' }} />
+          )}
+          &lt;ImageUpload
+            serviceId={service.id}
+            onUploaded={(url) => handleImageUploaded(service.id, url)}
+          />
+        &lt;/div>
+      ))}
+    &lt;/div>
+  );
+}</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                เปิด <code>/admin</code> → แต่ละบริการมีปุ่มเลือกไฟล์
+                เลือกรูปภาพ → เห็น preview ทันที → รอสักครู่ → ข้อความ "กำลังอัปโหลด..." หายไป
+                เปิด Supabase Dashboard → Storage → service-images → เห็นไฟล์ที่อัปโหลด
+                เปิด Supabase Table Editor → services → เห็น <code>image_url</code> อัปเดตแล้ว
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้าเกิด error <code>column "image_url" does not exist</code> ต้องเพิ่ม column ก่อน:
+                เปิด Supabase → Table Editor → services → "Add column" ชื่อ <code>image_url</code> ประเภท <code>text</code>
+                แล้วกด Save
+              </p>
+            </div>
           </div>
         </div>
 
@@ -571,67 +639,118 @@ body { font-family: 'Sarabun', sans-serif; color: var(--color-text); background:
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">4</div>
-            <div class="task-title">ออกแบบ Login/Register Form ให้สวยงาม</div>
+            <div class="task-title">แสดงรูปใน ServiceCard</div>
           </div>
           <div class="task-body">
-            <p>นำ <code>login.php</code> และ <code>register.php</code> จาก Week 9 มาเพิ่ม CSS ให้สวยงาม ต้องมี: Card กลางหน้าที่มี Shadow และ Border Radius, Floating Labels (Label ลอยขึ้นเมื่อ Focus/มีค่า), Error State แสดงสีแดงที่ Input ที่ผิด, ปุ่ม Submit ที่ดูน่ากด</p>
-            <p>แบบฟอร์มต้องใช้งานได้ดีบนมือถือด้วย: Input ต้องกว้างเต็มหน้าจอ, ปุ่มต้องใหญ่พอแตะได้ (อย่างน้อย 44px สูง), ไม่มีการ Zoom เมื่อ Tap บน iOS (font-size อย่างน้อย 16px)</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Form มี Shadow + Rounded Card / Label เคลื่อนเมื่อ Focus / กรอกข้อมูลผิด → Input เป็นสีแดง / ใช้งานบนมือถือได้สะดวก ไม่ต้อง Zoom / ปุ่ม Hover มี Effect</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ป้องกัน Auto-Zoom บน iOS ด้วยการใช้ <code>font-size: 16px</code> ขึ้นไปสำหรับ Input ทุกตัว และตั้ง <code>touch-action: manipulation</code> เพื่อลด Tap Delay</p></div>
-          </div>
-        </div>
-
-        <!-- Task 5 -->
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">ทดสอบ Responsive ด้วย Chrome DevTools</div>
-          </div>
-          <div class="task-body">
-            <p>เปิด Chrome DevTools (F12) แล้วสลับไปโหมด Device Toolbar (Ctrl+Shift+M) ทดสอบ catalog.html และ dashboard_bs.html ที่ Breakpoint ต่อไปนี้ และแก้ไขปัญหาที่พบ:</p>
-            <ul style="margin-left:1.5rem; margin-top:0.5rem;">
-              <li><strong>iPhone SE</strong> — 375 x 667 px</li>
-              <li><strong>iPad Air</strong> — 820 x 1180 px</li>
-              <li><strong>Desktop</strong> — 1440 x 900 px</li>
+            <p>แก้ไข <code>ServiceCard.jsx</code> ให้แสดงรูปภาพเมื่อมี <code>image_url</code> หรือแสดง Placeholder สีเมื่อยังไม่มีรูป</p>
+            <ul>
+              <li>
+                เปิด <code>src/components/ServiceCard.jsx</code> เพิ่ม conditional rendering:
+                ถ้า <code>service.image_url</code> มีค่า แสดง <code>&lt;img src={service.image_url} /&gt;</code>
+                ถ้าไม่มี แสดง <code>&lt;div&gt;</code> สี placeholder แทน
+              </li>
+              <li>ตั้งขนาดรูปให้ <code>width: 100%</code> และ <code>height: 200px</code> พร้อม <code>object-fit: cover</code></li>
+              <li>เพิ่ม <code>alt</code> attribute ให้รูปภาพเพื่อ Accessibility</li>
             </ul>
-            <p>สิ่งที่ต้องตรวจสอบ: ข้อความไม่ถูก Clip, ไม่มี Horizontal Scroll, ปุ่มมีขนาดพอสำหรับนิ้วมือ, รูปภาพไม่ล้น Container, ไม่มีพื้นที่ว่างผิดปกติ</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>ทั้ง 3 Breakpoint: ไม่มี Horizontal Scroll / ทุกเนื้อหาอ่านได้ / ปุ่มและ Link กดได้สะดวก / Layout ไม่แตก / บันทึก Screenshot แต่ละ Breakpoint ส่งอาจารย์</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ปัญหา Horizontal Scroll ที่พบบ่อยคือ Element บางตัวมีความกว้างเกิน 100% หาได้โดยรัน <code>document.querySelectorAll('*')</code> แล้วหา Element ที่ <code>offsetWidth > document.body.offsetWidth</code> ใน Console</p></div>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/components/ServiceCard.jsx — เพิ่มรูปภาพ</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">export function ServiceCard({ service }) {
+  const imgStyle = {
+    width: '100%',
+    height: '200px',
+    objectFit: 'cover',
+    display: 'block',
+  };
+
+  const placeholderStyle = {
+    ...imgStyle,
+    background: 'linear-gradient(135deg, #e2e8f0, #cbd5e1)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#94a3b8',
+    fontSize: '2rem',
+  };
+
+  return (
+    &lt;div className="service-card">
+      {service.image_url ? (
+        &lt;img
+          src={service.image_url}
+          alt={service.name}
+          style={imgStyle}
+        />
+      ) : (
+        &lt;div style={placeholderStyle}>🏷️&lt;/div>
+      )}
+      &lt;div className="service-info">
+        &lt;h3>{service.name}&lt;/h3>
+        &lt;p>{service.description}&lt;/p>
+        &lt;span className="price">฿{service.price}&lt;/span>
+      &lt;/div>
+    &lt;/div>
+  );
+}</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                เปิดหน้าหลัก → บริการที่มี <code>image_url</code> แสดงรูปภาพจริง
+                บริการที่ยังไม่มีรูปแสดง Placeholder สีเทา
+                อัปโหลดรูปใน Admin Page → กลับมาหน้าหลัก → รูปแสดงทันที (query invalidate ทำงาน)
+                รูปภาพไม่ล้น Card และขนาดสม่ำเสมอทุกการ์ด
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้ารูปดูยืดหรือผิดสัดส่วน ให้ตรวจสอบว่าใช้ <code>object-fit: cover</code> ครบถ้วน
+                และ Container มีความสูงกำหนดไว้ชัดเจน
+                <code>object-fit: cover</code> จะ crop รูปให้พอดีกับ Container โดยไม่ยืด
+              </p>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-09.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">ระบบสมาชิก &amp; Authentication</div>
+        <div class="wn-name">Supabase Auth: Login, Register, Session &amp; Protected Routes</div>
       </a>
       <a href="week-11.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">Code Reusability &amp; Template</div>
+        <div class="wn-name">Shadcn/ui + Tailwind CSS: ออกแบบ UI ที่สวยงามและ Responsive</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
         integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
-        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"
+        integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw=="
         crossorigin="anonymous"></script>
 </body>
 </html>
