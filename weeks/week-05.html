@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 5 — ออกแบบฐานข้อมูล & MySQL — 07-034-233</title>
+  <title>สัปดาห์ที่ 5 — Hono API บน Cloudflare Workers — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,14 +18,13 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 5</span>
     <span class="sep">›</span>
-    <span>ออกแบบฐานข้อมูล & MySQL</span>
+    <span>Hono API บน Cloudflare Workers</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 5</div>
-    <h1 class="wh-title">ออกแบบฐานข้อมูล & MySQL</h1>
+    <h1 class="wh-title">Hono API บน Cloudflare Workers</h1>
     <div class="wh-clos">
-      <span class="wh-clo">CLO2</span>
       <span class="wh-clo">CLO3</span>
     </div>
   </div>
@@ -47,186 +46,203 @@
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>พื้นฐานฐานข้อมูล Relational Database</h3>
+        <h3>Cloudflare Workers คืออะไร</h3>
         <p>
-          <strong>ฐานข้อมูลเชิงสัมพันธ์ (Relational Database)</strong> เก็บข้อมูลในรูปแบบ <strong>ตาราง (Table)</strong>
-          ซึ่งประกอบด้วย <strong>แถว (Row/Record)</strong> และ <strong>คอลัมน์ (Column/Field)</strong>
-          แต่ละตารางจะมีชื่อเฉพาะ และเชื่อมโยงกับตารางอื่นผ่าน <strong>Key</strong>
+          <strong>Cloudflare Workers</strong> คือ Serverless Platform ที่รันโค้ด JavaScript ที่ <strong>Edge Node</strong>
+          ของ Cloudflare ทั่วโลก (มากกว่า 300 เมือง) แทนที่จะรันที่ Server กลางเพียงแห่งเดียว
+          ทำให้ผู้ใช้ได้รับการตอบสนองจาก Node ที่อยู่ใกล้ที่สุด Latency จึงต่ำกว่าการใช้ Server ดั้งเดิมมาก
         </p>
         <p>
-          แนวคิดสำคัญของ Relational Database:
-        </p>
-        <ul>
-          <li>
-            <strong>Primary Key (PK)</strong> — คอลัมน์ที่ระบุ Record อย่างเป็นเอกลักษณ์ ห้ามซ้ำและห้ามเป็น NULL
-            นิยมใช้คอลัมน์ <code>id</code> แบบ INT AUTO_INCREMENT
-          </li>
-          <li>
-            <strong>Foreign Key (FK)</strong> — คอลัมน์ที่อ้างอิง Primary Key ของตารางอื่น
-            ใช้สร้างความสัมพันธ์ระหว่างตาราง เช่น <code>orders.user_id</code> อ้างอิง <code>users.id</code>
-          </li>
-          <li>
-            <strong>Index</strong> — โครงสร้างข้อมูลพิเศษที่ช่วยให้ค้นหาข้อมูลเร็วขึ้น
-            (คล้ายดัชนีหนังสือ) Primary Key จะมี Index อัตโนมัติ
-          </li>
-          <li>
-            <strong>Constraint</strong> — กฎที่บังคับกับข้อมูล เช่น NOT NULL, UNIQUE, DEFAULT, CHECK
-          </li>
-        </ul>
-        <p>
-          <strong>ชนิดข้อมูล MySQL ที่ใช้บ่อย:</strong>
+          สิ่งที่ทำให้ Cloudflare Workers โดดเด่น:
         </p>
         <ul>
-          <li><code>INT</code> — จำนวนเต็ม (-2 ล้าน ถึง +2 ล้าน), <code>BIGINT</code> — จำนวนเต็มขนาดใหญ่</li>
-          <li><code>VARCHAR(n)</code> — ข้อความความยาวแปรผัน ไม่เกิน n ตัวอักษร (เหมาะสำหรับ ชื่อ, Email)</li>
-          <li><code>TEXT</code> — ข้อความยาว ไม่จำกัด (เหมาะสำหรับ รายละเอียด, เนื้อหา)</li>
-          <li><code>DECIMAL(p,s)</code> — ทศนิยมแม่นยำสูง (เช่น <code>DECIMAL(10,2)</code> สำหรับราคา)</li>
-          <li><code>FLOAT / DOUBLE</code> — ทศนิยม (ความแม่นยำน้อยกว่า DECIMAL)</li>
-          <li><code>BOOLEAN / TINYINT(1)</code> — จริง/เท็จ (0 หรือ 1)</li>
-          <li><code>DATE</code> — วันที่ (YYYY-MM-DD), <code>TIME</code> — เวลา, <code>DATETIME</code> — วันที่และเวลา</li>
-          <li><code>TIMESTAMP</code> — เหมือน DATETIME แต่อ้างอิง UTC อัปเดตอัตโนมัติได้</li>
-          <li><code>ENUM('val1','val2',...)</code> — ค่าที่กำหนดไว้ล่วงหน้า (เช่น สถานะ)</li>
-        </ul>
-
-        <h3>การออกแบบ ER Diagram</h3>
-        <p>
-          <strong>ER Diagram (Entity-Relationship Diagram)</strong> คือแผนภาพที่แสดง Entity (ตาราง),
-          Attribute (คอลัมน์), และ Relationship (ความสัมพันธ์) ระหว่าง Entity
-          ใช้ออกแบบโครงสร้างฐานข้อมูลก่อนสร้างจริง
-        </p>
-        <p>
-          <strong>ประเภทของ Relationship:</strong>
-        </p>
-        <ul>
-          <li><strong>1:1 (One-to-One)</strong> — หนึ่ง Record ใน Table A สัมพันธ์กับหนึ่ง Record ใน Table B เท่านั้น
-            เช่น ผู้ใช้หนึ่งคนมีโปรไฟล์หนึ่งชุด</li>
-          <li><strong>1:N (One-to-Many)</strong> — หนึ่ง Record ใน Table A สัมพันธ์กับหลาย Record ใน Table B
-            เช่น ผู้ใช้หนึ่งคนมีหลายคำสั่งซื้อ (คุณสัมพันธ์ที่พบบ่อยที่สุด)</li>
-          <li><strong>N:M (Many-to-Many)</strong> — หลาย Record ใน Table A สัมพันธ์กับหลาย Record ใน Table B
-            เช่น นักศึกษาหนึ่งคนลงทะเบียนหลายวิชา และหนึ่งวิชามีหลายคนลงทะเบียน
-            ต้องแก้ด้วยตาราง Junction (ตารางกลาง)</li>
+          <li>
+            <strong>V8 Isolates</strong> — แต่ละ Worker รันใน Isolate แยกกันของ V8 Engine (เดียวกับ Chrome)
+            ไม่ใช่ Container หรือ VM ทำให้ Cold Start เร็วมาก (ต่ำกว่า 1ms)
+            เทียบกับ AWS Lambda ที่อาจใช้เวลาหลายร้อย ms
+          </li>
+          <li>
+            <strong>Edge Runtime</strong> — โค้ดรันที่ Edge Node ใกล้ผู้ใช้ ลด Latency จากการส่งข้อมูลข้ามทวีป
+          </li>
+          <li>
+            <strong>Web Standards API</strong> — ใช้ API มาตรฐานเดียวกับ Browser เช่น <code>Request</code>,
+            <code>Response</code>, <code>fetch()</code>, <code>Headers</code> ทำให้โค้ดคุ้นเคยและย้ายแพลตฟอร์มได้ง่าย
+          </li>
+          <li>
+            <strong>Free Tier ใจดี</strong> — 100,000 requests/วัน ฟรี เหมาะสำหรับโปรเจกต์ขนาดเล็กและนักศึกษา
+          </li>
         </ul>
 
         <div class="diagram-box">
           <pre>
-ตัวอย่าง ER Diagram: ระบบลงทะเบียนนักศึกษา
+สถาปัตยกรรม Cloudflare Workers:
 
-┌──────────────────┐       ┌──────────────────────┐       ┌────────────────┐
-│    students      │       │   enrollments (N:M)  │       │    courses     │
-├──────────────────┤       ├──────────────────────┤       ├────────────────┤
-│ PK id            │ 1   N │ PK id                │ N   1 │ PK id          │
-│    student_code  │──────►│ FK student_id        │◄──────│    code        │
-│    first_name    │       │ FK course_id         │       │    name        │
-│    last_name     │       │    enrolled_date      │       │    credits     │
-│    email         │       │    grade             │       │    FK dept_id  │
-│    faculty       │       └──────────────────────┘       └────────────────┘
-│    created_at    │
-└──────────────────┘
+  ผู้ใช้ในไทย          ผู้ใช้ในญี่ปุ่น       ผู้ใช้ในยุโรป
+       │                     │                    │
+       ▼                     ▼                    ▼
+  CF Edge: Bangkok    CF Edge: Tokyo      CF Edge: Frankfurt
+       │                     │                    │
+       └─────────────────────┴────────────────────┘
+                             │
+                    Cloudflare Network
+                    (Worker รันที่ Edge ใกล้ผู้ใช้)
 
-Relationship:
-  students (1) ────── (N) enrollments (N) ────── (1) courses
-  ผู้ใช้สามารถลงหลายวิชา, แต่ละวิชามีหลายคนลง
+  เปรียบเทียบ: Traditional Server
+  ผู้ใช้ทุกคน ──────────────────────► Server กลาง (เช่น สิงคโปร์)
+  (ทุกคนรอเท่ากัน ไม่ว่าอยู่ที่ไหน)
           </pre>
         </div>
 
-        <h3>MySQL ผ่าน phpMyAdmin</h3>
+        <h3>Hono Framework — ทำไมเลือก Hono</h3>
         <p>
-          <strong>phpMyAdmin</strong> คือ Web Interface สำหรับจัดการ MySQL ที่มาพร้อมกับ XAMPP
-          เข้าถึงได้ที่ <code>http://localhost/phpmyadmin</code> โดยไม่ต้องใช้รหัสผ่านเริ่มต้น
+          <strong>Hono</strong> (แปลว่า "เปลวไฟ" ในภาษาญี่ปุ่น) คือ Web Framework ที่ออกแบบมาสำหรับ
+          Edge Runtime โดยเฉพาะ เป็น Framework ที่เล็ก เร็ว และใช้ Web Standards API
         </p>
         <p>
-          การดำเนินการหลักผ่าน phpMyAdmin:
+          เหตุผลที่เลือก Hono สำหรับคอร์สนี้:
         </p>
         <ul>
-          <li><strong>สร้างฐานข้อมูล</strong>: คลิก "New" ที่แถบซ้าย → ตั้งชื่อ → เลือก Collation <code>utf8mb4_unicode_ci</code> → Create</li>
-          <li><strong>สร้างตาราง</strong>: เลือก Database → "Create table" → ตั้งชื่อตาราง → กำหนดจำนวนคอลัมน์ → Go</li>
-          <li><strong>กำหนดโครงสร้าง</strong>: ตั้งชื่อคอลัมน์, เลือก Type, กำหนด Length, Null/Not Null, Default, Index</li>
-          <li><strong>เพิ่มข้อมูล</strong>: แท็บ "Insert" → กรอกข้อมูล → Go</li>
-          <li><strong>ดูข้อมูล</strong>: แท็บ "Browse" แสดง Records ทั้งหมด</li>
-          <li><strong>รัน SQL</strong>: แท็บ "SQL" สำหรับเขียนคำสั่ง SQL โดยตรง</li>
+          <li>
+            <strong>เบาและเร็ว</strong> — Bundle Size ต่ำกว่า 15KB ไม่มี Dependency ภายนอก
+            ใช้งานได้บน Cloudflare Workers, Deno, Bun, และ Node.js
+          </li>
+          <li>
+            <strong>Web Standards API</strong> — ใช้ <code>Request</code> / <code>Response</code> มาตรฐาน
+            ไม่ใช่ Object แบบ Express.js ทำให้โค้ดพกพาได้ระหว่างแพลตฟอร์ม
+          </li>
+          <li>
+            <strong>API ที่เข้าใจง่าย</strong> — Syntax คล้าย Express.js ที่หลายคนคุ้นเคย
+            แต่รองรับ Async/Await โดยตรงทุก Handler
+          </li>
+          <li>
+            <strong>Built-in Middleware</strong> — มี Middleware สำเร็จรูปพร้อมใช้ เช่น
+            CORS, Logger, bearerAuth, compress, cache
+          </li>
         </ul>
 
         <div class="callout tip">
-          <div class="callout-title">เคล็ดลับ — Collation</div>
+          <div class="callout-title">เคล็ดลับ — Hono vs Express</div>
           <p>
-            ตั้ง Collation เป็น <strong>utf8mb4_unicode_ci</strong> เสมอเมื่อสร้าง Database หรือ Table
-            <code>utf8mb4</code> รองรับ Emoji และอักขระพิเศษ, <code>unicode_ci</code> ทำให้ค้นหาแบบ
-            Case-Insensitive และรองรับภาษาไทยได้อย่างถูกต้อง
+            Express.js ใช้ <code>req, res</code> แบบ Node.js เดิม ส่วน Hono ใช้ <code>c</code> (Context)
+            ที่ครอบ <code>Request</code> และ <code>Response</code> มาตรฐาน เช่น
+            <code>c.req.param('id')</code> และ <code>c.json(data)</code>
+            ถ้าเคยใช้ Express มาก่อน จะปรับตัวได้เร็วมาก
           </p>
         </div>
 
-        <h3>SQL พื้นฐาน</h3>
+        <h3>Routing ใน Hono</h3>
         <p>
-          <strong>SQL (Structured Query Language)</strong> คือภาษามาตรฐานสำหรับจัดการฐานข้อมูล Relational
-          แบ่งเป็น 4 กลุ่มหลัก (CRUD):
-        </p>
-        <ul>
-          <li><strong>DDL (Data Definition Language)</strong>: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code> — กำหนดโครงสร้าง</li>
-          <li><strong>DML (Data Manipulation Language)</strong>: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> — จัดการข้อมูล</li>
-          <li><strong>DQL (Data Query Language)</strong>: <code>SELECT</code> — ดึงข้อมูล</li>
-          <li><strong>DCL (Data Control Language)</strong>: <code>GRANT</code>, <code>REVOKE</code> — จัดการสิทธิ์</li>
-        </ul>
-        <p>
-          คำสั่ง SELECT ที่ใช้บ่อย:
-        </p>
-        <ul>
-          <li><code>SELECT * FROM users</code> — ดึงทุก Record และทุก Column</li>
-          <li><code>SELECT name, email FROM users WHERE id = 5</code> — เลือก Column ที่ต้องการ + กรอง</li>
-          <li><code>SELECT * FROM products WHERE price > 500 ORDER BY price DESC LIMIT 10</code></li>
-          <li><code>SELECT COUNT(*) AS total FROM users</code> — นับจำนวน Record</li>
-          <li><code>SELECT * FROM users WHERE email LIKE '%@gmail.com'</code> — ค้นหาแบบ Pattern</li>
-        </ul>
-
-        <h3>เชื่อมต่อ MySQL กับ PHP</h3>
-        <p>
-          PHP มี 2 วิธีหลักสำหรับเชื่อมต่อ MySQL:
+          Hono รองรับ HTTP Methods ครบถ้วนสำหรับการสร้าง REST API:
         </p>
         <ul>
           <li>
-            <strong>MySQLi (MySQL Improved)</strong> — API แบบ Procedural และ Object-Oriented
-            ใช้งานง่าย แต่ผูกกับ MySQL เท่านั้น (<code>mysqli_connect()</code>)
+            <code>app.get(path, handler)</code> — ดึงข้อมูล (Read) เช่น ดึงรายการบริการ
           </li>
           <li>
-            <strong>PDO (PHP Data Objects)</strong> — Object-Oriented Interface รองรับหลาย Database
-            (MySQL, PostgreSQL, SQLite) ด้วย Prepared Statements ที่ป้องกัน SQL Injection ได้ดีกว่า
-            <strong>แนะนำให้ใช้ PDO</strong>
+            <code>app.post(path, handler)</code> — สร้างข้อมูลใหม่ (Create) เช่น สร้างการจอง
+          </li>
+          <li>
+            <code>app.put(path, handler)</code> — อัปเดตข้อมูลทั้งหมด (Update) เช่น แก้ไขข้อมูลบริการ
+          </li>
+          <li>
+            <code>app.delete(path, handler)</code> — ลบข้อมูล (Delete) เช่น ยกเลิกการจอง
+          </li>
+          <li>
+            <code>app.patch(path, handler)</code> — อัปเดตข้อมูลบางส่วน (Partial Update)
           </li>
         </ul>
+        <p>
+          <strong>Dynamic Route Parameters</strong>: ใช้ <code>:param</code> ใน Path เพื่อรับค่าจาก URL
+        </p>
+        <ul>
+          <li><code>app.get('/api/services/:id', (c) =&gt; { const id = c.req.param('id'); ... })</code></li>
+          <li><code>app.get('/api/users/:userId/bookings/:bookingId', (c) =&gt; { ... })</code> — หลาย Params ได้</li>
+        </ul>
+        <p>
+          <strong>JSON Response</strong>: Hono มี <code>c.json(data, statusCode)</code> สำหรับส่ง JSON Response
+          โดย Status Code default คือ 200 ถ้าไม่ระบุ
+        </p>
 
         <div class="diagram-box">
           <pre>
-การเชื่อมต่อ PHP → MySQL ด้วย PDO:
+REST API Convention สำหรับ BookEasy:
 
-  PHP Script
-      │
-      ├─ new PDO("mysql:host=localhost;dbname=mydb;charset=utf8mb4", $user, $pass)
-      │
-      ▼
-  PDO Object
-      │
-      ├─ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-      ├─ $stmt->execute([$id]);  ← Prepared Statement ป้องกัน SQL Injection
-      └─ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      │
-      ▼
-  Array ของข้อมูล → แสดงใน HTML
+  Method    Path                    ทำหน้าที่
+  ─────────────────────────────────────────────────────
+  GET       /api/services           ดึงรายการบริการทั้งหมด
+  GET       /api/services/:id       ดึงบริการเดียวตาม ID
+  POST      /api/services           สร้างบริการใหม่
+  PUT       /api/services/:id       แก้ไขบริการทั้งหมด
+  DELETE    /api/services/:id       ลบบริการ
+
+  GET       /api/bookings           ดึงรายการจองทั้งหมด
+  POST      /api/bookings           สร้างการจองใหม่
+  GET       /api/bookings/:id       ดึงรายละเอียดการจอง
           </pre>
         </div>
 
+        <h3>Middleware ใน Hono</h3>
+        <p>
+          <strong>Middleware</strong> คือฟังก์ชันที่ทำงานก่อน (หรือหลัง) Route Handler
+          ใช้สำหรับงานที่ต้องทำซ้ำทุก Request เช่น Logging, Authentication, CORS
+        </p>
+        <p>
+          Middleware สำคัญที่ใช้ในคอร์สนี้:
+        </p>
+        <ul>
+          <li>
+            <strong>logger()</strong> — บันทึก Log ทุก Request ที่เข้ามา แสดง Method, Path, Status, Response Time
+            มีประโยชน์มากระหว่าง Development
+          </li>
+          <li>
+            <strong>cors()</strong> — ตั้งค่า CORS (Cross-Origin Resource Sharing) เพื่อให้ Frontend
+            ที่รันบน Domain อื่น (เช่น <code>localhost:5173</code>) สามารถเรียก API ได้
+            Browser จะ Block Request ข้ามต้นทางโดย Default ถ้าไม่มี CORS Header
+          </li>
+          <li>
+            <strong>bearerAuth()</strong> — ตรวจสอบ Token ใน Header <code>Authorization: Bearer &lt;token&gt;</code>
+            ใช้ป้องกัน Route ที่ต้องการ Authentication
+          </li>
+        </ul>
+
         <div class="callout warning">
-          <div class="callout-title">ข้อควรระวัง — SQL Injection</div>
+          <div class="callout-title">ข้อควรระวัง — CORS</div>
           <p>
-            ห้ามนำตัวแปรจากผู้ใช้ใส่ใน SQL Query โดยตรง เช่น <code>"SELECT * FROM users WHERE id = " . $_GET['id']</code>
-            ผู้ใช้อาจส่ง <code>1 OR 1=1</code> ซึ่งจะ Return ทุก Record ในตาราง หรือ <code>1; DROP TABLE users;</code>
-            ป้องกันด้วยการใช้ <strong>Prepared Statements</strong> ของ PDO หรือ MySQLi เสมอ
+            ถ้าไม่เพิ่ม CORS Middleware เบราว์เซอร์จะ Block การเรียก API จาก Frontend ด้วย Error
+            <em>"Access to fetch at 'http://localhost:8787' from origin 'http://localhost:5173' has been blocked by CORS policy"</em>
+            ต้องตั้งค่า <code>cors({ origin: 'http://localhost:5173' })</code> เสมอเมื่อ Frontend กับ Backend
+            รันบน Port ต่างกัน
           </p>
         </div>
 
+        <h3>Wrangler CLI</h3>
         <p>
-          <strong>Prepared Statements</strong> ทำงานโดยแยกโครงสร้าง SQL ออกจากข้อมูล:
-          <code>?</code> หรือ <code>:name</code> เป็น Placeholder ที่ PDO จะ Bind ข้อมูลให้อัตโนมัติ
-          พร้อม Escape อักขระอันตรายทั้งหมด ทำให้ SQL Injection เป็นไปไม่ได้
+          <strong>Wrangler</strong> คือ CLI สำหรับจัดการ Cloudflare Workers พัฒนาโดย Cloudflare เอง
+          ใช้สำหรับ Development, Testing, และ Deploy
         </p>
+        <ul>
+          <li>
+            <code>npx wrangler dev</code> — รัน Worker ใน Local Development Mode
+            เข้าถึงได้ที่ <code>http://localhost:8787</code>
+            Wrangler จะ Watch ไฟล์และ Reload อัตโนมัติเมื่อโค้ดเปลี่ยน
+          </li>
+          <li>
+            <code>npx wrangler deploy</code> — Deploy Worker ขึ้น Cloudflare Edge Network จริง
+            ต้องมีบัญชี Cloudflare และ Login ก่อนด้วย <code>npx wrangler login</code>
+          </li>
+          <li>
+            <code>npx wrangler tail</code> — ดู Real-time Logs ของ Worker ที่รันบน Production
+          </li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — wrangler.toml</div>
+          <p>
+            ไฟล์ <code>wrangler.toml</code> ใน Root ของโปรเจกต์เป็นไฟล์ Config สำหรับ Wrangler
+            กำหนด <code>name</code> (ชื่อ Worker), <code>main</code> (Entry File), และ
+            <code>compatibility_date</code> สร้างอัตโนมัติเมื่อใช้ <code>npm create hono@latest</code>
+          </p>
+        </div>
 
       </div>
     </div>
@@ -242,101 +258,16 @@ Relationship:
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">create_tables.sql</span>
-          <span class="code-lang">SQL</span>
+          <span class="code-filename">terminal</span>
+          <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-sql">
--- ============================
--- สร้างฐานข้อมูลและตาราง
--- ============================
-
--- สร้าง Database
-CREATE DATABASE IF NOT EXISTS mywebapp_db
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
--- เลือกใช้ Database นี้
-USE mywebapp_db;
-
--- ============================
--- ตาราง users: ข้อมูลผู้ใช้งาน
--- ============================
-CREATE TABLE IF NOT EXISTS users (
-  id          INT UNSIGNED     NOT NULL AUTO_INCREMENT,
-  username    VARCHAR(50)      NOT NULL,
-  email       VARCHAR(100)     NOT NULL,
-  password    VARCHAR(255)     NOT NULL,  -- เก็บ Hashed password (bcrypt)
-  first_name  VARCHAR(50)      NOT NULL,
-  last_name   VARCHAR(50)      NOT NULL,
-  role        ENUM('user','admin','moderator') NOT NULL DEFAULT 'user',
-  is_active   TINYINT(1)       NOT NULL DEFAULT 1,
-  created_at  DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at  DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  PRIMARY KEY (id),
-  UNIQUE KEY uk_username (username),
-  UNIQUE KEY uk_email    (email),
-  KEY idx_role (role)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================
--- ตาราง categories: หมวดหมู่สินค้า
--- ============================
-CREATE TABLE IF NOT EXISTS categories (
-  id          INT UNSIGNED  NOT NULL AUTO_INCREMENT,
-  name        VARCHAR(100)  NOT NULL,
-  slug        VARCHAR(100)  NOT NULL,
-  description TEXT,
-  created_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  PRIMARY KEY (id),
-  UNIQUE KEY uk_slug (slug)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================
--- ตาราง products: สินค้า
--- ============================
-CREATE TABLE IF NOT EXISTS products (
-  id           INT UNSIGNED    NOT NULL AUTO_INCREMENT,
-  name         VARCHAR(200)    NOT NULL,
-  description  TEXT,
-  price        DECIMAL(10, 2)  NOT NULL DEFAULT 0.00,
-  stock        INT             NOT NULL DEFAULT 0,
-  image_name   VARCHAR(255),
-  category_id  INT UNSIGNED,              -- Foreign Key ไปยัง categories
-  is_active    TINYINT(1)      NOT NULL DEFAULT 1,
-  created_at   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  PRIMARY KEY (id),
-  KEY idx_category (category_id),
-  KEY idx_price    (price),
-  CONSTRAINT fk_product_category
-    FOREIGN KEY (category_id) REFERENCES categories (id)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================
--- ตาราง orders: คำสั่งซื้อ (1:N กับ users)
--- ============================
-CREATE TABLE IF NOT EXISTS orders (
-  id           INT UNSIGNED   NOT NULL AUTO_INCREMENT,
-  user_id      INT UNSIGNED   NOT NULL,
-  total_price  DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-  status       ENUM('pending','paid','shipped','completed','cancelled') NOT NULL DEFAULT 'pending',
-  note         TEXT,
-  created_at   DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  PRIMARY KEY (id),
-  KEY idx_user   (user_id),
-  KEY idx_status (status),
-  CONSTRAINT fk_order_user
-    FOREIGN KEY (user_id) REFERENCES users (id)
-    ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        </code></pre>
+        <pre><code class="language-bash"># snippet 1: สร้าง Hono Worker
+npm create hono@latest bookeasy-api -- --template cloudflare-workers
+cd bookeasy-api
+npm install
+npx wrangler dev
+# เปิด http://localhost:8787</code></pre>
       </div>
 
       <div class="code-block">
@@ -346,87 +277,46 @@ CREATE TABLE IF NOT EXISTS orders (
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">queries.sql</span>
-          <span class="code-lang">SQL</span>
+          <span class="code-filename">src/index.js</span>
+          <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-sql">
--- ============================
--- INSERT: เพิ่มข้อมูล
--- ============================
-USE mywebapp_db;
+        <pre><code class="language-javascript">// snippet 2: Hono routes พื้นฐาน — src/index.js
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
 
--- เพิ่มหมวดหมู่
-INSERT INTO categories (name, slug, description) VALUES
-  ('อิเล็กทรอนิกส์', 'electronics', 'สินค้าอิเล็กทรอนิกส์ทุกประเภท'),
-  ('เสื้อผ้า',        'clothing',    'เสื้อผ้าแฟชั่น'),
-  ('อาหาร & เครื่องดื่ม', 'food',   'อาหารและเครื่องดื่ม');
+const app = new Hono();
 
--- เพิ่มผู้ใช้ (password ที่นี่เป็น placeholder, จริง ๆ ต้อง hash ด้วย bcrypt)
-INSERT INTO users (username, email, password, first_name, last_name) VALUES
-  ('somchai01',  'somchai@example.com',   '$2y$10$...', 'สมชาย',  'ใจดี'),
-  ('somying02',  'somying@example.com',   '$2y$10$...', 'สมหญิง', 'รักเรียน'),
-  ('prayuth03',  'prayuth@example.com',   '$2y$10$...', 'ประยุทธ์','ขยันดี');
+// Middleware
+app.use('*', logger());
+app.use('/api/*', cors({ origin: 'http://localhost:5173' }));
 
--- เพิ่มสินค้า
-INSERT INTO products (name, description, price, stock, category_id) VALUES
-  ('โน้ตบุ๊ค Dell Inspiron 15', 'Intel Core i5, RAM 8GB, SSD 512GB', 25900.00, 5,  1),
-  ('เมาส์ Logitech MX Master 3', 'Wireless, 7 ปุ่ม, ชาร์จ USB-C',    3290.00,  20, 1),
-  ('คีย์บอร์ด Keychron K2',      'Mechanical, Bluetooth/Wired',        3490.00,  8,  1),
-  ('เสื้อยืด Polo',              'Cotton 100%, มีหลายสี',               390.00,   100, 2),
-  ('กาแฟ Doi Chang 250g',        'Arabica 100% จากดอยช้าง',             280.00,   50, 3);
+// Mock data
+const SERVICES = [
+  { id: 1, name: 'ตัดผมชาย', description: 'ตัดผมสไตล์เกาหลี', price: 150, duration_min: 45 },
+  { id: 2, name: 'นวดแผนไทย', description: 'นวดผ่อนคลาย', price: 400, duration_min: 60 },
+];
 
--- ============================
--- SELECT: ดึงข้อมูล
--- ============================
+// Routes
+app.get('/api/services', (c) => {
+  return c.json({ success: true, data: SERVICES });
+});
 
--- ดึงทุก Record
-SELECT * FROM users;
-SELECT * FROM products;
+app.get('/api/services/:id', (c) => {
+  const id = Number(c.req.param('id'));
+  const service = SERVICES.find(s => s.id === id);
+  if (!service) return c.json({ error: 'ไม่พบบริการ' }, 404);
+  return c.json({ success: true, data: service });
+});
 
--- เลือก Column ที่ต้องการ
-SELECT id, username, email, created_at FROM users;
+app.post('/api/bookings', async (c) => {
+  const body = await c.req.json();
+  const booking = { id: Date.now(), ...body, status: 'pending' };
+  return c.json({ success: true, data: booking }, 201);
+});
 
--- กรองด้วย WHERE
-SELECT * FROM products WHERE price > 1000;
-SELECT * FROM users WHERE email LIKE '%@gmail.com';
-SELECT * FROM products WHERE stock = 0;
-
--- เรียงลำดับ
-SELECT * FROM products ORDER BY price DESC;
-SELECT * FROM products ORDER BY price ASC LIMIT 3;
-
--- JOIN: รวมข้อมูลจากหลายตาราง
-SELECT
-  p.id,
-  p.name          AS product_name,
-  p.price,
-  c.name          AS category_name
-FROM products p
-INNER JOIN categories c ON p.category_id = c.id
-ORDER BY c.name, p.price;
-
--- Aggregate Functions
-SELECT COUNT(*) AS total_products FROM products;
-SELECT AVG(price) AS avg_price FROM products;
-SELECT MIN(price) AS cheapest, MAX(price) AS most_expensive FROM products;
-SELECT category_id, COUNT(*) AS product_count, AVG(price) AS avg_price
-FROM products
-GROUP BY category_id
-ORDER BY product_count DESC;
-
--- ============================
--- UPDATE: แก้ไขข้อมูล
--- ============================
-UPDATE products SET price = 24900.00, stock = 4 WHERE id = 1;
-UPDATE users SET is_active = 0 WHERE id = 3; -- ระงับบัญชี
-
--- ============================
--- DELETE: ลบข้อมูล
--- ============================
-DELETE FROM products WHERE stock = 0 AND is_active = 0;
--- ระวัง! ไม่มี WHERE จะลบทุก Record
-        </code></pre>
+export default app;</code></pre>
       </div>
 
       <div class="code-block">
@@ -436,220 +326,21 @@ DELETE FROM products WHERE stock = 0 AND is_active = 0;
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">db_connect.php</span>
-          <span class="code-lang">PHP</span>
+          <span class="code-filename">terminal</span>
+          <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php">
-<?php
-// ============================
-// PHP PDO Connection to MySQL
-// ============================
-// ไฟล์นี้: config/db_connect.php
-// require_once จากไฟล์อื่นเพื่อใช้ $pdo
+        <pre><code class="language-bash"># snippet 3: ทดสอบ API ด้วย curl
+# GET ทุก services
+curl http://localhost:8787/api/services
 
-define('DB_HOST',    'localhost');
-define('DB_NAME',    'mywebapp_db');
-define('DB_USER',    'root');          // XAMPP default
-define('DB_PASS',    '');              // XAMPP default (ไม่มีรหัสผ่าน)
-define('DB_CHARSET', 'utf8mb4');
+# GET service เดี่ยว
+curl http://localhost:8787/api/services/1
 
-try {
-    // สร้าง DSN (Data Source Name)
-    $dsn = sprintf(
-        'mysql:host=%s;dbname=%s;charset=%s',
-        DB_HOST,
-        DB_NAME,
-        DB_CHARSET
-    );
-
-    // ตัวเลือก PDO ที่แนะนำ
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,  // โยน Exception เมื่อเกิด Error
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,         // ดึงเป็น Associative Array
-        PDO::ATTR_EMULATE_PREPARES   => false,                    // ใช้ Prepared Statements จริง
-    ];
-
-    // สร้าง Connection
-    $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-
-} catch (PDOException $e) {
-    // ใน Production: Log error และแสดงข้อความกว้าง ๆ ให้ผู้ใช้
-    // ใน Development: แสดง Error เพื่อ Debug
-    error_log('Database connection failed: ' . $e->getMessage());
-
-    // ห้าม echo $e->getMessage() ใน Production เพราะเปิดเผยข้อมูล Server
-    die('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่ภายหลัง');
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="code-filename">list_users.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php">
-<?php
-// ============================
-// ดึงข้อมูลจาก MySQL และแสดงเป็น HTML Table
-// ============================
-
-require_once 'config/db_connect.php'; // $pdo พร้อมใช้
-
-// ============================
-// SELECT ด้วย Prepared Statement
-// ============================
-$search = trim($_GET['search'] ?? '');
-$page   = max(1, (int)($_GET['page'] ?? 1));
-$limit  = 10;
-$offset = ($page - 1) * $limit;
-
-if (!empty($search)) {
-    // ค้นหาแบบ LIKE
-    $stmt = $pdo->prepare(
-        "SELECT id, username, email, first_name, last_name, role, created_at
-         FROM users
-         WHERE username LIKE ? OR email LIKE ? OR first_name LIKE ?
-         ORDER BY created_at DESC
-         LIMIT ? OFFSET ?"
-    );
-    $searchParam = "%$search%";
-    $stmt->execute([$searchParam, $searchParam, $searchParam, $limit, $offset]);
-
-    // นับทั้งหมดสำหรับ Pagination
-    $countStmt = $pdo->prepare(
-        "SELECT COUNT(*) FROM users WHERE username LIKE ? OR email LIKE ? OR first_name LIKE ?"
-    );
-    $countStmt->execute([$searchParam, $searchParam, $searchParam]);
-} else {
-    $stmt = $pdo->prepare(
-        "SELECT id, username, email, first_name, last_name, role, created_at
-         FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?"
-    );
-    $stmt->execute([$limit, $offset]);
-
-    $countStmt = $pdo->query("SELECT COUNT(*) FROM users");
-}
-
-$users     = $stmt->fetchAll();       // ดึงทุก Row เป็น Array
-$totalRows = $countStmt->fetchColumn(); // ดึงค่าแรก
-$totalPages = ceil($totalRows / $limit);
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>รายชื่อผู้ใช้งาน</title>
-  <style>
-    body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
-    .container { max-width: 960px; margin: 0 auto; }
-    h1 { color: #2c3e50; }
-    .search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
-    .search-bar input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
-    .search-bar button { padding: 10px 20px; background: #2c3e50; color: white; border: none; border-radius: 6px; cursor: pointer; }
-    .info-bar { color: #666; margin-bottom: 12px; font-size: 0.9rem; }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-    th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
-    td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
-    tr:hover td { background: #f8f9fa; }
-    .badge { padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
-    .badge-admin { background: #fee2e2; color: #dc2626; }
-    .badge-user  { background: #dbeafe; color: #1d4ed8; }
-    .badge-mod   { background: #fef3c7; color: #d97706; }
-    .pagination { display: flex; gap: 6px; margin-top: 16px; justify-content: center; }
-    .pagination a, .pagination span { padding: 8px 14px; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #2c3e50; }
-    .pagination .active { background: #2c3e50; color: white; border-color: #2c3e50; }
-    .no-data { text-align: center; padding: 40px; color: #999; }
-  </style>
-</head>
-<body>
-<div class="container">
-
-  <h1>รายชื่อผู้ใช้งาน</h1>
-
-  <!-- ค้นหา -->
-  <form method="GET" class="search-bar">
-    <input type="text" name="search" placeholder="ค้นหาชื่อหรือ Email..."
-           value="<?= htmlspecialchars($search) ?>">
-    <button type="submit">🔍 ค้นหา</button>
-    <?php if (!empty($search)): ?>
-      <a href="?" style="padding:10px; color:#666;">✕ ล้าง</a>
-    <?php endif; ?>
-  </form>
-
-  <div class="info-bar">
-    พบ <?= number_format($totalRows) ?> ผู้ใช้งาน
-    <?= !empty($search) ? "| ค้นหา: \"$search\"" : '' ?>
-    | หน้า <?= $page ?> / <?= $totalPages ?>
-  </div>
-
-  <?php if (empty($users)): ?>
-    <div class="no-data">ไม่พบผู้ใช้งาน</div>
-  <?php else: ?>
-
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Username</th>
-        <th>ชื่อ-นามสกุล</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>วันที่สมัคร</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($users as $i => $user): ?>
-        <tr>
-          <td><?= $offset + $i + 1 ?></td>
-          <td><?= htmlspecialchars($user['username']) ?></td>
-          <td><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></td>
-          <td><?= htmlspecialchars($user['email']) ?></td>
-          <td>
-            <span class="badge badge-<?= $user['role'] === 'admin' ? 'admin' : ($user['role'] === 'moderator' ? 'mod' : 'user') ?>">
-              <?= htmlspecialchars($user['role']) ?>
-            </span>
-          </td>
-          <td><?= date('d/m/Y', strtotime($user['created_at'])) ?></td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-
-  <!-- Pagination -->
-  <?php if ($totalPages > 1): ?>
-    <div class="pagination">
-      <?php if ($page > 1): ?>
-        <a href="?page=<?= $page-1 ?>&search=<?= urlencode($search) ?>">← ก่อนหน้า</a>
-      <?php endif; ?>
-
-      <?php for ($p = max(1, $page-2); $p <= min($totalPages, $page+2); $p++): ?>
-        <?php if ($p == $page): ?>
-          <span class="active"><?= $p ?></span>
-        <?php else: ?>
-          <a href="?page=<?= $p ?>&search=<?= urlencode($search) ?>"><?= $p ?></a>
-        <?php endif; ?>
-      <?php endfor; ?>
-
-      <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page+1 ?>&search=<?= urlencode($search) ?>">ถัดไป →</a>
-      <?php endif; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php endif; ?>
-
-</div>
-</body>
-</html>
-        </code></pre>
+# POST จอง
+curl -X POST http://localhost:8787/api/bookings \
+  -H "Content-Type: application/json" \
+  -d '{"service_id":1,"booking_date":"2026-07-10","booking_time":"09:00"}'</code></pre>
       </div>
 
     </div>
@@ -657,36 +348,42 @@ $totalPages = ceil($totalRows / $limit);
     <!-- LAB SECTION -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 4 — ออกแบบฐานข้อมูลและ MySQL</h2>
-        <p>ฝึกสร้างฐานข้อมูลด้วย phpMyAdmin, เขียน SQL, เพิ่มข้อมูลทดสอบ, และเชื่อมต่อ PHP กับ MySQL</p>
+        <h2>🧪 ปฏิบัติการ Lab 4 — BookEasy: สร้าง Hono API</h2>
+        <p>ฝึกสร้าง Backend API ด้วย Hono บน Cloudflare Workers พร้อม Routes ครบและทดสอบด้วย curl</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 3</div>
+          <p>
+            ต่อยอดจาก Lab 3 — สร้าง backend API ที่ frontend จะเรียกใช้ใน Week 7
+          </p>
+        </div>
       </div>
       <div class="lab-body">
 
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">สร้างฐานข้อมูลด้วย phpMyAdmin</div>
+            <div class="task-title">ตั้งค่า bookeasy-api project</div>
           </div>
           <div class="task-body">
-            <p>เปิด phpMyAdmin แล้วสร้างฐานข้อมูลและตารางพื้นฐานสำหรับเว็บแอปพลิเคชัน</p>
+            <p>สร้าง Hono project ใหม่ใน folder แยกต่างหากจาก Frontend และตรวจสอบว่า Dev Server ทำงานได้</p>
             <ul>
-              <li>เปิด <code>http://localhost/phpmyadmin</code></li>
-              <li>คลิก "New" ที่แถบซ้าย → ตั้งชื่อ <strong>mywebapp_db</strong> → Collation: <strong>utf8mb4_unicode_ci</strong> → Create</li>
-              <li>เลือก Database <strong>mywebapp_db</strong> → แท็บ "Structure" → "Create table"</li>
-              <li>สร้างตาราง <strong>users</strong>: id (INT AUTO_INCREMENT PK), username (VARCHAR 50 UNIQUE NOT NULL), email (VARCHAR 100 UNIQUE NOT NULL), password (VARCHAR 255 NOT NULL), created_at (DATETIME DEFAULT CURRENT_TIMESTAMP)</li>
-              <li>สร้างตาราง <strong>products</strong>: id (INT AUTO_INCREMENT PK), name (VARCHAR 200 NOT NULL), price (DECIMAL 10,2 NOT NULL), stock (INT DEFAULT 0), image_name (VARCHAR 255)</li>
-              <li>ถ่ายภาพหน้าจอโครงสร้างทั้งสองตาราง</li>
+              <li>รันคำสั่ง <code>npm create hono@latest bookeasy-api -- --template cloudflare-workers</code> ใน folder เดียวกับ <code>bookeasy/</code></li>
+              <li>เข้าไปใน folder ที่สร้างใหม่: <code>cd bookeasy-api</code> แล้วรัน <code>npm install</code></li>
+              <li>รัน <code>npx wrangler dev</code> และเปิดเบราว์เซอร์ที่ <code>http://localhost:8787</code></li>
+              <li>ตรวจสอบว่า Hono ตอบกลับด้วย Response (ปกติจะเห็น "Hello Hono!" หรือ JSON ว่าง ๆ)</li>
+              <li>เปิดไฟล์ <code>src/index.js</code> เพื่อดูโครงสร้างเริ่มต้น</li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ใน phpMyAdmin แสดงฐานข้อมูล mywebapp_db พร้อมตาราง users และ products
-                 เมื่อคลิก "Structure" ของแต่ละตารางต้องเห็น Columns ครบตามที่กำหนด
-                 Primary Key และ Constraints ถูกต้อง</p>
+              <p>รัน <code>npx wrangler dev</code> ได้โดยไม่มี Error ใน Terminal เปิด <code>http://localhost:8787</code>
+                 แล้วเบราว์เซอร์แสดง Response บางอย่าง (ไม่ใช่ "Connection Refused")
+                 ถ่ายภาพหน้าจอ Terminal ที่แสดง "Listening on http://localhost:8787"</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>เมื่อสร้างตาราง ให้คลิกที่ช่อง "Index" ของ id และเลือก "PRIMARY" พร้อมติ๊ก "AUTO_INCREMENT"
-                 สำหรับ username และ email ให้เลือก "UNIQUE" ใน Index เพื่อป้องกันค่าซ้ำ</p>
+              <p>ถ้า <code>npm create hono@latest</code> ถามคำถาม ให้เลือก <strong>cloudflare-workers</strong>
+                 เป็น Template และเลือก <strong>No</strong> สำหรับ TypeScript เพื่อใช้ JavaScript ธรรมดา
+                 Wrangler จะสร้างไฟล์ <code>wrangler.toml</code> ให้อัตโนมัติ ไม่ต้องแก้ไข</p>
             </div>
           </div>
         </div>
@@ -694,27 +391,44 @@ $totalPages = ceil($totalRows / $limit);
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">เขียน SQL สร้างตาราง</div>
+            <div class="task-title">สร้าง routes ครบ</div>
           </div>
           <div class="task-body">
-            <p>เขียนคำสั่ง SQL สำหรับสร้างตาราง users และ products ด้วยตนเองใน phpMyAdmin SQL tab</p>
+            <p>เขียน Routes ครบ 3 Endpoint พร้อม Mock Data และ CORS Middleware</p>
             <ul>
-              <li>ใน phpMyAdmin คลิก Database mywebapp_db → แท็บ "SQL"</li>
-              <li>เขียนคำสั่ง <code>DROP TABLE IF EXISTS products, users;</code> เพื่อลบตารางเดิมก่อน (ถ้ามี)</li>
-              <li>เขียนคำสั่ง <code>CREATE TABLE users (...)</code> ด้วย Constraints ครบถ้วน: NOT NULL, UNIQUE, DEFAULT, PRIMARY KEY</li>
-              <li>เขียนคำสั่ง <code>CREATE TABLE products (...)</code> พร้อม FOREIGN KEY อ้างอิง users.id (ถ้าต้องการ)</li>
-              <li>เพิ่มคอลัมน์ <code>updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</code> ในทั้งสองตาราง</li>
+              <li>
+                แก้ไข <code>src/index.js</code> ให้มี Mock Data <code>SERVICES</code> เป็น Array
+                พร้อมข้อมูลบริการอย่างน้อย 2 รายการ (ดูตัวอย่างจาก Code Snippet ด้านบน)
+              </li>
+              <li>
+                เพิ่ม Middleware: <code>app.use('*', logger())</code> และ
+                <code>app.use('/api/*', cors({ origin: 'http://localhost:5173' }))</code>
+              </li>
+              <li>
+                สร้าง <code>GET /api/services</code> — คืน JSON <code>{ success: true, data: SERVICES }</code>
+              </li>
+              <li>
+                สร้าง <code>GET /api/services/:id</code> — ค้นหาด้วย <code>SERVICES.find()</code>
+                ถ้าไม่พบให้คืน <code>c.json({ error: 'ไม่พบบริการ' }, 404)</code>
+              </li>
+              <li>
+                สร้าง <code>POST /api/bookings</code> — รับ Body ด้วย <code>await c.req.json()</code>
+                แล้วคืน Booking Object พร้อม <code>id: Date.now()</code> และ <code>status: 'pending'</code>
+                ด้วย Status Code 201
+              </li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>รัน SQL แล้วไม่มี Error, ดูโครงสร้างตารางใน phpMyAdmin และ Export SQL ออกมาเก็บไว้
-                 SQL ที่เขียนต้องมี Comment อธิบายแต่ละ Column ว่าทำหน้าที่อะไร</p>
+              <p>รัน <code>npx wrangler dev</code> แล้วเรียก <code>GET /api/services</code> ได้ JSON ที่มี Array ของบริการ
+                 เรียก <code>GET /api/services/999</code> ได้ Response 404 พร้อม <code>{ "error": "ไม่พบบริการ" }</code>
+                 Terminal แสดง Log ทุกครั้งที่มี Request เข้ามา (จาก logger middleware)</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>ลำดับสำคัญ: ถ้า products มี FOREIGN KEY ไปยัง users ต้องสร้าง users ก่อน
-                 และ DROP products ก่อน DROP users ใช้ <code>SET FOREIGN_KEY_CHECKS = 0;</code>
-                 ก่อน DROP เพื่อปิดการตรวจสอบชั่วคราว</p>
+              <p>ต้อง Import Middleware ก่อนใช้งาน: <code>import { cors } from 'hono/cors'</code> และ
+                 <code>import { logger } from 'hono/logger'</code>
+                 <code>c.req.param('id')</code> คืนค่าเป็น String เสมอ ต้องแปลงเป็น Number ด้วย
+                 <code>Number(c.req.param('id'))</code> ก่อน Compare กับ <code>id</code> ใน Array ที่เป็น Number</p>
             </div>
           </div>
         </div>
@@ -722,85 +436,44 @@ $totalPages = ceil($totalRows / $limit);
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">เพิ่มข้อมูลทดสอบ</div>
+            <div class="task-title">ทดสอบด้วย curl</div>
           </div>
           <div class="task-body">
-            <p>เขียนคำสั่ง INSERT เพื่อเพิ่มข้อมูลทดสอบในทั้งสองตาราง</p>
+            <p>รัน Dev Server แล้วทดสอบทุก Route ด้วย curl และบันทึก Response JSON</p>
             <ul>
-              <li>INSERT ผู้ใช้อย่างน้อย 5 คน ด้วย username, email, และ password (ใช้ค่า placeholder เช่น 'hashed_password')</li>
-              <li>INSERT สินค้าอย่างน้อย 5 ชิ้น ด้วยชื่อ ราคา และจำนวน Stock ที่หลากหลาย</li>
-              <li>ทำให้ข้อมูลสมจริง: ราคาสินค้าบางชิ้นเกิน 1000 บาท บางชิ้นน้อยกว่า</li>
-              <li>สินค้าบางชิ้น Stock = 0 (สินค้าหมด)</li>
-              <li>ใช้ <code>INSERT INTO table (col1, col2) VALUES (v1, v2), (v1, v2), ...</code> แบบ Multi-row</li>
+              <li>
+                เปิด Terminal ใหม่ (ขณะที่ <code>npx wrangler dev</code> ยังรันอยู่ใน Terminal เดิม)
+              </li>
+              <li>
+                ทดสอบ <code>GET /api/services</code>:
+                <code>curl http://localhost:8787/api/services</code>
+              </li>
+              <li>
+                ทดสอบ <code>GET /api/services/1</code>:
+                <code>curl http://localhost:8787/api/services/1</code>
+              </li>
+              <li>
+                ทดสอบ 404: <code>curl http://localhost:8787/api/services/999</code>
+                ตรวจว่าได้ Status 404 และ <code>{ "error": "ไม่พบบริการ" }</code>
+              </li>
+              <li>
+                ทดสอบ <code>POST /api/bookings</code> ด้วย curl พร้อม JSON Body ตามตัวอย่างใน Snippet 3
+              </li>
+              <li>บันทึก JSON Response ของทุก Endpoint แล้วส่งเป็นหลักฐาน</li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>แท็บ Browse ของ users แสดงอย่างน้อย 5 Records และ products แสดงอย่างน้อย 5 Records
-                 ข้อมูลแต่ละ Record ครบทุก Field ที่กำหนด NOT NULL</p>
+              <p>ทุก Endpoint ตอบสนองถูกต้อง: <code>GET /api/services</code> คืน Array,
+                 <code>GET /api/services/1</code> คืน Object ของบริการ ID 1,
+                 <code>POST /api/bookings</code> คืน Booking Object ที่มี <code>id</code> และ <code>status: "pending"</code>
+                 ส่งภาพหน้าจอ Terminal ที่แสดง curl output ของทั้ง 3 Endpoint</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>ถ้า INSERT แล้วได้ Error "Duplicate entry" แสดงว่าค่า username หรือ email ซ้ำ
-                 (เพราะตั้ง UNIQUE) ให้ใช้ค่าที่ไม่ซ้ำกัน หรือ <code>TRUNCATE TABLE users;</code>
-                 เพื่อลบข้อมูลเก่าทั้งหมดก่อน</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">4</div>
-            <div class="task-title">ฝึก SQL SELECT</div>
-          </div>
-          <div class="task-body">
-            <p>เขียนคำสั่ง SELECT หลายรูปแบบเพื่อดึงข้อมูลตามเงื่อนไขต่าง ๆ</p>
-            <ul>
-              <li>ดึงผู้ใช้ทั้งหมด: <code>SELECT * FROM users;</code></li>
-              <li>ดึงผู้ใช้ที่ email มี @gmail: <code>SELECT * FROM users WHERE email LIKE '%@gmail.com';</code></li>
-              <li>ดึงสินค้าที่ราคา > 100 เรียงจากแพงสุด: <code>SELECT * FROM products WHERE price > 100 ORDER BY price DESC;</code></li>
-              <li>ดึงสินค้าที่ Stock = 0 (หมด): <code>SELECT * FROM products WHERE stock = 0;</code></li>
-              <li>นับจำนวนสินค้าทั้งหมดและราคาเฉลี่ย: <code>SELECT COUNT(*) AS total, AVG(price) AS avg_price FROM products;</code></li>
-              <li>ดึงเฉพาะ username และ email จาก users 3 คนแรก: <code>SELECT username, email FROM users LIMIT 3;</code></li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>รันคำสั่ง SELECT ทุกข้อใน phpMyAdmin SQL tab และได้ผลลัพธ์ที่ถูกต้อง
-                 บันทึก Screenshot ผลลัพธ์แต่ละคำสั่งพร้อม SQL ที่ใช้</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ใน phpMyAdmin สามารถคลิกชื่อ Column ในผลลัพธ์เพื่อเรียงลำดับได้เลย
-                 หรือใช้แท็บ "Browse" แล้วคลิก Filter icon เพื่อกรองข้อมูลโดยไม่ต้องเขียน SQL</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">เชื่อมต่อ PHP กับ MySQL และแสดงผล</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างไฟล์ PHP ที่เชื่อมต่อ MySQL ผ่าน PDO และดึงข้อมูลมาแสดงเป็นตาราง HTML</p>
-            <ul>
-              <li>สร้าง <code>htdocs/mywebapp/config/db.php</code> ที่มีโค้ด PDO Connection</li>
-              <li>สร้าง <code>htdocs/mywebapp/users.php</code> ที่ <code>require_once</code> ไฟล์ config แล้วรัน SELECT query</li>
-              <li>แสดงข้อมูล users ทั้งหมดเป็น HTML Table พร้อม Header: #, Username, Email, วันที่สมัคร</li>
-              <li>แสดงจำนวน Record ทั้งหมดที่ดึงมา</li>
-              <li>ใช้ <code>htmlspecialchars()</code> กับทุกค่าที่แสดงใน HTML</li>
-              <li>เพิ่ม Styling CSS ให้ตารางสวยงาม</li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>เปิด <code>http://localhost/mywebapp/users.php</code> แล้วเห็นตารางที่แสดงข้อมูลจาก Database จริง ๆ
-                 ข้อมูลตรงกับที่ INSERT ไว้ในตาราง users และไม่มี PHP Error หรือ PDO Exception แสดงในหน้า</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>หาก PDO ต่อไม่ได้ ให้ตรวจสอบ: (1) MySQL ใน XAMPP Control Panel เปิดอยู่หรือไม่,
-                 (2) ชื่อ Database ถูกต้องหรือไม่ (case-sensitive บน Linux), (3) Password ถูกต้องหรือไม่
-                 (XAMPP default: user=root, password=ว่าง)
-                 เปิด Error Reporting ด้วย <code>ini_set('display_errors', 1);</code> ที่บรรทัดแรกชั่วคราว</p>
+              <p>เพิ่ม Flag <code>-i</code> ใน curl เพื่อดู HTTP Status Code พร้อม Response Headers ด้วย
+                 เช่น <code>curl -i http://localhost:8787/api/services/999</code>
+                 จะเห็น <code>HTTP/1.1 404 Not Found</code> อยู่ด้านบน
+                 บน Windows ให้ใช้ Git Bash หรือ PowerShell แทน Command Prompt</p>
             </div>
           </div>
         </div>
@@ -812,11 +485,11 @@ $totalPages = ceil($totalRows / $limit);
     <div class="week-nav">
       <a href="week-04.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST</div>
+        <div class="wn-name">React State + Form + TanStack Router</div>
       </a>
       <a href="week-06.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">CRUD Operations</div>
+        <div class="wn-name">Supabase: ออกแบบ DB + SQL เบื้องต้น</div>
       </a>
     </div>
 
@@ -827,11 +500,11 @@ $totalPages = ceil($totalRows / $limit);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
-        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
         crossorigin="anonymous"></script>
 </body>
 </html>
