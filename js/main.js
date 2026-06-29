@@ -1,21 +1,21 @@
 /* main.js — Course portal: sidebar injection, copy buttons, mobile nav */
 
 const WEEKS = [
-  { n:  1, th: 'แนะนำรายวิชา & สถาปัตยกรรมเว็บ',    lab: 0 },
-  { n:  2, th: 'HTML, CSS, JavaScript (ทบทวน)',       lab: 1 },
-  { n:  3, th: 'PHP เบื้องต้น & ติดตั้งสภาพแวดล้อม', lab: 2 },
-  { n:  4, th: 'ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST',  lab: 3 },
-  { n:  5, th: 'ออกแบบฐานข้อมูล & MySQL',             lab: 4 },
-  { n:  6, th: 'CRUD Operations',                     lab: 5 },
-  { n:  7, th: 'อัปโหลดไฟล์ & จัดการไฟล์',           lab: 6 },
-  { n:  8, th: 'Session & Cookie',                    lab: 7 },
-  { n:  9, th: 'ระบบสมาชิก & Authentication',         lab: 8 },
-  { n: 10, th: 'UI/UX & Responsive Web',              lab: 9 },
-  { n: 11, th: 'Code Reusability & Template',         lab: 10 },
-  { n: 12, th: 'Web Services & REST API',             lab: 11 },
-  { n: 13, th: 'โครงงานเว็บ (ทีม)',                    lab: 0 },
-  { n: 14, th: 'นำเสนอโครงงาน & เอกสาร',              lab: 0 },
-  { n: 15, th: 'Testing, Deploy & สรุปรายวิชา',       lab: 0 },
+  { n:  1, th: 'แนะนำรายวิชา & Modern Web Stack',      lab: 0  },
+  { n:  2, th: 'ทบทวน HTML, CSS, JS & ES2022',         lab: 1  },
+  { n:  3, th: 'Vite + React: JSX & Component',        lab: 2  },
+  { n:  4, th: 'React State + Form + TanStack Router', lab: 3  },
+  { n:  5, th: 'Hono API บน Cloudflare Workers',       lab: 4  },
+  { n:  6, th: 'Supabase: ออกแบบ DB & SQL',            lab: 5  },
+  { n:  7, th: 'CRUD — Hono เชื่อมต่อ Supabase',       lab: 6  },
+  { n:  8, th: 'TanStack Query',                       lab: 7  },
+  { n:  9, th: 'Supabase Auth: Login & Register',      lab: 8  },
+  { n: 10, th: 'Supabase Storage: อัปโหลดรูปภาพ',     lab: 9  },
+  { n: 11, th: 'Shadcn/ui + Tailwind CSS',             lab: 10 },
+  { n: 12, th: 'Custom Hooks & Error Handling',        lab: 11 },
+  { n: 13, th: 'โครงงานเว็บแอปพลิเคชัน (ทีม)',         lab: 0  },
+  { n: 14, th: 'นำเสนอโครงงานเว็บ & เอกสาร',           lab: 0  },
+  { n: 15, th: 'Deploy Cloudflare Workers & Testing',  lab: 15 },
 ];
 
 function getPathInfo() {
