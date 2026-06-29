@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 14 — นำเสนอโครงงาน & จัดทำเอกสาร — 07-034-233</title>
+  <title>สัปดาห์ที่ 14 — นำเสนอโครงงานและจัดทำเอกสารประกอบ — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,12 +18,12 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 14</span>
     <span class="sep">›</span>
-    <span>นำเสนอโครงงาน</span>
+    <span>นำเสนอโครงงานและจัดทำเอกสารประกอบ</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 14</div>
-    <h1 class="wh-title">นำเสนอโครงงาน &amp; จัดทำเอกสาร</h1>
+    <h1 class="wh-title">นำเสนอโครงงานและจัดทำเอกสารประกอบ</h1>
     <div class="wh-clos">
       <span class="wh-clo">CLO5</span>
       <span class="wh-clo">CLO6</span>
@@ -32,372 +32,386 @@
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
         <li><a href="#theory">ทฤษฎี</a></li>
-        <li><a href="#code">เทมเพลตเอกสาร</a></li>
-        <li><a href="#schedule">ตารางนำเสนอ</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
       </ul>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         THEORY
+    ══════════════════════════════════════════ -->
     <div id="theory">
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>การนำเสนอที่มีประสิทธิภาพ</h3>
+        <!-- 1 -->
+        <h3>1. การนำเสนอโปรเจกต์เทคนิค (Demo-Driven Presentation)</h3>
         <p>
-          การนำเสนอโครงงานไม่ใช่แค่การแสดงว่า "ทำได้" แต่เป็นโอกาสพิสูจน์ว่า
-          ทีมเข้าใจปัญหา มีแนวคิดที่ดี และสามารถอธิบายวิธีแก้ปัญหาได้ชัดเจน
-          โครงสร้างการนำเสนอที่ดีควรประกอบด้วย:
+          สัปดาห์สุดท้ายของการพัฒนาคือโอกาสแสดงให้เห็นว่าทีมสร้าง<strong>ระบบจริงที่ใช้งานได้</strong>
+          รูปแบบที่ได้ผลดีที่สุดคือ <strong>Demo-Driven Presentation</strong> — เปิดด้วยปัญหา
+          แล้วสาธิตระบบสดทันทีโดยไม่เสียเวลากับ Slide มากเกินไป
         </p>
-        <div class="diagram-box">
-          <pre>
-โครงสร้างการนำเสนอ (รวม 12-15 นาที)
-
-┌──────────────────────────────────────────────────────┐
-│  1. บทนำ (2 นาที)                                    │
-│     • ชื่อโปรเจกต์ ชื่อทีม                           │
-│     • ปัญหาที่พบในชีวิตจริง ทำไมต้องแก้ปัญหานี้?     │
-│     • Target Users คือใคร?                           │
-├──────────────────────────────────────────────────────┤
-│  2. Demo ระบบจริง (6-8 นาที)                         │
-│     • Login และแสดง Dashboard                        │
-│     • สาธิต Feature หลักทีละอย่าง                    │
-│     • แสดง User Flow สมบูรณ์                         │
-│     • แสดง Admin Panel (ถ้ามี)                       │
-├──────────────────────────────────────────────────────┤
-│  3. สถาปัตยกรรมระบบ (2 นาที)                         │
-│     • โครงสร้างไฟล์และโฟลเดอร์                       │
-│     • ER Diagram ฐานข้อมูล                           │
-│     • Technologies ที่ใช้                             │
-├──────────────────────────────────────────────────────┤
-│  4. สิ่งที่ได้เรียนรู้และอุปสรรค (1-2 นาที)           │
-│     • ความท้าทายที่พบระหว่างทำ                       │
-│     • วิธีที่แก้ปัญหา                                │
-│     • สิ่งที่จะทำต่อถ้ามีเวลาเพิ่ม                   │
-├──────────────────────────────────────────────────────┤
-│  5. ถาม-ตอบ (2-3 นาที)                               │
-│     • อาจารย์และเพื่อนถามคำถาม                        │
-└──────────────────────────────────────────────────────┘
-          </pre>
-        </div>
-
-        <div class="callout tip">
-          <div class="callout-title">เคล็ดลับ</div>
-          <p>
-            ซ้อมการนำเสนออย่างน้อย 2-3 ครั้งก่อนวันจริง จับเวลาทุกครั้ง ถ้าเกิน 15 นาทีให้ตัดส่วนที่ไม่จำเป็นออก
-            ทุกคนในทีมควรมีส่วนพูดในการนำเสนอ เพราะแสดงให้เห็นว่าทุกคนเข้าใจระบบจริงๆ ไม่ใช่แค่คนเดียวที่ทำ
-          </p>
-        </div>
-
-        <h3>การสาธิตระบบ (Demo)</h3>
         <p>
-          ส่วน Demo คือหัวใจของการนำเสนอ อาจารย์และผู้ชมต้องการเห็นว่าระบบทำงานได้จริง
-          ไม่ใช่แค่ Mockup หรือ Screenshot เตรียมตัวให้ดี:
+          โครงสร้างการนำเสนอที่แนะนำ (รวม 12–15 นาที):
         </p>
         <ul>
           <li>
-            <strong>เตรียมข้อมูลทดสอบล่วงหน้า</strong> — ใส่ข้อมูลในฐานข้อมูลให้พร้อม
-            เช่น สินค้าอย่างน้อย 5-10 รายการ, User ตัวอย่างทั้ง admin และ customer
+            <strong>บทนำ (2 นาที)</strong> — ชื่อโปรเจกต์ ชื่อทีม ปัญหาในชีวิตจริงที่ต้องการแก้
+            และ Target Users ว่าคือใคร
           </li>
           <li>
-            <strong>ทดสอบบนเครื่องที่จะนำเสนอจริง</strong> — อย่าสมมติว่าจะทำงานได้บนทุกเครื่อง
-            ทดสอบก่อนวันนำเสนออย่างน้อย 1 วัน และตรวจสอบ XAMPP, port, database ให้ครบ
+            <strong>Demo สด (7–8 นาที)</strong> — สาธิต User Flow จริงตั้งแต่ต้นจนจบ
+            เช่น ลูกค้าจอง → ระบบบันทึก → Admin ยืนยัน แสดงให้ครบทุก Feature หลัก
           </li>
           <li>
-            <strong>เตรียม Backup</strong> — ถ่าย Screenshot หรือบันทึกวิดีโอระบบที่ทำงานได้
-            ในกรณีที่เกิดปัญหาระหว่าง Demo (เช่น เน็ตหลุด, XAMPP เปิดไม่ขึ้น)
+            <strong>สถาปัตยกรรมระบบ (2 นาที)</strong> — เทคโนโลยีที่ใช้ โครงสร้าง Frontend/Backend
+            และ Database Schema สั้นๆ
           </li>
           <li>
-            <strong>แสดง User Flow จริง</strong> — ไม่ใช่แค่กด Link ไปเรื่อยๆ แต่จำลองว่าผู้ใช้จริง
-            จะทำอะไร เช่น "สมมติว่าลูกค้าต้องการซื้อสินค้า เขาจะ Login → ค้นหา → เพิ่มลงตะกร้า → Checkout"
+            <strong>Retrospective (1–2 นาที)</strong> — สิ่งที่ทำสำเร็จ อุปสรรคที่พบ
+            และสิ่งที่จะพัฒนาต่อถ้ามีเวลา
           </li>
           <li>
-            <strong>แสดง Error Handling</strong> — ลองกรอกข้อมูลผิด เช่น Login ด้วยรหัสผ่านผิด
-            เพื่อแสดงว่าระบบจัดการ Error ได้อย่างถูกต้อง
+            <strong>ถาม-ตอบ (2–3 นาที)</strong> — เตรียมตอบคำถามจากอาจารย์และเพื่อน
           </li>
         </ul>
 
-        <div class="callout warning">
-          <div class="callout-title">ข้อควรระวัง</div>
+        <div class="diagram-box"><pre>
+  Demo-Driven Presentation Flow
+  ─────────────────────────────────────────────────
+  [ปัญหา] → [Demo Live] → [Tech Stack] → [Retro]
+      2 นาที      7-8 นาที     2 นาที      1-2 นาที
+  ─────────────────────────────────────────────────
+  เปิดด้วย: "ปัญหาจริงที่ทีมเราเจอคือ..."
+  Demo:      เปิด URL จริง ทำ User Flow สดๆ
+  ปิดด้วย:  "ถ้ามีเวลาเพิ่ม เราจะพัฒนา..."
+  ─────────────────────────────────────────────────</pre></div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — ซ้อมกับเวลาจริง</div>
           <p>
-            ห้ามนำเสนอด้วยการแสดง Source Code ที่ยาวๆ บน Projector อาจารย์และผู้ชมต้องการเห็นระบบที่ทำงานได้จริง
-            ไม่ใช่การอ่านโค้ด ถ้าต้องการแสดงโค้ด ให้เลือกเฉพาะส่วนที่น่าสนใจหรือแก้ยากไม่เกิน 10-15 บรรทัด
+            ซ้อมการนำเสนอพร้อมจับเวลาอย่างน้อย 2–3 ครั้งก่อนวันจริง ทุกคนในทีมต้องมีส่วนพูด
+            แสดงให้เห็นว่าทุกคนเข้าใจระบบทั้งหมด ไม่ใช่แค่คนที่เขียนโค้ดส่วนนั้น
+            เตรียม Backup เป็น Video Recording ไว้ในกรณีที่เน็ตหลุดหรือระบบมีปัญหาระหว่าง Demo
           </p>
         </div>
 
-        <h3>การจัดทำเอกสารโครงงาน (Project Documentation)</h3>
+        <!-- 2 -->
+        <h3>2. การเขียน README.md ที่ดี</h3>
         <p>
-          เอกสารโครงงานที่ดีทำให้ผู้อื่นเข้าใจและสามารถต่อยอดหรือติดตั้งระบบของคุณได้
-          เอกสารควรประกอบด้วยส่วนต่างๆ ดังนี้:
+          <strong>README.md</strong> คือประตูบานแรกของโปรเจกต์ — นักพัฒนาหรืออาจารย์ที่เปิด Repository
+          จะอ่านไฟล์นี้ก่อนเสมอ README ที่ดีช่วยให้ผู้อื่น Clone แล้วรันระบบได้ภายใน 5 นาที
+          โดยไม่ต้องถามเจ้าของโปรเจกต์
+        </p>
+        <p>
+          องค์ประกอบสำคัญของ README ที่ครบถ้วน:
         </p>
         <ul>
-          <li><strong>ปกและข้อมูลทั่วไป</strong> — ชื่อโปรเจกต์, ชื่อสมาชิกและรหัสนักศึกษา, อาจารย์ผู้สอน, ภาคเรียน/ปีการศึกษา</li>
-          <li><strong>สารบัญ</strong> — รายการหัวข้อทั้งหมดพร้อมเลขหน้า</li>
-          <li><strong>บทนำ</strong> — ที่มาของโปรเจกต์ วัตถุประสงค์ ขอบเขต ประโยชน์ที่คาดว่าจะได้รับ</li>
-          <li><strong>การวิเคราะห์ความต้องการ</strong> — User Stories, Use Case ผู้ใช้และ Admin</li>
-          <li><strong>การออกแบบระบบ</strong> — ER Diagram, Page Flow, สถาปัตยกรรมของระบบ</li>
-          <li><strong>รายละเอียดหน้าต่างๆ</strong> — Screenshot แต่ละหน้าพร้อมคำอธิบาย</li>
-          <li><strong>คู่มือการติดตั้ง</strong> — ขั้นตอนการติดตั้งบน XAMPP ตั้งแต่ต้น</li>
-          <li><strong>สรุปและข้อเสนอแนะ</strong> — สิ่งที่ทำสำเร็จ ปัญหาที่พบ สิ่งที่ควรพัฒนาต่อ</li>
-          <li><strong>การแบ่งหน้าที่ในทีม</strong> — ตารางแสดงว่าแต่ละคนทำส่วนไหน</li>
+          <li>
+            <strong>ชื่อโปรเจกต์และคำอธิบาย</strong> — หนึ่งประโยคสั้นๆ บอกว่าระบบทำอะไร
+            สำหรับใคร และแก้ปัญหาอะไร
+          </li>
+          <li>
+            <strong>ลิงก์ Demo</strong> — URL ที่ Deploy แล้วใช้งานได้จริง ไม่ใช่แค่
+            <code>localhost</code>
+          </li>
+          <li>
+            <strong>ฟีเจอร์หลัก</strong> — รายการ Feature ที่ทำเสร็จแล้ว ใช้ Checkbox
+            <code>- [x]</code> สำหรับเสร็จแล้วและ <code>- [ ]</code> สำหรับยังไม่ได้ทำ
+          </li>
+          <li>
+            <strong>Tech Stack</strong> — เทคโนโลยีทั้งหมดที่ใช้ทั้ง Frontend, Backend และ Database
+          </li>
+          <li>
+            <strong>วิธีรันในเครื่อง</strong> — คำสั่งทีละขั้นตอนที่ชัดเจนและทดสอบแล้วว่าใช้งานได้จริง
+          </li>
+          <li>
+            <strong>สมาชิกทีม</strong> — ชื่อ รหัสนักศึกษา และหน้าที่ในทีม
+          </li>
         </ul>
 
         <div class="callout note">
-          <div class="callout-title">หมายเหตุ</div>
+          <div class="callout-title">หมายเหตุ — README เป็น Living Document</div>
           <p>
-            เอกสารที่ดีไม่จำเป็นต้องยาวมาก ขอให้ครบถ้วนและชัดเจน Screenshot ที่มีคำอธิบายดีกว่าการเขียนอธิบายยาวๆ
-            โดยไม่มีรูปภาพ ใช้ภาษาที่เข้าใจง่าย อ่านแล้วรู้เรื่อง
+            อัปเดต README ทุกครั้งที่เพิ่ม Feature หรือเปลี่ยน Tech Stack
+            README ที่ล้าสมัยกว่าโค้ดจริงสร้างความสับสนมากกว่าไม่มี README เลย
+            เขียนและทดสอบคำสั่งใน README บนเครื่องใหม่ที่ไม่เคย Clone มาก่อนจะมั่นใจได้ว่าใช้ได้จริง
           </p>
         </div>
 
-        <h3>เกณฑ์การประเมิน</h3>
+        <!-- 3 -->
+        <h3>3. Technical Documentation: API Docs และ DB Schema Diagram</h3>
         <p>
-          การประเมินโครงงานแบ่งเป็น 5 ด้านดังนี้:
+          นอกจาก README เอกสารทางเทคนิคที่สำคัญสำหรับโปรเจกต์ Full Stack คือ
+          <strong>API Documentation</strong> และ <strong>Database Schema Diagram</strong>
+          ทั้งสองช่วยให้ทีมทำงานร่วมกันได้อย่างมีประสิทธิภาพ และเป็นหลักฐานแสดงการออกแบบระบบในการส่งงาน
         </p>
-        <div class="diagram-box">
-          <pre>
-เกณฑ์การประเมินโครงงาน (100 คะแนน)
-
-┌─────────────────────────────────────────────────────────┐
-│ 1. ความสมบูรณ์ของระบบ (System Completeness)   30 คะแนน │
-│    • ระบบทำงานได้จริงโดยไม่มี Error            │
-│    • มี Feature ครบตาม Requirements ที่วางไว้   │
-│    • มีฐานข้อมูล MySQL อย่างน้อย 3 ตาราง       │
-│    • มีระบบ Login/Authentication ที่ทำงานได้    │
-│    • มี CRUD อย่างน้อย 2 ชุด                   │
-├─────────────────────────────────────────────────────────┤
-│ 2. การออกแบบ UI/UX                            20 คะแนน │
-│    • หน้าตาสะอาด ใช้งานง่าย เข้าใจได้ทันที    │
-│    • Responsive Design (แสดงผลดีบน Mobile)     │
-│    • Navigation ชัดเจน ไม่หลงทาง               │
-│    • Feedback ที่ดี (Success/Error messages)    │
-├─────────────────────────────────────────────────────────┤
-│ 3. ความถูกต้องของฐานข้อมูล                    20 คะแนน │
-│    • โครงสร้างตารางเหมาะสม ไม่ซ้ำซ้อน          │
-│    • Foreign Keys และ Relationships ถูกต้อง     │
-│    • ใช้ Prepared Statements (ป้องกัน SQL Inj)  │
-│    • ข้อมูลสอดคล้องกัน (Data Integrity)        │
-├─────────────────────────────────────────────────────────┤
-│ 4. การนำเสนอและเอกสาร                         20 คะแนน │
-│    • นำเสนอชัดเจน มีโครงสร้างดี ในเวลาที่กำหนด │
-│    • Demo ระบบได้สมบูรณ์ไม่ติดขัด              │
-│    • เอกสารครบถ้วน ชัดเจน มี Screenshot        │
-│    • ตอบคำถามได้ดี                             │
-├─────────────────────────────────────────────────────────┤
-│ 5. การทำงานเป็นทีม                            10 คะแนน │
-│    • ทุกคนมีส่วนร่วมในการนำเสนอ               │
-│    • แบ่งงานชัดเจนและสมเหตุสมผล               │
-│    • ทำงานร่วมกันได้อย่างราบรื่น               │
-└─────────────────────────────────────────────────────────┘
-          </pre>
-        </div>
-
-        <h3>เคล็ดลับการนำเสนอ</h3>
         <p>
-          ข้อแนะนำสำคัญสำหรับการนำเสนอที่น่าประทับใจ:
+          <strong>API Documentation</strong> ควรมีข้อมูลต่อไปนี้สำหรับทุก Endpoint:
         </p>
         <ul>
           <li>
-            <strong>หันหน้าหาผู้ชม ไม่ใช่จอ</strong> — ผู้นำเสนอหลายคนหันหน้าไปที่จอโปรเจกเตอร์
-            ทำให้เสียงไม่ชัดและดูไม่มั่นใจ ให้หันหน้าหาอาจารย์และเพื่อนตลอดเวลา
+            <strong>Method และ Path</strong> — เช่น <code>GET /api/services</code>
+            หรือ <code>POST /api/bookings</code>
           </li>
           <li>
-            <strong>พูดด้วยความมั่นใจ ช้าๆ ชัดๆ</strong> — ความกังวลทำให้พูดเร็วเกินไป
-            ลมหายใจสม่ำเสมอ หยุดพักระหว่างประโยคสำคัญ
+            <strong>คำอธิบาย</strong> — Endpoint นี้ทำอะไร สำหรับใคร ต้องการ Authentication หรือไม่
           </li>
           <li>
-            <strong>เล่าเรื่อง ไม่ใช่ท่องจำ</strong> — เข้าใจระบบของตัวเองดีพอที่จะอธิบายได้โดยไม่ต้องท่อง
-            ถ้าลืม ให้ดู Demo แล้วอธิบายสิ่งที่เห็นได้เลย
+            <strong>Request Body / Query Params</strong> — ข้อมูลที่ต้องส่งมา พร้อม Type และว่า Required หรือ Optional
           </li>
           <li>
-            <strong>ซ้อมกับเวลาจริง</strong> — นาฬิกาจับเวลา 15 นาที ถ้าเกินต้องตัด
-            ถ้าน้อยเกินไปต้องเพิ่มรายละเอียด
-          </li>
-          <li>
-            <strong>เตรียมตอบคำถาม</strong> — คิดล่วงหน้าว่าอาจารย์จะถามอะไร เช่น
-            "ทำไมเลือก Feature นี้?", "ถ้า User ทำ X จะเกิดอะไรขึ้น?", "มี Security อะไรบ้าง?"
-          </li>
-          <li>
-            <strong>ทุกคนต้องพูด</strong> — แบ่งหัวข้อให้สมาชิกแต่ละคนนำเสนอส่วนของตัวเอง
-            แสดงให้เห็นว่าทุกคนเข้าใจระบบทั้งหมด ไม่ใช่แค่ส่วนที่ตัวเองทำ
+            <strong>Response ตัวอย่าง</strong> — JSON ที่คืนกลับมาเมื่อสำเร็จ (200/201) และเมื่อเกิด Error (400/401/404)
           </li>
         </ul>
+        <p>
+          <strong>DB Schema Diagram</strong> ที่ดีแสดงตารางทั้งหมด คอลัมน์ Data Type
+          Primary Key (PK) Foreign Key (FK) และ Relationship ระหว่างตาราง
+          สร้างได้ฟรีด้วยเครื่องมือเช่น dbdiagram.io หรือ draw.io
+        </p>
+
+        <div class="diagram-box"><pre>
+  ตัวอย่าง DB Schema (ระบบจองบริการ)
+  ─────────────────────────────────────────────────
+  [users]               [services]
+  ───────               ──────────
+  id (PK, uuid)         id (PK, uuid)
+  email (unique)        name
+  password_hash         price
+  role (user/admin)     duration_min
+  created_at            created_at
+
+  [bookings]
+  ──────────
+  id (PK, uuid)
+  user_id (FK) ──────► [users.id]
+  service_id (FK) ────► [services.id]
+  booking_date
+  booking_time
+  status (pending/confirmed/cancelled)
+  created_at
+  ─────────────────────────────────────────────────</pre></div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — เขียน API Docs ก่อนเขียนโค้ด</div>
+          <p>
+            ทีมที่แบ่ง Frontend และ Backend ควรตกลง API Contract ผ่านเอกสารก่อน
+            เริ่มเขียนโค้ด Frontend สามารถ Mock ข้อมูลจาก API Docs ได้ทันทีโดยไม่ต้องรอ Backend
+            เสร็จ ทำให้ทั้งสองฝั่งทำงานได้พร้อมกัน
+          </p>
+        </div>
+
+        <!-- 4 -->
+        <h3>4. Deployment Checklist ก่อน Demo</h3>
+        <p>
+          การ Deploy ระบบขึ้น Production ก่อนวันนำเสนอเป็นสิ่งสำคัญมาก
+          การรัน Demo จาก <code>localhost</code> มีความเสี่ยงสูงหากมีปัญหาเรื่อง Port,
+          Environment Variables หรือ Database Connection ใช้ Checklist นี้ก่อนวันนำเสนอ
+        </p>
+
+        <div class="diagram-box"><pre>
+  Deployment Checklist ก่อน Demo
+  ─────────────────────────────────────────────────
+  Backend (Cloudflare Workers)
+  - [ ] wrangler deploy สำเร็จ ไม่มี Error
+  - [ ] Environment Variables ใน Workers Dashboard ครบ
+        (SUPABASE_URL, SUPABASE_ANON_KEY, JWT_SECRET)
+  - [ ] ทดสอบ API จาก URL จริงด้วย curl หรือ Postman
+  - [ ] CORS อนุญาต Domain ของ Frontend แล้ว
+
+  Frontend (Cloudflare Pages / Vercel)
+  - [ ] Build สำเร็จ (npm run build ไม่มี Error)
+  - [ ] VITE_API_URL ชี้ไปที่ Backend URL จริง (ไม่ใช่ localhost)
+  - [ ] Deploy แล้ว เปิดด้วย URL จริงในหลายเบราว์เซอร์
+  - [ ] ทดสอบบน Mobile ด้วย
+
+  Database (Supabase)
+  - [ ] มีข้อมูลตัวอย่างครบ (สินค้า/บริการอย่างน้อย 5 รายการ)
+  - [ ] มี User ทดสอบทั้ง admin และ user ปกติ
+  - [ ] Row Level Security (RLS) ตั้งค่าถูกต้อง
+  - [ ] ทดสอบ Register/Login/CRUD ครบทุก Flow
+  ─────────────────────────────────────────────────</pre></div>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — ทดสอบบนเครื่องที่จะนำเสนอจริง</div>
+          <p>
+            ทดสอบระบบบนเครื่องและเครือข่ายอินเทอร์เน็ตที่จะใช้นำเสนอจริงอย่างน้อย 1 วันก่อน
+            บางครั้งเครือข่าย WiFi ของมหาวิทยาลัยบล็อกพอร์ตบางพอร์ต หรือ Cloudflare Workers
+            ยังไม่ได้ Deploy ล่าสุด ตรวจสอบให้แน่ใจก่อนเริ่มนำเสนอ
+          </p>
+        </div>
+
+        <!-- 5 -->
+        <h3>5. Retrospective: สิ่งที่ทำได้ดี / สิ่งที่จะพัฒนาต่อ</h3>
+        <p>
+          <strong>Retrospective</strong> หรือการทบทวนหลังโปรเจกต์เป็นส่วนสำคัญของ Agile Methodology
+          ช่วยให้ทีมเรียนรู้จากประสบการณ์จริงและนำไปปรับใช้ในโปรเจกต์ต่อไป
+          ในการนำเสนอสัปดาห์นี้ให้ทีมแชร์ Retrospective สั้นๆ 2–3 ประเด็น
+        </p>
+        <p>
+          กรอบ Retrospective ที่ใช้ได้ง่ายมีสามส่วน:
+        </p>
+        <ul>
+          <li>
+            <strong>สิ่งที่ทำได้ดี (Went Well)</strong> — Feature ที่ภูมิใจที่สุด
+            การทำงานทีมที่ราบรื่น เทคโนโลยีที่เลือกแล้วช่วยได้มาก
+          </li>
+          <li>
+            <strong>อุปสรรคที่พบ (Challenges)</strong> — ปัญหาที่ใช้เวลาแก้นานที่สุด
+            ความเข้าใจผิดในทีม หรือเทคโนโลยีที่ยากกว่าที่คาด
+          </li>
+          <li>
+            <strong>สิ่งที่จะพัฒนาต่อ (Next Steps)</strong> — Feature ที่อยากเพิ่มถ้ามีเวลา
+            การแก้ไข Technical Debt หรือการปรับปรุง Performance และ Security
+          </li>
+        </ul>
+
+        <div class="diagram-box"><pre>
+  Retrospective Template
+  ─────────────────────────────────────────────────
+  ✅ Went Well
+     - Deploy บน Cloudflare Workers ครั้งแรกสำเร็จ
+     - ทีมใช้ GitHub Pull Request ทุก Feature
+     - Supabase Auth ง่ายกว่าที่คิด
+
+  ❌ Challenges
+     - CORS ใช้เวลาแก้ 3 ชั่วโมงวันแรก
+     - Type ใน TypeScript ที่ซับซ้อนทำให้ช้า
+     - ประสานงานหน้า API ยากเมื่อ Backend ยังไม่เสร็จ
+
+  🚀 Next Steps
+     - เพิ่มระบบ Email Notification
+     - เพิ่ม Unit Tests บน Backend
+     - ปรับ UI ให้รองรับ Dark Mode
+  ─────────────────────────────────────────────────</pre></div>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — Retrospective ไม่ใช่การโทษกัน</div>
+          <p>
+            เป้าหมายของ Retrospective คือการเรียนรู้ ไม่ใช่การหาว่าใครผิด
+            พูดถึงกระบวนการและสถานการณ์ ไม่ใช่บุคคล ทุกปัญหาที่พบในโปรเจกต์นี้
+            เป็นประสบการณ์ที่มีค่าสำหรับการทำงานจริงในอนาคต
+          </p>
+        </div>
 
       </div>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         CODE EXAMPLES
+    ══════════════════════════════════════════ -->
     <div id="code">
-      <span class="sec-badge code">💻 เทมเพลตเอกสาร</span>
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- README template -->
+      <!-- Snippet 1: README.md structure -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">README.md (เทมเพลต)</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">README.md — โครงสร้าง README ที่ดี</span>
           <span class="code-lang">Markdown</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-bash"># ชื่อโปรเจกต์
+        <pre><code class="language-markdown"># ชื่อโปรเจกต์
 
-ระบบ [ชื่อระบบ] สำหรับ [ใคร] เพื่อ [วัตถุประสงค์หลัก]
+&gt; คำอธิบายสั้น 1-2 ประโยค
+
+## Demo
+[ลิงก์เว็บไซต์ที่ deploy แล้ว](https://my-project.workers.dev)
+
+## ฟีเจอร์หลัก
+- [ ] ฟีเจอร์ 1
+- [ ] ฟีเจอร์ 2
+
+## Tech Stack
+- Frontend: Vite + React + TanStack Router/Query + Shadcn/ui
+- Backend: Hono บน Cloudflare Workers
+- Database: Supabase (PostgreSQL)
+
+## วิธีรันในเครื่อง
+```bash
+# Frontend
+cd frontend && npm install && npm run dev
+
+# Backend
+cd backend && npm install && npx wrangler dev
+```
 
 ## สมาชิกทีม
-
-| ชื่อ-นามสกุล     | รหัสนักศึกษา | หน้าที่หลัก           |
-|-----------------|-------------|----------------------|
-| สมชาย ใจดี      | 6601234001  | Backend (PHP + DB)   |
-| สมหญิง รักเรียน  | 6601234002  | Frontend (HTML/CSS)  |
-| วิชัย ขยันมาก   | 6601234003  | Full Stack + Docs    |
-
-## Features หลัก
-
-- [x] ระบบ Login / Register / Logout
-- [x] จัดการสินค้า (CRUD)
-- [x] ระบบตะกร้าสินค้า
-- [x] ระบบคำสั่งซื้อ
-- [x] Admin Panel
-- [ ] ระบบแจ้งเตือน Email (ยังไม่ได้ทำ)
-
-## Technologies
-
-- PHP 8.x
-- MySQL 8.x (via XAMPP)
-- HTML5, CSS3, JavaScript (ES6+)
-- Bootstrap 5 (สำหรับ UI)
-
-## การติดตั้ง (ดูรายละเอียดใน INSTALL.md)
-
-1. ติดตั้ง XAMPP
-2. Clone/copy โปรเจกต์ไปที่ htdocs/
-3. Import database.sql ผ่าน phpMyAdmin
-4. แก้ไข config/config.php
-5. เปิดเบราว์เซอร์ http://localhost/project-name/
-
-## ข้อมูล Login สำหรับทดสอบ
-
-Admin: admin@example.com / password: Admin1234
-User:  user@example.com  / password: User1234</code></pre>
+| ชื่อ | รหัสนักศึกษา | หน้าที่ |
+|------|-------------|--------|
+| สมชาย | 6601001 | Frontend |
+| สมหญิง | 6601002 | Backend |</code></pre>
       </div>
 
-      <!-- Installation guide -->
+      <!-- Snippet 2: API Documentation -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">INSTALL.md — คู่มือการติดตั้งบน XAMPP</span>
-          <span class="code-lang">Bash</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">API_DOCS.md — เอกสาร API อย่างง่าย</span>
+          <span class="code-lang">Markdown</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-bash"># ─── ขั้นตอนการติดตั้งบน XAMPP (Windows / macOS) ──────────────
+        <pre><code class="language-markdown">## BookEasy API
 
-# ── ขั้นตอนที่ 1: ติดตั้ง XAMPP ──────────────────────────────
-# ดาวน์โหลดจาก https://www.apachefriends.org
-# ติดตั้งและเปิด XAMPP Control Panel
-# กด Start สำหรับ Apache และ MySQL
+Base URL: `https://bookeasy-api.workers.dev`
 
-# ── ขั้นตอนที่ 2: วางไฟล์โปรเจกต์ ──────────────────────────
-# Windows: C:\xampp\htdocs\project-name\
-# macOS:   /Applications/XAMPP/htdocs/project-name/
+### GET /api/services
+ดึงรายการบริการทั้งหมด
 
-# ── ขั้นตอนที่ 3: สร้างฐานข้อมูล ────────────────────────────
-# เปิด phpMyAdmin: http://localhost/phpmyadmin
-# คลิก "New" สร้าง Database ชื่อ "project_db" (หรือตามที่กำหนด)
-# เลือก Database ที่สร้าง → แท็บ "Import"
-# เลือกไฟล์ database.sql → กด "Go"
+**Response 200:**
+```json
+{
+  "success": true,
+  "data": [
+    { "id": "uuid", "name": "ตัดผมชาย", "price": 150, "duration_min": 45 }
+  ]
+}
+```
 
-# ── ขั้นตอนที่ 4: ตั้งค่า config.php ─────────────────────────
-# แก้ไขไฟล์ config/config.php:
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');       # XAMPP ค่าเริ่มต้นคือ root
-define('DB_PASS', '');           # XAMPP ค่าเริ่มต้นคือ ว่าง
-define('DB_NAME', 'project_db'); # ชื่อ Database ที่สร้าง
+### POST /api/bookings
+สร้างการจองใหม่ (ต้องมี Authorization header)
 
-# ── ขั้นตอนที่ 5: ตั้งค่า permissions (macOS/Linux) ──────────
-# ให้ Apache เขียนไฟล์ใน uploads/ ได้
-chmod 777 uploads/
-# หรือ
-chmod -R 755 uploads/
-
-# ── ขั้นตอนที่ 6: เปิดเบราว์เซอร์ ───────────────────────────
-# Windows/Mac: http://localhost/project-name/
-# ถ้า port ไม่ใช่ 80: http://localhost:8080/project-name/
-
-# ── การแก้ปัญหาที่พบบ่อย ──────────────────────────────────────
-# Error: "Connection refused" → Apache ไม่ได้รัน เปิด XAMPP Control Panel
-# Error: "Access denied for user 'root'" → รหัสผ่าน MySQL ไม่ถูกต้อง
-# Error: "Table doesn't exist" → ยังไม่ได้ Import database.sql
-# Error: "Permission denied" → chmod uploads/ หรือสร้างโฟลเดอร์ uploads ก่อน
-# หน้าเว็บแสดง PHP code → Apache ไม่ได้รัน PHP module (ตรวจสอบ XAMPP)</code></pre>
+**Request Body:**
+```json
+{ "service_id": "uuid", "booking_date": "2026-07-10", "booking_time": "09:00" }
+```</code></pre>
       </div>
 
     </div>
 
-    <div id="schedule">
-      <div class="callout note">
-        <div class="callout-title">ตารางการนำเสนอโครงงาน — สัปดาห์ที่ 14</div>
-        <p>แต่ละทีมมีเวลา 15 นาที (นำเสนอ 12 นาที + ถาม-ตอบ 3 นาที) กำหนดการจะแจ้งในชั้นเรียน</p>
-        <div class="diagram-box">
-          <pre>
-ลำดับการนำเสนอ (ตัวอย่าง — อาจารย์จะแจ้งลำดับจริงในชั้นเรียน)
-
-เวลา        ทีม                 โปรเจกต์
-──────────  ──────────────────  ─────────────────────────────────
-09:00-09:15  ทีม 1              ระบบขายสินค้าออนไลน์
-09:15-09:30  ทีม 2              ระบบจัดการหอพัก
-09:30-09:45  ทีม 3              ระบบลงทะเบียนกิจกรรม
-09:45-10:00  ทีม 4              ระบบห้องสมุด
-10:00-10:15  พัก
-10:15-10:30  ทีม 5              เว็บไซต์ข่าวสารชุมชน
-10:30-10:45  ทีม 6              ระบบจองห้องประชุม
-10:45-11:00  ทีม 7              [โปรเจกต์อื่นๆ]
-11:00-11:15  ทีม 8              [โปรเจกต์อื่นๆ]
-
-หมายเหตุ: ทีมที่ยังไม่นำเสนอต้องรอในห้องและห้ามออก
-          </pre>
-        </div>
-      </div>
-
-      <div class="callout warning">
-        <div class="callout-title">งานที่ต้องส่ง (Deliverables) — สัปดาห์ที่ 14</div>
-        <ul>
-          <li>1. <strong>Source Code ทั้งหมด</strong> — โฟลเดอร์โปรเจกต์ + database.sql บีบอัดเป็น .zip ชื่อ "team-X-projectname.zip"</li>
-          <li>2. <strong>เอกสารโครงงาน</strong> — ไฟล์ PDF ครบทุกหัวข้อที่กำหนด (ดู Section ทฤษฎี)</li>
-          <li>3. <strong>นำเสนอสด</strong> — Demo ระบบจริงในชั้นเรียน ทุกคนในทีมต้องพูด</li>
-          <li>4. <strong>README.md</strong> — ใน zip ต้องมีไฟล์นี้พร้อมคู่มือการติดตั้งที่ชัดเจน</li>
-        </ul>
-      </div>
-    </div>
-
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-13.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">โครงงานเว็บ (ทีม)</div>
+        <div class="wn-name">โครงงานเว็บแอปพลิเคชันทางธุรกิจ: วิเคราะห์ ออกแบบ และพัฒนา (ทีม)</div>
       </a>
       <a href="week-15.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">Testing, Deploy &amp; สรุป</div>
+        <div class="wn-name">Deploy Cloudflare Workers + Testing + สรุปรายวิชา</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
-        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
-        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
-        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"
+        integrity="sha512-WIVy03zkU1p9GIRuBeMx2TO8jKhQ/LdJHebGYtMkLydAAPqAtlXdOcO+NHOm5TYW6GOTHvrkfdPcQhSRjgJh9Q=="
         crossorigin="anonymous"></script>
 </body>
 </html>
