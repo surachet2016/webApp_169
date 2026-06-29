@@ -63,14 +63,12 @@ function buildSidebarHTML(info) {
       <div class="brand-th">การพัฒนาเว็บแอปพลิเคชั่น</div>
       <div class="brand-en">Development of Web Application</div>
     </a>
+    <a href="${base}index.html" class="sidebar-home">
+      <span>🏠</span>
+      <span>หน้าหลัก / ซิลลาบัส</span>
+    </a>
     <div class="sidebar-label">เนื้อหารายสัปดาห์</div>
     <ul class="sidebar-nav">${items}</ul>
-    <div class="sidebar-footer">
-      <a href="${base}index.html">
-        <span>🏠</span>
-        <span>หน้าหลัก / ซิลลาบัส</span>
-      </a>
-    </div>
   `;
 }
 
