@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 2 — HTML, CSS, JavaScript (ทบทวน) — 07-034-233</title>
+  <title>สัปดาห์ที่ 2 — ทบทวน HTML/CSS/JS + ES2022 — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,13 +18,14 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 2</span>
     <span class="sep">›</span>
-    <span>HTML, CSS, JavaScript (ทบทวน)</span>
+    <span>ทบทวน HTML/CSS/JS + ES2022</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 2</div>
-    <h1 class="wh-title">ทบทวน HTML, CSS, JavaScript</h1>
+    <h1 class="wh-title">ทบทวน HTML/CSS/JS + ES2022</h1>
     <div class="wh-clos">
+      <span class="wh-clo">CLO1</span>
       <span class="wh-clo">CLO4</span>
     </div>
   </div>
@@ -46,30 +47,26 @@
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>โครงสร้างพื้นฐานของ HTML</h3>
-        <p>
-          HTML (HyperText Markup Language) ใช้ <strong>Tags</strong> เพื่อกำหนดโครงสร้างเนื้อหา
-          ทุกไฟล์ HTML ที่ถูกต้องต้องเริ่มด้วย <code>&lt;!DOCTYPE html&gt;</code> เพื่อบอกเบราว์เซอร์ว่า
-          นี่คือเอกสาร HTML5 ตามด้วย <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, และ <code>&lt;body&gt;</code>
-        </p>
+        <h3>HTML Semantic Elements</h3>
         <p>
           HTML5 นำเสนอ <strong>Semantic Elements</strong> ซึ่งเป็น Tags ที่มีความหมายในตัวเอง
-          ช่วยให้โค้ดอ่านง่าย และช่วย Search Engine ทำความเข้าใจโครงสร้างหน้าเว็บได้ดีขึ้น:
+          ช่วยให้ browser, Search Engine และ Screen Reader เข้าใจโครงสร้างหน้าเว็บได้ดีขึ้น
+          แทนที่จะใช้ <code>&lt;div&gt;</code> สำหรับทุกอย่าง ให้เลือก Tag ที่ตรงกับความหมาย:
         </p>
         <ul>
-          <li><code>&lt;header&gt;</code> — ส่วนหัวของหน้าหรือ section (Logo, Navigation)</li>
-          <li><code>&lt;nav&gt;</code> — เมนูนำทาง</li>
-          <li><code>&lt;main&gt;</code> — เนื้อหาหลักของหน้า (มีได้เพียง 1 อัน)</li>
-          <li><code>&lt;section&gt;</code> — ส่วนของเนื้อหาที่มีหัวข้อ</li>
-          <li><code>&lt;article&gt;</code> — เนื้อหาที่เป็นอิสระ เช่น บทความ โพสต์</li>
-          <li><code>&lt;aside&gt;</code> — เนื้อหาเสริมข้างเคียง เช่น Sidebar</li>
-          <li><code>&lt;footer&gt;</code> — ส่วนท้ายของหน้า</li>
+          <li><code>&lt;header&gt;</code> — ส่วนหัวของหน้าหรือ section (Logo, Navigation, Hero)</li>
+          <li><code>&lt;main&gt;</code> — เนื้อหาหลักของหน้า ใช้ได้เพียง 1 อันต่อหน้า</li>
+          <li><code>&lt;section&gt;</code> — ส่วนของเนื้อหาที่มีหัวข้อรวมกัน เช่น Hero, Services, Contact</li>
+          <li><code>&lt;article&gt;</code> — เนื้อหาที่เป็นอิสระ อ่านได้โดยไม่ต้องอิงบริบทรอบข้าง เช่น บทความ Blog</li>
+          <li><code>&lt;aside&gt;</code> — เนื้อหาเสริมข้างเคียง เช่น Sidebar, Related Links</li>
+          <li><code>&lt;footer&gt;</code> — ส่วนท้ายของหน้าหรือ section (ลิขสิทธิ์, ลิงก์ Social)</li>
+          <li><code>&lt;nav&gt;</code> — เมนูนำทางหลัก ห่อรายการลิงก์ที่ใช้นำทางหน้า</li>
         </ul>
         <p>
-          Elements แบ่งออกเป็น <strong>Block-level</strong> (ขึ้นบรรทัดใหม่เสมอ เช่น <code>&lt;div&gt;</code>,
-          <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>) และ
-          <strong>Inline</strong> (อยู่ในบรรทัดเดียวกัน เช่น <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>,
-          <code>&lt;strong&gt;</code>, <code>&lt;img&gt;</code>)
+          ใน BookEasy (โปรเจกต์หลักของรายวิชา) หน้า Landing Page จะใช้โครงสร้าง:
+          <code>&lt;header&gt;</code> (ชื่อแอป + nav) →
+          <code>&lt;main&gt;</code> ที่มี <code>&lt;section&gt;</code> ย่อย (Hero, Services, CTA) →
+          <code>&lt;footer&gt;</code> (copyright)
         </p>
 
         <div class="callout tip">
@@ -77,120 +74,152 @@
           <p>
             ใช้ Semantic Elements แทน <code>&lt;div&gt;</code> ทั่วไปเสมอเมื่อมีความหมายที่ตรงกัน
             เช่น ใช้ <code>&lt;nav&gt;</code> แทน <code>&lt;div class="nav"&gt;</code>
-            ช่วยให้ Screen Reader อ่านหน้าเว็บได้ถูกต้อง และ SEO ดีขึ้น
+            ช่วยให้ Screen Reader อ่านหน้าเว็บได้ถูกต้องและ SEO ดีขึ้น
           </p>
         </div>
 
-        <h3>CSS: การจัดรูปแบบและ Layout</h3>
+        <h3>CSS Flexbox &amp; Grid เบื้องต้น</h3>
         <p>
-          CSS (Cascading Style Sheets) ใช้ <strong>Selectors</strong> เพื่อเลือก Elements แล้วกำหนด Properties:
-          <code>element</code> (เลือกทุก tag), <code>.class</code> (เลือกตาม class), <code>#id</code> (เลือก id เดียว),
-          <code>element:hover</code> (Pseudo-class เมื่อเมาส์ชี้), <code>parent > child</code> (เลือก child โดยตรง)
-        </p>
-        <p>
-          <strong>Box Model</strong> คือแนวคิดพื้นฐานของ CSS Layout ทุก Element มี:
-          Content → Padding → Border → Margin เรียงจากใน-ออก
-          ใช้ <code>box-sizing: border-box</code> เพื่อให้ width/height รวม padding และ border ด้วย
-        </p>
-        <p>
-          <strong>Flexbox</strong> เหมาะสำหรับ Layout 1 มิติ (แถวหรือคอลัมน์):
+          <strong>Flexbox</strong> เหมาะสำหรับ Layout 1 มิติ (แถวหรือคอลัมน์) เช่น Navigation bar,
+          รายการ Card ที่ต้องการตัดบรรทัดอัตโนมัติ:
         </p>
         <ul>
           <li><code>display: flex</code> — เปิดใช้ Flexbox บน container</li>
           <li><code>flex-direction: row | column</code> — ทิศทางการวาง items</li>
-          <li><code>justify-content</code> — จัดตำแหน่งในแนวแกนหลัก (flex-start, center, space-between, space-around)</li>
-          <li><code>align-items</code> — จัดตำแหน่งในแนวตั้งฉาก (flex-start, center, stretch)</li>
-          <li><code>flex-wrap: wrap</code> — อนุญาตให้ items ตัดบรรทัดใหม่</li>
-          <li><code>gap</code> — ระยะห่างระหว่าง items</li>
+          <li><code>justify-content: flex-start | center | space-between</code> — จัดตำแหน่งในแนวแกนหลัก</li>
+          <li><code>align-items: flex-start | center | stretch</code> — จัดตำแหน่งในแนวตั้งฉาก</li>
+          <li><code>flex-wrap: wrap</code> — อนุญาตให้ items ตัดบรรทัดใหม่เมื่อเต็มแถว</li>
+          <li><code>gap</code> — ระยะห่างระหว่าง items โดยไม่ต้องใช้ margin</li>
         </ul>
         <p>
-          <strong>CSS Grid</strong> เหมาะสำหรับ Layout 2 มิติ (แถวและคอลัมน์พร้อมกัน):
+          <strong>CSS Grid</strong> เหมาะสำหรับ Layout 2 มิติ (แถวและคอลัมน์พร้อมกัน)
+          เช่น Layout หน้าหลักที่มี Sidebar + Content หรือ Services grid 3 คอลัมน์:
         </p>
         <ul>
           <li><code>display: grid</code> — เปิดใช้ Grid</li>
-          <li><code>grid-template-columns: repeat(3, 1fr)</code> — 3 คอลัมน์เท่ากัน</li>
-          <li><code>grid-template-areas</code> — ตั้งชื่อพื้นที่ใน Grid</li>
+          <li><code>grid-template-columns: repeat(3, 1fr)</code> — 3 คอลัมน์ขนาดเท่ากัน</li>
+          <li><code>grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))</code> — ปรับจำนวนคอลัมน์อัตโนมัติ</li>
+          <li><code>gap</code> — ระยะห่างระหว่าง grid cells</li>
           <li><code>grid-column: span 2</code> — ขยาย item ให้ครอบ 2 คอลัมน์</li>
         </ul>
         <p>
-          <strong>Responsive Design</strong> ด้วย <code>@media</code> query ให้เว็บปรับตัวตามขนาดหน้าจอ:
+          ใช้ <code>@media (max-width: 768px)</code> เปลี่ยน Layout เป็น 1 คอลัมน์บน Mobile
+          เพื่อให้หน้าเว็บ Responsive รองรับทุกขนาดหน้าจอ
+        </p>
+
+        <h3>ES2022 ที่ใช้บ่อยใน Stack นี้</h3>
+        <p>
+          JavaScript มาตรฐานสมัยใหม่ (ES2015+ หรือที่เรียกรวมว่า ESNext/ES2022) มีฟีเจอร์ที่ทำให้
+          เขียน code ได้กระชับและอ่านง่ายขึ้นมาก ทุก Stack ที่ใช้ในรายวิชา (React, Hono, Supabase)
+          ล้วนพึ่งพาฟีเจอร์เหล่านี้:
         </p>
         <ul>
-          <li>Mobile: <code>@media (max-width: 576px)</code></li>
-          <li>Tablet: <code>@media (max-width: 768px)</code></li>
-          <li>Desktop: <code>@media (min-width: 992px)</code></li>
+          <li>
+            <strong>Arrow Functions</strong> — ไวยากรณ์กระชับสำหรับฟังก์ชัน
+            <code>const add = (a, b) =&gt; a + b</code>
+            ต่างจาก function ปกติตรงที่ไม่มี <code>this</code> binding ของตัวเอง
+            จึงเหมาะมากสำหรับ callback ใน array methods และ event handlers
+          </li>
+          <li>
+            <strong>Destructuring</strong> — แตกค่าออกจาก Object หรือ Array
+            ด้วย <code>const { name, price } = service</code> (object)
+            และ <code>const [first, ...rest] = services</code> (array)
+            ทำให้ไม่ต้องเข้าถึง property ซ้ำๆ ด้วย dot notation
+          </li>
+          <li>
+            <strong>Spread &amp; Rest Operators</strong> (<code>...</code>) — คัดลอกและรวม Object/Array
+            โดยไม่ mutate ต้นฉบับ ใช้มากใน React state updates:
+            <code>const updated = { ...service, price: 500 }</code>
+          </li>
+          <li>
+            <strong>Optional Chaining</strong> (<code>?.</code>) — เข้าถึง nested properties อย่างปลอดภัย
+            โดยไม่เกิด TypeError หาก property ใด undefined:
+            <code>user?.profile?.phone</code>
+          </li>
+          <li>
+            <strong>Nullish Coalescing</strong> (<code>??</code>) — ให้ค่า default เมื่อ null หรือ undefined:
+            <code>phone ?? 'ไม่ระบุ'</code> ต่างจาก <code>||</code> ตรงที่ <code>0</code> และ <code>''</code>
+            ไม่ถูกนับว่าเป็น falsy
+          </li>
+          <li>
+            <strong>Template Literals</strong> — String ที่ฝัง expression ได้ด้วย backtick:
+            <code>`บริการ ${name} ราคา ${price} บาท`</code>
+            รองรับ multiline โดยไม่ต้องต่อ string ด้วย <code>+</code>
+          </li>
         </ul>
 
-        <h3>JavaScript พื้นฐาน</h3>
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            ฟีเจอร์ทั้งหมดนี้ใช้ได้ใน browser ทุกตัวที่ทันสมัย (Chrome, Firefox, Safari, Edge)
+            และ Node.js v14+ รวมถึง Cloudflare Workers
+            ไม่ต้องใช้ Babel transpile แล้วในปัจจุบัน
+          </p>
+        </div>
+
+        <h3>async/await และ Fetch API</h3>
         <p>
-          JavaScript (JS) เป็นภาษาโปรแกรมที่รันบนเบราว์เซอร์ ทำให้หน้าเว็บมีพฤติกรรมแบบ Dynamic
-          ใช้ <code>let</code> และ <code>const</code> แทน <code>var</code> เสมอ:
-          <code>const</code> สำหรับค่าที่ไม่เปลี่ยนแปลง, <code>let</code> สำหรับค่าที่เปลี่ยนได้
-        </p>
-        <p>
-          <strong>DOM Manipulation</strong> คือการเข้าถึงและแก้ไข Elements ใน HTML ผ่าน JavaScript:
-        </p>
-        <ul>
-          <li><code>document.querySelector('.class')</code> — เลือก Element แรกที่ตรง</li>
-          <li><code>document.querySelectorAll('li')</code> — เลือกทุก Element ที่ตรง (NodeList)</li>
-          <li><code>element.textContent = 'text'</code> — เปลี่ยนข้อความ</li>
-          <li><code>element.innerHTML = '&lt;b&gt;bold&lt;/b&gt;'</code> — เปลี่ยน HTML ภายใน</li>
-          <li><code>element.classList.add('active')</code> — เพิ่ม class</li>
-          <li><code>element.classList.toggle('hidden')</code> — toggle class</li>
-          <li><code>element.style.color = 'red'</code> — เปลี่ยน Inline Style</li>
-        </ul>
-        <p>
-          <strong>Event Listeners</strong> ใช้รับเหตุการณ์จากผู้ใช้ เช่น การคลิก การพิมพ์ การ Submit ฟอร์ม:
+          JavaScript เป็น Single-threaded ใช้ <strong>Asynchronous</strong> เพื่อทำงานที่ใช้เวลา
+          เช่น ดึงข้อมูลจาก API โดยไม่บล็อก UI <strong>Promises</strong> เป็นกลไกพื้นฐาน
+          และ <code>async/await</code> เป็น syntax ที่ทำให้เขียนและอ่าน Promise ได้ง่ายขึ้น:
         </p>
         <ul>
-          <li><code>element.addEventListener('click', handler)</code></li>
-          <li><code>element.addEventListener('submit', handler)</code></li>
-          <li><code>element.addEventListener('input', handler)</code></li>
-          <li><code>event.preventDefault()</code> — ป้องกันพฤติกรรมเริ่มต้น (เช่น ไม่ให้ฟอร์ม Submit)</li>
+          <li>
+            <code>async function</code> — ประกาศฟังก์ชันที่ทำงาน asynchronous
+            ฟังก์ชัน async จะ return Promise เสมอ
+          </li>
+          <li>
+            <code>await</code> — หยุดรอผล Promise ก่อนทำบรรทัดถัดไป
+            ใช้ได้เฉพาะภายใน <code>async function</code> หรือ top-level module
+          </li>
+          <li>
+            <code>try / catch</code> — จัดการ Error ที่เกิดจาก await
+            หาก fetch ล้มเหลวหรือ server คืน error ต้องจับด้วย catch
+          </li>
         </ul>
         <p>
-          <strong>Fetch API</strong> ใช้ดึงข้อมูลจาก Server แบบ Asynchronous โดยไม่ต้องโหลดหน้าใหม่
-          ทำงานด้วย Promises และ async/await:
+          <strong>Fetch API</strong> เป็น built-in ใน browser สำหรับส่ง HTTP request
+          ทำงานด้วย Promises และใช้ร่วมกับ <code>async/await</code> ได้ตรงๆ:
+          <code>const response = await fetch('/api/services')</code>
+          จากนั้นแปลงเป็น JSON ด้วย <code>await response.json()</code>
         </p>
 
         <div class="callout warning">
           <div class="callout-title">ข้อควรระวัง</div>
           <p>
-            อย่าใช้ <code>innerHTML</code> กับข้อมูลที่มาจากผู้ใช้หรือ API โดยตรง เพราะอาจเกิดช่องโหว่
-            XSS (Cross-Site Scripting) ได้ ให้ใช้ <code>textContent</code> แทนเมื่อต้องการแสดงข้อความ
+            <code>fetch</code> จะไม่ throw Error เมื่อ server ตอบ 4xx หรือ 5xx
+            ต้องตรวจสอบ <code>response.ok</code> หรือ <code>response.status</code> ด้วยตัวเอง
+            แล้ว <code>throw new Error(...)</code> เพื่อให้ catch จัดการได้ถูกต้อง
           </p>
         </div>
 
-        <h3>การจัดวาง Layout หน้าเว็บ</h3>
+        <h3>ES Modules: import / export</h3>
         <p>
-          Layout ที่พบบ่อยที่สุดในเว็บแอปพลิเคชัน คือ Header + Sidebar + Main Content + Footer
-          สามารถสร้างด้วย CSS Grid template areas ได้อย่างสวยงาม:
+          <strong>ES Modules</strong> คือระบบ module มาตรฐานของ JavaScript ที่ช่วยแบ่งโค้ดออกเป็นไฟล์ย่อย
+          แต่ละไฟล์มี scope ของตัวเอง ไม่มีการปนกันของตัวแปร
+          React, Hono และทุกเครื่องมือใน stack นี้ล้วนใช้ระบบ module นี้:
         </p>
-
-        <div class="diagram-box">
-          <pre>
-┌─────────────────────────────────────────┐
-│              HEADER                     │  grid-area: header
-├──────────┬──────────────────────────────┤
-│          │                              │
-│ SIDEBAR  │     MAIN CONTENT             │  grid-area: sidebar / main
-│          │                              │
-│          │                              │
-├──────────┴──────────────────────────────┤
-│              FOOTER                     │  grid-area: footer
-└─────────────────────────────────────────┘
-
-CSS Grid Template Areas:
-  grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
-          </pre>
-        </div>
-
+        <ul>
+          <li>
+            <strong>Named export</strong> — <code>export const BASE_URL = '...'</code>
+            และ <code>export function getServices() {}</code>
+            import ด้วย <code>import { getServices, BASE_URL } from './services.js'</code>
+          </li>
+          <li>
+            <strong>Default export</strong> — <code>export default function App() {}</code>
+            import ด้วย <code>import App from './App.js'</code> (ตั้งชื่อเองได้)
+          </li>
+          <li>
+            <strong>ใช้ใน browser</strong> — เพิ่ม <code>type="module"</code> บน script tag:
+            <code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code>
+            browser จะโหลด dependency ทั้งหมดอัตโนมัติ
+          </li>
+        </ul>
         <p>
-          บน Mobile (หน้าจอเล็ก) ให้เปลี่ยน Layout เป็น 1 คอลัมน์ด้วย @media query:
-          Sidebar จะซ้อนอยู่ใต้ Header และ Main Content จะอยู่ถัดลงมา
+          ข้อสำคัญ: ES Modules ต้องรันผ่าน HTTP server เท่านั้น ไม่สามารถเปิดไฟล์ด้วย
+          <code>file://</code> โดยตรงได้เพราะ CORS policy ของ browser
+          ในสัปดาห์นี้ใช้ <code>python3 -m http.server 8080</code> แทน Vite
+          (Vite จะเริ่มใช้จริงตั้งแต่สัปดาห์ที่ 3)
         </p>
 
       </div>
@@ -207,339 +236,26 @@ CSS Grid Template Areas:
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">semantic.html</span>
-          <span class="code-lang">HTML</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-html">
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Semantic HTML5 Example</title>
-</head>
-<body>
-
-  <!-- Header: ส่วนหัวของเว็บไซต์ -->
-  <header>
-    <div class="logo">MyWebApp</div>
-    <nav>
-      <ul>
-        <li><a href="/">หน้าหลัก</a></li>
-        <li><a href="/about">เกี่ยวกับ</a></li>
-        <li><a href="/contact">ติดต่อ</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Main: เนื้อหาหลัก -->
-  <main>
-
-    <!-- Section: ส่วนข่าวล่าสุด -->
-    <section id="news">
-      <h2>ข่าวล่าสุด</h2>
-
-      <!-- Article: บทความแต่ละชิ้น -->
-      <article>
-        <header>
-          <h3>หัวข้อข่าวที่ 1</h3>
-          <time datetime="2026-06-28">28 มิถุนายน 2569</time>
-        </header>
-        <p>เนื้อหาข่าว...</p>
-        <footer>
-          <p>โดย: ผู้เขียน | <a href="#">อ่านต่อ</a></p>
-        </footer>
-      </article>
-
-      <article>
-        <header>
-          <h3>หัวข้อข่าวที่ 2</h3>
-          <time datetime="2026-06-27">27 มิถุนายน 2569</time>
-        </header>
-        <p>เนื้อหาข่าว...</p>
-      </article>
-    </section>
-
-    <!-- Aside: เนื้อหาเสริม Sidebar -->
-    <aside>
-      <h3>บทความยอดนิยม</h3>
-      <ul>
-        <li><a href="#">บทความ 1</a></li>
-        <li><a href="#">บทความ 2</a></li>
-      </ul>
-    </aside>
-
-  </main>
-
-  <!-- Footer: ส่วนท้าย -->
-  <footer>
-    <p>&copy; 2026 Princess of Naradhiwas University</p>
-    <address>Narathiwat, Thailand</address>
-  </footer>
-
-</body>
-</html>
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="code-filename">layout.css</span>
-          <span class="code-lang">CSS</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-css">
-/* ============================
-   CSS Flexbox: Navigation Bar
-   ============================ */
-.navbar {
-  display: flex;
-  justify-content: space-between;  /* logo ซ้าย, menu ขวา */
-  align-items: center;
-  background: #2c3e50;
-  padding: 0 24px;
-  height: 60px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.nav-links a:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* ============================
-   CSS Grid: Card Layout (3 คอลัมน์)
-   ============================ */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3 คอลัมน์เท่ากัน */
-  gap: 24px;
-  padding: 24px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card-image {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
-.card-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 8px;
-  color: #2c3e50;
-}
-
-.card-desc {
-  color: #666;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-/* ============================
-   Responsive: Mobile (1 คอลัมน์)
-   ============================ */
-@media (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: 1fr;  /* เปลี่ยนเป็น 1 คอลัมน์ */
-    padding: 16px;
-    gap: 16px;
-  }
-
-  .navbar {
-    flex-direction: column;
-    height: auto;
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);  /* Tablet: 2 คอลัมน์ */
-  }
-}
-
-/* ============================
-   CSS Grid: Full Page Layout
-   ============================ */
-.page-layout {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  grid-template-rows: 60px 1fr auto;
-  grid-template-areas:
-    "header  header"
-    "sidebar main"
-    "footer  footer";
-  min-height: 100vh;
-}
-
-.page-header  { grid-area: header;  background: #2c3e50; }
-.page-sidebar { grid-area: sidebar; background: #f8f9fa; }
-.page-main    { grid-area: main;    padding: 24px; }
-.page-footer  { grid-area: footer;  background: #343a40; color: white; }
-
-@media (max-width: 768px) {
-  .page-layout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "header"
-      "main"
-      "sidebar"
-      "footer";
-  }
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="code-filename">form-validation.js</span>
+          <span class="code-filename">modern.js</span>
           <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-javascript">
-// ============================
-// Form Validation ด้วย JavaScript
-// ============================
+        <pre><code class="language-javascript">// snippet 1: ES2022 Modern JavaScript
+// Arrow functions
+const add = (a, b) => a + b;
 
-const form = document.getElementById('registerForm');
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-const phoneInput = document.getElementById('phone');
+// Destructuring
+const { name, price } = service;
+const [first, ...rest] = services;
 
-// ฟังก์ชันแสดงข้อผิดพลาดใต้ input
-function showError(input, message) {
-  const field = input.parentElement;
-  // ลบ error เก่าออกก่อน
-  const existingError = field.querySelector('.error-msg');
-  if (existingError) existingError.remove();
+// Spread operator
+const updated = { ...service, price: 500 };
 
-  // เพิ่ม error ใหม่
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error-msg';
-  errorDiv.textContent = message;
-  field.appendChild(errorDiv);
-  input.classList.add('input-error');
-}
+// Optional chaining &amp; nullish coalescing
+const phone = user?.profile?.phone ?? 'ไม่ระบุ';
 
-// ฟังก์ชันล้าง error
-function clearError(input) {
-  const field = input.parentElement;
-  const existingError = field.querySelector('.error-msg');
-  if (existingError) existingError.remove();
-  input.classList.remove('input-error');
-}
-
-// Validate email format
-function isValidEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-}
-
-// Validate Thai phone number (0xx-xxx-xxxx)
-function isValidPhone(phone) {
-  const regex = /^0[0-9]{8,9}$/;
-  return regex.test(phone.replace(/-/g, ''));
-}
-
-// Event: ตรวจสอบเมื่อ Submit
-form.addEventListener('submit', function(event) {
-  event.preventDefault(); // ป้องกันการ Submit จริง
-
-  let isValid = true;
-
-  // ตรวจสอบชื่อ
-  if (nameInput.value.trim() === '') {
-    showError(nameInput, 'กรุณากรอกชื่อ-นามสกุล');
-    isValid = false;
-  } else if (nameInput.value.trim().length < 3) {
-    showError(nameInput, 'ชื่อต้องมีอย่างน้อย 3 ตัวอักษร');
-    isValid = false;
-  } else {
-    clearError(nameInput);
-  }
-
-  // ตรวจสอบ Email
-  if (emailInput.value.trim() === '') {
-    showError(emailInput, 'กรุณากรอก Email');
-    isValid = false;
-  } else if (!isValidEmail(emailInput.value)) {
-    showError(emailInput, 'รูปแบบ Email ไม่ถูกต้อง');
-    isValid = false;
-  } else {
-    clearError(emailInput);
-  }
-
-  // ตรวจสอบเบอร์โทร
-  if (phoneInput.value.trim() === '') {
-    showError(phoneInput, 'กรุณากรอกเบอร์โทรศัพท์');
-    isValid = false;
-  } else if (!isValidPhone(phoneInput.value)) {
-    showError(phoneInput, 'เบอร์โทรต้องเป็นตัวเลข 9-10 หลัก');
-    isValid = false;
-  } else {
-    clearError(phoneInput);
-  }
-
-  if (isValid) {
-    console.log('Form ผ่านการตรวจสอบ! พร้อม Submit');
-    // ส่งข้อมูลไปยัง Server ได้เลย
-    form.submit();
-  }
-});
-
-// Event: ล้าง error เมื่อผู้ใช้เริ่มพิมพ์
-[nameInput, emailInput, phoneInput].forEach(input => {
-  input.addEventListener('input', () => clearError(input));
-});
-        </code></pre>
+// Template literals
+const msg = `บริการ ${name} ราคา ${price} บาท`;</code></pre>
       </div>
 
       <div class="code-block">
@@ -549,100 +265,49 @@ form.addEventListener('submit', function(event) {
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">fetch-data.js</span>
+          <span class="code-filename">fetch-services.js</span>
           <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-javascript">
-// ============================
-// Fetch API: ดึงข้อมูลและแสดงเป็น Cards
-// ============================
-
-// ข้อมูลตัวอย่างนักศึกษา (ในงานจริงจะมาจาก API/PHP)
-const students = [
-  { id: '6601001', name: 'สมชาย ใจดี',     faculty: 'วิศวกรรมศาสตร์', gpa: 3.75 },
-  { id: '6601002', name: 'สมหญิง รักเรียน', faculty: 'วิทยาศาสตร์',    gpa: 3.90 },
-  { id: '6601003', name: 'ประยุทธ์ ขยันดี', faculty: 'บริหารธุรกิจ',    gpa: 3.20 },
-  { id: '6601004', name: 'มาลี สวยงาม',    faculty: 'พยาบาลศาสตร์',   gpa: 3.55 },
-  { id: '6601005', name: 'วิชัย เก่งกาจ',  faculty: 'ครุศาสตร์',       gpa: 3.40 },
-];
-
-// ฟังก์ชันสร้าง Card HTML จากข้อมูลนักศึกษา
-function createStudentCard(student) {
-  const gpaColor = student.gpa >= 3.5 ? '#27ae60' : student.gpa >= 3.0 ? '#f39c12' : '#e74c3c';
-
-  const card = document.createElement('div');
-  card.className = 'student-card';
-  card.innerHTML = `
-    <div class="card-avatar">${student.name.charAt(0)}</div>
-    <div class="card-info">
-      <h3 class="card-name">${student.name}</h3>
-      <p class="card-id">รหัส: ${student.id}</p>
-      <p class="card-faculty">คณะ: ${student.faculty}</p>
-      <span class="card-gpa" style="color: ${gpaColor}">GPA: ${student.gpa.toFixed(2)}</span>
-    </div>
-  `;
-  return card;
-}
-
-// ฟังก์ชันแสดงผลในหน้าเว็บ
-function renderStudents(data) {
-  const container = document.getElementById('studentContainer');
-  container.innerHTML = ''; // ล้างข้อมูลเก่า
-
-  if (data.length === 0) {
-    container.innerHTML = '<p class="no-data">ไม่พบข้อมูลนักศึกษา</p>';
-    return;
-  }
-
-  data.forEach(student => {
-    container.appendChild(createStudentCard(student));
-  });
-}
-
-// ============================
-// ตัวอย่าง Fetch จาก API จริง
-// ============================
-async function fetchFromAPI() {
-  const loadingEl = document.getElementById('loading');
-  loadingEl.style.display = 'block';
-
+        <pre><code class="language-javascript">// snippet 2: Async/Await + Fetch API
+async function fetchServices() {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-
-    // ตรวจสอบว่า Response สำเร็จ
-    if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`);
-    }
-
-    const users = await response.json();
-    console.log('ดึงข้อมูลสำเร็จ:', users.length, 'รายการ');
-
-    // แปลงข้อมูลให้อยู่ในรูปแบบที่ต้องการ
-    const formattedUsers = users.map(user => ({
-      id: String(user.id).padStart(7, '0'),
-      name: user.name,
-      faculty: user.company.name,
-      gpa: (Math.random() * 1.5 + 2.5).toFixed(2) * 1
-    }));
-
-    renderStudents(formattedUsers);
-
+    const response = await fetch('/api/services');
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('เกิดข้อผิดพลาด:', error.message);
-    document.getElementById('studentContainer').innerHTML =
-      `<p class="error">ไม่สามารถดึงข้อมูลได้: ${error.message}</p>`;
-  } finally {
-    loadingEl.style.display = 'none';
+    console.error('โหลดข้อมูลล้มเหลว:', error);
+    return [];
   }
+}</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">services.js / main.js</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">// snippet 3: ES Modules
+// services.js — export
+export const BASE_URL = 'http://localhost:8787';
+
+export async function getServices() {
+  const res = await fetch(`${BASE_URL}/api/services`);
+  return res.json();
 }
 
-// รัน: ใช้ข้อมูลตัวอย่างก่อน
-renderStudents(students);
+// main.js — import
+import { getServices, BASE_URL } from './services.js';
 
-// หรือดึงจาก API:
-// fetchFromAPI();
-        </code></pre>
+const services = await getServices();
+console.log(services);</code></pre>
       </div>
 
     </div>
@@ -650,34 +315,38 @@ renderStudents(students);
     <!-- LAB SECTION -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 1 — ทบทวน HTML, CSS, JavaScript</h2>
-        <p>ฝึกสร้างหน้าเว็บด้วย HTML Semantic, จัด Layout ด้วย CSS Flexbox/Grid, และเพิ่ม Interactivity ด้วย JavaScript</p>
+        <h2>🧪 ปฏิบัติการ Lab 1 — BookEasy: หน้า Landing Page (Static)</h2>
+        <p>สร้างหน้า Landing Page ของ BookEasy ด้วย HTML/CSS บริสุทธิ์ และเพิ่ม JavaScript เบื้องต้น พร้อมทดสอบ ES Modules ยังไม่มี React หรือ Vite ในสัปดาห์นี้</p>
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            ยังไม่ใช้ Vite ในสัปดาห์นี้ ใช้ <code>python3 -m http.server 8080</code> เพื่อรัน ES Modules
+            แล้วเปิดเบราว์เซอร์ที่ <code>http://localhost:8080</code>
+          </p>
+        </div>
       </div>
       <div class="lab-body">
 
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">สร้างหน้าเว็บส่วนตัว (Personal Profile Page)</div>
+            <div class="task-title">สร้าง project folder และไฟล์ HTML</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>profile.html</code> ที่แสดงประวัติส่วนตัวของคุณ โดยใช้ Semantic HTML5 Elements ให้ถูกต้อง</p>
+            <p>สร้าง Landing Page ของ BookEasy ด้วย HTML และ CSS บริสุทธิ์ โดยยังไม่มี JavaScript ในขั้นตอนนี้</p>
             <ul>
-              <li>ใช้ <code>&lt;header&gt;</code> แสดงชื่อและรูปภาพ (ใช้ placeholder จาก <code>https://ui-avatars.com/api/?name=ชื่อคุณ</code>)</li>
-              <li>ใช้ <code>&lt;main&gt;</code> และ <code>&lt;section&gt;</code> แบ่งส่วน: ประวัติ, ทักษะ, การศึกษา</li>
-              <li>ใช้ <code>&lt;ul&gt;</code> หรือ <code>&lt;ol&gt;</code> แสดงรายการทักษะอย่างน้อย 5 ข้อ</li>
-              <li>ใช้ <code>&lt;footer&gt;</code> แสดงข้อมูลติดต่อ (Email, เบอร์โทร)</li>
-              <li>ใช้ <code>&lt;time&gt;</code> สำหรับวันที่เกิดหรือวันที่เข้าศึกษา</li>
+              <li>สร้าง folder <code>bookeasy-static/</code></li>
+              <li>สร้าง <code>bookeasy-static/index.html</code> ที่มี <code>&lt;header&gt;</code> (ชื่อแอป + nav), <code>&lt;main&gt;</code> ที่ประกอบด้วย Hero section, Services section (การ์ด dummy 3 ใบ), และ <code>&lt;footer&gt;</code></li>
+              <li>สร้าง <code>bookeasy-static/style.css</code> สำหรับ layout ด้วย Flexbox/Grid ครอบคลุม Header, Services grid, Footer</li>
+              <li>เชื่อม CSS เข้ากับ HTML ด้วย <code>&lt;link rel="stylesheet" href="style.css"&gt;</code></li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>หน้าเว็บแสดงข้อมูลครบ 4 ส่วน (header, main-bio, main-skills, footer) โดยใช้ Semantic Elements ที่ถูกต้อง
-                 ตรวจสอบด้วย W3C Validator (<code>validator.w3.org</code>) ต้องไม่มี Error</p>
+              <p>เปิด <code>http://localhost:8080</code> แล้วเห็นหน้า Landing Page ที่มีครบ: Header, Hero, Services (3 การ์ด), Footer ใช้ Semantic HTML5 Elements ถูกต้อง และ CSS Grid/Flexbox จัดหน้าเว็บได้อย่างมีระเบียบ</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>เปิด Chrome DevTools กด Elements tab แล้วดู Tree ของ HTML ตรวจสอบว่า Elements ซ้อนกันถูกต้อง
-                 เช่น <code>&lt;ul&gt;</code> ต้องมี <code>&lt;li&gt;</code> เป็น Child โดยตรง</p>
+              <p>เริ่มจาก HTML skeleton ก่อน (ไม่มี CSS) แล้วค่อยเพิ่ม CSS ทีละส่วน ใช้ <code>grid-template-columns: repeat(3, 1fr)</code> สำหรับ Services grid และ <code>display: flex; justify-content: space-between</code> สำหรับ Header</p>
             </div>
           </div>
         </div>
@@ -685,26 +354,23 @@ renderStudents(students);
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">ออกแบบ Layout ด้วย CSS Flexbox</div>
+            <div class="task-title">เพิ่ม JavaScript เบื้องต้น</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>cards.html</code> และ <code>cards.css</code> โดยใช้ CSS Flexbox จัด Layout การ์ด 3 คอลัมน์ที่ปรับเป็น 1 คอลัมน์บน Mobile</p>
+            <p>เพิ่ม JavaScript ให้หน้าเว็บแสดงข้อมูล Services แบบ Dynamic โดยดึงจาก mock array แทนการ hardcode ใน HTML</p>
             <ul>
-              <li>สร้างการ์ดอย่างน้อย 6 ใบ แต่ละใบมี: รูปภาพ, หัวข้อ, รายละเอียด, ปุ่ม</li>
-              <li>ใช้ <code>display: flex; flex-wrap: wrap;</code> บน container</li>
-              <li>กำหนด <code>flex: 0 0 calc(33.33% - 16px)</code> หรือใช้ CSS Grid <code>repeat(3, 1fr)</code></li>
-              <li>เพิ่ม Hover Effect บนการ์ด: เงา (<code>box-shadow</code>) และขยับขึ้น (<code>transform: translateY</code>)</li>
-              <li>ใช้ <code>@media (max-width: 768px)</code> เปลี่ยนเป็น 1 คอลัมน์</li>
+              <li>สร้าง <code>bookeasy-static/main.js</code></li>
+              <li>เพิ่มฟังก์ชัน <code>async function loadServices()</code> ที่ใช้ hardcode array แทน fetch เช่น <code>const services = [{ name: 'นวดไทย', price: 350 }, ...]</code></li>
+              <li>ใช้ <code>document.querySelector</code> และ <code>innerHTML</code> หรือ <code>appendChild</code> เพิ่ม card ลงใน DOM</li>
+              <li>เรียกใช้ <code>loadServices()</code> เมื่อหน้าโหลดเสร็จ</li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>บน Desktop (>768px) การ์ดแสดง 3 ใบต่อแถว และบน Mobile (&lt;=768px) แสดง 1 ใบต่อแถว
-                 ทดสอบโดยใช้ DevTools Responsive Mode กดปุ่มไอคอน "Toggle device toolbar" (Ctrl+Shift+M)</p>
+              <p>หน้า Services แสดง card จาก JavaScript array ไม่ใช่ HTML hardcode — ลบข้อมูลใน array แล้ว Reload หน้าต้องไม่เห็น card เลย และเพิ่มข้อมูลใหม่ใน array แล้ว Reload ต้องเห็น card เพิ่มขึ้น</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>หากใช้ CSS Grid ให้ลอง <code>grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))</code>
-                 ซึ่งจะปรับจำนวนคอลัมน์อัตโนมัติตามขนาดหน้าจอโดยไม่ต้องเขียน @media</p>
+              <p>ใช้ Arrow Function และ Template Literal ที่เรียนมา: <code>services.forEach(s => { container.innerHTML += `&lt;div class="card"&gt;${s.name}&lt;/div&gt;` })</code> หรือจะใช้ <code>map().join('')</code> ก็ได้ ใส่ <code>await</code> ไว้เพื่อเตรียม refactor เป็น fetch จริงในภายหลัง</p>
             </div>
           </div>
         </div>
@@ -712,81 +378,23 @@ renderStudents(students);
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">สร้าง Navigation Bar แบบ Responsive</div>
+            <div class="task-title">ทดสอบ ES Modules</div>
           </div>
           <div class="task-body">
-            <p>สร้าง Navigation Bar ที่มีเมนูปกติบน Desktop และเปลี่ยนเป็น Hamburger Menu บน Mobile</p>
+            <p>แยกโค้ดออกเป็น module และใช้ ES Modules <code>import</code> / <code>export</code> เพื่อฝึกโครงสร้างที่ใช้จริงในโปรเจกต์ React/Hono</p>
             <ul>
-              <li>สร้าง <code>&lt;nav&gt;</code> ด้วย Logo ด้านซ้าย และรายการเมนู 5 รายการด้านขวา</li>
-              <li>เพิ่มปุ่ม Hamburger (☰) ที่ซ่อนอยู่บน Desktop แต่แสดงบน Mobile</li>
-              <li>ใช้ JavaScript <code>addEventListener('click', ...)</code> ให้ปุ่ม Hamburger toggle class <code>active</code></li>
-              <li>ใช้ CSS ซ่อน/แสดงเมนูด้วย class <code>active</code> บน Mobile</li>
-              <li>เพิ่ม Active State: Highlight เมนูที่กำลังดูอยู่ด้วย CSS</li>
+              <li>สร้าง <code>bookeasy-static/services.js</code> สำหรับ mock data และ helper functions</li>
+              <li>ใน <code>services.js</code> ประกาศ <code>export const MOCK_SERVICES = [...]</code> และ <code>export function renderCards(data) {}</code></li>
+              <li>แก้ <code>main.js</code> ให้ import จาก services.js: <code>import { MOCK_SERVICES, renderCards } from './services.js'</code></li>
+              <li>แก้ tag <code>&lt;script&gt;</code> ใน HTML เป็น <code>&lt;script type="module" src="main.js"&gt;&lt;/script&gt;</code></li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>บน Desktop เมนูแสดงแนวนอน, บน Mobile (&lt;=768px) มีปุ่ม Hamburger และกดแล้วเมนูเปิด/ปิดได้
-                 เมนูทุกลิงก์ต้องคลิกได้และมี Hover Effect</p>
+              <p>หน้าเว็บยังแสดงผล Services card ได้ปกติหลังเปลี่ยนเป็น module และในแท็บ Network ของ DevTools เห็น browser โหลดทั้ง <code>main.js</code> และ <code>services.js</code> แยกกัน ไม่มี Error ใน Console</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>วิธีง่ายที่สุดคือ toggle class บน <code>&lt;nav&gt;</code> แล้วใช้ CSS:
-                 <code>nav .menu { display: none; }</code> และ <code>nav.active .menu { display: flex; flex-direction: column; }</code></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">4</div>
-            <div class="task-title">JavaScript: ตรวจสอบแบบฟอร์ม (Form Validation)</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างฟอร์มลงทะเบียนใน <code>register.html</code> พร้อม Validation แบบ Real-time ด้วย JavaScript</p>
-            <ul>
-              <li>ฟอร์มมีช่องกรอก: ชื่อ-นามสกุล, Email, เบอร์โทรศัพท์, รหัสผ่าน, ยืนยันรหัสผ่าน</li>
-              <li>ตรวจสอบว่าไม่ว่างเปล่า, Email format ถูกต้อง, เบอร์โทรเป็น 10 หลัก, รหัสผ่านตรงกัน</li>
-              <li>แสดง Error Message ใต้แต่ละ field ที่มีปัญหา (สีแดง)</li>
-              <li>เมื่อผู้ใช้แก้ไขให้ Error หายไปทันที (ใช้ event <code>input</code>)</li>
-              <li>ปุ่ม Submit ให้แสดง Alert ว่า "ลงทะเบียนสำเร็จ!" เมื่อผ่านทุกการตรวจสอบ</li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ทดสอบกรอกข้อมูลผิดทุก field และกด Submit — ต้องเห็น Error messages ทุกช่อง
-                 จากนั้นแก้ไขทีละช่อง Error ต้องหายไปทีละอัน และเมื่อกรอกถูกทั้งหมดกด Submit แล้วได้ Alert "ลงทะเบียนสำเร็จ!"</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ Regular Expression สำหรับ Email: <code>/^[^\s@]+@[^\s@]+\.[^\s@]+$/</code>
-                 และสำหรับเบอร์โทรไทย: <code>/^0[0-9]{9}$/</code> ทดสอบด้วย <code>regex.test(value)</code></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">JavaScript: แสดงข้อมูลแบบ Dynamic จาก Array</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างไฟล์ <code>students.html</code> ที่แสดงรายชื่อนักศึกษาเป็น Cards แบบ Dynamic โดยดึงจาก Array ใน JavaScript</p>
-            <ul>
-              <li>สร้าง Array ของ Objects นักศึกษาอย่างน้อย 8 คน มี properties: name, studentId, faculty, gpa</li>
-              <li>เขียนฟังก์ชัน <code>renderStudents(data)</code> ที่สร้าง HTML การ์ดจาก Array และแทรกใน DOM</li>
-              <li>เพิ่มช่องค้นหา: กรอกชื่อแล้วกรอง Array และ render ใหม่</li>
-              <li>เพิ่มปุ่ม Sort: เรียงตาม GPA (มาก-น้อย) และ (น้อย-มาก)</li>
-              <li>แสดงจำนวนนักศึกษาที่พบ เช่น "พบ 8 รายการ"</li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>การ์ดแสดงครบทุกคน, ค้นหาชื่อแล้วกรองได้ถูกต้อง (ไม่ Case-Sensitive), กด Sort แล้วลำดับเปลี่ยน
-                 และตัวนับแสดงจำนวนที่ถูกต้องตลอด</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>Array.filter()</code> สำหรับค้นหาและ <code>Array.sort()</code> สำหรับเรียง
-                 ตัวอย่าง: <code>students.filter(s => s.name.includes(searchText))</code>
-                 และ <code>students.sort((a, b) => b.gpa - a.gpa)</code></p>
+              <p>หาก Console แสดง CORS error ให้ตรวจสอบว่ารันผ่าน <code>python3 -m http.server 8080</code> แล้ว ไม่ใช่เปิดไฟล์โดยตรงด้วย <code>file://</code> และตรวจสอบว่า <code>import</code> path ใช้ <code>./services.js</code> (มี ./ นำหน้าและนามสกุล .js ครบ)</p>
             </div>
           </div>
         </div>
@@ -798,11 +406,11 @@ renderStudents(students);
     <div class="week-nav">
       <a href="week-01.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">แนะนำรายวิชา & สถาปัตยกรรมเว็บ</div>
+        <div class="wn-name">แนะนำรายวิชา &amp; Modern Web Stack</div>
       </a>
       <a href="week-03.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">PHP เบื้องต้น & ติดตั้งสภาพแวดล้อม</div>
+        <div class="wn-name">Vite + React + Component</div>
       </a>
     </div>
 
@@ -812,12 +420,6 @@ renderStudents(students);
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
-        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
-        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
