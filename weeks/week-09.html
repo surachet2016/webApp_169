@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 9 — ระบบสมาชิก & Authentication — 07-034-233</title>
+  <title>สัปดาห์ที่ 9 — Supabase Auth — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,12 +18,12 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 9</span>
     <span class="sep">›</span>
-    <span>ระบบสมาชิก &amp; Authentication</span>
+    <span>Supabase Auth</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 9</div>
-    <h1 class="wh-title">ระบบสมาชิก &amp; Authentication</h1>
+    <h1 class="wh-title">Supabase Auth — Login, Register, Session &amp; Protected Routes</h1>
     <div class="wh-clos">
       <span class="wh-clo">CLO3</span>
       <span class="wh-clo">CLO7</span>
@@ -32,6 +32,7 @@
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
@@ -49,60 +50,204 @@
       <div class="theory-wrap">
 
         <!-- 1 -->
-        <h3>1. ระบบสมาชิก (Membership System) คืออะไร?</h3>
-        <p>ระบบสมาชิกเป็นหนึ่งในคุณสมบัติหลักของเว็บแอปพลิเคชันเกือบทุกประเภท ตั้งแต่ร้านค้าออนไลน์ โซเชียลมีเดีย ไปจนถึงระบบบริหารจัดการภายในองค์กร ระบบสมาชิกมีองค์ประกอบหลักได้แก่: <strong>Registration</strong> (สมัครสมาชิก), <strong>Login</strong> (เข้าสู่ระบบ), <strong>Logout</strong> (ออกจากระบบ), <strong>Profile</strong> (จัดการข้อมูลส่วนตัว) และ <strong>Password Reset</strong> (รีเซ็ตรหัสผ่าน)</p>
-        <p>การออกแบบระบบสมาชิกที่ดีต้องคำนึงถึง: ความปลอดภัยของข้อมูล (โดยเฉพาะรหัสผ่าน), ประสบการณ์ผู้ใช้ที่ราบรื่น, การจัดการ Error อย่างเหมาะสม และการป้องกันการโจมตีประเภทต่าง ๆ เช่น Brute Force, SQL Injection และ XSS</p>
-        <p>สำหรับหลักสูตรนี้เราจะเน้นสร้างระบบ Registration และ Login พื้นฐานที่ปลอดภัย โดยใช้ PDO สำหรับฐานข้อมูล, <code>password_hash()</code> สำหรับเข้ารหัสรหัสผ่าน และ Session สำหรับจัดการสถานะ Login ซึ่งเป็นมาตรฐานที่ใช้ในระบบงานจริง</p>
-
-        <!-- 2 -->
-        <h3>2. การเข้ารหัสรหัสผ่าน (Password Hashing)</h3>
-        <p><strong>ห้ามเก็บรหัสผ่านเป็น Plain Text</strong> โดยเด็ดขาด หากฐานข้อมูลถูกขโมย รหัสผ่านของผู้ใช้ทุกคนจะรั่วทันที ในอดีตนักพัฒนาบางคนใช้ MD5 หรือ SHA1 ซึ่งเป็น Hash Function แต่ปัจจุบันสองอย่างนี้ถือว่า <strong>ไม่ปลอดภัย</strong> เพราะมี Rainbow Table และ GPU สามารถ Crack ได้เร็วมาก</p>
-        <p>PHP ให้ฟังก์ชัน <code>password_hash($password, PASSWORD_BCRYPT)</code> ที่ใช้อัลกอริทึม <strong>bcrypt</strong> ซึ่งออกแบบมาให้ช้าโดยเจตนา (ต่างจาก MD5 ที่เร็ว) เพื่อทำให้การ Brute Force ยากและใช้เวลานาน bcrypt ยังเพิ่ม <strong>Salt</strong> โดยอัตโนมัติ ทำให้รหัสผ่านเดียวกันได้ Hash ต่างกันทุกครั้งที่ Hash</p>
-        <p>การตรวจสอบรหัสผ่านใช้ <code>password_verify($input, $hash)</code> ซึ่งจะเปรียบเทียบ Input กับ Hash ที่เก็บในฐานข้อมูล ถ้าตรงกันคืนค่า <code>true</code> ไม่ต้อง Hash Input ก่อน เพราะฟังก์ชันทำให้เอง</p>
-
-        <div class="callout warning"><div class="callout-title">ข้อควรระวัง</div><p>อย่าใช้ MD5 หรือ SHA1 สำหรับรหัสผ่าน! ใช้เฉพาะ <code>password_hash()</code> ที่มาพร้อม PHP 5.5+ เท่านั้น Column รหัสผ่านในฐานข้อมูลต้องเป็น VARCHAR(255) เพราะ bcrypt Hash มีความยาว 60 ตัวอักษร</p></div>
+        <h3>1. Authentication vs Authorization — ความแตกต่างที่ต้องรู้</h3>
+        <p>
+          <strong>Authentication (AuthN)</strong> คือกระบวนการ "พิสูจน์ตัวตน" — ตรวจสอบว่าผู้ใช้เป็นใคร
+          เช่น การ Login ด้วย Email และ Password, ใช้ Google OAuth, หรือสแกน Face ID
+          ผลลัพธ์คือระบบรู้ว่า "ผู้ใช้คนนี้คือ user@example.com"
+        </p>
+        <p>
+          <strong>Authorization (AuthZ)</strong> คือกระบวนการ "ตรวจสอบสิทธิ์" — หลังจากรู้แล้วว่าเป็นใคร
+          ระบบจะตัดสินว่าผู้ใช้คนนั้น "ทำอะไรได้บ้าง" เช่น User ทั่วไปดูข้อมูลได้แต่แก้ไขไม่ได้,
+          Admin แก้ไขและลบได้, เจ้าของข้อมูลเข้าถึงได้เฉพาะข้อมูลของตัวเอง
+        </p>
+        <p>
+          ทั้งสองต้องทำงานร่วมกันเสมอ: ต้องพิสูจน์ตัวตน (AuthN) ก่อน จึงจะตรวจสอบสิทธิ์ (AuthZ) ได้
+          ในหลักสูตรนี้ใช้ Supabase Auth สำหรับ AuthN และ Row Level Security (RLS) สำหรับ AuthZ
+        </p>
 
         <div class="diagram-box"><pre>
-  password_hash('mySecret123', PASSWORD_BCRYPT)
-  ↓
-  '$2y$10$abc...xyz'  (60 ตัวอักษร — เก็บในฐานข้อมูล)
+  Authentication (AuthN)               Authorization (AuthZ)
+  ────────────────────────             ─────────────────────────────
+  "คุณเป็นใคร?"                        "คุณทำอะไรได้บ้าง?"
 
-  password_verify('mySecret123', '$2y$10$abc...xyz')
-  ↓  true ✓
+  • Login ด้วย Email + Password        • ดูได้เฉพาะ bookings ของตัวเอง
+  • OAuth (Google, GitHub)             • Admin เท่านั้นที่ลบ service ได้
+  • Magic Link (ลิงก์ทาง Email)        • RLS policy บน Supabase Table
 
-  password_verify('wrongPassword', '$2y$10$abc...xyz')
-  ↓  false ✗
+  ผลลัพธ์: JWT token + session         ผลลัพธ์: allow / deny operation
         </pre></div>
 
+        <!-- 2 -->
+        <h3>2. Supabase Auth — Email/Password, Magic Link, OAuth</h3>
+        <p>
+          Supabase Auth เป็น Authentication Service ที่มาพร้อม Supabase โดยไม่ต้องสร้างระบบ Auth เอง
+          รองรับหลายวิธีการ Login:
+        </p>
+        <ul>
+          <li>
+            <strong>Email + Password</strong> — วิธีคลาสสิก ผู้ใช้สมัครด้วย Email และรหัสผ่าน
+            Supabase จะ Hash รหัสผ่านให้อัตโนมัติและเก็บใน <code>auth.users</code> table ที่ซ่อนอยู่
+          </li>
+          <li>
+            <strong>Magic Link</strong> — ส่งลิงก์ Login ทาง Email โดยไม่ต้องใช้รหัสผ่าน
+            ผู้ใช้คลิกลิงก์ → ระบบ Login อัตโนมัติ ปลอดภัยและใช้งานง่าย
+          </li>
+          <li>
+            <strong>OAuth (Social Login)</strong> — Login ผ่าน Provider ภายนอก เช่น Google, GitHub, Facebook
+            ผู้ใช้ไม่ต้องสร้าง account ใหม่ ใช้ account ที่มีอยู่แล้วได้เลย
+          </li>
+        </ul>
+        <p>
+          ข้อมูลผู้ใช้ทั้งหมดเก็บอยู่ใน Schema พิเศษชื่อ <code>auth</code> ใน Supabase
+          ซึ่งไม่สามารถเข้าถึงได้โดยตรงจาก frontend เพื่อความปลอดภัย
+          Supabase มี <code>auth.uid()</code> function ให้ใช้ใน RLS Policy เพื่อดึง ID ของผู้ใช้ปัจจุบัน
+        </p>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — เลือก Auth Method อย่างไร</div>
+          <p>
+            สำหรับแอปที่ผู้ใช้คุ้นเคยกับ Email/Password ให้ใช้แบบแรก
+            ถ้าต้องการลดขั้นตอนให้ผู้ใช้ ใช้ Magic Link (ไม่ต้องจำรหัสผ่าน)
+            สำหรับแอปที่กลุ่มผู้ใช้มี Google Account ทุกคน OAuth จะสะดวกที่สุด
+          </p>
+        </div>
+
         <!-- 3 -->
-        <h3>3. ระบบ Login และ Logout</h3>
-        <p>กระบวนการ Login ที่ถูกต้องมีขั้นตอนดังนี้: (1) รับ Email/Username และ Password จากฟอร์ม, (2) ค้นหาผู้ใช้จากฐานข้อมูลด้วย Email โดยใช้ Prepared Statement, (3) ตรวจสอบว่าพบ User หรือไม่, (4) ใช้ <code>password_verify()</code> ตรวจสอบรหัสผ่าน, (5) หากถูกต้อง เรียก <code>session_regenerate_id(true)</code> ก่อนตั้ง Session, (6) ตั้งค่า Session Variables, (7) Redirect ไปหน้า Dashboard</p>
-        <p>สิ่งสำคัญที่ต้องระวังในข้อความ Error: <strong>อย่าบอกว่า Email ไม่มีในระบบหรือรหัสผ่านผิด</strong> แยกกัน เพราะจะทำให้ผู้โจมตีรู้ว่า Email นั้นมีอยู่ในระบบ ควรแสดงข้อความเดียวกันเสมอ เช่น "อีเมลหรือรหัสผ่านไม่ถูกต้อง"</p>
-        <p>การ Logout ต้องทำ 3 อย่าง: (1) <code>$_SESSION = []</code> ล้าง Array, (2) ลบ Session Cookie ด้วย <code>setcookie(session_name(), '', time()-3600)</code>, (3) <code>session_destroy()</code> ทำลาย Session บนเซิร์ฟเวอร์ จากนั้น Redirect ไปหน้า Login</p>
+        <h3>3. JWT Token และ Session Management</h3>
+        <p>
+          เมื่อ Login สำเร็จ Supabase จะออก <strong>JWT (JSON Web Token)</strong> ให้
+          JWT คือ String ที่เข้ารหัสข้อมูลผู้ใช้ (เช่น <code>user_id</code>, <code>email</code>, role)
+          และลงลายเซ็น (sign) ด้วย Secret Key ของ Supabase
+          ฝั่ง Server สามารถตรวจสอบความถูกต้องของ JWT ได้โดยไม่ต้องถามฐานข้อมูล
+        </p>
+        <p>
+          Supabase JS Client จัดการ Session ให้อัตโนมัติ: เก็บ JWT ใน <code>localStorage</code>,
+          ส่ง Token ในทุก Request ไปยัง Supabase API, และ refresh Token อัตโนมัติก่อนหมดอายุ
+          นักพัฒนาไม่ต้องเขียน logic เหล่านี้เอง
+        </p>
+        <p>
+          <code>supabase.auth.onAuthStateChange()</code> เป็น Event Listener ที่แจ้งเตือนเมื่อ Auth state เปลี่ยน
+          เช่น เมื่อ Login, Logout, หรือ Token refresh ใช้สร้าง <strong>AuthContext</strong>
+          เพื่อให้ทุก Component ในแอปรับรู้สถานะ Auth โดยอัตโนมัติ
+        </p>
 
         <div class="diagram-box"><pre>
-  ผู้ใช้ → กรอก Login Form → PHP ตรวจสอบ
-                                    │
-                          SELECT FROM users WHERE email = ?
-                                    │
-                       พบ User → password_verify()
-                                    │
-                    ตรงกัน ✓                ไม่ตรง ✗
-                         │                      │
-               session_regenerate_id()    แสดง Error Message
-               $_SESSION['user_id'] = X   (ไม่บอกว่าอะไรผิด)
-               $_SESSION['logged_in'] = true
-                         │
-                   Redirect → dashboard.php
+  Login สำเร็จ
+       │
+       ▼
+  Supabase ออก JWT (access_token + refresh_token)
+       │
+       ▼
+  Supabase JS Client เก็บ JWT ใน localStorage
+       │
+       ├── onAuthStateChange('SIGNED_IN', session) ถูกเรียก
+       │        │
+       │        ▼
+       │   AuthContext อัปเดต user state → UI เปลี่ยน (แสดงชื่อผู้ใช้, logout button)
+       │
+       └── ทุก Supabase API call ส่ง JWT ใน Authorization header อัตโนมัติ
+               │
+               ▼
+          RLS ตรวจสอบ auth.uid() → อนุญาตเฉพาะข้อมูลของตัวเอง
         </pre></div>
 
         <!-- 4 -->
-        <h3>4. ความปลอดภัยพื้นฐานของระบบ</h3>
-        <p><strong>SQL Injection</strong> คือการที่ผู้โจมตีแทรก SQL Code ผ่านช่อง Input เช่น ใส่ <code>' OR '1'='1</code> เป็น Password เพื่อ Bypass การ Login ป้องกันได้ด้วยการใช้ PDO Prepared Statement ทุกครั้งที่รับ Input จากผู้ใช้ ห้ามใช้ String Concatenation สร้าง SQL Query</p>
-        <p><strong>XSS (Cross-Site Scripting)</strong> คือการแทรก JavaScript ผ่าน Input เพื่อขโมย Cookie หรือ Session ป้องกันด้วย <code>htmlspecialchars()</code> ทุกครั้งก่อนแสดงข้อมูลใน HTML</p>
-        <p><strong>CSRF (Cross-Site Request Forgery)</strong> คือการหลอกให้ผู้ใช้ที่ Login อยู่ส่ง Request โดยไม่รู้ตัว ป้องกันด้วยการใส่ CSRF Token ซ่อนไว้ในฟอร์มทุกอัน แล้วตรวจสอบ Token ก่อนประมวลผล สำหรับระบบพื้นฐานในหลักสูตรนี้ยังไม่จำเป็นต้องใช้ แต่ควรทราบว่ามีอยู่</p>
+        <h3>4. supabase.auth API — signUp, signInWithPassword, signOut, getSession</h3>
+        <p>
+          Supabase JS Client มี API หลักสำหรับ Authentication ดังนี้:
+        </p>
+        <ul>
+          <li>
+            <code>supabase.auth.signUp({ email, password, options })</code> — สมัครสมาชิกใหม่
+            ถ้าเปิดใช้ Email Confirmation ผู้ใช้ต้องยืนยันอีเมลก่อน Login ได้
+            <code>options.data</code> ใช้เก็บข้อมูลเพิ่มเติมเช่น <code>full_name</code>
+          </li>
+          <li>
+            <code>supabase.auth.signInWithPassword({ email, password })</code> — Login ด้วย Email และรหัสผ่าน
+            คืนค่า <code>{ data: { user, session }, error }</code>
+          </li>
+          <li>
+            <code>supabase.auth.signOut()</code> — ออกจากระบบ ล้าง Session ใน localStorage
+            และ trigger <code>onAuthStateChange('SIGNED_OUT')</code>
+          </li>
+          <li>
+            <code>supabase.auth.getSession()</code> — ดู session ปัจจุบัน ใช้ตรวจสอบว่า Login อยู่หรือไม่
+            เมื่อแอปเริ่มต้น ต้องเรียก getSession ก่อนเพื่อกู้ session จาก localStorage
+          </li>
+        </ul>
+        <p>
+          ทุก API คืน <code>{ data, error }</code> pattern เสมอ ต้องตรวจสอบ <code>error</code>
+          ก่อนใช้ <code>data</code> ถ้า error ไม่ใช่ null แสดงว่าเกิดข้อผิดพลาด เช่น
+          รหัสผ่านไม่ถูกต้อง, Email ซ้ำ, หรือ Email ไม่ได้ยืนยัน
+        </p>
 
-        <div class="callout note"><div class="callout-title">หมายเหตุ</div><p>ตรวจสอบ Input ทุกตัวจากผู้ใช้เสมอ ทั้ง $_POST, $_GET, $_COOKIE อย่าเชื่อถือข้อมูลจาก Client โดยไม่ตรวจสอบ แม้จะเป็น Hidden Field ใน Form ก็ตาม</p></div>
+        <!-- 5 -->
+        <h3>5. Protected Route Pattern ใน TanStack Router</h3>
+        <p>
+          <strong>Protected Route</strong> คือ Route ที่เข้าถึงได้เฉพาะผู้ใช้ที่ Login แล้ว
+          ถ้ายังไม่ Login ให้ redirect ไปหน้า Login โดยอัตโนมัติ
+          เป็น pattern สำคัญในทุกแอปที่มีระบบสมาชิก
+        </p>
+        <p>
+          วิธีทำใน React + TanStack Router คือสร้าง Component ชื่อ <code>ProtectedRoute</code>
+          ที่ตรวจสอบ <code>user</code> จาก <code>useAuth()</code> hook:
+          ถ้า <code>loading</code> แสดง spinner, ถ้าไม่มี <code>user</code> ให้ navigate ไป <code>/login</code>,
+          ถ้ามี <code>user</code> ให้ render <code>children</code> ตามปกติ
+        </p>
+        <p>
+          จากนั้นห่อ Component ที่ต้องการปกป้องด้วย <code>&lt;ProtectedRoute&gt;</code>
+          เช่น <code>&lt;ProtectedRoute&gt;&lt;BookingPage /&gt;&lt;/ProtectedRoute&gt;</code>
+          วิธีนี้แยก logic การตรวจสอบ Auth ออกจาก Business Logic ของหน้านั้น ๆ ทำให้โค้ดสะอาดและ reuse ได้
+        </p>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — ความปลอดภัยที่แท้จริงอยู่ที่ Backend</div>
+          <p>
+            Protected Route ใน Frontend เป็นแค่ UX — ป้องกันผู้ใช้ทั่วไปไม่ให้เห็นหน้าที่ไม่ควรเห็น
+            แต่ไม่ได้ป้องกัน API ถ้าใครเปิด DevTools แล้วเรียก API โดยตรงก็ยังได้
+            ความปลอดภัยที่แท้จริงต้องมาจาก RLS บน Supabase ซึ่งทำงานฝั่ง Database
+          </p>
+        </div>
+
+        <!-- 6 -->
+        <h3>6. Row Level Security (RLS) — Authorization ระดับแถวข้อมูล</h3>
+        <p>
+          <strong>Row Level Security (RLS)</strong> คือฟีเจอร์ของ PostgreSQL (ฐานข้อมูลที่ Supabase ใช้)
+          ที่กำหนดว่าผู้ใช้แต่ละคน SELECT/INSERT/UPDATE/DELETE แถวข้อมูลไหนได้บ้าง
+          ทำงานโดยอัตโนมัติในทุก Query ไม่ต้องเขียน WHERE clause เพิ่มเองในโค้ด
+        </p>
+        <p>
+          เมื่อเปิด RLS บน Table ค่า default คือ "ไม่มีใครเข้าถึงได้เลย" จนกว่าจะสร้าง Policy
+          Policy คือกฎที่ระบุเงื่อนไขว่าแถวข้อมูลนั้นควรแสดงให้ผู้ใช้คนใดเห็น
+          ตัวอย่างเช่น: "แสดงเฉพาะแถวที่ <code>user_id = auth.uid()</code>"
+          ซึ่งหมายความว่าผู้ใช้จะเห็นเฉพาะข้อมูลของตัวเองเท่านั้น
+        </p>
+        <p>
+          การสร้าง RLS Policy ทำได้ใน Supabase Dashboard (Table Editor → RLS → New Policy)
+          หรือใช้ SQL: <code>CREATE POLICY "policy_name" ON table_name FOR SELECT USING (auth.uid() = user_id);</code>
+          <code>auth.uid()</code> คือ function พิเศษที่คืน UUID ของผู้ใช้ปัจจุบันจาก JWT
+        </p>
+
+        <div class="diagram-box"><pre>
+  ไม่มี RLS:                        มี RLS + Policy:
+  ─────────────────────             ──────────────────────────────────
+  SELECT * FROM bookings            SELECT * FROM bookings
+  → ได้ทุกแถวของทุกคน              → ได้เฉพาะแถวที่ user_id = auth.uid()
+
+  User A เห็น booking               User A เห็น booking ของ A เท่านั้น
+  ของ User B, C, D ด้วย             User B เห็น booking ของ B เท่านั้น
+
+  ⚠️ ความเสี่ยงสูงมาก              ✓ ปลอดภัยระดับ Database
+        </pre></div>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — เปิด RLS ทันทีเมื่อสร้าง Table</div>
+          <p>
+            Table ใหม่ใน Supabase มี RLS ปิดอยู่ by default ซึ่งหมายความว่าใครก็สามารถดึงข้อมูลได้
+            ควร Enable RLS พร้อมกับสร้าง Policy ทันทีหลังสร้าง Table ก่อนที่จะมีข้อมูลจริงเข้ามา
+          </p>
+        </div>
 
       </div>
     </div>
@@ -113,245 +258,145 @@
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Example 1: register.php -->
+      <!-- Snippet 1: Supabase Auth operations -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">register.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/lib/supabase.js — Auth API หลัก</span>
+          <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// register.php — ลงทะเบียนสมาชิกใหม่
-require 'db.php';
-$errors = [];
+        <pre><code class="language-javascript">// snippet 1: Supabase Auth operations
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username        = trim($_POST['username'] ?? '');
-    $email           = trim($_POST['email'] ?? '');
-    $password        = $_POST['password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+// สมัครสมาชิก
+const { data, error } = await supabase.auth.signUp({
+  email: 'user@example.com',
+  password: 'password123',
+  options: { data: { full_name: 'สมชาย ใจดี' } },
+});
 
-    // Validation
-    if (strlen($username) < 3) {
-        $errors[] = 'ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร';
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'รูปแบบอีเมลไม่ถูกต้อง';
-    }
-    if (strlen($password) < 8) {
-        $errors[] = 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';
-    }
-    if ($password !== $confirmPassword) {
-        $errors[] = 'รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน';
-    }
+// เข้าสู่ระบบ
+const { data: { user, session }, error } = await supabase.auth.signInWithPassword({
+  email: 'user@example.com',
+  password: 'password123',
+});
 
-    if (empty($errors)) {
-        // ตรวจสอบว่า Username หรือ Email ถูกใช้ไปแล้วหรือไม่
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE username = :u OR email = :e");
-        $stmt->execute([':u' => $username, ':e' => $email]);
-        if ($stmt->fetch()) {
-            $errors[] = 'ชื่อผู้ใช้หรืออีเมลนี้ถูกใช้ไปแล้ว';
-        }
-    }
+// ออกจากระบบ
+await supabase.auth.signOut();
 
-    if (empty($errors)) {
-        // เข้ารหัสรหัสผ่านด้วย bcrypt
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+// ดู session ปัจจุบัน
+const { data: { session } } = await supabase.auth.getSession();
+console.log(session?.user?.email);
 
-        $sql = "INSERT INTO users (username, email, password) VALUES (:u, :e, :p)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':u' => $username,
-            ':e' => $email,
-            ':p' => $hashedPassword,
-        ]);
-
-        header('Location: login.php?success=registered');
-        exit;
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head><meta charset="UTF-8"><title>สมัครสมาชิก</title></head>
-<body>
-  <h1>สมัครสมาชิก</h1>
-
-  <?php foreach ($errors as $err): ?>
-    <p style="color:red"><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></p>
-  <?php endforeach; ?>
-
-  <form method="POST" action="register.php">
-    <label>ชื่อผู้ใช้: <input type="text" name="username" required minlength="3"></label><br>
-    <label>อีเมล: <input type="email" name="email" required></label><br>
-    <label>รหัสผ่าน (≥8 ตัว): <input type="password" name="password" required minlength="8"></label><br>
-    <label>ยืนยันรหัสผ่าน: <input type="password" name="confirm_password" required></label><br>
-    <button type="submit">สมัครสมาชิก</button>
-    <a href="login.php">มีบัญชีอยู่แล้ว? เข้าสู่ระบบ</a>
-  </form>
-</body>
-</html></code></pre>
+// ฟัง auth state changes
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') console.log('เข้าสู่ระบบแล้ว:', session.user.email);
+  if (event === 'SIGNED_OUT') console.log('ออกจากระบบแล้ว');
+});</code></pre>
       </div>
 
-      <!-- Example 2: login.php -->
+      <!-- Snippet 2: Auth Context + useAuth hook -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">login.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/contexts/AuthContext.jsx — AuthProvider &amp; useAuth</span>
+          <span class="code-lang">JSX</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// login.php — เข้าสู่ระบบ
-session_start();
-require 'db.php';
+        <pre><code class="language-jsx">// snippet 2: Auth Context + useAuth hook
+import { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 
-// ถ้า Login อยู่แล้ว Redirect ไป dashboard
-if (!empty($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
-    exit;
-}
+const AuthContext = createContext(null);
 
-$error = '';
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
 
-    if ($email && $password) {
-        // ค้นหาผู้ใช้ด้วย Email (Prepared Statement ป้องกัน SQL Injection)
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
-        $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // ตรวจสอบรหัสผ่านด้วย password_verify()
-        if ($user && password_verify($password, $user['password'])) {
-            // Login สำเร็จ!
-            // สร้าง Session ID ใหม่ เพื่อป้องกัน Session Fixation
-            session_regenerate_id(true);
-
-            $_SESSION['user_id']  = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email']    = $user['email'];
-            $_SESSION['logged_in'] = true;
-            $_SESSION['last_activity'] = time();
-
-            header('Location: dashboard.php');
-            exit;
-        } else {
-            // ข้อความ Error รวมทั้ง Email ไม่มีในระบบ และรหัสผ่านผิด
-            // เพื่อไม่ให้ผู้โจมตีรู้ว่าอะไรผิด
-            $error = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
-        }
-    } else {
-        $error = 'กรุณากรอกอีเมลและรหัสผ่าน';
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head><meta charset="UTF-8"><title>เข้าสู่ระบบ</title></head>
-<body>
-  <h1>เข้าสู่ระบบ</h1>
-
-  <?php if (isset($_GET['success']) && $_GET['success'] === 'registered'): ?>
-    <p style="color:green">สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ</p>
-  <?php endif; ?>
-
-  <?php if ($error): ?>
-    <p style="color:red"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
-  <?php endif; ?>
-
-  <form method="POST" action="login.php">
-    <label>อีเมล: <input type="email" name="email" required autocomplete="email"></label><br>
-    <label>รหัสผ่าน: <input type="password" name="password" required autocomplete="current-password"></label><br>
-    <button type="submit">เข้าสู่ระบบ</button>
-    <a href="register.php">สมัครสมาชิก</a>
-  </form>
-</body>
-</html></code></pre>
-      </div>
-
-      <!-- Example 3: logout.php -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">logout.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// logout.php — ออกจากระบบ
-session_start();
-
-// 1. ล้าง Session Array ทั้งหมด
-$_SESSION = [];
-
-// 2. ลบ Session Cookie จากเบราว์เซอร์
-if (ini_get('session.use_cookies')) {
-    $params = session_get_cookie_params();
-    setcookie(
-        session_name(), '', time() - 42000,
-        $params['path'], $params['domain'],
-        $params['secure'], $params['httponly']
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_, session) => setUser(session?.user ?? null)
     );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return (
+    &lt;AuthContext.Provider value={{ user, loading }}>
+      {children}
+    &lt;/AuthContext.Provider>
+  );
 }
 
-// 3. ทำลาย Session บนเซิร์ฟเวอร์
-session_destroy();
-
-// Redirect ไปหน้า Login
-header('Location: login.php?logout=1');
-exit;</code></pre>
+export const useAuth = () => useContext(AuthContext);</code></pre>
       </div>
 
-      <!-- Example 4: auth_check.php -->
+      <!-- Snippet 3: Protected Route + Login Form -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">auth_check.php — Helper ตรวจสอบ Authentication</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">ProtectedRoute.jsx + LoginPage.jsx</span>
+          <span class="code-lang">JSX</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// auth_check.php — ไฟล์ Helper สำหรับป้องกันหน้าที่ต้อง Login
-// วิธีใช้: require 'auth_check.php'; ที่ต้นไฟล์ทุกหน้าที่ต้อง Login
+        <pre><code class="language-jsx">// snippet 3: Protected Route + Login Form
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from '@tanstack/react-router';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+// Protected Route wrapper
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  if (loading) return &lt;p>กำลังตรวจสอบ...&lt;/p>;
+  if (!user) {
+    navigate({ to: '/login' });
+    return null;
+  }
+  return children;
 }
 
-// ตรวจสอบว่า Login แล้วหรือยัง
-if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: login.php?error=not_logged_in');
-    exit;
-}
+// Login Form
+function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-// ตรวจสอบ Session Timeout (30 นาที)
-if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > 1800) {
-    session_unset();
-    session_destroy();
-    header('Location: login.php?error=timeout');
-    exit;
-}
-$_SESSION['last_activity'] = time();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) { setError(error.message); return; }
+    navigate({ to: '/' });
+  }
 
-// ─────────────────────────────────────────────────────────
-// ตัวอย่าง dashboard.php ที่ใช้ auth_check.php
-// ─────────────────────────────────────────────────────────
-// <?php
-// require 'auth_check.php'; // บรรทัดนี้ต้องเป็น require ไม่ใช่ include_once
-// ?>
-// <!DOCTYPE html>
-// <html lang="th">
-// <head><meta charset="UTF-8"><title>Dashboard</title></head>
-// <body>
-//   <h1>ยินดีต้อนรับ <?= htmlspecialchars($_SESSION['username']) ?>!</h1>
-//   <p>อีเมล: <?= htmlspecialchars($_SESSION['email']) ?></p>
-//   <a href="logout.php">ออกจากระบบ</a>
-// </body>
-// </html></code></pre>
+  return (
+    &lt;form onSubmit={handleSubmit}>
+      &lt;input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="อีเมล" required />
+      &lt;input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="รหัสผ่าน" required />
+      {error &amp;&amp; &lt;p className="error">{error}&lt;/p>}
+      &lt;button type="submit">เข้าสู่ระบบ&lt;/button>
+    &lt;/form>
+  );
+}</code></pre>
       </div>
 
     </div>
@@ -361,8 +406,12 @@ $_SESSION['last_activity'] = time();
     ══════════════════════════════════════════ -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 8 — ระบบสมาชิก &amp; Authentication</h2>
-        <p>สร้างระบบสมาชิกสมบูรณ์แบบ ตั้งแต่การสมัคร เข้าสู่ระบบ Dashboard ไปจนถึง Logout พร้อมการเข้ารหัสรหัสผ่านที่ถูกต้อง</p>
+        <h2>🧪 ปฏิบัติการ Lab 8 — BookEasy: ระบบ Login/Register</h2>
+        <p>เพิ่ม Authentication ให้ BookEasy ด้วย Supabase Auth ตั้งแต่สร้าง AuthContext, หน้า Login/Register ไปจนถึงปกป้อง route /booking ด้วย ProtectedRoute และตั้ง RLS บน Supabase</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 7</div>
+          <p>ต่อยอดจาก Lab 7 — เพิ่ม Authentication เพื่อให้ผู้ใช้ต้อง Login ก่อนจอง</p>
+        </div>
       </div>
       <div class="lab-body">
 
@@ -370,29 +419,51 @@ $_SESSION['last_activity'] = time();
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">สร้างตาราง users ในฐานข้อมูล</div>
+            <div class="task-title">สร้าง AuthContext และ Supabase Client ฝั่ง Frontend</div>
           </div>
           <div class="task-body">
-            <p>สร้างตาราง <code>users</code> ในฐานข้อมูล MySQL โดยมี Column ที่ครบถ้วนสำหรับระบบสมาชิก Column <code>password</code> ต้องเป็น VARCHAR(255) เพื่อรองรับ bcrypt Hash</p>
+            <p>ติดตั้ง Supabase JS Client และสร้าง <code>AuthContext</code> เพื่อให้ทุก Component เข้าถึงสถานะ Auth ได้</p>
+            <ul>
+              <li>รัน <code>npm install @supabase/supabase-js</code> ใน folder <code>bookeasy</code> (frontend)</li>
+              <li>สร้างไฟล์ <code>src/lib/supabase.js</code> — สร้าง Supabase client ด้วย Public URL และ anon key จาก Supabase Dashboard (Settings → API)</li>
+              <li>สร้างไฟล์ <code>src/contexts/AuthContext.jsx</code> ตาม snippet 2 ด้านบน (AuthProvider + useAuth hook)</li>
+              <li>เปิด <code>src/main.jsx</code> แล้วห่อ <code>&lt;RouterProvider /&gt;</code> ด้วย <code>&lt;AuthProvider&gt;</code></li>
+            </ul>
             <div class="code-block">
               <div class="code-head">
-                <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-                <span class="code-filename">สร้างตาราง users</span>
-                <span class="code-lang">SQL</span>
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/lib/supabase.js</span>
+                <span class="code-lang">JavaScript</span>
                 <button class="copy-btn">คัดลอก</button>
               </div>
-              <pre><code class="language-sql">CREATE TABLE users (
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    username   VARCHAR(50) NOT NULL UNIQUE,
-    email      VARCHAR(100) NOT NULL UNIQUE,
-    password   VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;</code></pre>
+              <pre><code class="language-javascript">import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://xxxxxxxxxxxx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJ...'; // anon public key
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);</code></pre>
             </div>
-            <p>หลังสร้างตาราง ให้ทดสอบการ Hash รหัสผ่านด้วยโค้ด PHP: <code>echo password_hash('test1234', PASSWORD_BCRYPT);</code> แล้วสังเกตว่า Hash มีความยาวเท่าไรและเริ่มต้นด้วย <code>$2y$10$</code></p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>ตาราง users มีครบทุก Column / ทดสอบ password_hash() แล้ว Hash มีความยาว 60 ตัวอักษรและขึ้นต้นด้วย $2y$10$</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใส่ UNIQUE Constraint ที่ทั้ง username และ email เพื่อป้องกันการสมัครซ้ำในระดับฐานข้อมูล (Defense in Depth) ไม่ใช่แค่ตรวจสอบใน PHP เท่านั้น</p></div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                <code>@supabase/supabase-js</code> อยู่ใน <code>package.json</code>
+                ไฟล์ <code>src/lib/supabase.js</code> และ <code>src/contexts/AuthContext.jsx</code> มีอยู่
+                <code>main.jsx</code> ห่อ RouterProvider ด้วย AuthProvider แล้ว
+                แอปยังรันได้โดยไม่มี Error ใน console
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                อย่าเก็บ API key ใน repository สาธารณะ ใช้ <code>.env</code> file แทน:
+                สร้าง <code>.env</code> ที่ root ของ bookeasy ใส่ <code>VITE_SUPABASE_URL</code> และ <code>VITE_SUPABASE_ANON_KEY</code>
+                แล้วอ่านใน <code>supabase.js</code> ด้วย <code>import.meta.env.VITE_SUPABASE_URL</code>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -400,13 +471,85 @@ $_SESSION['last_activity'] = time();
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">หน้าสมัครสมาชิก (register.php)</div>
+            <div class="task-title">สร้างหน้า Login และ Register</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>register.php</code> ที่มีฟอร์ม: ชื่อผู้ใช้, อีเมล, รหัสผ่าน, ยืนยันรหัสผ่าน ต้อง Validate: ทุกฟิลด์กรอกครบ, รูปแบบอีเมลถูกต้อง (<code>filter_var</code>), รหัสผ่านและยืนยันตรงกัน, ชื่อผู้ใช้และอีเมลไม่ซ้ำในระบบ</p>
-            <p>เมื่อผ่าน Validation ให้ Hash รหัสผ่านด้วย <code>password_hash()</code> และ INSERT ลงตาราง users จากนั้น Redirect ไป login.php</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>สมัครด้วยข้อมูลครบถ้วน → Redirect ไป login.php / สมัครด้วย Email ซ้ำ → Error / รหัสผ่านไม่ตรง → Error / เปิด phpMyAdmin → เห็นข้อมูลในตาราง users โดย Column password เป็น Hash ไม่ใช่ Plain Text</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>filter_var($email, FILTER_VALIDATE_EMAIL)</code> ตรวจสอบรูปแบบอีเมล และ <code>strlen($password) >= 8</code> ตรวจสอบความยาวรหัสผ่าน ตรวจสอบ Username ซ้ำก่อน INSERT</p></div>
+            <p>สร้างหน้า Login และ Register พร้อมเพิ่ม route ใน router</p>
+            <ul>
+              <li>
+                สร้าง <code>src/pages/LoginPage.jsx</code> — Form มี Email + Password + ปุ่ม "เข้าสู่ระบบ"
+                เรียก <code>supabase.auth.signInWithPassword()</code> และแสดง error ถ้าล้มเหลว
+                Login สำเร็จให้ navigate ไป <code>/</code>
+              </li>
+              <li>
+                สร้าง <code>src/pages/RegisterPage.jsx</code> — Form มี Email + Password + Full Name
+                เรียก <code>supabase.auth.signUp()</code> และแสดงข้อความสำเร็จหรือ error
+              </li>
+              <li>
+                เพิ่ม routes <code>/login</code> และ <code>/register</code> ใน <code>src/router.js</code>
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/pages/RegisterPage.jsx</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { useNavigate } from '@tanstack/react-router';
+
+export function RegisterPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName } },
+    });
+    if (error) { setMessage(error.message); return; }
+    setMessage('สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลเพื่อยืนยัน');
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}>
+      &lt;input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="ชื่อ-นามสกุล" required />
+      &lt;input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="อีเมล" required />
+      &lt;input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="รหัสผ่าน (≥6 ตัว)" required minLength={6} />
+      {message &amp;&amp; &lt;p>{message}&lt;/p>}
+      &lt;button type="submit">สมัครสมาชิก&lt;/button>
+      &lt;a href="/login">มีบัญชีอยู่แล้ว? เข้าสู่ระบบ&lt;/a>
+    &lt;/form>
+  );
+}</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                เปิด <code>/register</code> → กรอกข้อมูล → กด Submit → แสดงข้อความสำเร็จ
+                เปิด Supabase Dashboard → Authentication → Users → เห็น user ใหม่
+                เปิด <code>/login</code> → Login ด้วย account ที่สมัคร → navigate ไปหน้าแรก
+                Login ผิด → แสดง error message
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้า Supabase Project เปิด "Email Confirmation" ไว้ ผู้ใช้ต้องคลิก confirm link ในอีเมลก่อน Login ได้
+                ระหว่างพัฒนาสามารถปิดฟีเจอร์นี้ได้ที่ Authentication → Settings → Confirm email
+              </p>
+            </div>
           </div>
         </div>
 
@@ -414,13 +557,73 @@ $_SESSION['last_activity'] = time();
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">หน้าเข้าสู่ระบบ (login.php)</div>
+            <div class="task-title">ปกป้อง Route /booking ด้วย ProtectedRoute</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>login.php</code> ที่มีฟอร์ม: อีเมล และ รหัสผ่าน ใช้ PDO Prepared Statement ค้นหา User ด้วย Email แล้วใช้ <code>password_verify()</code> ตรวจสอบรหัสผ่าน</p>
-            <p>เมื่อ Login สำเร็จ: เรียก <code>session_regenerate_id(true)</code>, ตั้ง Session (<code>user_id</code>, <code>username</code>, <code>logged_in = true</code>), Redirect ไป dashboard.php เมื่อ Login ล้มเหลว: แสดงข้อความ "อีเมลหรือรหัสผ่านไม่ถูกต้อง" เสมอ ไม่ว่าจะผิดที่อีเมลหรือรหัสผ่าน</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Login ด้วยข้อมูลถูกต้อง → เข้า dashboard.php / Login ด้วยรหัสผ่านผิด → Error Message / Login ด้วย Email ที่ไม่มีในระบบ → Error Message เดียวกัน / DevTools → Session มี user_id</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ตรวจสอบทั้ง <code>$user</code> ไม่ว่าง และ <code>password_verify()</code> ในเงื่อนไขเดียวกัน: <code>if ($user && password_verify($password, $user['password']))</code> เพื่อป้องกัน PHP Error กรณีไม่พบ User</p></div>
+            <p>ห่อ BookingForm ด้วย <code>ProtectedRoute</code> และเพิ่มปุ่ม Login/Logout ใน Header</p>
+            <ul>
+              <li>
+                สร้าง <code>src/components/ProtectedRoute.jsx</code> ตาม snippet 3 ด้านบน
+                ตรวจสอบ <code>user</code> จาก <code>useAuth()</code> — redirect ไป <code>/login</code> ถ้าไม่มี user
+              </li>
+              <li>
+                ใน <code>src/router.js</code> หรือไฟล์ที่กำหนด route <code>/booking</code>
+                ห่อ Component ด้วย <code>&lt;ProtectedRoute&gt;</code>
+              </li>
+              <li>
+                เปิด <code>src/components/Header.jsx</code> (หรือ Navbar):
+                ใช้ <code>useAuth()</code> ตรวจสอบ <code>user</code>
+                ถ้ามี user แสดง "สวัสดี [ชื่อ]" + ปุ่ม "ออกจากระบบ" ที่เรียก <code>supabase.auth.signOut()</code>
+                ถ้าไม่มี user แสดงปุ่ม "เข้าสู่ระบบ" ที่ navigate ไป <code>/login</code>
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/components/ProtectedRoute.jsx</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
+
+export function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading &amp;&amp; !user) {
+      navigate({ to: '/login' });
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) return &lt;p>กำลังตรวจสอบ...&lt;/p>;
+  if (!user) return null;
+  return children;
+}</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                เปิด <code>/booking</code> โดยไม่ Login → redirect ไป <code>/login</code> ทันที
+                Login แล้วเปิด <code>/booking</code> → เห็นหน้า BookingForm ตามปกติ
+                Header แสดงปุ่ม "เข้าสู่ระบบ" เมื่อยังไม่ Login และแสดงชื่อผู้ใช้ + ปุ่ม "ออกจากระบบ" เมื่อ Login แล้ว
+                กด "ออกจากระบบ" → กลับสู่สถานะไม่ Login
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ใช้ <code>useEffect</code> สำหรับ navigate เพราะการเรียก <code>navigate()</code>
+                ระหว่าง render โดยตรงอาจทำให้เกิด React warning
+                ตรวจสอบ <code>loading</code> ก่อนเสมอ ไม่เช่นนั้นอาจ redirect ก่อนที่ session จะโหลดเสร็จ
+              </p>
+            </div>
           </div>
         </div>
 
@@ -428,65 +631,93 @@ $_SESSION['last_activity'] = time();
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">4</div>
-            <div class="task-title">หน้า Dashboard (ต้อง Login)</div>
+            <div class="task-title">เปิด RLS และตั้ง Policy บน Supabase</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>dashboard.php</code> ที่ตรวจสอบ Session ก่อนแสดงเนื้อหา ถ้ายังไม่ Login ให้ Redirect ไป login.php ทันที แสดง: ข้อความต้อนรับพร้อม Username, อีเมลของผู้ใช้, เวลาที่ Login และปุ่ม Logout</p>
-            <p>ทดสอบโดยพยายาม Copy URL ของ dashboard.php แล้วเปิดใน Tab ใหม่โดยไม่ Login ต้อง Redirect ไปหน้า Login โดยอัตโนมัติ</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Login แล้วเปิด dashboard.php → เห็น "ยินดีต้อนรับ [ชื่อ]" / เปิด dashboard.php โดยไม่ Login → Redirect ไป login.php / Username แสดงถูกต้องตรงกับที่สมัคร</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใส่ <code>session_start();</code> และตรวจสอบ Session ที่บรรทัดแรกสุด ก่อน HTML ใด ๆ จากนั้นค่อยแสดงเนื้อหา สามารถสร้าง <code>auth_check.php</code> แยกไว้แล้ว <code>require</code> เพื่อใช้ซ้ำได้</p></div>
-          </div>
-        </div>
+            <p>เปิด Row Level Security บน <code>bookings</code> table และสร้าง Policy ให้ผู้ใช้เห็นเฉพาะข้อมูลของตัวเอง</p>
+            <ul>
+              <li>เปิด Supabase Dashboard → Table Editor → เลือก <code>bookings</code> table</li>
+              <li>คลิก "RLS disabled" เพื่อ Enable RLS → ยืนยัน</li>
+              <li>คลิก "New Policy" → เลือก template "Enable read access for users based on user_id"</li>
+              <li>ตรวจสอบว่า Policy ใช้ <code>auth.uid() = user_id</code> เป็น USING expression</li>
+              <li>สร้าง Policy แยกสำหรับ INSERT ที่กำหนด <code>user_id</code> อัตโนมัติเป็น <code>auth.uid()</code></li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">SQL — RLS Policies สำหรับ bookings</span>
+                <span class="code-lang">JavaScript</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-javascript">// รัน SQL นี้ใน Supabase SQL Editor
 
-        <!-- Task 5 -->
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">ระบบ Logout สมบูรณ์</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างไฟล์ <code>logout.php</code> ที่ทำการ Logout สมบูรณ์แบบ 3 ขั้นตอน: ล้าง <code>$_SESSION = []</code>, ลบ Session Cookie ออกจากเบราว์เซอร์, และ <code>session_destroy()</code> จากนั้น Redirect ไป login.php</p>
-            <p>ทดสอบ: Login → ไป dashboard.php → กด Logout → พยายามกด Back ของเบราว์เซอร์ → ต้องไม่สามารถเข้า dashboard.php ได้อีก (Redirect กลับ login.php)</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>กด Logout → Redirect ไป login.php / กด Browser Back → Redirect ไป login.php ทันที (ไม่เห็น dashboard) / DevTools Cookies → PHPSESSID หายไปหลัง Logout</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ต้องทำครบ 3 ขั้นตอน ขาดขั้นตอนใดขั้นตอนหนึ่งอาจทำให้ Session ยังคงอยู่ หลัง <code>session_destroy()</code> สามารถเพิ่ม Header <code>Cache-Control: no-store</code> เพื่อป้องกัน Browser Cache หน้า Dashboard</p></div>
+-- เปิด RLS
+ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
+
+-- Policy: ดูได้เฉพาะ bookings ของตัวเอง
+CREATE POLICY "users can view own bookings"
+ON bookings FOR SELECT
+USING (auth.uid() = user_id);
+
+-- Policy: จองได้เฉพาะในนามตัวเอง
+CREATE POLICY "users can insert own bookings"
+ON bookings FOR INSERT
+WITH CHECK (auth.uid() = user_id);</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                Supabase Dashboard แสดงว่า RLS เปิดอยู่บน <code>bookings</code> table
+                Login ด้วย User A → จอง → เห็นเฉพาะ bookings ของ User A เท่านั้น
+                Login ด้วย User B → เห็นเฉพาะ bookings ของ User B ไม่เห็นของ User A
+                ทดสอบด้วย Supabase SQL Editor: <code>SELECT * FROM bookings</code> (ไม่มี session) → ได้ 0 แถว
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ต้องเพิ่ม column <code>user_id UUID REFERENCES auth.users(id)</code> ใน <code>bookings</code> table ถ้ายังไม่มี
+                และใน BookingForm ส่ง <code>user_id: user.id</code> ไปด้วยเมื่อ INSERT
+                ดึง <code>user</code> จาก <code>useAuth()</code> hook ภายใน BookingForm
+              </p>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-08.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">Session &amp; Cookie</div>
+        <div class="wn-name">TanStack Query: useQuery, useMutation &amp; Server State Management</div>
       </a>
       <a href="week-10.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">UI/UX &amp; Responsive</div>
+        <div class="wn-name">Supabase Storage: อัปโหลดไฟล์และจัดการรูปภาพ</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
-        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
         integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
-        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"
+        integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw=="
         crossorigin="anonymous"></script>
 </body>
 </html>
