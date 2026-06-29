@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 3 — PHP เบื้องต้น & ติดตั้งสภาพแวดล้อม — 07-034-233</title>
+  <title>สัปดาห์ที่ 3 — Vite + React: ตั้งค่าโปรเจกต์ &amp; Component — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,12 +18,12 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 3</span>
     <span class="sep">›</span>
-    <span>PHP เบื้องต้น</span>
+    <span>Vite + React: Component</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 3</div>
-    <h1 class="wh-title">PHP เบื้องต้น & ติดตั้งสภาพแวดล้อม</h1>
+    <h1 class="wh-title">Vite + React: ตั้งค่าโปรเจกต์ &amp; Component</h1>
     <div class="wh-clos">
       <span class="wh-clo">CLO3</span>
     </div>
@@ -46,131 +46,108 @@
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>PHP คืออะไร?</h3>
+        <h3>Vite คืออะไร</h3>
         <p>
-          <strong>PHP</strong> (PHP: Hypertext Preprocessor) เป็นภาษา Scripting ฝั่ง Server (Server-side Scripting Language)
-          ที่ถูกออกแบบมาสำหรับการพัฒนาเว็บโดยเฉพาะ PHP ทำงานบน Web Server (เช่น Apache) ก่อนที่ผลลัพธ์จะถูกส่งไปยังเบราว์เซอร์
-          ผู้ใช้จะเห็นแค่ HTML ที่ PHP สร้างขึ้น ไม่เห็นโค้ด PHP โดยตรง
+          <strong>Vite</strong> (อ่านว่า "วีต") เป็น Build Tool รุ่นใหม่สำหรับพัฒนา Web Application
+          สร้างโดย Evan You ผู้สร้าง Vue.js จุดเด่นหลักคือความเร็วในการ Start Dev Server และ
+          Hot Module Replacement (HMR) ที่แทบทันทีเมื่อแก้ไขไฟล์
         </p>
         <p>
-          จุดเด่นของ PHP ได้แก่:
+          เปรียบเทียบกับ <strong>Create React App (CRA)</strong> ที่หลายคนอาจเคยใช้:
         </p>
         <ul>
-          <li><strong>ฝังใน HTML ได้</strong> — เขียน PHP ปนกับ HTML ในไฟล์เดียวกัน ด้วย PHP Tags <code>&lt;?php ... ?&gt;</code></li>
-          <li><strong>Open Source & ฟรี</strong> — ดาวน์โหลดและใช้งานได้ฟรี ชุมชนผู้ใช้ขนาดใหญ่</li>
-          <li><strong>รองรับ Database หลายชนิด</strong> — MySQL, PostgreSQL, SQLite, MongoDB</li>
-          <li><strong>Cross-platform</strong> — ทำงานได้บน Windows, macOS, Linux</li>
-          <li><strong>ใช้งานแพร่หลาย</strong> — WordPress, Facebook (เดิม), Wikipedia ล้วนสร้างด้วย PHP</li>
+          <li><strong>CRA</strong> — ใช้ webpack ที่ต้อง bundle ทุกไฟล์ก่อน dev server จึงช้ามากในโปรเจกต์ใหญ่</li>
+          <li><strong>Vite</strong> — ใช้ native ES Modules ของ browser และ esbuild (เขียนด้วย Go) ทำให้ Start Server เร็วกว่า CRA 10–100 เท่า</li>
         </ul>
         <p>
-          ไฟล์ PHP จะมีนามสกุล <strong>.php</strong> และต้องรันผ่าน Web Server เท่านั้น
-          (ไม่สามารถเปิดด้วยการดับเบิ้ลคลิกไฟล์แบบ HTML ได้) นั่นคือต้องเข้าถึงผ่าน URL เช่น
-          <code>http://localhost/myproject/index.php</code>
+          <strong>HMR (Hot Module Replacement)</strong> คือความสามารถในการอัปเดตเฉพาะโมดูลที่เปลี่ยนแปลง
+          โดยไม่ต้อง Reload หน้าทั้งหมด ทำให้ state ของแอปยังคงอยู่ขณะพัฒนา
         </p>
 
         <div class="diagram-box">
           <pre>
-การทำงานของ PHP:
+โครงสร้างโปรเจกต์ Vite + React:
 
-  1. ผู้ใช้เปิด URL: http://localhost/hello.php
-           │
-           ▼
-  2. Apache รับ Request และส่งให้ PHP Engine ประมวลผล
-           │
-           ▼
-  3. PHP อ่านไฟล์ hello.php และรันโค้ด PHP
-     (อาจเชื่อมต่อ Database, คำนวณ, ตรวจสอบเงื่อนไข)
-           │
-           ▼
-  4. PHP สร้าง HTML จากผลลัพธ์
-           │
-           ▼
-  5. Apache ส่ง HTML กลับไปให้เบราว์เซอร์ (HTTP Response)
-           │
-           ▼
-  6. เบราว์เซอร์แสดงผล HTML ให้ผู้ใช้เห็น
+  bookeasy/
+  ├── public/          ← ไฟล์ static (favicon, images)
+  ├── src/
+  │   ├── components/  ← React Components
+  │   ├── App.jsx      ← Root Component
+  │   ├── main.jsx     ← Entry point (ReactDOM.createRoot)
+  │   └── index.css    ← Global styles
+  ├── index.html       ← HTML template (Vite entry)
+  ├── vite.config.js   ← Vite configuration
+  └── package.json     ← Dependencies &amp; npm scripts
           </pre>
         </div>
 
-        <h3>การติดตั้ง XAMPP</h3>
         <p>
-          <strong>XAMPP</strong> เป็นชุดซอฟต์แวร์ที่รวม Web Server และ Database ไว้ในชุดเดียว ประกอบด้วย:
+          <strong>npm scripts</strong> ที่ใช้บ่อยใน Vite project:
         </p>
         <ul>
-          <li><strong>X</strong> — Cross-platform (ทำงานได้บน Windows, macOS, Linux)</li>
-          <li><strong>A</strong> — Apache Web Server (ให้บริการ HTTP)</li>
-          <li><strong>M</strong> — MariaDB/MySQL (ระบบจัดการฐานข้อมูล)</li>
-          <li><strong>P</strong> — PHP (ภาษา Scripting)</li>
-          <li><strong>P</strong> — Perl (ภาษา Scripting อีกตัว)</li>
-        </ul>
-        <p>ขั้นตอนการติดตั้งและใช้งาน XAMPP:</p>
-        <ul>
-          <li>ดาวน์โหลดจาก <code>https://www.apachefriends.org</code> เลือก Version สำหรับ OS ของคุณ</li>
-          <li>ติดตั้งด้วยการรัน Installer ยอมรับ Default Settings</li>
-          <li>เปิด <strong>XAMPP Control Panel</strong> แล้วกด <strong>Start</strong> ที่ Apache และ MySQL</li>
-          <li>ตัวบ่งชี้สีเขียวแสดงว่า Service กำลังทำงาน</li>
-          <li>วางไฟล์ PHP ใน folder <strong>htdocs</strong> (Windows: <code>C:\xampp\htdocs\</code>, macOS: <code>/Applications/XAMPP/htdocs/</code>)</li>
-          <li>เข้าถึงได้ที่ <code>http://localhost/</code> หรือ <code>http://127.0.0.1/</code></li>
-          <li>เปิด phpMyAdmin (จัดการ MySQL) ที่ <code>http://localhost/phpmyadmin</code></li>
+          <li><code>npm run dev</code> — เปิด Dev Server พร้อม HMR ที่ <code>http://localhost:5173</code></li>
+          <li><code>npm run build</code> — Build สำหรับ Production สร้างไฟล์ใน <code>dist/</code></li>
+          <li><code>npm run preview</code> — Preview ไฟล์ที่ Build แล้วก่อน Deploy</li>
         </ul>
 
-        <div class="callout warning">
-          <div class="callout-title">ข้อควรระวัง — Port Conflicts</div>
+        <h3>JSX คืออะไร</h3>
+        <p>
+          <strong>JSX</strong> (JavaScript XML) เป็น Syntax Extension ของ JavaScript ที่ให้เขียน
+          HTML-like markup ภายใน JavaScript ได้โดยตรง JSX ไม่ใช่ HTML จริง แต่ Vite/Babel
+          จะ transform ให้กลายเป็น <code>React.createElement()</code> ที่ JavaScript เข้าใจ
+        </p>
+        <ul>
+          <li>
+            <strong>ใช้ <code>className</code> แทน <code>class</code></strong> — เพราะ <code>class</code> เป็น reserved keyword ใน JavaScript
+          </li>
+          <li>
+            <strong>ใช้ <code>htmlFor</code> แทน <code>for</code></strong> — เช่นเดียวกัน <code>for</code> เป็น reserved keyword
+          </li>
+          <li>
+            <strong>ฝัง JavaScript ด้วย <code>{}</code></strong> — ใส่ expression ใดก็ได้ภายใน curly braces เช่น <code>{name}</code>, <code>{price * 1.07}</code>
+          </li>
+          <li>
+            <strong>Tag ต้องปิดเสมอ</strong> — ต่างจาก HTML ที่ <code>&lt;img&gt;</code> ไม่ต้องปิด ใน JSX ต้องเป็น <code>&lt;img /&gt;</code>
+          </li>
+          <li>
+            <strong>Return element เดียวเท่านั้น</strong> — ต้องห่อด้วย <code>&lt;div&gt;</code> หรือ Fragment <code>&lt;&gt;...&lt;/&gt;</code>
+          </li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
           <p>
-            Apache ใช้ Port 80 (HTTP) และ 443 (HTTPS) หากมีโปรแกรมอื่นใช้ Port เดียวกัน (เช่น Skype, IIS)
-            Apache จะ Start ไม่ได้ แก้ไขโดย: หยุดโปรแกรมที่ใช้ Port ซ้อน หรือเปลี่ยน Port ของ Apache
-            ใน <code>httpd.conf</code> เช่นเปลี่ยนจาก 80 เป็น 8080 แล้วเข้าถึงด้วย <code>http://localhost:8080/</code>
+            JSX ดูเหมือน HTML แต่ทำงานใน JavaScript context ทุก expression ใน <code>{}</code>
+            ต้องคืนค่า ไม่ใช่ Statement เช่น ใช้ Ternary Operator (<code>condition ? a : b</code>)
+            แทน if/else และใช้ <code>array.map()</code> แทน for loop
           </p>
         </div>
 
-        <h3>โครงสร้างภาษา PHP พื้นฐาน</h3>
+        <h3>React Function Component และ Props</h3>
         <p>
-          PHP Tags บอกให้ PHP Engine รู้ว่าส่วนใดคือโค้ด PHP ที่ต้องประมวลผล:
+          <strong>Function Component</strong> คือฟังก์ชัน JavaScript ที่ return JSX
+          ชื่อ Component ต้องขึ้นต้นด้วยตัวพิมพ์ใหญ่ (เช่น <code>ServiceCard</code>, <code>Header</code>)
+          เพื่อให้ React แยกแยะจาก HTML element ได้
+        </p>
+        <p>
+          <strong>Props</strong> (Properties) คือข้อมูลที่ส่งจาก Parent Component ไปยัง Child Component
+          ทำงานคล้าย Parameter ของฟังก์ชัน ทำให้ Component นำกลับใช้ซ้ำได้ด้วยข้อมูลต่างกัน:
         </p>
         <ul>
-          <li><code>&lt;?php ... ?&gt;</code> — Standard PHP Tag (แนะนำ)</li>
-          <li><code>&lt;?= $variable ?&gt;</code> — Short Echo Tag สำหรับแสดงค่าตัวแปร</li>
+          <li>ส่ง props ด้วย syntax เหมือน HTML attribute: <code>&lt;ServiceCard name="ตัดผม" price={150} /&gt;</code></li>
+          <li>รับ props ใน Component ด้วย destructuring: <code>function ServiceCard({ name, price }) {}</code></li>
+          <li>Props เป็น Read-only — Component ไม่ควรแก้ไข props ที่ได้รับ</li>
+          <li>Spread props: <code>&lt;ServiceCard {...service} /&gt;</code> ส่งทุก property ของ object</li>
         </ul>
-        <p>
-          <strong>ตัวแปร (Variables)</strong> ใน PHP เริ่มต้นด้วยเครื่องหมาย <code>$</code> เสมอ
-          PHP เป็น <strong>Loosely Typed Language</strong> ไม่ต้องประกาศชนิดข้อมูลล่วงหน้า:
-        </p>
-        <ul>
-          <li><code>$name = "สมชาย";</code> — String (ข้อความ)</li>
-          <li><code>$age = 20;</code> — Integer (จำนวนเต็ม)</li>
-          <li><code>$gpa = 3.75;</code> — Float (ทศนิยม)</li>
-          <li><code>$isStudent = true;</code> — Boolean (จริง/เท็จ)</li>
-          <li><code>$scores = [85, 90, 78];</code> — Array (อาร์เรย์)</li>
-          <li><code>$nothing = null;</code> — Null (ไม่มีค่า)</li>
-        </ul>
-        <p>
-          คำสั่งแสดงผล: <code>echo</code> และ <code>print</code> ใช้แสดงข้อความหรือค่าตัวแปร
-          <code>var_dump()</code> ใช้แสดงชนิดและค่าของตัวแปร (มีประโยชน์สำหรับ Debug):
-        </p>
 
         <div class="callout tip">
-          <div class="callout-title">เคล็ดลับ — String Concatenation</div>
+          <div class="callout-title">เคล็ดลับ — Naming Conventions</div>
           <p>
-            PHP ใช้จุด (<code>.</code>) สำหรับต่อสตริง ไม่ใช่ <code>+</code> แบบ JavaScript
-            เช่น: <code>echo "สวัสดี " . $name . "!";</code>
-            หรือฝังตัวแปรใน Double Quotes ได้เลย: <code>echo "สวัสดี $name!";</code>
+            ไฟล์ Component ใช้ PascalCase เช่น <code>ServiceCard.jsx</code>, <code>Header.jsx</code>
+            ชื่อ CSS class ใช้ kebab-case เช่น <code>service-card</code>, <code>services-grid</code>
+            ส่วน JavaScript variables และ functions ใช้ camelCase
           </p>
         </div>
-
-        <h3>PHP กับ HTML</h3>
-        <p>
-          จุดแข็งของ PHP คือสามารถฝังในไฟล์ HTML ได้โดยตรง ทำให้สร้างหน้าเว็บ Dynamic ได้ง่าย
-          PHP จะประมวลผลส่วนที่อยู่ใน <code>&lt;?php ?&gt;</code> แล้วส่ง Output ออกมาแทนที่ Tags นั้น
-        </p>
-        <p>
-          คำสั่ง <strong>include</strong> และ <strong>require</strong> ใช้แทรกไฟล์ PHP อื่นเข้ามา
-          เหมาะสำหรับแยก Header, Footer, หรือ Config เป็นไฟล์แยกและใช้ซ้ำในหลายหน้า:
-        </p>
-        <ul>
-          <li><code>include 'header.php';</code> — แทรกไฟล์ (หากไม่พบจะแสดง Warning และรันต่อ)</li>
-          <li><code>require 'config.php';</code> — แทรกไฟล์ (หากไม่พบจะหยุดทำงานทันที)</li>
-          <li><code>include_once</code> / <code>require_once</code> — แทรกไฟล์เพียงครั้งเดียว (ป้องกัน Duplicate)</li>
-        </ul>
 
       </div>
     </div>
@@ -186,28 +163,16 @@
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">hello.php</span>
-          <span class="code-lang">PHP</span>
+          <span class="code-filename">terminal</span>
+          <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php">
-<?php
-// ไฟล์ PHP แรก: hello.php
-// วางในโฟลเดอร์ htdocs แล้วเปิด http://localhost/hello.php
-
-// แสดงข้อความด้วย echo
-echo "สวัสดี PHP!";
-echo "<br>"; // บรรทัดใหม่ใน HTML
-
-// แสดงวันที่และเวลาปัจจุบัน
-echo "วันนี้คือ: " . date('d/m/Y') . "<br>";
-echo "เวลา: " . date('H:i:s') . "<br>";
-
-// คำสั่ง phpinfo() แสดงข้อมูลการตั้งค่า PHP ทั้งหมด
-// มีประโยชน์มากสำหรับตรวจสอบว่า PHP Extensions ใดถูกเปิดใช้
-// phpinfo(); // ลบ comment เพื่อทดลอง (ห้ามใช้บน Production!)
-?>
-        </code></pre>
+        <pre><code class="language-bash"># ตั้งค่าโปรเจกต์ BookEasy
+npm create vite@latest bookeasy -- --template react
+cd bookeasy
+npm install
+npm run dev
+# เปิด http://localhost:5173</code></pre>
       </div>
 
       <div class="code-block">
@@ -217,243 +182,62 @@ echo "เวลา: " . date('H:i:s') . "<br>";
             <span class="dot-y"></span>
             <span class="dot-g"></span>
           </div>
-          <span class="code-filename">variables.php</span>
-          <span class="code-lang">PHP</span>
+          <span class="code-filename">src/components/ServiceCard.jsx</span>
+          <span class="code-lang">JSX</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php">
-<?php
-// ============================
-// PHP Variables & Data Types
-// ============================
+        <pre><code class="language-jsx">// React Component เบื้องต้น — ServiceCard.jsx
+function ServiceCard({ name, description, price, duration }) {
+  return (
+    &lt;div className="service-card"&gt;
+      &lt;h3&gt;{name}&lt;/h3&gt;
+      &lt;p&gt;{description}&lt;/p&gt;
+      &lt;div className="service-info"&gt;
+        &lt;span&gt;ราคา: {price} บาท&lt;/span&gt;
+        &lt;span&gt;เวลา: {duration} นาที&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;button&gt;จองบริการนี้&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
 
-// String
-$name = "สมชาย ใจดี";
-$university = 'มหาวิทยาลัยนราธิวาสราชนครินทร์';
+export default ServiceCard;</code></pre>
+      </div>
 
-// Integer
-$age = 20;
-$studentYear = 3;
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/App.jsx</span>
+          <span class="code-lang">JSX</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-jsx">// ใช้ Component ใน App.jsx
+import ServiceCard from './components/ServiceCard';
 
-// Float
-$gpa = 3.75;
-$tuitionFee = 12500.50;
-
-// Boolean
-$isActive = true;
-$isGraduated = false;
-
-// Array (อาร์เรย์แบบ Indexed)
-$scores = [85, 92, 78, 96, 88];
-
-// Array แบบ Associative (คล้าย Object ใน JS)
-$student = [
-    'name'    => 'สมชาย ใจดี',
-    'id'      => '6601001',
-    'faculty' => 'วิศวกรรมศาสตร์',
-    'gpa'     => 3.75
+const MOCK_SERVICES = [
+  { id: 1, name: 'ตัดผมชาย', description: 'ตัดผมสไตล์เกาหลี/ยุโรป', price: 150, duration: 45 },
+  { id: 2, name: 'นวดแผนไทย', description: 'นวดผ่อนคลาย 60 นาที', price: 400, duration: 60 },
+  { id: 3, name: 'สปาหน้า', description: 'บำรุงผิวหน้า ลดรอยแดง', price: 600, duration: 90 },
 ];
 
-// Null
-$profilePicture = null;
+function App() {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;BookEasy — จองบริการออนไลน์&lt;/h1&gt;
+      &lt;div className="services-grid"&gt;
+        {MOCK_SERVICES.map(service =&gt; (
+          &lt;ServiceCard key={service.id} {...service} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/main&gt;
+  );
+}
 
-// ============================
-// แสดงค่าตัวแปร
-// ============================
-echo "<h2>ข้อมูลนักศึกษา</h2>";
-echo "ชื่อ: $name<br>";                          // ฝัง Variable ใน String
-echo "อายุ: " . $age . " ปี<br>";               // ต่อ String
-echo "เกรดเฉลี่ย: " . number_format($gpa, 2) . "<br>"; // จัด Format ทศนิยม
-
-// แสดงข้อมูล Array
-echo "<h3>คะแนนวิชาต่าง ๆ</h3>";
-echo "<pre>";
-print_r($scores);     // แสดง Array แบบอ่านง่าย
-echo "</pre>";
-
-echo "<h3>ข้อมูลนักศึกษา (Associative Array)</h3>";
-echo "ชื่อ: " . $student['name'] . "<br>";
-echo "รหัส: " . $student['id'] . "<br>";
-echo "คณะ: " . $student['faculty'] . "<br>";
-
-// ============================
-// var_dump(): ดู Type และ Value
-// ============================
-echo "<h3>var_dump() แสดงชนิดข้อมูล</h3>";
-echo "<pre>";
-var_dump($name);        // string(17) "สมชาย ใจดี"
-var_dump($age);         // int(20)
-var_dump($gpa);         // float(3.75)
-var_dump($isActive);    // bool(true)
-var_dump($profilePicture); // NULL
-echo "</pre>";
-
-// ============================
-// Type Casting (แปลงชนิดข้อมูล)
-// ============================
-$strNumber = "42";
-$intNumber = (int) $strNumber;     // แปลงเป็น Integer
-$floatNum  = (float) "3.14";       // แปลงเป็น Float
-$boolVal   = (bool) 0;             // แปลงเป็น Boolean (0 = false)
-
-echo "<br>Type Casting:<br>";
-var_dump($intNumber);   // int(42)
-var_dump($floatNum);    // float(3.14)
-var_dump($boolVal);     // bool(false)
-?>
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="code-filename">dynamic-page.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php">
-<?php
-// ============================
-// PHP ผสมกับ HTML: หน้าเว็บ Dynamic
-// ============================
-
-$pageTitle = "หน้าเว็บ Dynamic";
-$currentYear = date('Y');
-$currentDate = date('d/m/Y');
-$currentTime = date('H:i');
-
-// สินค้าตัวอย่าง
-$products = [
-    ['name' => 'โน้ตบุ๊ค Dell',    'price' => 25900, 'stock' => 5],
-    ['name' => 'เมาส์ Logitech',   'price' =>  890,  'stock' => 20],
-    ['name' => 'คีย์บอร์ด Keychron', 'price' => 3290, 'stock' => 8],
-    ['name' => 'จอ LG 27"',        'price' => 8500,  'stock' => 3],
-];
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title><?= $pageTitle ?></title>
-  <style>
-    body { font-family: 'Sarabun', sans-serif; padding: 20px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-    th { background: #2c3e50; color: white; }
-    tr:nth-child(even) { background: #f2f2f2; }
-    .out-of-stock { color: red; }
-    .in-stock { color: green; }
-  </style>
-</head>
-<body>
-
-  <h1><?= $pageTitle ?></h1>
-  <p>วันที่: <?= $currentDate ?> | เวลา: <?= $currentTime ?></p>
-
-  <h2>รายการสินค้า</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>ชื่อสินค้า</th>
-        <th>ราคา (บาท)</th>
-        <th>สถานะ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($products as $index => $product): ?>
-        <tr>
-          <td><?= $index + 1 ?></td>
-          <td><?= $product['name'] ?></td>
-          <td><?= number_format($product['price']) ?></td>
-          <td class="<?= $product['stock'] > 0 ? 'in-stock' : 'out-of-stock' ?>">
-            <?= $product['stock'] > 0 ? "มีสินค้า ({$product['stock']} ชิ้น)" : "สินค้าหมด" ?>
-          </td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-
-  <footer>
-    <p>&copy; <?= $currentYear ?> ร้านค้าออนไลน์ตัวอย่าง</p>
-  </footer>
-
-</body>
-</html>
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="code-filename">header.php + footer.php + index.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php">
-<?php // ===== header.php ===== ?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $pageTitle ?? 'My Website' ?></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <header>
-    <div class="logo">MyWebApp</div>
-    <nav>
-      <a href="/index.php">หน้าหลัก</a>
-      <a href="/about.php">เกี่ยวกับ</a>
-      <a href="/contact.php">ติดต่อ</a>
-    </nav>
-  </header>
-  <main>
-
-
-<?php // ===== footer.php ===== ?>
-  </main>
-  <footer>
-    <p>&copy; <?= date('Y') ?> Princess of Naradhiwas University</p>
-    <p>พัฒนาโดย: อาจารย์สุรเชษฐ์ สังข์แก้วพันธ์</p>
-  </footer>
-</body>
-</html>
-
-
-<?php
-// ===== index.php (หน้าหลัก) =====
-$pageTitle = "หน้าหลัก — My Website";
-
-require_once 'header.php'; // แทรก header (หากไม่พบ = หยุดทำงาน)
-?>
-
-  <h1>ยินดีต้อนรับ!</h1>
-  <p>นี่คือหน้าหลักของเว็บไซต์</p>
-  <p>วันนี้คือ: <?= date('l, d F Y') ?></p>
-
-  <section id="features">
-    <h2>ฟีเจอร์หลัก</h2>
-    <ul>
-      <li>จัดการสินค้า</li>
-      <li>ระบบสมาชิก</li>
-      <li>รายงานการขาย</li>
-    </ul>
-  </section>
-
-<?php
-require_once 'footer.php'; // แทรก footer
-?>
-        </code></pre>
+export default App;</code></pre>
       </div>
 
     </div>
@@ -461,37 +245,38 @@ require_once 'footer.php'; // แทรก footer
     <!-- LAB SECTION -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 2 — PHP เบื้องต้น</h2>
-        <p>ฝึกติดตั้ง XAMPP, สร้างไฟล์ PHP แรก, ทดลองชนิดข้อมูล, และสร้างหน้าเว็บ Dynamic ด้วย PHP</p>
+        <h2>🧪 ปฏิบัติการ Lab 2 — BookEasy: Scaffold โปรเจกต์ React</h2>
+        <p>สร้าง Vite + React project สำหรับ BookEasy สร้าง Component โครงสร้างหลัก และทดสอบ render ด้วย mock data</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 1</div>
+          <p>
+            เราสร้าง HTML/CSS static ไปแล้ว ตอนนี้จะ rebuild ด้วย React + Vite
+          </p>
+        </div>
       </div>
       <div class="lab-body">
 
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">ติดตั้งและทดสอบ XAMPP</div>
+            <div class="task-title">สร้าง Vite + React project</div>
           </div>
           <div class="task-body">
-            <p>ติดตั้ง XAMPP และทดสอบว่า Apache และ MySQL ทำงานได้อย่างถูกต้อง</p>
+            <p>Scaffold โปรเจกต์ React ใหม่ด้วย Vite template และทดสอบให้รันได้บน Dev Server</p>
             <ul>
-              <li>ดาวน์โหลด XAMPP จาก <code>https://www.apachefriends.org</code></li>
-              <li>ติดตั้งและเปิด XAMPP Control Panel</li>
-              <li>กด Start Apache และ Start MySQL — ทั้งคู่ต้องเป็นสีเขียว</li>
-              <li>เปิดเบราว์เซอร์ไปที่ <code>http://localhost</code> — ต้องเห็นหน้า XAMPP Dashboard</li>
-              <li>เปิด <code>http://localhost/phpmyadmin</code> — ต้องเห็นหน้า phpMyAdmin</li>
-              <li>สร้างไฟล์ <code>test.php</code> ใน htdocs ด้วยเนื้อหา <code>&lt;?php echo "PHP ทำงานได้!"; ?&gt;</code></li>
-              <li>เปิด <code>http://localhost/test.php</code> — ต้องเห็นข้อความ "PHP ทำงานได้!"</li>
+              <li>รัน <code>npm create vite@latest bookeasy -- --template react</code></li>
+              <li>เข้าไปในโฟลเดอร์ด้วย <code>cd bookeasy</code> แล้วรัน <code>npm install</code></li>
+              <li>ลบไฟล์ที่ Vite สร้างให้แต่ไม่ต้องการ: <code>src/App.css</code> และ <code>src/assets/react.svg</code></li>
+              <li>ตรวจสอบว่า <code>npm run dev</code> เปิดได้ที่ <code>http://localhost:5173</code></li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>สามารถเปิด <code>http://localhost</code> เห็น XAMPP Dashboard, เปิด <code>http://localhost/phpmyadmin</code> ได้,
-                 และ <code>http://localhost/test.php</code> แสดงข้อความที่ถูกต้อง ถ่ายภาพหน้าจอทั้ง 3 หน้าส่งอาจารย์</p>
+              <p>เปิด <code>http://localhost:5173</code> แล้วเห็นหน้า Default Vite + React ไม่มี Error ใน Console</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>หาก Apache Start ไม่ได้ ให้ตรวจสอบว่ามีโปรแกรมอื่นใช้ Port 80 หรือไม่
-                 เปิด Command Prompt แล้วพิมพ์ <code>netstat -ano | findstr :80</code> (Windows)
-                 หรือ <code>lsof -i :80</code> (macOS) เพื่อดูว่ามีโปรแกรมใดใช้ Port นั้น</p>
+              <p>หาก port 5173 ถูกใช้งานอยู่ Vite จะใช้ port ถัดไปอัตโนมัติ ให้สังเกตหมายเลข port ใน terminal
+                 และ <code>npm run dev</code> ต้องรันภายใน folder <code>bookeasy/</code> ที่มีไฟล์ <code>package.json</code></p>
             </div>
           </div>
         </div>
@@ -499,26 +284,25 @@ require_once 'footer.php'; // แทรก footer
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">สร้างไฟล์ PHP แรก</div>
+            <div class="task-title">สร้าง Component โครงสร้าง</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>profile.php</code> ใน htdocs ที่แสดงข้อมูลส่วนตัวของคุณพร้อมวันที่และเวลา</p>
+            <p>สร้าง Component หลักทั้งหมดและเชื่อมต่อใน App.jsx</p>
             <ul>
-              <li>แสดงชื่อ-นามสกุล, รหัสนักศึกษา, คณะ, และสาขาวิชา</li>
-              <li>แสดงวันที่ปัจจุบันในรูปแบบ <code>dd/mm/yyyy</code> ด้วย <code>date('d/m/Y')</code></li>
-              <li>แสดงเวลาปัจจุบันด้วย <code>date('H:i:s')</code></li>
-              <li>คำนวณอายุจากปีเกิด: <code>$age = date('Y') - $birthYear;</code></li>
-              <li>แสดง Output ในรูปแบบ HTML ที่สวยงาม (มี CSS ตกแต่ง)</li>
+              <li>สร้าง <code>src/components/Header.jsx</code> — แสดง Logo และ nav links</li>
+              <li>สร้าง <code>src/components/Footer.jsx</code> — แสดง copyright</li>
+              <li>สร้าง <code>src/components/ServiceCard.jsx</code> — รับ props: <code>name</code>, <code>description</code>, <code>price</code>, <code>duration</code></li>
+              <li>แก้ไข <code>src/App.jsx</code> ให้ใช้ Header, Footer, ServiceCard พร้อม <code>MOCK_SERVICES</code> array</li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>เปิด <code>http://localhost/profile.php</code> แล้วเห็นข้อมูลครบทุกอย่าง
-                 วันที่และเวลาต้องแสดงค่าปัจจุบันจริง ๆ (ไม่ใช่ค่า Hardcode) และ HTML ต้องถูกต้อง ไม่มี PHP Tags รั่วออกมาแสดงในหน้า</p>
+              <p>แต่ละไฟล์ export Component ได้ถูกต้อง App.jsx import และใช้งาน Component ทั้ง 3 ตัวได้
+                 ไม่มี Error ใน Console และไม่มี TypeScript — ไฟล์ใช้นามสกุล <code>.jsx</code> ทั้งหมด</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>หากหน้าเว็บแสดง PHP Code โดยตรงแทนผลลัพธ์ แสดงว่า Apache ไม่ได้ Start หรือคุณเปิดไฟล์โดยตรง (ผ่าน file://)
-                 ต้องเข้าผ่าน <code>http://localhost/...</code> เสมอ</p>
+              <p>สร้าง folder <code>src/components/</code> ก่อน แล้วสร้างไฟล์แต่ละตัว
+                 ทุก Component ต้องมี <code>export default</code> และชื่อ Component ต้องขึ้นต้นด้วยตัวพิมพ์ใหญ่</p>
             </div>
           </div>
         </div>
@@ -526,80 +310,24 @@ require_once 'footer.php'; // แทรก footer
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">ทดลองชนิดข้อมูล PHP</div>
+            <div class="task-title">ตรวจ render</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>datatypes.php</code> ที่ทดลองตัวแปรทุกชนิดและแสดงผลด้วย <code>var_dump()</code></p>
+            <p>ตรวจสอบว่าหน้าเว็บ render Component ครบถ้วนและไม่มี build error</p>
             <ul>
-              <li>ประกาศตัวแปร String, Integer, Float, Boolean, Array, Null อย่างน้อยชนิดละ 2 ตัว</li>
-              <li>แสดงผลด้วย <code>var_dump()</code> ทุกตัวแปรและบันทึกผลที่ได้</li>
-              <li>ทดลอง Type Casting: แปลง String "100" เป็น Integer, แปลง Float 3.9 เป็น Integer</li>
-              <li>ทดลอง Type Juggling: คำนวณ <code>"5" + 3</code> และบันทึกผล (PHP แปลง String เป็น Integer อัตโนมัติ)</li>
-              <li>ทดลองฟังก์ชัน <code>gettype()</code> เพื่อดูชนิดข้อมูล</li>
+              <li>ดูในเบราว์เซอร์ว่าหน้าแสดง Header, ServiceCard 3 ใบจาก mock data, และ Footer</li>
+              <li>ถ่ายภาพหน้าจอหน้า localhost:5173</li>
+              <li>รัน <code>npm run build</code> และตรวจสอบว่าไม่มี error ใน terminal</li>
             </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>หน้าเว็บแสดง var_dump() ของตัวแปรทุกชนิดพร้อมชนิดข้อมูล เช่น <code>string(5) "hello"</code>, <code>int(20)</code>
-                 นักศึกษาต้องอธิบายได้ว่าผลของ <code>(int)3.9</code> คืออะไร (คำตอบ: 3 ตัดทศนิยมทิ้ง)</p>
+              <p>หน้าแสดง Header, 3 ServiceCard พร้อม name/description/price/duration จาก mock data, และ Footer
+                 รัน <code>npm run build</code> แล้วสำเร็จ ไม่มี error — ส่งภาพหน้าจอและไฟล์โค้ดให้อาจารย์</p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>&lt;pre&gt;</code> ครอบ <code>var_dump()</code> เพื่อให้ Output จัดรูปแบบสวยงาม:
-                 <code>echo "&lt;pre&gt;"; var_dump($myArray); echo "&lt;/pre&gt;";</code></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">4</div>
-            <div class="task-title">สร้างหน้าเว็บด้วย PHP และ HTML</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างไฟล์ <code>greeting.php</code> ที่แสดงการทักทายตามเวลาของวันแบบ Dynamic</p>
-            <ul>
-              <li>ดึงชั่วโมงปัจจุบันด้วย <code>$hour = (int)date('H');</code></li>
-              <li>เงื่อนไข: 5-11 = "สวัสดีตอนเช้า ☀️", 12-17 = "สวัสดีตอนบ่าย 🌤️", 18-21 = "สวัสดีตอนเย็น 🌆", อื่น ๆ = "สวัสดียามค่ำคืน 🌙"</li>
-              <li>แสดงวันในสัปดาห์เป็นภาษาไทย: ใช้ <code>date('N')</code> (1=จันทร์, 7=อาทิตย์) พร้อม Array <code>['จันทร์','อังคาร','พุธ','พฤหัสฯ','ศุกร์','เสาร์','อาทิตย์']</code></li>
-              <li>นับวันถึงสิ้นปีและแสดง: <code>$daysLeft = ceil((mktime(0,0,0,12,31,date('Y')) - time()) / 86400);</code></li>
-              <li>ออกแบบหน้าให้สวยงามด้วย CSS (สีพื้นหลังตามช่วงเวลา)</li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>หน้าเว็บแสดงคำทักทายที่ตรงกับเวลาจริง แสดงวันในสัปดาห์เป็นภาษาไทยถูกต้อง
-                 ทดสอบโดยเปลี่ยน <code>$hour</code> เป็นค่าต่าง ๆ ชั่วคราว เพื่อตรวจสอบว่าทุกเงื่อนไขทำงานได้</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>date_default_timezone_set('Asia/Bangkok');</code> ที่บรรทัดแรกของไฟล์
-                 เพื่อให้ <code>date()</code> แสดงเวลาไทยอย่างถูกต้อง (UTC+7) ไม่เช่นนั้นเวลาอาจผิดได้</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">ใช้คำสั่ง include แยก Header และ Footer</div>
-          </div>
-          <div class="task-body">
-            <p>ปรับโครงสร้างโปรเจกต์ให้ใช้ <code>include</code> แยก Header และ Footer ออกจากหน้าหลัก</p>
-            <ul>
-              <li>สร้างโฟลเดอร์ <code>mysite/</code> ใน htdocs</li>
-              <li>สร้าง <code>mysite/includes/header.php</code>: DOCTYPE, html, head, body เปิด, header tag พร้อม nav</li>
-              <li>สร้าง <code>mysite/includes/footer.php</code>: ปิด main, footer tag, ปิด body, html</li>
-              <li>สร้าง <code>mysite/index.php</code>: ตั้งค่า <code>$pageTitle</code> แล้ว <code>require_once</code> header.php, เขียนเนื้อหา, <code>require_once</code> footer.php</li>
-              <li>สร้าง <code>mysite/about.php</code> ในรูปแบบเดียวกัน แต่เนื้อหาต่างกัน</li>
-            </ul>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ทั้ง index.php และ about.php แสดง Header และ Footer เหมือนกัน โดยไม่มีโค้ดซ้ำกัน
-                 แก้ไขที่ header.php เพียงที่เดียวแล้วทั้งสองหน้าเปลี่ยนพร้อมกัน</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>require_once __DIR__ . '/includes/header.php';</code> แทน path แบบ relative
-                 เพราะ <code>__DIR__</code> คือ directory ของไฟล์ปัจจุบัน ทำให้ include ทำงานถูกต้องไม่ว่าจะเรียกจากที่ใด</p>
+              <p>หากเห็น <code>ServiceCard is not defined</code> ให้ตรวจสอบว่า import path ถูกต้อง
+                 เช่น <code>import ServiceCard from './components/ServiceCard'</code> (Vite ไม่ต้องใส่ <code>.jsx</code> ก็ได้)</p>
             </div>
           </div>
         </div>
@@ -611,11 +339,11 @@ require_once 'footer.php'; // แทรก footer
     <div class="week-nav">
       <a href="week-02.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">HTML, CSS, JavaScript (ทบทวน)</div>
+        <div class="wn-name">ทบทวน HTML/CSS/JS + ES2022</div>
       </a>
       <a href="week-04.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST</div>
+        <div class="wn-name">React State + Form + TanStack Router</div>
       </a>
     </div>
 
@@ -626,14 +354,17 @@ require_once 'footer.php'; // แทรก footer
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
         integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
         integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"
+        integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw=="
         crossorigin="anonymous"></script>
 </body>
 </html>
