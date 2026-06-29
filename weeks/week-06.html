@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 6 — CRUD Operations — 07-034-233</title>
+  <title>สัปดาห์ที่ 6 — Supabase: ออกแบบ DB + SQL เบื้องต้น — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,19 +18,21 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 6</span>
     <span class="sep">›</span>
-    <span>CRUD Operations</span>
+    <span>Supabase: ออกแบบ DB + SQL เบื้องต้น</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 6</div>
-    <h1 class="wh-title">CRUD Operations — สร้าง อ่าน แก้ไข ลบ ข้อมูล</h1>
+    <h1 class="wh-title">Supabase: ออกแบบ DB + SQL เบื้องต้น</h1>
     <div class="wh-clos">
+      <span class="wh-clo">CLO2</span>
       <span class="wh-clo">CLO3</span>
     </div>
   </div>
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
@@ -40,383 +42,363 @@
       </ul>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         THEORY
-    ══════════════════════════════════════════ -->
+    <!-- THEORY SECTION -->
     <div id="theory">
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <!-- 1 -->
-        <h3>1. CRUD คืออะไร?</h3>
-        <p>CRUD ย่อมาจาก <strong>Create, Read, Update, Delete</strong> ซึ่งเป็นการดำเนินการพื้นฐาน 4 อย่างที่ทุกแอปพลิเคชันที่ใช้ฐานข้อมูลจำเป็นต้องมี ไม่ว่าจะเป็นระบบจัดการสินค้า ระบบสมาชิก หรือแม้แต่โซเชียลมีเดีย ล้วนสร้างขึ้นจาก CRUD ทั้งสิ้น</p>
-        <p>ในภาษา SQL แต่ละตัวอักษรของ CRUD ตรงกับคำสั่งดังนี้: <strong>Create → INSERT</strong>, <strong>Read → SELECT</strong>, <strong>Update → UPDATE</strong>, <strong>Delete → DELETE</strong> และเมื่อนำมาใช้งานในเว็บแอปพลิเคชัน PHP เราจะเชื่อมต่อผ่าน PDO (PHP Data Objects) ซึ่งเป็นวิธีที่ปลอดภัยและยืดหยุ่นที่สุดในการติดต่อกับฐานข้อมูล</p>
-        <p>ความสำคัญของการเข้าใจ CRUD คือการที่นักพัฒนาจะสามารถสร้างฟีเจอร์ใหม่ ๆ ได้อย่างรวดเร็ว เพราะทุกระบบสามารถแยกย่อยออกมาเป็น CRUD ได้เสมอ ตัวอย่างเช่น ระบบโพสต์บล็อกก็ประกอบด้วย สร้างโพสต์ (Create), แสดงโพสต์ (Read), แก้ไขโพสต์ (Update), และลบโพสต์ (Delete)</p>
+        <h3>1. Supabase คืออะไร</h3>
+        <p>
+          <strong>Supabase</strong> คือ Open-Source Backend-as-a-Service ที่รวม
+          <strong>PostgreSQL</strong>, Auth, Storage, Realtime, และ Edge Functions ไว้ใน Platform เดียว
+          บางครั้งเรียกว่า "Firebase Alternative" เพราะให้บริการคล้ายกันแต่สร้างบน PostgreSQL แทน NoSQL
+        </p>
+        <p>
+          สิ่งที่ทำให้ Supabase โดดเด่น:
+        </p>
+        <ul>
+          <li>
+            <strong>PostgreSQL</strong> — ฐานข้อมูลเชิงสัมพันธ์ที่ทรงพลัง รองรับ SQL มาตรฐาน, JSON,
+            Full-Text Search, และ Extension หลายร้อยตัว
+          </li>
+          <li>
+            <strong>Auth</strong> — ระบบ Authentication พร้อมใช้ รองรับ Email/Password, OAuth (Google, GitHub),
+            Magic Link โดยไม่ต้องเขียนโค้ดใหม่
+          </li>
+          <li>
+            <strong>Storage</strong> — อัปโหลดและจัดการไฟล์ รูปภาพ และวิดีโอ มี CDN ในตัว
+          </li>
+          <li>
+            <strong>Realtime</strong> — Subscribe การเปลี่ยนแปลงข้อมูลใน Database แบบ Real-time ผ่าน WebSocket
+          </li>
+          <li>
+            <strong>Auto-generated API</strong> — สร้าง REST API และ GraphQL API จากโครงสร้างตารางอัตโนมัติ
+            พร้อม SDK สำหรับ JavaScript, Python, Flutter, Swift
+          </li>
+        </ul>
 
-        <div class="diagram-box"><pre>
-  C — Create  → INSERT INTO table (col1, col2) VALUES (?, ?)
-  R — Read    → SELECT * FROM table WHERE id = ?
-  U — Update  → UPDATE table SET col1 = ? WHERE id = ?
-  D — Delete  → DELETE FROM table WHERE id = ?
-        </pre></div>
+        <div class="diagram-box">
+          <pre>
+สถาปัตยกรรม Supabase:
 
-        <!-- 2 -->
-        <h3>2. Create — เพิ่มข้อมูล (INSERT)</h3>
-        <p>การเพิ่มข้อมูลเริ่มต้นจากการสร้าง HTML Form ที่มี <code>method="POST"</code> ผู้ใช้กรอกข้อมูล แล้ว Submit ฟอร์ม PHP จะรับข้อมูลผ่าน <code>$_POST</code> แล้วทำการ INSERT เข้าฐานข้อมูลผ่าน PDO Prepared Statement</p>
-        <p>สิ่งสำคัญที่ต้องทำหลัง INSERT สำเร็จคือการ Redirect ผู้ใช้ไปยังหน้าอื่น เช่น หน้ารายการสินค้า นี่คือรูปแบบที่เรียกว่า <strong>Post/Redirect/Get (PRG Pattern)</strong> ซึ่งป้องกันไม่ให้ผู้ใช้กด Refresh แล้วเกิดการส่งข้อมูลซ้ำโดยไม่ตั้งใจ หากไม่ใช้ PRG Pattern เมื่อผู้ใช้กด F5 บนหน้าผลลัพธ์ เบราว์เซอร์จะถามว่า "ต้องการส่งข้อมูลอีกครั้งหรือไม่?" ซึ่งอาจทำให้ข้อมูลถูกเพิ่มซ้ำได้</p>
-        <p>ก่อน INSERT ควรทำการ Validate ข้อมูลทุกครั้ง เช่น ตรวจสอบว่าฟิลด์บังคับกรอกครบหรือไม่ ตรวจสอบรูปแบบ email, ตรวจสอบว่าตัวเลขอยู่ในช่วงที่กำหนด และ Sanitize ข้อมูลก่อนนำไปใช้เพื่อป้องกัน XSS</p>
+  ┌─────────────────────────────────────────────┐
+  │              Supabase Platform              │
+  │                                             │
+  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  │
+  │  │PostgreSQL│  │   Auth   │  │ Storage  │  │
+  │  └──────────┘  └──────────┘  └──────────┘  │
+  │                                             │
+  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  │
+  │  │ Realtime │  │PostgREST │  │  Edge Fn │  │
+  │  └──────────┘  └──────────┘  └──────────┘  │
+  └─────────────────────────────────────────────┘
+               │
+         supabase-js SDK
+               │
+  ┌────────────────────────────────┐
+  │   Frontend (React / Vanilla)   │
+  └────────────────────────────────┘
+          </pre>
+        </div>
 
-        <div class="callout tip"><div class="callout-title">เคล็ดลับ — PRG Pattern</div><p>หลัง INSERT สำเร็จให้ใช้ <code>header('Location: list.php'); exit;</code> เสมอ เพื่อป้องกันการ Submit ซ้ำเมื่อผู้ใช้กด Refresh หน้า</p></div>
+        <h3>2. การสร้างโปรเจกต์ใน Supabase Dashboard</h3>
+        <p>
+          การเริ่มต้นใช้ Supabase ทำได้ผ่าน Dashboard ที่ <strong>supabase.com</strong>
+          โดยไม่จำเป็นต้องติดตั้งอะไรบน Machine ของตัวเอง เพราะฐานข้อมูลและ API รันบน Cloud ทั้งหมด
+        </p>
+        <p>
+          ขั้นตอนการสร้างโปรเจกต์ใหม่:
+        </p>
+        <ul>
+          <li>
+            สมัครบัญชีที่ <code>supabase.com</code> (ใช้ GitHub Account ได้)
+            แล้วคลิก <strong>New Project</strong>
+          </li>
+          <li>
+            ตั้งชื่อโปรเจกต์ กำหนด Database Password ที่แข็งแกร่ง และเลือก Region
+            (แนะนำ <strong>Southeast Asia (Singapore)</strong> สำหรับผู้ใช้ในไทย)
+          </li>
+          <li>
+            รอประมาณ 1–2 นาทีให้ Supabase สร้าง PostgreSQL Instance ให้
+          </li>
+          <li>
+            ไปที่ <strong>Settings → API</strong> บันทึก <code>Project URL</code> และ <code>anon key</code>
+            ไว้ใช้ในโค้ด JavaScript
+          </li>
+        </ul>
 
-        <!-- 3 -->
-        <h3>3. Read — อ่านข้อมูล (SELECT)</h3>
-        <p>การอ่านข้อมูลจากฐานข้อมูลสามารถทำได้หลายรูปแบบ ตั้งแต่ SELECT ข้อมูลทั้งหมด (<code>SELECT * FROM products</code>), SELECT แบบมีเงื่อนไข (<code>SELECT * FROM products WHERE id = ?</code>), ไปจนถึงการค้นหาด้วย LIKE (<code>WHERE name LIKE ?</code>) หรือการเรียงลำดับด้วย ORDER BY</p>
-        <p>เมื่อข้อมูลมีจำนวนมาก ควรใช้ <strong>Pagination</strong> เพื่อแบ่งหน้า โดยใช้ LIMIT และ OFFSET ใน SQL เช่น <code>SELECT * FROM products LIMIT 10 OFFSET 20</code> จะดึงข้อมูล 10 รายการ โดยข้ามแถวแรกไป 20 แถว ซึ่งเทียบเท่ากับหน้า 3 เมื่อแสดงหน้าละ 10 รายการ</p>
-        <p>ข้อมูลที่ดึงมาจาก PDO จะอยู่ในรูปแบบ Array ที่สามารถวนซ้ำด้วย foreach เพื่อแสดงเป็นตาราง HTML ได้ทันที ควรใช้ <code>htmlspecialchars()</code> ทุกครั้งเมื่อแสดงข้อมูลใน HTML เพื่อป้องกัน XSS Attack</p>
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — Free Tier</div>
+          <p>
+            Supabase Free Tier ให้ 2 โปรเจกต์ฟรี, Storage 500 MB, และ Database 500 MB
+            เพียงพอสำหรับโปรเจกต์ในคอร์สนี้
+            หากโปรเจกต์ไม่มีการใช้งานเกิน 7 วัน จะถูก Pause อัตโนมัติ สามารถ Resume ได้ผ่าน Dashboard
+          </p>
+        </div>
 
-        <div class="callout note"><div class="callout-title">หมายเหตุ</div><p>เมื่อ SELECT ข้อมูลที่อาจมีอักขระพิเศษ เช่น <code>&lt;</code>, <code>&gt;</code>, <code>"</code> ให้ใช้ <code>htmlspecialchars($value, ENT_QUOTES, 'UTF-8')</code> ทุกครั้งก่อนแสดงผลใน HTML</p></div>
+        <h3>3. PostgreSQL พื้นฐาน — ความแตกต่างจาก MySQL</h3>
+        <p>
+          <strong>PostgreSQL</strong> เป็น Relational Database ที่มีความสามารถสูงกว่า MySQL หลายด้าน
+          Supabase เลือก PostgreSQL เพราะรองรับ Feature ขั้นสูงที่จำเป็นสำหรับ Modern Web Application
+        </p>
+        <p>
+          ความแตกต่างสำคัญที่ควรทราบ:
+        </p>
+        <ul>
+          <li>
+            <strong>UUID</strong> — PostgreSQL ใช้ <code>UUID</code> เป็น Primary Key แทน
+            <code>INT AUTO_INCREMENT</code> ของ MySQL
+            UUID สร้างด้วย <code>gen_random_uuid()</code> ทำให้ ID ไม่เดาได้และ Merge ข้อมูลจากหลาย Database ได้
+          </li>
+          <li>
+            <strong>TIMESTAMPTZ</strong> — PostgreSQL ใช้ <code>TIMESTAMPTZ</code> (Timestamp with Time Zone)
+            แทน <code>TIMESTAMP</code> ของ MySQL เพื่อให้เก็บ Timezone ไว้ด้วยเสมอ
+          </li>
+          <li>
+            <strong>CHECK Constraint</strong> — PostgreSQL รองรับ CHECK Constraint ที่ซับซ้อนโดยตรงใน
+            Column Definition เช่น <code>CHECK (status IN ('pending','confirmed','cancelled'))</code>
+          </li>
+          <li>
+            <strong>Extensions</strong> — PostgreSQL มี Extension เสริมเช่น <code>uuid-ossp</code>,
+            <code>pgvector</code> (AI/Vector Search), <code>postgis</code> (GIS/Location Data)
+          </li>
+          <li>
+            <strong>Row Level Security (RLS)</strong> — PostgreSQL รองรับ Policy ความปลอดภัยระดับแถว
+            ซึ่งเป็นหัวใจสำคัญของ Supabase ในการจำกัดการเข้าถึงข้อมูล
+          </li>
+        </ul>
 
-        <!-- 4 -->
-        <h3>4. Update — แก้ไขข้อมูล (UPDATE)</h3>
-        <p>กระบวนการ Update มี 2 ขั้นตอนหลัก คือ (1) <strong>โหลดข้อมูลเดิม</strong> ด้วย SELECT มาแสดงในฟอร์มก่อน (pre-fill form) เพื่อให้ผู้ใช้เห็นข้อมูลปัจจุบันและแก้ไขเฉพาะส่วนที่ต้องการเปลี่ยน จากนั้น (2) เมื่อผู้ใช้ Submit ฟอร์ม ให้ทำ UPDATE ลงฐานข้อมูล</p>
-        <p>การส่ง ID ของรายการที่ต้องการแก้ไขทำได้ผ่าน URL Parameter เช่น <code>edit.php?id=5</code> ซึ่ง PHP รับได้ผ่าน <code>$_GET['id']</code> และต้องตรวจสอบว่า ID นั้นถูกต้องและมีอยู่จริงในฐานข้อมูลก่อนแสดงฟอร์ม เพื่อป้องกันผู้ใช้ที่ตั้งใจแก้ไข URL เพื่อเข้าถึงข้อมูลที่ไม่ได้รับอนุญาต</p>
+        <div class="diagram-box">
+          <pre>
+เปรียบเทียบ MySQL กับ PostgreSQL ใน Supabase:
 
-        <div class="callout warning"><div class="callout-title">ข้อควรระวัง</div><p>อย่าลืม <code>WHERE</code> ใน <code>UPDATE</code> และ <code>DELETE</code>! ถ้าลืม WHERE จะแก้ไข/ลบข้อมูลทั้งหมดในตาราง เช่น <code>UPDATE products SET price = 0</code> โดยไม่มี WHERE จะทำให้สินค้าทุกชิ้นราคาเป็น 0 ทันที!</p></div>
+  Feature          MySQL                PostgreSQL (Supabase)
+  ──────────────────────────────────────────────────────────
+  Primary Key      INT AUTO_INCREMENT   UUID DEFAULT gen_random_uuid()
+  Timestamp        TIMESTAMP            TIMESTAMPTZ
+  String           VARCHAR(255)         TEXT (ไม่จำกัดขนาด)
+  Boolean          TINYINT(1)           BOOLEAN
+  JSON             JSON                 JSONB (indexed, ค้นหาได้เร็วกว่า)
+  Enum             ENUM('a','b')        CHECK (col IN ('a','b'))
+  Auth Integration ไม่มี               auth.users (built-in)
+          </pre>
+        </div>
 
-        <!-- 5 -->
-        <h3>5. Delete — ลบข้อมูล (DELETE)</h3>
-        <p>การลบข้อมูลออกแบบ 2 แบบ คือ <strong>Hard Delete</strong> ซึ่งลบออกจากฐานข้อมูลจริง ๆ ข้อมูลหายถาวร และ <strong>Soft Delete</strong> ซึ่งเพิ่ม Column <code>deleted_at</code> หรือ <code>is_deleted</code> แล้ว UPDATE แทนการลบจริง วิธีนี้ทำให้สามารถกู้คืนข้อมูลได้ภายหลังหากลบผิดพลาด ระบบงานจริงมักใช้ Soft Delete</p>
-        <p>ก่อนลบควรแสดง Confirmation Dialog หรือหน้า Confirm เพื่อให้ผู้ใช้ยืนยันก่อน ป้องกันการลบโดยไม่ตั้งใจ ไม่ควรให้ลบด้วย GET Request เพราะ Bot หรือ Crawler อาจติดตาม Link และลบข้อมูลโดยไม่ตั้งใจ ควรลบด้วย POST เสมอ</p>
-        <p>หากข้อมูลที่จะลบมีความสัมพันธ์กับตารางอื่น (Foreign Key) ต้องตรวจสอบว่าการลบจะทำให้ข้อมูลในตารางอื่นเสียหายหรือไม่ก่อน อาจต้องลบข้อมูลในตารางที่เกี่ยวข้องก่อน (CASCADE DELETE) หรือป้องกันการลบหากยังมีข้อมูลอ้างอิงอยู่</p>
+        <h3>4. ออกแบบตาราง BookEasy: services, bookings, profiles</h3>
+        <p>
+          ระบบ BookEasy ต้องการตาราง 3 ตาราง ที่มีความสัมพันธ์กันผ่าน Foreign Key:
+        </p>
+        <ul>
+          <li>
+            <strong>services</strong> — เก็บข้อมูลบริการที่ให้จอง เช่น ตัดผม นวด สปา
+            มี <code>id, name, description, price, duration_min, image_url, created_at</code>
+          </li>
+          <li>
+            <strong>bookings</strong> — เก็บข้อมูลการจอง เชื่อมกับ <code>auth.users</code>
+            และ <code>services</code> ผ่าน Foreign Key
+            มี <code>id, user_id, service_id, booking_date, booking_time, status, notes, created_at</code>
+          </li>
+          <li>
+            <strong>profiles</strong> — เก็บข้อมูลโปรไฟล์ผู้ใช้ที่เพิ่มเติมจาก <code>auth.users</code>
+            เชื่อมกับ <code>auth.users</code> แบบ One-to-One
+            มี <code>id, full_name, phone, avatar_url, updated_at</code>
+          </li>
+        </ul>
+        <p>
+          ความสัมพันธ์ระหว่างตาราง: ผู้ใช้ 1 คน (<code>auth.users</code>) มีได้ 1 โปรไฟล์ (<code>profiles</code>)
+          และมีการจองได้หลายครั้ง (<code>bookings</code>) แต่ละการจองเชื่อมกับบริการ 1 รายการ (<code>services</code>)
+        </p>
 
-        <div class="diagram-box"><pre>
-  Hard Delete:   DELETE FROM products WHERE id = 5
-                 → ข้อมูลหายถาวร ไม่สามารถกู้คืนได้
+        <div class="diagram-box">
+          <pre>
+ER Diagram — BookEasy:
 
-  Soft Delete:   UPDATE products SET deleted_at = NOW() WHERE id = 5
-                 → ข้อมูลยังอยู่ในฐานข้อมูล สามารถกู้คืนได้
-                 → SELECT ต้องเพิ่ม WHERE deleted_at IS NULL เสมอ
-        </pre></div>
+  auth.users (Supabase built-in)
+       │ id (UUID)
+       │
+       ├──────────────────────────────┐
+       │                              │
+       ▼ (1:1)                        ▼ (1:N)
+  profiles                       bookings
+  ─────────────────               ──────────────────────────
+  id → auth.users.id              id (UUID, PK)
+  full_name                       user_id → auth.users.id
+  phone                           service_id → services.id
+  avatar_url                      booking_date
+  updated_at                      booking_time
+                                  status (pending/confirmed/cancelled)
+                                  notes
+                                  created_at
+                                       │
+                                       │ (N:1)
+                                       ▼
+                                  services
+                                  ─────────────────
+                                  id (UUID, PK)
+                                  name
+                                  description
+                                  price
+                                  duration_min
+                                  image_url
+                                  created_at
+          </pre>
+        </div>
+
+        <h3>5. Row Level Security (RLS) — แนวคิดพื้นฐาน</h3>
+        <p>
+          <strong>Row Level Security (RLS)</strong> คือ Feature ของ PostgreSQL ที่ให้กำหนด Policy
+          ว่าผู้ใช้แต่ละคนสามารถ SELECT, INSERT, UPDATE, หรือ DELETE แถวไหนได้บ้าง
+          โดยตรวจสอบที่ระดับ Database ไม่ใช่ระดับ Application Code
+        </p>
+        <p>
+          ทำไม RLS ถึงสำคัญใน Supabase:
+        </p>
+        <ul>
+          <li>
+            <strong>ความปลอดภัยโดย Default</strong> — เมื่อเปิด RLS บนตาราง ไม่มีใครเข้าถึงข้อมูลได้เลยจนกว่าจะสร้าง Policy
+            ป้องกันการรั่วไหลข้อมูลหาก Developer ลืมเพิ่ม Filter ใน Query
+          </li>
+          <li>
+            <strong>ตรวจสอบที่ Database</strong> — แม้ผู้ไม่หวังดีจะ Bypass Application Code ได้
+            RLS ยังคุ้มครองข้อมูลที่ระดับ Database อยู่
+          </li>
+          <li>
+            <strong>ใช้ JWT Token</strong> — Supabase ส่ง <code>auth.uid()</code> ซึ่งคือ UUID ของผู้ใช้ปัจจุบัน
+            ไปใน Policy เพื่อเปรียบเทียบ เช่น <code>user_id = auth.uid()</code> ให้ผู้ใช้เห็นเฉพาะข้อมูลของตัวเอง
+          </li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — RLS ใน Lab นี้</div>
+          <p>
+            ใน Lab 5 นี้ยังไม่เปิด RLS เพื่อให้ทดสอบได้ง่าย
+            แต่ใน Production จำเป็นต้องเปิด RLS ทุกตาราง และเขียน Policy อย่างรอบคอบ
+            มิเช่นนั้นข้อมูลของผู้ใช้ทุกคนจะมองเห็นกันได้
+          </p>
+        </div>
 
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         CODE EXAMPLES
-    ══════════════════════════════════════════ -->
+    <!-- CODE EXAMPLES SECTION -->
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Example 1: create.php -->
+      <!-- Snippet 1: CREATE TABLE -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">create.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">Supabase SQL Editor</span>
+          <span class="code-lang">SQL</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// create.php — เพิ่มสินค้าใหม่
-require 'db.php'; // ไฟล์เชื่อมต่อ PDO
+        <pre><code class="language-sql">-- snippet 1: สร้างตาราง BookEasy ใน Supabase SQL Editor
 
-$errors = [];
+-- ตารางบริการ
+CREATE TABLE services (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name       TEXT NOT NULL,
+  description TEXT,
+  price      NUMERIC(10,2) NOT NULL,
+  duration_min INT NOT NULL,
+  image_url  TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name        = trim($_POST['name'] ?? '');
-    $description = trim($_POST['description'] ?? '');
-    $price       = $_POST['price'] ?? '';
-    $stock       = $_POST['stock'] ?? '';
+-- ตารางการจอง
+CREATE TABLE bookings (
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id      UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  service_id   UUID REFERENCES services(id) ON DELETE CASCADE,
+  booking_date DATE NOT NULL,
+  booking_time TIME NOT NULL,
+  status       TEXT DEFAULT 'pending' CHECK (status IN ('pending','confirmed','cancelled')),
+  notes        TEXT,
+  created_at   TIMESTAMPTZ DEFAULT NOW()
+);
 
-    // Validation
-    if ($name === '') $errors[] = 'กรุณากรอกชื่อสินค้า';
-    if (!is_numeric($price) || $price < 0) $errors[] = 'ราคาต้องเป็นตัวเลขและไม่ติดลบ';
-    if (!is_numeric($stock) || $stock < 0)  $errors[] = 'จำนวนสต็อกต้องเป็นตัวเลขและไม่ติดลบ';
-
-    if (empty($errors)) {
-        $sql = "INSERT INTO products (name, description, price, stock)
-                VALUES (:name, :description, :price, :stock)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':name'        => $name,
-            ':description' => $description,
-            ':price'       => (float)$price,
-            ':stock'       => (int)$stock,
-        ]);
-
-        // PRG Pattern: redirect หลัง INSERT สำเร็จ
-        header('Location: list.php?success=created');
-        exit;
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>เพิ่มสินค้า</title>
-</head>
-<body>
-  <h1>เพิ่มสินค้าใหม่</h1>
-
-  <?php if (!empty($errors)): ?>
-    <div class="alert error">
-      <ul>
-        <?php foreach ($errors as $err): ?>
-          <li><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></li>
-        <?php endforeach; ?>
-      </ul>
-    </div>
-  <?php endif; ?>
-
-  <form method="POST" action="create.php">
-    <label>ชื่อสินค้า: <input type="text" name="name" required></label><br>
-    <label>คำอธิบาย: <textarea name="description"></textarea></label><br>
-    <label>ราคา (บาท): <input type="number" name="price" min="0" step="0.01" required></label><br>
-    <label>จำนวนสต็อก: <input type="number" name="stock" min="0" required></label><br>
-    <button type="submit">บันทึกสินค้า</button>
-    <a href="list.php">ยกเลิก</a>
-  </form>
-</body>
-</html></code></pre>
+-- ตารางโปรไฟล์ผู้ใช้
+CREATE TABLE profiles (
+  id         UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  full_name  TEXT,
+  phone      TEXT,
+  avatar_url TEXT,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);</code></pre>
       </div>
 
-      <!-- Example 2: list.php -->
+      <!-- Snippet 2: INSERT + SELECT -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">list.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">Supabase SQL Editor</span>
+          <span class="code-lang">SQL</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// list.php — แสดงรายการสินค้าทั้งหมด
-require 'db.php';
+        <pre><code class="language-sql">-- snippet 2: เพิ่มข้อมูลทดสอบ
+INSERT INTO services (name, description, price, duration_min) VALUES
+  ('ตัดผมชาย', 'ตัดผมสไตล์เกาหลี/ยุโรป พร้อมล้างและเป่า', 150, 45),
+  ('ตัดผมหญิง', 'ตัดและจัดทรงผมสำหรับผู้หญิง', 250, 60),
+  ('นวดแผนไทย', 'นวดผ่อนคลายกล้ามเนื้อด้วยภูมิปัญญาไทย', 400, 60),
+  ('นวดหน้า', 'บำรุงผิวหน้า ลดรอยแดง เพิ่มความชุ่มชื้น', 350, 45),
+  ('สปาหน้า', 'โปรแกรมดูแลผิวหน้าครบวงจร', 600, 90);
 
-// ดึงสินค้าทั้งหมดเรียงตามชื่อ
-$stmt = $pdo->query("SELECT * FROM products ORDER BY name ASC");
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>รายการสินค้า</title>
-</head>
-<body>
-  <h1>รายการสินค้าทั้งหมด</h1>
-
-  <?php if (isset($_GET['success'])): ?>
-    <div class="alert success">
-      <?php
-        $msg = match($_GET['success']) {
-            'created' => 'เพิ่มสินค้าสำเร็จ!',
-            'updated' => 'แก้ไขสินค้าสำเร็จ!',
-            'deleted' => 'ลบสินค้าสำเร็จ!',
-            default   => 'ดำเนินการสำเร็จ!'
-        };
-        echo htmlspecialchars($msg);
-      ?>
-    </div>
-  <?php endif; ?>
-
-  <a href="create.php">+ เพิ่มสินค้าใหม่</a>
-
-  <?php if (empty($products)): ?>
-    <p>ยังไม่มีสินค้าในระบบ</p>
-  <?php else: ?>
-    <table border="1" cellpadding="8">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>ชื่อสินค้า</th>
-          <th>คำอธิบาย</th>
-          <th>ราคา</th>
-          <th>สต็อก</th>
-          <th>จัดการ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($products as $p): ?>
-        <tr>
-          <td><?= $p['id'] ?></td>
-          <td><?= htmlspecialchars($p['name'], ENT_QUOTES, 'UTF-8') ?></td>
-          <td><?= htmlspecialchars($p['description'], ENT_QUOTES, 'UTF-8') ?></td>
-          <td><?= number_format($p['price'], 2) ?> บาท</td>
-          <td><?= $p['stock'] ?></td>
-          <td>
-            <a href="edit.php?id=<?= $p['id'] ?>">แก้ไข</a> |
-            <a href="delete.php?id=<?= $p['id'] ?>" onclick="return confirm('ยืนยันการลบ?')">ลบ</a>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  <?php endif; ?>
-</body>
-</html></code></pre>
+-- ดูข้อมูล
+SELECT id, name, price, duration_min FROM services ORDER BY price;</code></pre>
       </div>
 
-      <!-- Example 3: edit.php -->
+      <!-- Snippet 3: JavaScript Supabase client -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">edit.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/lib/supabase.js</span>
+          <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// edit.php — แก้ไขข้อมูลสินค้า
-require 'db.php';
+        <pre><code class="language-javascript">// snippet 3: เชื่อมต่อ Supabase ใน JavaScript
+// ติดตั้ง: npm install @supabase/supabase-js
 
-$id = (int)($_GET['id'] ?? 0);
-if ($id <= 0) {
-    header('Location: list.php');
-    exit;
-}
+import { createClient } from '@supabase/supabase-js';
 
-// โหลดข้อมูลเดิม
-$stmt = $pdo->prepare("SELECT * FROM products WHERE id = :id");
-$stmt->execute([':id' => $id]);
-$product = $stmt->fetch(PDO::FETCH_ASSOC);
+const supabaseUrl = 'https://xxxx.supabase.co';      // จาก Supabase Dashboard
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI...'; // anon key
 
-if (!$product) {
-    die('ไม่พบสินค้า');
-}
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
-$errors = [];
+// ทดสอบดึงข้อมูล
+const { data, error } = await supabase
+  .from('services')
+  .select('*')
+  .order('price', { ascending: true });
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name        = trim($_POST['name'] ?? '');
-    $description = trim($_POST['description'] ?? '');
-    $price       = $_POST['price'] ?? '';
-    $stock       = $_POST['stock'] ?? '';
-
-    if ($name === '') $errors[] = 'กรุณากรอกชื่อสินค้า';
-    if (!is_numeric($price) || $price < 0) $errors[] = 'ราคาต้องเป็นตัวเลขและไม่ติดลบ';
-    if (!is_numeric($stock) || $stock < 0)  $errors[] = 'จำนวนสต็อกต้องเป็นตัวเลขและไม่ติดลบ';
-
-    if (empty($errors)) {
-        $sql = "UPDATE products
-                SET name = :name, description = :description,
-                    price = :price, stock = :stock
-                WHERE id = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':name'        => $name,
-            ':description' => $description,
-            ':price'       => (float)$price,
-            ':stock'       => (int)$stock,
-            ':id'          => $id,
-        ]);
-
-        header('Location: list.php?success=updated');
-        exit;
-    }
-
-    // อัปเดตค่าใน $product สำหรับแสดงใน form หากมี error
-    $product = array_merge($product, compact('name', 'description', 'price', 'stock'));
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head><meta charset="UTF-8"><title>แก้ไขสินค้า</title></head>
-<body>
-  <h1>แก้ไขสินค้า: <?= htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') ?></h1>
-
-  <?php foreach ($errors as $err): ?>
-    <p style="color:red"><?= htmlspecialchars($err, ENT_QUOTES, 'UTF-8') ?></p>
-  <?php endforeach; ?>
-
-  <form method="POST" action="edit.php?id=<?= $id ?>">
-    <label>ชื่อสินค้า:
-      <input type="text" name="name" value="<?= htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') ?>" required>
-    </label><br>
-    <label>คำอธิบาย:
-      <textarea name="description"><?= htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') ?></textarea>
-    </label><br>
-    <label>ราคา:
-      <input type="number" name="price" value="<?= $product['price'] ?>" min="0" step="0.01" required>
-    </label><br>
-    <label>สต็อก:
-      <input type="number" name="stock" value="<?= $product['stock'] ?>" min="0" required>
-    </label><br>
-    <button type="submit">บันทึกการแก้ไข</button>
-    <a href="list.php">ยกเลิก</a>
-  </form>
-</body>
-</html></code></pre>
-      </div>
-
-      <!-- Example 4: delete.php -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">delete.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// delete.php — ลบสินค้า (แสดงหน้ายืนยันก่อน)
-require 'db.php';
-
-$id = (int)($_GET['id'] ?? 0);
-if ($id <= 0) {
-    header('Location: list.php');
-    exit;
-}
-
-// โหลดสินค้าที่ต้องการลบ
-$stmt = $pdo->prepare("SELECT * FROM products WHERE id = :id");
-$stmt->execute([':id' => $id]);
-$product = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$product) {
-    die('ไม่พบสินค้า');
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
-    // ดำเนินการลบจริง (Hard Delete)
-    $stmt = $pdo->prepare("DELETE FROM products WHERE id = :id");
-    $stmt->execute([':id' => $id]);
-
-    header('Location: list.php?success=deleted');
-    exit;
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head><meta charset="UTF-8"><title>ยืนยันการลบ</title></head>
-<body>
-  <h1>ยืนยันการลบสินค้า</h1>
-  <p>คุณต้องการลบสินค้าต่อไปนี้ใช่หรือไม่?</p>
-
-  <div style="background:#fff3cd; padding:16px; border-radius:8px; margin:16px 0;">
-    <p><strong>ชื่อ:</strong> <?= htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8') ?></p>
-    <p><strong>ราคา:</strong> <?= number_format($product['price'], 2) ?> บาท</p>
-    <p><strong>สต็อก:</strong> <?= $product['stock'] ?> ชิ้น</p>
-  </div>
-
-  <p style="color:red"><strong>คำเตือน:</strong> การลบไม่สามารถเรียกคืนได้!</p>
-
-  <form method="POST" action="delete.php?id=<?= $id ?>">
-    <button type="submit" name="confirm" value="yes" style="background:red; color:white;">
-      ยืนยันการลบ
-    </button>
-    <a href="list.php">ยกเลิก</a>
-  </form>
-</body>
-</html></code></pre>
+console.log(data, error);</code></pre>
       </div>
 
     </div>
 
-    <!-- ══════════════════════════════════════════
-         LAB 5
-    ══════════════════════════════════════════ -->
+    <!-- LAB SECTION -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 5 — CRUD Operations</h2>
-        <p>สร้างระบบจัดการสินค้าสมบูรณ์แบบครอบคลุมการสร้าง อ่าน แก้ไข และลบข้อมูลผ่าน PHP และ MySQL</p>
+        <h2>🧪 ปฏิบัติการ Lab 5 — BookEasy: สร้างฐานข้อมูลใน Supabase</h2>
+        <p>ฝึกสร้างฐานข้อมูล PostgreSQL ใน Supabase Dashboard เขียน SQL สร้างตารางและเพิ่มข้อมูลทดสอบ จากนั้นเชื่อมต่อผ่าน JavaScript Client</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 4</div>
+          <p>
+            ต่อยอดจาก Lab 4 — สร้าง database จริงใน Supabase เพื่อใช้แทน mock data ใน Week 7
+          </p>
+        </div>
       </div>
       <div class="lab-body">
 
@@ -424,30 +406,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">สร้างตาราง products ในฐานข้อมูล</div>
+            <div class="task-title">สร้างโปรเจกต์ Supabase</div>
           </div>
           <div class="task-body">
-            <p>เปิด phpMyAdmin และสร้างตาราง <code>products</code> ในฐานข้อมูลที่สร้างไว้จากสัปดาห์ก่อน โดยมี Column ดังนี้:</p>
-            <div class="code-block">
-              <div class="code-head">
-                <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-                <span class="code-filename">สร้างตาราง products</span>
-                <span class="code-lang">SQL</span>
-                <button class="copy-btn">คัดลอก</button>
-              </div>
-              <pre><code class="language-sql">CREATE TABLE products (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(255) NOT NULL,
-    description TEXT,
-    price       DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    stock       INT NOT NULL DEFAULT 0,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;</code></pre>
+            <p>สร้างโปรเจกต์ใหม่ใน Supabase Dashboard และบันทึก Credentials ที่จำเป็น</p>
+            <ul>
+              <li>ไปที่ <code>supabase.com</code> → Sign In ด้วย GitHub Account → คลิก <strong>New Project</strong></li>
+              <li>ตั้งชื่อโปรเจกต์ว่า <code>bookeasy</code> กำหนด Database Password และเลือก Region <strong>Southeast Asia (Singapore)</strong></li>
+              <li>รอให้โปรเจกต์พร้อม (ประมาณ 1–2 นาที) จนสถานะเปลี่ยนเป็น "Active"</li>
+              <li>ไปที่ <strong>Settings → API</strong> และบันทึก <code>Project URL</code> และ <code>anon public key</code> ไว้ใช้ใน Task 4</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>โปรเจกต์ Supabase ชื่อ "bookeasy" สถานะ Active ใน Dashboard
+                 มี Project URL และ anon key พร้อมใช้งาน
+                 ถ่ายภาพหน้าจอ Settings → API ที่แสดง URL และ Key</p>
             </div>
-            <p>หลังสร้างตาราง ให้ INSERT ข้อมูลตัวอย่างอย่างน้อย 3 รายการเพื่อใช้ทดสอบ</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>ตาราง products มีครบทุก Column ที่กำหนด และมีข้อมูลอย่างน้อย 3 รายการในตาราง ตรวจสอบด้วย SELECT * FROM products ใน phpMyAdmin</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>DECIMAL(10,2)</code> สำหรับราคาเพื่อให้เก็บทศนิยมได้ถูกต้อง ไม่ควรใช้ FLOAT เพราะอาจเกิดความคลาดเคลื่อนในการคำนวณเงิน</p></div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>Database Password ต้องจำหรือบันทึกไว้ในที่ปลอดภัยเพราะจะใช้หาก Connect ตรงผ่าน <code>psql</code>
+                 แต่สำหรับ JavaScript SDK ใช้ anon key แทน ไม่จำเป็นต้องใช้ Password</p>
+            </div>
           </div>
         </div>
 
@@ -455,13 +434,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">หน้าเพิ่มสินค้า (create.php)</div>
+            <div class="task-title">สร้างตาราง</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>create.php</code> ที่มีทั้ง HTML Form และตรรกะการบันทึกข้อมูลในไฟล์เดียวกัน ต้องมีฟิลด์: ชื่อสินค้า, คำอธิบาย, ราคา, จำนวนสต็อก เมื่อ Submit ให้ INSERT ลงฐานข้อมูลและ Redirect ไป list.php</p>
-            <p>ต้องมีการตรวจสอบความถูกต้อง (Validation) อย่างน้อย: ชื่อสินค้าต้องไม่ว่าง, ราคาและสต็อกต้องเป็นตัวเลขที่ไม่ติดลบ หากข้อมูลผิดให้แสดง Error Message และรักษาข้อมูลที่ผู้ใช้กรอกไว้ไม่ให้หาย</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>กรอกข้อมูลครบแล้วกด Submit ข้อมูลต้องปรากฏใน list.php และฐานข้อมูล / เมื่อกรอกข้อมูลผิด (เช่น ราคาเป็นตัวอักษร) ต้องแสดงข้อความ Error ที่ชัดเจน</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>is_numeric()</code> ตรวจสอบตัวเลข และ <code>trim()</code> ตัดช่องว่างหน้า-หลังก่อน Validate เสมอ อย่าลืม <code>require 'db.php'</code> ที่บรรทัดแรก</p></div>
+            <p>ใช้ SQL Editor ใน Supabase Dashboard สร้างตาราง 3 ตารางสำหรับ BookEasy</p>
+            <ul>
+              <li>ไปที่เมนู <strong>SQL Editor</strong> ใน Supabase Dashboard แล้วคลิก <strong>New Query</strong></li>
+              <li>คัดลอก SQL จาก Snippet 1 ด้านบน วางในช่อง Editor แล้วคลิก <strong>Run</strong></li>
+              <li>ตรวจสอบว่า Query สำเร็จ (ไม่มี Error Message สีแดง)</li>
+              <li>ไปที่เมนู <strong>Table Editor</strong> ตรวจว่ามีตารางครบ 3 ตาราง: <code>services</code>, <code>bookings</code>, <code>profiles</code></li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>Table Editor แสดงตาราง 3 ตารางครบ (<code>services</code>, <code>bookings</code>, <code>profiles</code>)
+                 แต่ละตารางมี Column ครบตามที่ออกแบบ ถ่ายภาพหน้าจอ Table Editor ที่แสดงทั้ง 3 ตาราง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>หากเกิด Error <em>"relation auth.users does not exist"</em> ให้ตรวจสอบว่ารัน SQL ใน Project ที่ถูกต้อง
+                 <code>auth.users</code> เป็นตาราง Built-in ของ Supabase ที่มีอยู่แล้วในทุกโปรเจกต์
+                 ไม่ต้องสร้างเอง</p>
+            </div>
           </div>
         </div>
 
@@ -469,13 +462,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">หน้าแสดงรายการสินค้า (list.php)</div>
+            <div class="task-title">เพิ่มข้อมูลทดสอบ</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>list.php</code> ที่ดึงสินค้าทั้งหมดจากฐานข้อมูลและแสดงเป็น Table ที่มี Column: ID, ชื่อสินค้า, คำอธิบาย, ราคา, สต็อก, และปุ่มจัดการ (Edit / Delete)</p>
-            <p>ปุ่ม "แก้ไข" ต้อง Link ไป <code>edit.php?id=X</code> และปุ่ม "ลบ" ต้อง Link ไป <code>delete.php?id=X</code> นอกจากนี้ให้แสดง Flash Message เมื่อกลับมาหลัง Create/Update/Delete สำเร็จ</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>หน้าแสดงสินค้าทั้งหมดในตาราง / Link ไปหน้า Edit และ Delete ทำงานถูกต้อง / Flash Message แสดงเมื่อดำเนินการสำเร็จ</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>number_format($p['price'], 2)</code> แสดงราคาให้มีทศนิยม 2 ตำแหน่ง และใช้ <code>htmlspecialchars()</code> กับทุกข้อมูลที่แสดงใน HTML เพื่อความปลอดภัย</p></div>
+            <p>เพิ่มข้อมูลบริการ 5 รายการลงในตาราง <code>services</code> และตรวจสอบด้วย SELECT</p>
+            <ul>
+              <li>เปิด <strong>SQL Editor</strong> → New Query อีกครั้ง</li>
+              <li>คัดลอก SQL จาก Snippet 2 ด้านบน (ส่วน INSERT) วางในช่อง Editor แล้วคลิก <strong>Run</strong></li>
+              <li>รัน <code>SELECT * FROM services;</code> ในช่อง Editor เพื่อตรวจสอบ</li>
+              <li>ตรวจว่าผลลัพธ์แสดง 5 แถว พร้อม UUID ที่ระบบสร้างให้อัตโนมัติ</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p><code>SELECT * FROM services;</code> แสดงผลลัพธ์ 5 แถว ทุกแถวมี <code>id</code> เป็น UUID
+                 และ <code>created_at</code> ที่ระบบกำหนดให้อัตโนมัติ ถ่ายภาพหน้าจอผลลัพธ์ของ SELECT</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>สามารถดูข้อมูลผ่าน <strong>Table Editor</strong> ได้เช่นกัน โดยคลิกที่ตาราง <code>services</code>
+                 เพื่อดูในรูปแบบตาราง Excel ที่อ่านง่ายกว่า SQL Query Result</p>
+            </div>
           </div>
         </div>
 
@@ -483,62 +489,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm'])) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">4</div>
-            <div class="task-title">หน้าแก้ไขสินค้า (edit.php)</div>
+            <div class="task-title">ทดสอบ Supabase Client ใน project</div>
           </div>
           <div class="task-body">
-            <p>สร้างไฟล์ <code>edit.php</code> ที่รับ ID ผ่าน URL (<code>?id=X</code>) แล้ว SELECT ข้อมูลสินค้ามาแสดงใน Form (pre-fill) เมื่อ Submit ให้ UPDATE ข้อมูลในฐานข้อมูลและ Redirect กลับ list.php</p>
-            <p>ต้องตรวจสอบว่า ID ที่รับมามีอยู่ในฐานข้อมูลจริง ถ้าไม่มีให้แสดงข้อความ "ไม่พบสินค้า" Validation ต้องเหมือน create.php</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>กดปุ่ม "แก้ไข" จาก list.php → ฟอร์มแสดงข้อมูลเดิมครบถ้วน → แก้ไขและบันทึก → ข้อมูลใน list.php อัปเดตถูกต้อง / ทดสอบด้วย URL id ที่ไม่มีอยู่จริง ต้องแสดง error</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>แปลง ID เป็น Integer ด้วย <code>(int)$_GET['id']</code> เสมอก่อนใช้งาน เพื่อป้องกัน SQL Injection แม้จะใช้ Prepared Statement แล้วก็ตาม</p></div>
-          </div>
-        </div>
-
-        <!-- Task 5 -->
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">หน้าลบสินค้า (delete.php)</div>
-          </div>
-          <div class="task-body">
-            <p>สร้างไฟล์ <code>delete.php</code> ที่แสดงรายละเอียดสินค้าที่จะลบพร้อมปุ่ม "ยืนยันการลบ" และปุ่ม "ยกเลิก" การลบจริงต้องทำผ่าน POST Request เท่านั้น ไม่ใช่ GET</p>
-            <p>เมื่อผู้ใช้ยืนยัน ให้ DELETE ข้อมูลจากฐานข้อมูลและ Redirect กลับ list.php พร้อม Flash Message "ลบสินค้าสำเร็จ"</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>กดปุ่ม "ลบ" จาก list.php → แสดงหน้ายืนยันพร้อมข้อมูลสินค้า → กด "ยืนยัน" → ข้อมูลหายจาก list.php / กด "ยกเลิก" → กลับ list.php โดยไม่ลบ</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ให้ใช้ <code>if ($_SERVER['REQUEST_METHOD'] === 'POST')</code> ตรวจสอบก่อน DELETE เสมอ ป้องกันการลบผ่าน URL โดยตรง (GET Request)</p></div>
+            <p>ติดตั้ง Supabase JavaScript SDK ใน bookeasy-api และทดสอบดึงข้อมูลจากตาราง services</p>
+            <ul>
+              <li>เปิด Terminal ใน folder <code>bookeasy-api</code> แล้วรัน <code>npm install @supabase/supabase-js</code></li>
+              <li>สร้างไฟล์ใหม่ <code>src/lib/supabase.js</code> แล้วคัดลอกโค้ดจาก Snippet 3 ด้านบน</li>
+              <li>แทนค่า <code>supabaseUrl</code> และ <code>supabaseKey</code> ด้วย URL และ anon key ของโปรเจกต์ตัวเอง (จาก Task 1)</li>
+              <li>สร้างไฟล์ <code>test-db.js</code> ที่ import <code>supabase</code> จาก <code>./src/lib/supabase.js</code> และรัน query ดึงข้อมูลจาก services</li>
+              <li>รัน <code>node test-db.js</code> แล้วตรวจว่า <code>data</code> แสดง Array 5 รายการ และ <code>error</code> เป็น <code>null</code></li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>รัน <code>node test-db.js</code> แล้ว Console แสดง Array ของบริการ 5 รายการ
+                 และ <code>error: null</code> ถ่ายภาพหน้าจอ Terminal ที่แสดงผลลัพธ์จาก Supabase</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>หาก Error <em>"invalid API key"</em> ให้ตรวจสอบว่าใช้ <strong>anon public key</strong>
+                 ไม่ใช่ service_role key (อย่าใช้ service_role key ใน Frontend หรือ Client-side code)
+                 Key ที่ถูกต้องจะขึ้นต้นด้วย <code>eyJ</code> และยาวมาก</p>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-05.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">ออกแบบฐานข้อมูล &amp; MySQL</div>
+        <div class="wn-name">Hono API บน Cloudflare Workers</div>
       </a>
       <a href="week-07.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">อัปโหลดไฟล์ &amp; จัดการไฟล์</div>
+        <div class="wn-name">CRUD ครบวงจร — Hono + Supabase</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
         integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
-        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
-        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
