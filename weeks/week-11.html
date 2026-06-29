@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 11 — Code Reusability & Template/Component — 07-034-233</title>
+  <title>สัปดาห์ที่ 11 — Shadcn/ui + Tailwind CSS — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,19 +18,20 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 11</span>
     <span class="sep">›</span>
-    <span>Code Reusability & Template</span>
+    <span>Shadcn/ui + Tailwind CSS</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 11</div>
-    <h1 class="wh-title">Code Reusability & Template/Component</h1>
+    <h1 class="wh-title">Shadcn/ui + Tailwind CSS: Component Library และ Responsive Design</h1>
     <div class="wh-clos">
-      <span class="wh-clo">CLO3</span>
+      <span class="wh-clo">CLO4</span>
     </div>
   </div>
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
@@ -40,678 +41,665 @@
       </ul>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         THEORY
+    ══════════════════════════════════════════ -->
     <div id="theory">
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>ทำไมต้องเขียนโค้ดที่ใช้ซ้ำได้?</h3>
+        <!-- 1 -->
+        <h3>1. Component Libraries คืออะไร — Shadcn vs MUI vs Chakra</h3>
         <p>
-          ในการพัฒนาเว็บแอปพลิเคชันจริง โปรเจกต์มักประกอบด้วยหน้าเว็บหลายสิบหรือหลายร้อยหน้า
-          ถ้าเราคัดลอก (copy-paste) โค้ดเดิมซ้ำๆ ในแต่ละหน้า เช่น ส่วน Header, Navbar, และ Footer
-          จะเกิดปัญหาใหญ่ตามมา: เมื่อต้องการแก้ไขโลโก้หรือเมนูนำทาง เราต้องแก้ไขทุกหน้าพร้อมกัน
-          ซึ่งหมายถึงการแก้บัคในที่เดียวกันอาจต้องทำซ้ำถึง 10 หรือ 20 ที่ ทำให้เกิดข้อผิดพลาดได้ง่าย
+          <strong>Component Library</strong> คือชุด UI Components สำเร็จรูปที่นักพัฒนาสามารถนำมาใช้ในโปรเจกต์ได้ทันที
+          เช่น ปุ่ม (Button), การ์ด (Card), Modal, Input, Table และอีกมากมาย
+          แทนที่จะเขียน CSS และ HTML ทุกอย่างจากศูนย์ เราสามารถ import Component เหล่านี้มาใช้ได้เลย
+          ซึ่งช่วยประหยัดเวลา รักษา Consistency ของ UI และมั่นใจได้ว่า Component ผ่านการทดสอบ Accessibility แล้ว
         </p>
         <p>
-          หลักการสำคัญในการพัฒนาซอฟต์แวร์ที่แก้ปัญหานี้คือ <strong>DRY — Don't Repeat Yourself</strong>
-          ซึ่งหมายความว่าโค้ดแต่ละชิ้นควรมีอยู่เพียงที่เดียว และถูกนำมาใช้ซ้ำในที่ที่ต้องการ แทนที่จะก็อปปี้
-          การทำตามหลัก DRY ช่วยให้โค้ดของเราดูแลรักษาง่ายขึ้น (Maintainability) มีความสม่ำเสมอ (Consistency)
-          และลดโอกาสเกิดบัคที่เกิดจากการแก้ไขไม่ครบทุกที่
-        </p>
-        <ul>
-          <li><strong>Maintainability</strong> — แก้ไขโค้ดที่เดียว มีผลทั่วทั้งระบบ</li>
-          <li><strong>Consistency</strong> — ทุกหน้าใช้ Header และ Footer แบบเดียวกัน ไม่มีความแตกต่าง</li>
-          <li><strong>Readability</strong> — ไฟล์แต่ละหน้ามีขนาดเล็กลง อ่านง่ายขึ้น โฟกัสที่เนื้อหาของหน้านั้นๆ</li>
-          <li><strong>Reusability</strong> — สร้าง Component ครั้งเดียว ใช้ได้ทั่วทั้งโปรเจกต์</li>
-        </ul>
-
-        <div class="callout note">
-          <div class="callout-title">หมายเหตุ</div>
-          <p>
-            ปัญหาของการ Copy-Paste โค้ด: ลองนึกภาพว่าคุณมีเว็บไซต์ 20 หน้า แต่ละหน้าก็อปปี้ Navbar มาเอง
-            วันหนึ่งต้องเพิ่มเมนูใหม่ คุณต้องแก้ไข 20 ไฟล์พร้อมกัน และถ้าลืมแก้แค่ 1 ไฟล์
-            ผู้ใช้ที่เข้าหน้านั้นจะเห็น Navbar ที่ไม่สมบูรณ์ — นี่คือปัญหาที่ DRY แก้ได้
-          </p>
-        </div>
-
-        <h3>PHP include และ require</h3>
-        <p>
-          PHP มีคำสั่งในตระกูล <code>include</code> และ <code>require</code> ที่ใช้แทรกเนื้อหาจากไฟล์อื่นเข้ามาในไฟล์ปัจจุบัน
-          ทำให้เราแบ่งโค้ดออกเป็น Component ย่อยๆ ได้อย่างสะดวก
+          Library ยอดนิยมในระบบนิเวศ React มีหลายตัว แต่ละตัวมีแนวทางที่แตกต่างกัน:
         </p>
         <ul>
           <li>
-            <strong>include</strong> — แทรกไฟล์เข้ามา ถ้าไม่พบไฟล์จะแสดง Warning แต่สคริปต์ยังทำงานต่อได้
+            <strong>Material UI (MUI)</strong> — ใช้หลักการออกแบบของ Google Material Design
+            มี Component ครบครัน Customize ได้ผ่าน Theme แต่ Bundle size ค่อนข้างใหญ่
+            เหมาะสำหรับโปรเจกต์ขนาดใหญ่ที่ต้องการความสม่ำเสมอของ Design System
           </li>
           <li>
-            <strong>require</strong> — แทรกไฟล์เข้ามา ถ้าไม่พบไฟล์จะเกิด Fatal Error และหยุดการทำงานทันที
-            เหมาะสำหรับไฟล์ที่จำเป็นต้องมี เช่น config.php
+            <strong>Chakra UI</strong> — API ที่ใช้งานง่าย มี Style Props (เช่น <code>p={4}</code> แทน padding)
+            รองรับ Dark Mode ออกนอกกล่อง มี Accessibility ดีมาก แต่ต้องเรียนรู้ API เฉพาะของมัน
           </li>
           <li>
-            <strong>include_once / require_once</strong> — เหมือนกันกับข้างต้น แต่ตรวจสอบก่อนว่าเคยแทรกไฟล์นี้แล้วหรือยัง
-            ถ้าแล้วจะข้ามไป ป้องกันการประกาศฟังก์ชันซ้ำซ้อน
+            <strong>Shadcn/ui</strong> — แนวคิดใหม่ที่ไม่ใช่ Library แบบปกติ
+            แต่เป็นการ <strong>copy โค้ด Component เข้ามาในโปรเจกต์โดยตรง</strong>
+            ทำให้ Customize ได้ 100% ใช้ Tailwind CSS สำหรับ Styling และ Radix UI สำหรับ Behavior
+            ไม่มี Dependency ล็อกในเวอร์ชันของ Library
           </li>
         </ul>
-        <p>
-          โครงสร้างไฟล์ที่นิยมใช้ในโปรเจกต์ PHP:
-        </p>
-        <div class="diagram-box">
-          <pre>
-project/
-├── config/
-│   └── config.php          ← ค่าการตั้งค่าและค่าคงที่ (DB, Site URL, ฯลฯ)
-├── includes/
-│   ├── header.php          ← DOCTYPE, &lt;head&gt;, &lt;nav&gt; ส่วนบนของทุกหน้า
-│   ├── footer.php          ← &lt;footer&gt;, &lt;script&gt; ส่วนล่างของทุกหน้า
-│   ├── navbar.php          ← เมนูนำทาง (อาจรวมอยู่ใน header.php)
-│   └── functions.php       ← ฟังก์ชัน Helper ที่ใช้ทั่วทั้งโปรเจกต์
-├── index.php               ← หน้าหลัก (require header, content, footer)
-├── products.php            ← หน้าสินค้า (require header, content, footer)
-└── about.php               ← หน้าเกี่ยวกับ (require header, content, footer)
-          </pre>
-        </div>
+
+        <div class="diagram-box"><pre>
+  แนวทางการ Styling ของแต่ละ Library
+  ──────────────────────────────────────────────────
+  MUI        → Emotion (CSS-in-JS) + MUI Theme
+  Chakra UI  → Emotion + Style Props + Chakra Theme
+  Shadcn/ui  → Tailwind CSS + CSS Variables
+  ──────────────────────────────────────────────────
+
+  การติดตั้ง Component
+  ──────────────────────────────────────────────────
+  MUI        → npm install @mui/material        (ได้ทุก Component)
+  Chakra UI  → npm install @chakra-ui/react     (ได้ทุก Component)
+  Shadcn/ui  → npx shadcn@latest add button     (copy เฉพาะที่ต้องการ)
+  ──────────────────────────────────────────────────</pre></div>
 
         <div class="callout tip">
-          <div class="callout-title">เคล็ดลับ</div>
+          <div class="callout-title">เคล็ดลับ — ทำไม Shadcn/ui ถึงได้รับความนิยมสูง</div>
           <p>
-            ใช้ <code>require_once</code> สำหรับ config.php และ functions.php เสมอ
-            เพราะถ้าไม่มีไฟล์เหล่านี้เว็บจะทำงานไม่ได้เลย และ <code>_once</code> ป้องกันการประกาศฟังก์ชันซ้ำ
-            ในกรณีที่มีการ include ซ้อนกัน (nested include)
+            Shadcn/ui เป็นเพียงเครื่องมือสำหรับ copy โค้ด Component เข้าโปรเจกต์ ไม่ใช่ npm package
+            ดังนั้นถ้า Library ออก Breaking Change ในเวอร์ชันใหม่ โปรเจกต์ของเราก็ไม่ได้รับผลกระทบ
+            และสามารถแก้ไข Component ได้ตามต้องการโดยไม่ต้องรอ Maintainer ของ Library
           </p>
         </div>
 
-        <h3>Template Pattern ด้วย PHP</h3>
+        <!-- 2 -->
+        <h3>2. Tailwind CSS — Utility-First CSS Framework</h3>
         <p>
-          Template Pattern คือรูปแบบการออกแบบที่แยกส่วน Layout (โครงร่างหน้าเว็บ) ออกจากเนื้อหา (Content)
-          แทนที่แต่ละหน้าจะ include header/footer เอง เราสร้างไฟล์ <strong>layout.php</strong> ที่เป็นโครงร่างหลัก
-          แล้วฉีด (inject) เนื้อหาเข้าไปแทน มี 2 วิธีหลัก:
+          <strong>Tailwind CSS</strong> เป็น CSS Framework แนวทาง <strong>Utility-First</strong>
+          ซึ่งหมายความว่าแทนที่จะเขียน CSS Class ที่มีความหมายเช่น <code>.card</code> หรือ <code>.btn-primary</code>
+          เราใช้ Class เล็กๆ ที่ทำสิ่งเดียวโดยตรง เช่น <code>p-4</code> (padding 1rem),
+          <code>text-blue-500</code> (สีน้ำเงิน), <code>flex</code> (display: flex),
+          <code>rounded-lg</code> (border-radius ขนาดใหญ่)
+        </p>
+        <p>
+          ข้อดีหลักของ Tailwind:
         </p>
         <ul>
           <li>
-            <strong>ผ่านตัวแปร</strong> — ตั้งค่า <code>$title</code> และ <code>$content</code>
-            ก่อนแล้วค่อย include layout.php
+            <strong>ไม่ต้องตั้งชื่อ CSS Class</strong> — ปัญหาคลาสสิคในการพัฒนาเว็บคือการตั้งชื่อ Class
+            ด้วย Tailwind เราไม่ต้องคิดว่าจะตั้งชื่อว่าอะไร เพราะใช้ Utility Class ของ Tailwind ได้เลย
           </li>
           <li>
-            <strong>ผ่าน Output Buffering</strong> — ใช้ <code>ob_start()</code> และ <code>ob_get_clean()</code>
-            จับ HTML ที่ถูกสร้างขึ้นใส่ตัวแปรก่อนส่งไปยัง layout
+            <strong>ขนาดไฟล์ CSS เล็ก</strong> — Tailwind ใช้เทคโนโลยี Purge/Content Scanning
+            ลบ Class ที่ไม่ได้ใช้ออก ทำให้ CSS ที่ Deploy จริงมีขนาดเล็กมาก
+          </li>
+          <li>
+            <strong>Responsive Design ง่าย</strong> — ใช้ Prefix เช่น <code>md:</code>, <code>lg:</code>
+            เช่น <code>grid-cols-1 md:grid-cols-2 lg:grid-cols-3</code>
+            แสดง 1 คอลัมน์บนมือถือ 2 คอลัมน์บน tablet 3 คอลัมน์บน Desktop
+          </li>
+          <li>
+            <strong>Dark Mode</strong> — เพิ่ม <code>dark:</code> prefix เช่น <code>bg-white dark:bg-gray-900</code>
           </li>
         </ul>
-        <p>
-          การแยก Logic ออกจาก Presentation เป็นแนวคิดสำคัญในสถาปัตยกรรมซอฟต์แวร์ ช่วยให้ Front-end developer
-          แก้ไขหน้าตาได้โดยไม่ต้องยุ่งกับ Business Logic และ Back-end developer แก้ Logic ได้โดยไม่ต้องกังวลเรื่อง HTML
-        </p>
 
-        <div class="callout warning">
-          <div class="callout-title">ข้อควรระวัง</div>
-          <p>
-            เมื่อใช้ Output Buffering ต้องแน่ใจว่าเรียก <code>ob_end_clean()</code> หรือ <code>ob_get_clean()</code>
-            ทุกครั้งที่เรียก <code>ob_start()</code> เพราะถ้าลืมปิด Buffer อาจทำให้หน้าเว็บแสดงผลผิดพลาดหรือข้อมูลรั่วไหลระหว่างหน้า
-          </p>
-        </div>
+        <div class="diagram-box"><pre>
+  Responsive Breakpoints ของ Tailwind
+  ─────────────────────────────────────────
+  (ไม่มี prefix) → mobile first (base)
+  sm:            → min-width: 640px
+  md:            → min-width: 768px
+  lg:            → min-width: 1024px
+  xl:            → min-width: 1280px
+  2xl:           → min-width: 1536px
 
-        <h3>ฟังก์ชัน Helper</h3>
-        <p>
-          ฟังก์ชัน Helper คือฟังก์ชันที่เราสร้างขึ้นมาเองเพื่อทำงานที่ใช้บ่อยในโปรเจกต์ รวบรวมไว้ใน
-          <code>includes/functions.php</code> แล้ว include ในทุกหน้า ตัวอย่างฟังก์ชัน Helper ที่มีประโยชน์:
-        </p>
-        <ul>
-          <li><code>formatThaiDate($date)</code> — แปลงวันที่จาก Y-m-d เป็นรูปแบบ "28 มิถุนายน 2568"</li>
-          <li><code>formatPrice($amount)</code> — จัดรูปแบบตัวเลขเป็นราคา เช่น "1,250.00 บาท"</li>
-          <li><code>slugify($text)</code> — แปลงข้อความเป็น URL-friendly เช่น "สินค้าใหม่" → "sinkha-mai"</li>
-          <li><code>truncateText($text, $limit)</code> — ตัดข้อความให้สั้นลง เพิ่ม "..." ที่ท้าย</li>
-          <li><code>sanitize($input)</code> — ทำความสะอาด Input เพื่อป้องกัน XSS</li>
-          <li><code>redirect($url)</code> — Redirect ไปยัง URL อื่นพร้อม header()</li>
-        </ul>
-        <p>
-          การรวม Helper ทั้งหมดไว้ในไฟล์เดียวทำให้เราแน่ใจว่าทุกหน้าใช้ฟังก์ชันเดียวกัน
-          และถ้าต้องการอัปเดตการ format วันที่หรือราคา ก็แก้แค่ที่เดียว
-        </p>
-
-        <h3>Class และ Object พื้นฐาน (OOP)</h3>
-        <p>
-          <strong>Object-Oriented Programming (OOP)</strong> เป็นรูปแบบการเขียนโปรแกรมที่จัดระเบียบโค้ดในรูปแบบ
-          "วัตถุ" (Object) แต่ละวัตถุมี <strong>Properties</strong> (คุณลักษณะ) และ <strong>Methods</strong> (พฤติกรรม)
-          PHP รองรับ OOP ตั้งแต่เวอร์ชัน 5 และปัจจุบัน Framework ขนาดใหญ่อย่าง Laravel ใช้ OOP เป็นหลัก
-        </p>
-        <ul>
-          <li><strong>Class</strong> — แบบพิมพ์เขียว (Blueprint) ที่กำหนดโครงสร้างของวัตถุ</li>
-          <li><strong>Object</strong> — instance ที่สร้างจาก Class โดยใช้ <code>new</code></li>
-          <li><strong>Property</strong> — ตัวแปรที่อยู่ใน Class เก็บข้อมูลของวัตถุ</li>
-          <li><strong>Method</strong> — ฟังก์ชันที่อยู่ใน Class กำหนดพฤติกรรมของวัตถุ</li>
-          <li><strong>Constructor</strong> — Method พิเศษ <code>__construct()</code> ที่ถูกเรียกอัตโนมัติเมื่อสร้าง Object</li>
-          <li><strong>Access Modifiers</strong> — <code>public</code> (เข้าถึงได้จากทุกที่), <code>private</code> (เฉพาะใน Class), <code>protected</code> (ใน Class และ Subclass)</li>
-        </ul>
-
-        <div class="diagram-box">
-          <pre>
-┌──────────────────────────────────────────┐
-│            Class Product                  │
-├──────────────────────────────────────────┤
-│  Properties (คุณลักษณะ):                 │
-│    $id      — รหัสสินค้า                 │
-│    $name    — ชื่อสินค้า                 │
-│    $price   — ราคา                       │
-│    $stock   — จำนวนในสต็อก               │
-├──────────────────────────────────────────┤
-│  Methods (พฤติกรรม):                     │
-│    __construct($id, $name, $price)        │
-│    getFormattedPrice() → "฿1,250.00"    │
-│    isInStock()         → true/false      │
-│    toArray()           → array           │
-└──────────────────────────────────────────┘
-              │  new Product(1, "เสื้อ", 250)
-              ▼
-┌──────────────────────────────────────────┐
-│          Object $product                  │
-│    $product->id    = 1                   │
-│    $product->name  = "เสื้อ"             │
-│    $product->price = 250                 │
-└──────────────────────────────────────────┘
-          </pre>
-        </div>
+  ตัวอย่าง: &lt;div class="text-sm md:text-base lg:text-lg">
+  → มือถือ: text-sm | tablet: text-base | Desktop: text-lg</pre></div>
 
         <div class="callout note">
-          <div class="callout-title">หมายเหตุ</div>
+          <div class="callout-title">หมายเหตุ — Tailwind กับ React</div>
           <p>
-            OOP ไม่ใช่สิ่งที่ต้องใช้ในทุกส่วนของโปรเจกต์ขนาดเล็ก แต่การเรียนรู้พื้นฐาน Class และ Object
-            จะเตรียมความพร้อมสำหรับการใช้ Framework เช่น Laravel ซึ่งใช้ OOP ทุกที่ และช่วยให้เข้าใจ
-            Library และ Package ต่างๆ ที่เราจะใช้ในอนาคต
+            ใน React ใช้ <code>className</code> แทน <code>class</code> เหมือนปกติ
+            และสามารถใช้ Library เช่น <code>clsx</code> หรือ <code>cn()</code> จาก Shadcn
+            เพื่อจัดการ Class แบบเงื่อนไขได้สะดวก เช่น <code>cn('base-class', isActive &amp;&amp; 'active-class')</code>
+          </p>
+        </div>
+
+        <!-- 3 -->
+        <h3>3. Shadcn/ui Setup กับ Vite + React</h3>
+        <p>
+          การติดตั้ง Shadcn/ui ต้องทำหลายขั้นตอนเพราะมันไม่ใช่ npm package ธรรมดา
+          แต่ละขั้นตอนสำคัญและต้องทำตามลำดับ:
+        </p>
+        <ol>
+          <li>
+            <strong>ติดตั้ง Tailwind CSS</strong> — ต้องติดตั้ง <code>tailwindcss</code>,
+            <code>postcss</code> และ <code>autoprefixer</code> เป็น dev dependencies
+            แล้วรัน <code>npx tailwindcss init -p</code> เพื่อสร้างไฟล์ config
+          </li>
+          <li>
+            <strong>ตั้งค่า tailwind.config.js</strong> — กำหนด <code>content</code>
+            ให้ Tailwind สแกนไฟล์ JSX/TSX เพื่อหา Class ที่ใช้จริง
+          </li>
+          <li>
+            <strong>เพิ่ม Tailwind directives ใน CSS</strong> — เพิ่ม
+            <code>@tailwind base;</code>, <code>@tailwind components;</code>,
+            <code>@tailwind utilities;</code> ใน <code>src/index.css</code>
+          </li>
+          <li>
+            <strong>รัน Shadcn init</strong> — <code>npx shadcn@latest init</code>
+            จะถามตัวเลือกต่างๆ เช่น Style (Default/New York), Color scheme, และ CSS variables
+          </li>
+          <li>
+            <strong>เพิ่ม Component ทีละตัว</strong> — <code>npx shadcn@latest add button</code>
+            จะ copy โค้ด Component มาไว้ที่ <code>src/components/ui/button.jsx</code>
+          </li>
+        </ol>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — Path Alias</div>
+          <p>
+            Shadcn ใช้ <code>@/</code> เป็น Path Alias สำหรับ <code>src/</code>
+            ต้องตั้งค่าใน <code>vite.config.js</code> โดยเพิ่ม
+            <code>resolve: { alias: { '@': path.resolve(__dirname, './src') } }</code>
+            ถ้าไม่ตั้งค่าจะเกิด error "Cannot find module '@/components/ui/button'"
+          </p>
+        </div>
+
+        <!-- 4 -->
+        <h3>4. Components ที่ใช้บ่อย: Button, Card, Input, Dialog, Badge, Table</h3>
+        <p>
+          Shadcn/ui มี Component พร้อมใช้หลายสิบตัว แต่ที่ใช้บ่อยที่สุดในแอปทั่วไปได้แก่:
+        </p>
+        <ul>
+          <li>
+            <strong>Button</strong> — รองรับหลาย variant: <code>default</code>, <code>destructive</code>,
+            <code>outline</code>, <code>secondary</code>, <code>ghost</code>, <code>link</code>
+            และหลาย size: <code>sm</code>, <code>default</code>, <code>lg</code>, <code>icon</code>
+            ใช้ prop <code>asChild</code> เพื่อ Render เป็น Element อื่นได้ เช่น <code>&lt;Link&gt;</code>
+          </li>
+          <li>
+            <strong>Card</strong> — ประกอบด้วย <code>Card</code>, <code>CardHeader</code>,
+            <code>CardTitle</code>, <code>CardDescription</code>, <code>CardContent</code>, <code>CardFooter</code>
+            ใช้จัดวาง Content ในรูปแบบ Card ที่มี shadow และ border radius
+          </li>
+          <li>
+            <strong>Input</strong> — ใช้แทน <code>&lt;input&gt;</code> ธรรมดา
+            มี style ที่สอดคล้องกับ Design System และรองรับ Accessibility เช่น aria attributes
+          </li>
+          <li>
+            <strong>Dialog</strong> — Modal window ที่ Accessible ประกอบด้วย <code>Dialog</code>,
+            <code>DialogTrigger</code>, <code>DialogContent</code>, <code>DialogHeader</code>,
+            <code>DialogTitle</code>, <code>DialogDescription</code>, <code>DialogFooter</code>
+            จัดการ Focus Trap และ Keyboard Navigation อัตโนมัติ
+          </li>
+          <li>
+            <strong>Badge</strong> — Tag เล็กๆ สำหรับแสดงสถานะหรือ Label
+            variant: <code>default</code>, <code>secondary</code>, <code>destructive</code>, <code>outline</code>
+          </li>
+          <li>
+            <strong>Table</strong> — ประกอบด้วย <code>Table</code>, <code>TableHeader</code>,
+            <code>TableBody</code>, <code>TableRow</code>, <code>TableHead</code>, <code>TableCell</code>
+            เหมาะสำหรับแสดงข้อมูลรายการ เช่น รายการจอง
+          </li>
+        </ul>
+
+        <div class="diagram-box"><pre>
+  โครงสร้าง Card Component
+  ─────────────────────────────────────────────────
+  &lt;Card>                   ← wrapper หลัก
+    &lt;CardHeader>           ← ส่วนหัว (title + description)
+      &lt;CardTitle>          ← หัวข้อหลัก
+      &lt;CardDescription>   ← คำอธิบายย่อ
+    &lt;/CardHeader>
+    &lt;CardContent>          ← เนื้อหาหลัก
+    &lt;/CardContent>
+    &lt;CardFooter>           ← ส่วนท้าย (actions)
+    &lt;/CardFooter>
+  &lt;/Card></pre></div>
+
+        <!-- 5 -->
+        <h3>5. Theming และ CSS Variables ใน Shadcn</h3>
+        <p>
+          Shadcn/ui ใช้ <strong>CSS Variables</strong> เป็นพื้นฐานของ Theming
+          ทำให้สามารถสลับ Theme (เช่น Light/Dark mode) ได้โดยไม่ต้องแก้ไข Component โดยตรง
+          ไฟล์ <code>src/index.css</code> จะมี CSS Variables ที่กำหนดสีหลักทั้งหมด เช่น
+          <code>--background</code>, <code>--foreground</code>, <code>--primary</code>,
+          <code>--secondary</code>, <code>--muted</code>, <code>--accent</code>
+        </p>
+        <p>
+          Tailwind Class ที่ Shadcn ใช้จะอ้างอิงถึง CSS Variables เหล่านี้ เช่น
+          <code>bg-background</code> = <code>background-color: hsl(var(--background))</code>
+          <code>text-primary</code> = <code>color: hsl(var(--primary))</code>
+          ดังนั้นเมื่อเปลี่ยนค่า CSS Variable ทุก Component ที่ใช้ Class นั้นจะเปลี่ยนสีตามอัตโนมัติ
+        </p>
+        <p>
+          ในการทำ Dark Mode ใน Shadcn เพียงเพิ่ม class <code>dark</code> ที่ <code>&lt;html&gt;</code> element
+          CSS Variables ใน <code>:root</code> จะถูก override โดย Variables ใน <code>.dark</code>
+          ซึ่ง Shadcn สร้างให้อัตโนมัติตอน init
+        </p>
+
+        <div class="diagram-box"><pre>
+  CSS Variables ใน index.css (ตัวอย่าง)
+  ─────────────────────────────────────────────────
+  :root {
+    --background: 0 0% 100%;       ← สีขาว (Light mode)
+    --foreground: 222.2 84% 4.9%;  ← สีเข้ม
+    --primary: 222.2 47.4% 11.2%;  ← สีหลัก
+    --primary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;  ← สีเข้ม (Dark mode)
+    --foreground: 210 40% 98%;     ← สีอ่อน
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+  }</pre></div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — เลือก Color Scheme ตอน Init</div>
+          <p>
+            ตอนรัน <code>npx shadcn@latest init</code> ให้เลือก <strong>Style: Default</strong>
+            และ <strong>Color: Slate</strong> เพราะ Slate เป็นสีเทาที่ดูมืออาชีพและเข้ากันได้ดีกับสีอื่น
+            ถ้าต้องการเปลี่ยน Color Scheme ภายหลัง แก้ CSS Variables ใน <code>src/index.css</code> ได้เลย
+            โดยอ้างอิงจาก <a href="https://ui.shadcn.com/themes" target="_blank">ui.shadcn.com/themes</a>
           </p>
         </div>
 
       </div>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         CODE EXAMPLES
+    ══════════════════════════════════════════ -->
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Example 1: Project structure with includes -->
+      <!-- Snippet 1: ติดตั้ง Tailwind + Shadcn -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">includes/header.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">Terminal — ติดตั้ง Tailwind + Shadcn ใน Vite Project</span>
+          <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// includes/header.php
-// ตรวจสอบว่า $pageTitle ถูกกำหนดมาหรือเปล่า ถ้าไม่มีใช้ค่าเริ่มต้น
-$pageTitle = $pageTitle ?? 'เว็บแอปพลิเคชัน';
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo htmlspecialchars($pageTitle); ?> — ร้านออนไลน์</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-<header class="site-header">
-  <div class="container">
-    <a href="/index.php" class="logo">🛒 ร้านออนไลน์</a>
-    <nav>
-      <a href="/index.php">หน้าหลัก</a>
-      <a href="/products.php">สินค้า</a>
-      <a href="/cart.php">ตะกร้า</a>
-      <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="/profile.php">โปรไฟล์</a>
-        <a href="/logout.php">ออกจากระบบ</a>
-      <?php else: ?>
-        <a href="/login.php">เข้าสู่ระบบ</a>
-      <?php endif; ?>
-    </nav>
-  </div>
-</header>
-<main class="container"></code></pre>
+        <pre><code class="language-bash"># snippet 1: ติดตั้ง Tailwind + Shadcn ใน Vite project
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# ติดตั้ง Shadcn
+npx shadcn@latest init
+# เลือก: Style=Default, Color=Slate, CSS variables=yes
+
+# เพิ่ม components ที่ต้องการ
+npx shadcn@latest add button card input dialog badge</code></pre>
       </div>
 
+      <!-- Snippet 2: ServiceCard ด้วย Shadcn -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">includes/footer.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/components/ServiceCard.jsx — ใช้ Shadcn Components</span>
+          <span class="code-lang">JSX</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// includes/footer.php
-?>
-</main>
-<footer class="site-footer">
-  <div class="container">
-    <p>&copy; <?php echo date('Y'); ?> ร้านออนไลน์ — สงวนลิขสิทธิ์</p>
-    <p>
-      <a href="/privacy.php">นโยบายความเป็นส่วนตัว</a> |
-      <a href="/contact.php">ติดต่อเรา</a>
-    </p>
-  </div>
-</footer>
-<script src="/assets/js/main.js"></script>
-</body>
-</html></code></pre>
-      </div>
+        <pre><code class="language-jsx">// snippet 2: ใช้ Shadcn components ใน ServiceCard
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Link } from '@tanstack/react-router';
 
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">products.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// products.php — หน้าแสดงสินค้า ใช้ include สำหรับ header/footer
-session_start();
-require_once 'config/config.php';
-require_once 'includes/functions.php';
-
-$pageTitle = 'รายการสินค้า';
-
-// ดึงข้อมูลสินค้าจากฐานข้อมูล
-$stmt = $pdo->query("SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC");
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// แทรก header (ตัวแปร $pageTitle จะถูกใช้ใน header.php)
-require_once 'includes/header.php';
-?>
-
-<h1>รายการสินค้าทั้งหมด</h1>
-<div class="product-grid">
-  <?php foreach ($products as $product): ?>
-    <div class="product-card">
-      <img src="<?php echo htmlspecialchars($product['image']); ?>"
-           alt="<?php echo htmlspecialchars($product['name']); ?>">
-      <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-      <p class="price"><?php echo formatPrice($product['price']); ?></p>
-      <a href="/product-detail.php?id=<?php echo $product['id']; ?>" class="btn">
-        ดูรายละเอียด
-      </a>
-    </div>
-  <?php endforeach; ?>
-</div>
-
-<?php
-// แทรก footer
-require_once 'includes/footer.php';
-?></code></pre>
-      </div>
-
-      <!-- Example 2: Template Pattern -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">includes/layout.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// includes/layout.php — Master Layout Template
-// ตัวแปรที่ต้องส่งมาจากหน้าที่เรียกใช้:
-//   $title   (string) — ชื่อหน้า
-//   $content (string) — HTML เนื้อหาของหน้านั้น
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo htmlspecialchars($title ?? 'เว็บแอปพลิเคชัน'); ?></title>
-  <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-  <header>
-    <a href="/">🏠 หน้าหลัก</a>
-    <nav>
-      <a href="/products.php">สินค้า</a>
-      <a href="/about.php">เกี่ยวกับเรา</a>
-      <a href="/contact.php">ติดต่อ</a>
-    </nav>
-  </header>
-
-  <main>
-    <?php echo $content; // แสดงเนื้อหาของหน้านั้นๆ ?>
-  </main>
-
-  <footer>
-    <p>&copy; <?php echo date('Y'); ?> บริษัทของเรา</p>
-  </footer>
-  <script src="/assets/js/app.js"></script>
-</body>
-</html></code></pre>
-      </div>
-
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">about.php (ใช้ layout.php ผ่าน Output Buffering)</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-require_once 'config/config.php';
-require_once 'includes/functions.php';
-
-$title = 'เกี่ยวกับเรา';
-
-// เริ่ม Output Buffering — จับ HTML ที่สร้างขึ้นใส่ตัวแปร
-ob_start();
-?>
-  <h1>เกี่ยวกับบริษัทของเรา</h1>
-  <p>เราก่อตั้งขึ้นในปี พ.ศ. 2560 ด้วยความมุ่งมั่นที่จะให้บริการที่ดีที่สุด...</p>
-  <section class="team">
-    <h2>ทีมงานของเรา</h2>
-    <!-- เนื้อหาเพิ่มเติม -->
-  </section>
-<?php
-// ดึง HTML ที่ถูกจับไว้ออกมาใส่ตัวแปร $content
-$content = ob_get_clean();
-
-// ส่งไปยัง layout เพื่อแสดงผล
-require_once 'includes/layout.php';
-?></code></pre>
-      </div>
-
-      <!-- Example 3: Helper functions -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">includes/functions.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// includes/functions.php — คลัง Helper Functions
-
-/**
- * จัดรูปแบบราคาเป็นสกุลเงินบาทไทย
- * @param float $amount — จำนวนเงิน
- * @return string — เช่น "฿1,250.00"
- */
-function formatPrice(float $amount): string {
-    return '฿' . number_format($amount, 2);
-}
-
-/**
- * แปลงวันที่จากรูปแบบ Y-m-d เป็นภาษาไทย
- * @param string $date — เช่น "2025-06-28"
- * @return string — เช่น "28 มิถุนายน 2568"
- */
-function formatThaiDate(string $date): string {
-    $months = [
-        1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม',
-        4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน',
-        7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน',
-        10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม'
-    ];
-    $timestamp = strtotime($date);
-    $day   = (int) date('j', $timestamp);
-    $month = $months[(int) date('n', $timestamp)];
-    $year  = (int) date('Y', $timestamp) + 543; // แปลงเป็น พ.ศ.
-    return "$day $month $year";
-}
-
-/**
- * ตัดข้อความให้สั้นลงและเพิ่ม "..." ที่ท้าย
- * @param string $text  — ข้อความต้นฉบับ
- * @param int    $limit — จำนวนตัวอักษรสูงสุด
- * @return string
- */
-function limitText(string $text, int $limit = 100): string {
-    if (mb_strlen($text) <= $limit) {
-        return $text;
-    }
-    return mb_substr($text, 0, $limit) . '...';
-}
-
-/**
- * ทำความสะอาด Input ป้องกัน XSS
- * @param string $input
- * @return string
- */
-function sanitize(string $input): string {
-    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
-}
-
-/**
- * Redirect ไปยัง URL อื่น
- * @param string $url
- */
-function redirect(string $url): void {
-    header("Location: $url");
-    exit;
-}
-
-/**
- * คืนคำทักทายตามช่วงเวลาของวัน
- * @return string
- */
-function getGreeting(): string {
-    $hour = (int) date('H');
-    if ($hour >= 5 && $hour < 12)  return 'สวัสดีตอนเช้า';
-    if ($hour >= 12 && $hour < 17) return 'สวัสดีตอนบ่าย';
-    if ($hour >= 17 && $hour < 21) return 'สวัสดีตอนเย็น';
-    return 'สวัสดีตอนดึก';
+function ServiceCard({ id, name, description, price, duration_min, image_url }) {
+  return (
+    &lt;Card className="hover:shadow-lg transition-shadow">
+      {image_url &amp;&amp; (
+        &lt;img src={image_url} alt={name} className="w-full h-48 object-cover rounded-t-lg" />
+      )}
+      &lt;CardHeader>
+        &lt;CardTitle>{name}&lt;/CardTitle>
+        &lt;Badge variant="secondary">{duration_min} นาที&lt;/Badge>
+      &lt;/CardHeader>
+      &lt;CardContent>
+        &lt;p className="text-muted-foreground text-sm">{description}&lt;/p>
+      &lt;/CardContent>
+      &lt;CardFooter className="flex justify-between items-center">
+        &lt;span className="text-xl font-bold text-primary">{price} ฿&lt;/span>
+        &lt;Button asChild>
+          &lt;Link to="/services/$serviceId" params={{ serviceId: id }}>จองเลย&lt;/Link>
+        &lt;/Button>
+      &lt;/CardFooter>
+    &lt;/Card>
+  );
 }</code></pre>
       </div>
 
-      <!-- Example 4: PHP Class -->
+      <!-- Snippet 3: BookingDialog -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">classes/Product.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/components/BookingDialog.jsx — Dialog สำหรับ Booking Form</span>
+          <span class="code-lang">JSX</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// classes/Product.php — PHP Class พื้นฐาน
+        <pre><code class="language-jsx">// snippet 3: Dialog สำหรับ Booking Form
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
-class Product {
-    // Properties (คุณลักษณะ)
-    public int    $id;
-    public string $name;
-    public float  $price;
-    private int   $stock;
+function BookingDialog({ service }) {
+  const [open, setOpen] = useState(false);
 
-    // Constructor — ถูกเรียกอัตโนมัติเมื่อสร้าง Object
-    public function __construct(int $id, string $name, float $price, int $stock = 0) {
-        $this->id    = $id;
-        $this->name  = $name;
-        $this->price = $price;
-        $this->stock = $stock;
-    }
-
-    // Method: คืนราคาในรูปแบบที่อ่านง่าย
-    public function getFormattedPrice(): string {
-        return '฿' . number_format($this->price, 2);
-    }
-
-    // Method: ตรวจสอบว่ายังมีสินค้าในสต็อกหรือไม่
-    public function isInStock(): bool {
-        return $this->stock > 0;
-    }
-
-    // Method: ลดจำนวนสต็อก
-    public function decreaseStock(int $quantity = 1): bool {
-        if ($this->stock < $quantity) {
-            return false; // สต็อกไม่พอ
-        }
-        $this->stock -= $quantity;
-        return true;
-    }
-
-    // Method: คืนข้อมูลเป็น Array
-    public function toArray(): array {
-        return [
-            'id'    => $this->id,
-            'name'  => $this->name,
-            'price' => $this->price,
-            'stock' => $this->stock,
-            'in_stock' => $this->isInStock(),
-        ];
-    }
-}
-
-// ─── ตัวอย่างการใช้งาน ────────────────────────────────────
-$product1 = new Product(1, 'เสื้อยืดสีขาว', 250.00, 50);
-$product2 = new Product(2, 'กางเกงยีนส์', 890.00, 0);
-
-echo $product1->name;                // เสื้อยืดสีขาว
-echo $product1->getFormattedPrice(); // ฿250.00
-echo $product1->isInStock() ? 'มีสินค้า' : 'สินค้าหมด'; // มีสินค้า
-
-echo $product2->getFormattedPrice(); // ฿890.00
-echo $product2->isInStock() ? 'มีสินค้า' : 'สินค้าหมด'; // สินค้าหมด
-
-// ใช้ใน loop
-$products = [$product1, $product2];
-foreach ($products as $p) {
-    echo $p->name . ' — ' . $p->getFormattedPrice();
-    if (!$p->isInStock()) {
-        echo ' (หมดแล้ว)';
-    }
-    echo "\n";
+  return (
+    &lt;Dialog open={open} onOpenChange={setOpen}>
+      &lt;DialogTrigger asChild>
+        &lt;Button>จองบริการ: {service.name}&lt;/Button>
+      &lt;/DialogTrigger>
+      &lt;DialogContent>
+        &lt;DialogHeader>
+          &lt;DialogTitle>จอง {service.name}&lt;/DialogTitle>
+        &lt;/DialogHeader>
+        &lt;form className="space-y-4">
+          &lt;Input type="date" name="date" required />
+          &lt;select className="w-full border rounded px-3 py-2">
+            &lt;option>09:00&lt;/option>
+            &lt;option>10:00&lt;/option>
+            &lt;option>11:00&lt;/option>
+          &lt;/select>
+          &lt;Button type="submit" className="w-full">ยืนยันการจอง&lt;/Button>
+        &lt;/form>
+      &lt;/DialogContent>
+    &lt;/Dialog>
+  );
 }</code></pre>
       </div>
 
     </div>
 
-    <!-- LAB SECTION -->
+    <!-- ══════════════════════════════════════════
+         LAB 10
+    ══════════════════════════════════════════ -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 10 — Code Reusability & Template</h2>
-        <p>นำหลักการ DRY มาใช้กับโปรเจกต์ของคุณ โดยแยกส่วนที่ใช้ซ้ำออกเป็น Component และสร้าง Template System</p>
+        <h2>🧪 ปฏิบัติการ Lab 10 — BookEasy: รีดีไซน์ UI ด้วย Shadcn</h2>
+        <p>นำ Shadcn/ui และ Tailwind CSS มารีดีไซน์หน้าตา BookEasy ทั้งหมดให้สวยงาม สม่ำเสมอ และ Responsive</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 9</div>
+          <p>ต่อยอดจาก Lab 9 — รีดีไซน์ UI ทั้งหมดของ BookEasy ให้สวยงามด้วย Shadcn/ui + Tailwind</p>
+        </div>
       </div>
       <div class="lab-body">
 
+        <!-- Task 1 -->
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">แยกไฟล์ Header และ Footer</div>
+            <div class="task-title">ติดตั้ง Tailwind + Shadcn</div>
           </div>
           <div class="task-body">
-            <p>
-              นำโปรเจกต์จาก Lab สัปดาห์ก่อน (หรือสร้างโปรเจกต์ใหม่ที่มีอย่างน้อย 3 หน้า) แล้วทำดังนี้:
-            </p>
-            <ol>
-              <li>สร้างโฟลเดอร์ <code>includes/</code> ในโปรเจกต์</li>
-              <li>สร้างไฟล์ <code>includes/header.php</code> — ย้ายส่วน HTML ตั้งแต่ <code>&lt;!DOCTYPE html&gt;</code> จนถึง <code>&lt;main&gt;</code> เข้ามาในไฟล์นี้</li>
-              <li>สร้างไฟล์ <code>includes/footer.php</code> — ย้ายส่วน <code>&lt;/main&gt;</code>, <code>&lt;footer&gt;</code>, และ <code>&lt;/html&gt;</code> เข้ามา</li>
-              <li>แทนที่โค้ดที่ย้ายออกไปด้วย <code>&lt;?php require_once 'includes/header.php'; ?&gt;</code> และ <code>&lt;?php require_once 'includes/footer.php'; ?&gt;</code> ในทุกหน้า</li>
-              <li>ทดสอบว่าทุกหน้ายังแสดงผลถูกต้อง</li>
-            </ol>
+            <p>ติดตั้ง Tailwind CSS และ Shadcn/ui เข้าสู่โปรเจกต์ BookEasy แล้วเพิ่ม Components ที่จะใช้ในสัปดาห์นี้</p>
+            <ul>
+              <li>ติดตั้ง tailwindcss, postcss, autoprefixer ตาม snippet 1 ด้านบน</li>
+              <li>รัน <code>npx shadcn@latest init</code> เลือก Style=Default, Color=Slate, CSS variables=yes</li>
+              <li>เพิ่ม components: <code>button card input dialog badge table avatar</code>
+                โดยใช้ <code>npx shadcn@latest add button card input dialog badge table avatar</code>
+              </li>
+              <li>
+                ตรวจสอบว่าโฟลเดอร์ <code>src/components/ui/</code> มีไฟล์ Component ทั้งหมดครบถ้วน
+              </li>
+              <li>
+                เพิ่ม Path Alias <code>@</code> ใน <code>vite.config.js</code>:
+                <code>resolve: { alias: { '@': path.resolve(__dirname, './src') } }</code>
+              </li>
+            </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ทุกหน้าของโปรเจกต์แสดงผลถูกต้อง Header และ Footer แสดงเหมือนกันทุกหน้า โดยไม่มีโค้ด Header/Footer ซ้ำในไฟล์หลัก</p>
+              <p>
+                รัน <code>npm run dev</code> ได้โดยไม่มี error
+                โฟลเดอร์ <code>src/components/ui/</code> มีไฟล์ button.jsx, card.jsx, input.jsx, dialog.jsx, badge.jsx, table.jsx, avatar.jsx
+                และแอปยังแสดงหน้าเดิมได้ถูกต้อง
+              </p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>require_once</code> แทน <code>include</code> สำหรับ Header และ Footer เพราะถ้าไม่มีไฟล์นี้หน้าเว็บจะพังทั้งหมด การใช้ <code>require</code> ทำให้เกิด Fatal Error ที่ชัดเจนกว่า Warning</p>
+              <p>
+                ถ้าเกิด error เรื่อง Path Alias ให้ติดตั้ง <code>@types/node</code> ก่อน:
+                <code>npm install -D @types/node</code> แล้วเพิ่ม <code>import path from 'path'</code>
+                ที่ด้านบนของ <code>vite.config.js</code>
+              </p>
             </div>
           </div>
         </div>
 
+        <!-- Task 2 -->
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">สร้าง config.php</div>
+            <div class="task-title">รีดีไซน์ ServiceCard</div>
           </div>
           <div class="task-body">
-            <p>
-              สร้างไฟล์ <code>config/config.php</code> ที่รวบรวมค่าการตั้งค่าของโปรเจกต์ทั้งหมดไว้ที่เดียว:
-            </p>
-            <ol>
-              <li>สร้างโฟลเดอร์ <code>config/</code> และไฟล์ <code>config/config.php</code></li>
-              <li>กำหนด Constants สำหรับ Database: <code>DB_HOST</code>, <code>DB_USER</code>, <code>DB_PASS</code>, <code>DB_NAME</code></li>
-              <li>กำหนด Constants สำหรับ Site: <code>SITE_NAME</code>, <code>SITE_URL</code>, <code>UPLOAD_DIR</code></li>
-              <li>ย้ายการเชื่อมต่อฐานข้อมูลมาไว้ใน config.php และสร้างตัวแปร <code>$pdo</code> ให้พร้อมใช้</li>
-              <li>แทนที่การเชื่อมต่อฐานข้อมูลในทุกหน้าด้วย <code>require_once 'config/config.php';</code></li>
-            </ol>
+            <p>แทนที่ HTML div ธรรมดาใน ServiceCard ด้วย Component ของ Shadcn ตาม snippet 2</p>
+            <ul>
+              <li>
+                เปิดไฟล์ <code>src/components/ServiceCard.jsx</code>
+                แทนที่ <code>&lt;div className="service-card"&gt;</code> ด้วย <code>&lt;Card&gt;</code> ของ Shadcn
+              </li>
+              <li>
+                ใช้ <code>&lt;CardHeader&gt;</code>, <code>&lt;CardTitle&gt;</code>, <code>&lt;CardContent&gt;</code>, <code>&lt;CardFooter&gt;</code>
+                จัดโครงสร้างเนื้อหาใน Card
+              </li>
+              <li>
+                ใช้ <code>&lt;Badge variant="secondary"&gt;</code> แสดงระยะเวลา (duration_min)
+              </li>
+              <li>
+                ใช้ <code>&lt;Button asChild&gt;&lt;Link&gt;&lt;/Link&gt;&lt;/Button&gt;</code> สำหรับปุ่มจอง
+                เพื่อให้ Render เป็น Link แต่มีหน้าตาเป็น Button
+              </li>
+              <li>
+                เพิ่ม Tailwind classes เพื่อ Hover Effect: <code>hover:shadow-lg transition-shadow</code>
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/components/ServiceCard.jsx — รีดีไซน์ด้วย Card</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Link } from '@tanstack/react-router';
+
+export function ServiceCard({ id, name, description, price, duration_min, image_url }) {
+  return (
+    &lt;Card className="hover:shadow-lg transition-shadow overflow-hidden">
+      {image_url ? (
+        &lt;img src={image_url} alt={name} className="w-full h-48 object-cover" />
+      ) : (
+        &lt;div className="w-full h-48 bg-muted flex items-center justify-center text-muted-foreground">
+          ไม่มีรูปภาพ
+        &lt;/div>
+      )}
+      &lt;CardHeader>
+        &lt;CardTitle>{name}&lt;/CardTitle>
+        &lt;Badge variant="secondary">{duration_min} นาที&lt;/Badge>
+      &lt;/CardHeader>
+      &lt;CardContent>
+        &lt;p className="text-muted-foreground text-sm">{description}&lt;/p>
+      &lt;/CardContent>
+      &lt;CardFooter className="flex justify-between items-center">
+        &lt;span className="text-xl font-bold text-primary">{price} ฿&lt;/span>
+        &lt;Button asChild>
+          &lt;Link to="/services/$serviceId" params={{ serviceId: id }}>จองเลย&lt;/Link>
+        &lt;/Button>
+      &lt;/CardFooter>
+    &lt;/Card>
+  );
+}</code></pre>
+            </div>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ทุกหน้าในโปรเจกต์ใช้ <code>$pdo</code> จาก config.php ได้อย่างถูกต้อง ไม่มีการ hardcode รหัสผ่านหรือชื่อฐานข้อมูลซ้ำในไฟล์อื่น</p>
+              <p>
+                หน้าแสดงบริการแสดง ServiceCard ที่มีรูปแบบใหม่ด้วย Shadcn Card
+                แต่ละ Card มี Badge แสดงระยะเวลา และ Button จองเลย
+                เมื่อ Hover ที่ Card จะมี shadow เพิ่มขึ้น
+              </p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>กำหนด Constants ด้วย <code>define('DB_HOST', 'localhost');</code> แทนตัวแปร <code>$DB_HOST</code> เพราะ Constants สามารถเข้าถึงได้ทุกที่โดยไม่ต้อง global และไม่สามารถถูก override ได้โดยบังเอิญ</p>
+              <p>
+                เพิ่ม <code>overflow-hidden</code> ใน <code>&lt;Card&gt;</code>
+                เพื่อให้รูปภาพ Crop ตาม Border Radius ของ Card ได้ถูกต้อง
+                ถ้าไม่ใส่ มุมของรูปจะล้นออกนอก Card
+              </p>
             </div>
           </div>
         </div>
 
+        <!-- Task 3 -->
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">สร้าง functions.php</div>
+            <div class="task-title">รีดีไซน์ BookingForm เป็น Dialog</div>
           </div>
           <div class="task-body">
-            <p>
-              สร้างไฟล์ <code>includes/functions.php</code> พร้อมฟังก์ชัน Helper ที่ใช้บ่อย:
-            </p>
-            <ol>
-              <li>เขียนฟังก์ชัน <code>formatThaiCurrency(float $amount): string</code> — คืนราคาในรูปแบบ "฿1,250.00"</li>
-              <li>เขียนฟังก์ชัน <code>getGreeting(): string</code> — คืนคำทักทายตามช่วงเวลา (เช้า/บ่าย/เย็น/ดึก)</li>
-              <li>เขียนฟังก์ชัน <code>limitText(string $text, int $limit = 100): string</code> — ตัดข้อความและเพิ่ม "..."</li>
-              <li>Include functions.php ใน header.php เพื่อให้ทุกหน้าสามารถใช้ฟังก์ชันเหล่านี้ได้</li>
-              <li>ทดสอบการใช้ฟังก์ชันในหน้าสินค้า: แสดงราคาด้วย <code>formatThaiCurrency()</code></li>
-            </ol>
+            <p>แทนที่ Booking Form ธรรมดาด้วย Dialog ของ Shadcn เพื่อ UX ที่ดีขึ้น</p>
+            <ul>
+              <li>
+                สร้างไฟล์ <code>src/components/BookingDialog.jsx</code>
+                ใช้ <code>&lt;Dialog&gt;</code> จาก Shadcn ตาม snippet 3 ด้านบน
+              </li>
+              <li>
+                ใช้ <code>&lt;DialogTrigger asChild&gt;</code> ห่อ Button
+                เพื่อให้เปิด Dialog เมื่อกด
+              </li>
+              <li>
+                ใช้ <code>&lt;Input&gt;</code> จาก Shadcn แทน <code>&lt;input&gt;</code> ธรรมดา
+                สำหรับ field วันที่ในฟอร์ม
+              </li>
+              <li>
+                นำ <code>&lt;BookingDialog&gt;</code> ไปใช้ใน ServiceCard หรือ Service Detail Page
+                แทนที่ปุ่มหรือ form เดิม
+              </li>
+            </ul>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ฟังก์ชันทั้งสามทำงานถูกต้อง: formatThaiCurrency(1250) คืน "฿1,250.00", getGreeting() คืนคำทักทายที่เหมาะสมกับเวลาปัจจุบัน, limitText("ข้อความยาว", 5) คืน "ข้อความ..."</p>
+              <p>
+                กดปุ่ม "จองบริการ" → Dialog เปิดขึ้นพร้อม Form
+                กด Escape หรือคลิกนอก Dialog → Dialog ปิดลง
+                กรอกวันที่และเวลา → กด "ยืนยันการจอง" → Form ส่งข้อมูลได้
+              </p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>ใช้ <code>mb_strlen()</code> และ <code>mb_substr()</code> แทน <code>strlen()</code> และ <code>substr()</code> สำหรับข้อความภาษาไทย เพราะฟังก์ชัน mb_ รองรับ Multi-byte characters (UTF-8) อย่างถูกต้อง</p>
+              <p>
+                Shadcn Dialog ใช้ Radix UI ภายใน ซึ่งจัดการ Focus Trap และ Keyboard Navigation อัตโนมัติ
+                ไม่ต้อง Implement เองเหมือน Modal ธรรมดา
+                ถ้า Dialog ไม่ปิดเมื่อกด Escape ให้ตรวจสอบว่า import ถูก Component จาก <code>'@/components/ui/dialog'</code>
+              </p>
             </div>
           </div>
         </div>
 
+        <!-- Task 4 -->
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">4</div>
-            <div class="task-title">ใช้ Template Pattern</div>
+            <div class="task-title">รีดีไซน์ Header และ Navigation</div>
           </div>
           <div class="task-body">
-            <p>
-              สร้าง Master Layout ที่ใช้ร่วมกันทั้งโปรเจกต์ด้วย Template Pattern:
-            </p>
-            <ol>
-              <li>สร้างไฟล์ <code>includes/layout.php</code> ที่มีโครงสร้าง HTML สมบูรณ์ รับตัวแปร <code>$title</code> และ <code>$content</code></li>
-              <li>แปลงหน้า index.php ให้ใช้ Output Buffering: ใช้ <code>ob_start()</code> จับเนื้อหา แล้ว <code>require_once 'includes/layout.php'</code></li>
-              <li>ทำซ้ำกับอีก 2 หน้า (เช่น products.php, about.php)</li>
-              <li>ทดสอบว่าแต่ละหน้าแสดง <code>&lt;title&gt;</code> ที่แตกต่างกันตาม <code>$title</code> ที่กำหนด</li>
-            </ol>
-            <div class="task-accept">
-              <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>ทั้ง 3 หน้าใช้ layout.php ร่วมกัน แต่ละหน้ามี &lt;title&gt; ที่แตกต่างกัน และเนื้อหาของแต่ละหน้าแสดงถูกต้องในส่วน $content</p>
-            </div>
-            <div class="task-hint">
-              <div class="th-title">คำแนะนำ</div>
-              <p>ลำดับที่ถูกต้อง: (1) กำหนด $title, (2) เรียก ob_start(), (3) เขียน HTML เนื้อหา, (4) $content = ob_get_clean(), (5) require_once layout.php ถ้าลำดับผิดจะทำให้ Layout แสดงก่อนเนื้อหาหรือแสดงซ้อนกัน</p>
-            </div>
-          </div>
-        </div>
+            <p>ใช้ Tailwind Classes สร้าง Responsive Navbar และเพิ่ม Avatar แสดงรูปโปรไฟล์ผู้ใช้</p>
+            <ul>
+              <li>
+                เปิดไฟล์ <code>src/components/Header.jsx</code> (หรือ Navbar)
+                เพิ่ม Tailwind classes สำหรับ Responsive Layout:
+                <code>flex items-center justify-between px-6 py-4 border-b bg-background</code>
+              </li>
+              <li>
+                ใช้ <code>&lt;Avatar&gt;</code> จาก Shadcn แสดงรูปโปรไฟล์ผู้ใช้
+                ถ้าไม่มีรูป ใช้ <code>&lt;AvatarFallback&gt;</code> แสดงตัวอักษรย่อของชื่อแทน
+              </li>
+              <li>
+                เพิ่ม Responsive สำหรับ Navigation: ซ่อน Link บน mobile ด้วย <code>hidden md:flex</code>
+                และแสดง Hamburger Menu แทน (ใช้ state toggle ได้)
+              </li>
+              <li>
+                ใช้ Tailwind Utility classes แทน CSS custom ที่เคยเขียนไว้เพื่อให้โค้ดสะอาดขึ้น
+              </li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/components/Header.jsx — Responsive Header ด้วย Tailwind + Avatar</span>
+                <span class="code-lang">JSX</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-jsx">import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Link } from '@tanstack/react-router';
+import { useAuth } from '../contexts/AuthContext';
 
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">สร้าง Class ง่ายๆ</div>
-          </div>
-          <div class="task-body">
-            <p>
-              สร้าง PHP Class สำหรับจัดการข้อมูลสินค้าในโปรเจกต์:
-            </p>
-            <ol>
-              <li>สร้างโฟลเดอร์ <code>classes/</code> และไฟล์ <code>classes/Product.php</code></li>
-              <li>สร้าง Class Product มี Properties: <code>$id</code>, <code>$name</code>, <code>$price</code>, <code>$stock</code></li>
-              <li>เพิ่ม Constructor ที่รับ id, name, price, และ stock (default = 0)</li>
-              <li>เพิ่ม Method <code>getFormattedPrice()</code> คืนราคาในรูปแบบ "฿X,XXX.XX"</li>
-              <li>เพิ่ม Method <code>isInStock()</code> คืน true/false ตามจำนวนสต็อก</li>
-              <li>ในหน้า products.php: include Product.php, ดึงข้อมูลจาก DB, สร้าง Object Product สำหรับแต่ละแถว, แสดงผลด้วย Method ของ Class</li>
-            </ol>
+export function Header() {
+  const { user, signOut } = useAuth();
+  const initials = user?.email?.slice(0, 2).toUpperCase() ?? 'U';
+
+  return (
+    &lt;header className="flex items-center justify-between px-6 py-4 border-b bg-background">
+      &lt;Link to="/" className="text-xl font-bold text-primary">
+        BookEasy
+      &lt;/Link>
+
+      &lt;nav className="hidden md:flex items-center gap-4">
+        &lt;Link to="/services" className="text-sm hover:text-primary transition-colors">บริการ&lt;/Link>
+        &lt;Link to="/bookings" className="text-sm hover:text-primary transition-colors">การจองของฉัน&lt;/Link>
+      &lt;/nav>
+
+      &lt;div className="flex items-center gap-3">
+        {user ? (
+          &lt;>
+            &lt;Avatar>
+              &lt;AvatarImage src={user.user_metadata?.avatar_url} />
+              &lt;AvatarFallback>{initials}&lt;/AvatarFallback>
+            &lt;/Avatar>
+            &lt;Button variant="outline" size="sm" onClick={signOut}>ออกจากระบบ&lt;/Button>
+          &lt;/>
+        ) : (
+          &lt;Button asChild size="sm">
+            &lt;Link to="/login">เข้าสู่ระบบ&lt;/Link>
+          &lt;/Button>
+        )}
+      &lt;/div>
+    &lt;/header>
+  );
+}</code></pre>
+            </div>
             <div class="task-accept">
               <div class="ta-title">เกณฑ์การผ่าน</div>
-              <p>หน้า products.php แสดงรายการสินค้าโดยใช้ Object ของ Class Product แต่ละสินค้าแสดงราคาผ่าน getFormattedPrice() และมี badge "หมดแล้ว" สำหรับสินค้าที่ isInStock() คืน false</p>
+              <p>
+                Header แสดงถูกต้องทั้งบน Desktop และ Mobile
+                เมื่อ Login แล้วจะเห็น Avatar และปุ่มออกจากระบบ
+                เมื่อยังไม่ Login จะเห็นปุ่มเข้าสู่ระบบ
+                บน Mobile (ความกว้างน้อยกว่า 768px) เมนู Navigation จะซ่อนไป
+              </p>
             </div>
             <div class="task-hint">
               <div class="th-title">คำแนะนำ</div>
-              <p>เมื่อดึงข้อมูลจาก Database ด้วย PDO ให้ใช้ <code>new Product($row['id'], $row['name'], $row['price'], $row['stock'])</code> สร้าง Object ในแต่ละ iteration ของ loop แล้วเก็บใน array เพื่อแสดงผล</p>
+              <p>
+                <code>AvatarFallback</code> แสดงเมื่อ <code>AvatarImage</code> โหลดไม่สำเร็จหรือไม่มี src
+                ใช้ตัวอักษรย่อชื่อผู้ใช้ เช่น <code>user.email.slice(0, 2).toUpperCase()</code>
+                เพื่อให้ Fallback ดูมีความหมายแทนที่จะแสดงพื้นที่สีเทาเปล่า
+              </p>
             </div>
           </div>
         </div>
@@ -719,35 +707,33 @@ foreach ($products as $p) {
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-10.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">UI/UX &amp; Responsive</div>
+        <div class="wn-name">Supabase Storage: อัปโหลดไฟล์และจัดการรูปภาพ</div>
       </a>
       <a href="week-12.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">Web Services &amp; REST API</div>
+        <div class="wn-name">Custom Hooks, Reusability &amp; Error Handling</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"
+        integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw=="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
         integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
-        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
         crossorigin="anonymous"></script>
 </body>
 </html>
