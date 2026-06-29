@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 15 — Testing, Deploy & สรุปรายวิชา — 07-034-233</title>
+  <title>สัปดาห์ที่ 15 — Deploy Cloudflare Workers + Testing + สรุปรายวิชา — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,12 +18,12 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 15</span>
     <span class="sep">›</span>
-    <span>Testing, Deploy &amp; สรุป</span>
+    <span>Deploy Cloudflare Workers + Testing + สรุปรายวิชา</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 15</div>
-    <h1 class="wh-title">Testing, Deploy &amp; สรุปรายวิชา</h1>
+    <h1 class="wh-title">Deploy Cloudflare Workers + Testing + สรุปรายวิชา</h1>
     <div class="wh-clos">
       <span class="wh-clo">CLO3</span>
       <span class="wh-clo">CLO7</span>
@@ -32,616 +32,626 @@
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
         <li><a href="#theory">ทฤษฎี</a></li>
         <li><a href="#code">โค้ดตัวอย่าง</a></li>
-        <li><a href="#next-steps">ก้าวต่อไป</a></li>
+        <li><a href="#lab">ปฏิบัติการ Lab 15</a></li>
       </ul>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         THEORY
+    ══════════════════════════════════════════ -->
     <div id="theory">
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <h3>การทดสอบเว็บแอปพลิเคชัน (Testing)</h3>
+        <!-- 1 -->
+        <h3>1. Cloudflare Workers Deployment — wrangler deploy</h3>
         <p>
-          ก่อน Deploy ระบบขึ้นสู่สาธารณะ สิ่งสำคัญที่สุดคือการทดสอบอย่างรอบคอบ
-          บัคที่หาไม่เจอตอนพัฒนาอาจกลายเป็นปัญหาใหญ่เมื่อผู้ใช้จริงเจอมัน
-          ประเภทของการทดสอบที่ควรทำ:
+          <strong>Cloudflare Workers</strong> คือ Serverless Runtime ที่รันโค้ด JavaScript ใกล้กับผู้ใช้มากที่สุด
+          ผ่าน Edge Network ของ Cloudflare ซึ่งมีมากกว่า 300 จุดทั่วโลก ข้อดีเมื่อเทียบกับ Server แบบเดิมคือ
+          ไม่มี Cold Start แบบ Traditional Serverless, Latency ต่ำมาก, และ Scale อัตโนมัติโดยไม่ต้องตั้งค่า
+        </p>
+        <p>
+          เครื่องมือหลักในการ Deploy คือ <strong>Wrangler CLI</strong> ซึ่งเป็น Command-line Tool ของ Cloudflare
+          ใช้สำหรับ Develop, Test, และ Deploy Workers พร้อมทั้งจัดการ Secrets และ KV Storage
         </p>
         <ul>
           <li>
-            <strong>Functional Testing (ทดสอบฟังก์ชันการทำงาน)</strong> — ระบบทำงานได้ตาม Requirement หรือไม่?
-            ทดสอบทุก Feature: Login, CRUD, Upload, Search, ฯลฯ
+            <strong>wrangler.toml</strong> — ไฟล์ Config หลักของโปรเจกต์ Workers ระบุ name, main entry, compatibility_date
+            และ bindings ต่างๆ เช่น Environment Variables หรือ KV Namespace
           </li>
           <li>
-            <strong>Usability Testing (ทดสอบความสะดวกในการใช้)</strong> — ให้คนอื่นที่ไม่ได้ทำโปรเจกต์ลองใช้
-            แล้วสังเกตว่าเขาสับสนตรงไหน ปุ่มหรือเมนูไม่ชัดเจนตรงไหน
+            <strong>npx wrangler dev</strong> — รัน Workers ในเครื่องแบบ Local Development มี Hot Reload
+            และ Simulate Edge Environment ได้ใกล้เคียงกับ Production มากที่สุด
           </li>
           <li>
-            <strong>Security Testing (ทดสอบความปลอดภัย)</strong> — ลอง SQL Injection ในช่องค้นหา,
-            ลอง XSS ในช่อง Comment, ลองเข้าหน้า Admin โดยไม่ Login
-          </li>
-          <li>
-            <strong>Browser Compatibility Testing</strong> — ทดสอบบน Chrome, Firefox, Edge, Safari
-            และบน Mobile (iOS Safari, Android Chrome)
-          </li>
-          <li>
-            <strong>Performance Testing</strong> — ระบบช้าหรือเปล่าเมื่อมีข้อมูลมาก? ลองใส่สินค้า 1,000 รายการ
-            แล้วดูว่าหน้าโหลดเร็วพอไหม
+            <strong>npx wrangler deploy</strong> — Deploy โค้ดขึ้น Cloudflare Network จริง
+            ใช้เวลาไม่กี่วินาที และ Rollback ทันทีหากมีปัญหา
           </li>
         </ul>
-        <p>
-          <strong>Checklist สิ่งที่ต้องทดสอบก่อน Deploy:</strong>
-        </p>
-        <div class="diagram-box">
-          <pre>
-การทดสอบก่อน Deploy — Checklist
 
-Authentication:
-  [ ] Login ด้วย username/password ถูก → เข้าได้
-  [ ] Login ด้วย password ผิด → แสดง error ที่เหมาะสม
-  [ ] เข้าหน้า Admin โดยไม่ Login → Redirect ไป Login
-  [ ] Session Timeout ทำงานหรือไม่?
-
-Form & Input:
-  [ ] Submit form ว่างเปล่า → แสดง validation error
-  [ ] ใส่ตัวอักษรพิเศษ/HTML ในช่อง input → ไม่ทำให้หน้าพัง
-  [ ] อัปโหลดไฟล์ขนาดใหญ่เกินกำหนด → แสดง error ที่ชัดเจน
-  [ ] อัปโหลดไฟล์นามสกุลไม่ถูกต้อง → ปฏิเสธและแจ้งเตือน
-
-Database:
-  [ ] บันทึกข้อมูลลง DB → ข้อมูลถูกต้องใน phpMyAdmin
-  [ ] แก้ไขข้อมูล → อัปเดตใน DB จริง
-  [ ] ลบข้อมูล → หายจาก DB และไม่แสดงในหน้าเว็บ
-  [ ] ค้นหาด้วยคำที่ไม่มีในระบบ → แสดง "ไม่พบข้อมูล"
-
-Mobile:
-  [ ] แสดงผลถูกต้องบน Mobile (ไม่ overflow, ไม่ตัดข้อความ)
-  [ ] ปุ่มกดได้ง่ายบน touch screen
-  [ ] Form กรอกได้สะดวกบน keyboard ของ mobile
-          </pre>
-        </div>
+        <div class="diagram-box"><pre>
+  โครงสร้าง Deploy Pipeline — Cloudflare Workers
+  ─────────────────────────────────────────────────
+  Local Dev               Cloudflare Edge
+  ─────────────────       ─────────────────────────
+  wrangler.toml           workers.dev Domain
+  src/index.js    ──────► bookeasy-api.your-name
+  .dev.vars                 .workers.dev
+  (local secrets)
+                          Cloudflare Pages
+  bookeasy/               ─────────────────────────
+  dist/           ──────► bookeasy.pages.dev
+  (Vite build)
+  ─────────────────────────────────────────────────</pre></div>
 
         <div class="callout tip">
-          <div class="callout-title">เคล็ดลับ</div>
+          <div class="callout-title">เคล็ดลับ — ตรวจ Logs หลัง Deploy</div>
           <p>
-            ให้เพื่อนหรือคนในครอบครัวที่ไม่รู้เรื่อง Web ลองใช้ระบบของคุณ แล้วสังเกตว่าเขาสับสนตรงไหน
-            นักพัฒนามักมองข้าม UX ที่แย่เพราะคุ้นชินกับระบบของตัวเอง ผู้ใช้จริงจะพบปัญหาที่คุณไม่เคยนึกถึง
+            หลัง Deploy แล้ว ใช้ <code>npx wrangler tail</code> เพื่อดู Real-time Logs ของ Workers
+            คล้ายกับ <code>console.log</code> ใน Development แต่ทำงานบน Production
+            ช่วย Debug ได้เมื่อ API ตอบสนองผิดปกติหลัง Deploy
           </p>
         </div>
 
-        <h3>การ Deploy ขึ้น Shared Hosting</h3>
+        <!-- 2 -->
+        <h3>2. Environment Variables บน Production — Wrangler Secrets</h3>
         <p>
-          <strong>Shared Hosting</strong> คือบริการ Hosting ที่ผู้ให้บริการมีเซิร์ฟเวอร์ขนาดใหญ่
-          และแบ่งพื้นที่ให้ลูกค้าหลายรายใช้ร่วมกัน เป็นตัวเลือกราคาถูกที่เหมาะสำหรับเว็บขนาดเล็กถึงกลาง
-          ผู้ให้บริการยอดนิยม: Hostinger, SiteGround, Namecheap, หรือ HostArmada
+          ใน Development เราเก็บ Credentials เช่น Supabase URL หรือ API Key ไว้ในไฟล์ <code>.dev.vars</code>
+          ซึ่งไม่ควร Commit ขึ้น Git แต่บน Production เราต้องใช้ <strong>Wrangler Secrets</strong>
+          ซึ่งเก็บค่า Encrypted ใน Cloudflare Dashboard และ Inject ให้ Workers ณ Runtime โดยอัตโนมัติ
         </p>
         <p>
-          <strong>ขั้นตอนการ Deploy บน Shared Hosting:</strong>
-        </p>
-        <ol>
-          <li>
-            <strong>อัปโหลดไฟล์ด้วย FTP</strong> — ดาวน์โหลด FileZilla (ฟรี) เชื่อมต่อด้วย
-            FTP credentials จาก Hosting Panel แล้ว Upload ไฟล์ทั้งหมดไปยัง <code>public_html/</code>
-          </li>
-          <li>
-            <strong>สร้าง Database บน Hosting</strong> — ใน cPanel หรือ Hosting Panel
-            ไปที่ MySQL Databases สร้าง Database ใหม่, User ใหม่, และกำหนด privileges
-          </li>
-          <li>
-            <strong>Import Database</strong> — ใน phpMyAdmin บน Hosting เลือก Import
-            แล้วเลือกไฟล์ database.sql ที่เตรียมไว้
-          </li>
-          <li>
-            <strong>แก้ไข config.php</strong> — เปลี่ยน DB_HOST, DB_USER, DB_PASS, DB_NAME
-            เป็นค่าของ Hosting (ไม่ใช่ localhost อีกต่อไป) โดย Hosting มักให้ HOST เป็น <code>localhost</code>
-            หรือ IP ภายใน
-          </li>
-          <li>
-            <strong>ตรวจสอบ PHP Version</strong> — Hosting บางแห่งใช้ PHP เวอร์ชันเก่า ตรวจสอบใน cPanel
-            ว่า PHP version ตรงกับที่พัฒนา (แนะนำ PHP 8.0+)
-          </li>
-          <li>
-            <strong>ตั้งค่า File Permissions</strong> — โฟลเดอร์ <code>uploads/</code> ต้องให้ Web Server เขียนได้
-            ตั้งเป็น 755 หรือ 775 ผ่าน FTP client หรือ File Manager ใน cPanel
-          </li>
-        </ol>
-
-        <div class="callout warning">
-          <div class="callout-title">ข้อควรระวัง</div>
-          <p>
-            ห้ามอัปโหลด config.php ที่มีรหัสผ่านจริงขึ้น Public Repository (GitHub)
-            ให้ใช้ FTP อัปโหลดโดยตรง หรือ เก็บ credentials ใน <code>.env</code> file
-            และเพิ่ม <code>config.php</code> ใน <code>.gitignore</code>
-          </p>
-        </div>
-
-        <h3>การ Deploy บน Free Platforms</h3>
-        <p>
-          สำหรับนักศึกษาที่ต้องการ Deploy โดยไม่เสียค่าใช้จ่าย มีตัวเลือกดังนี้:
+          ข้อแตกต่างระหว่าง <strong>Secrets</strong> กับ <strong>Environment Variables ปกติ</strong>:
         </p>
         <ul>
           <li>
-            <strong>InfinityFree (infinityfree.net)</strong> — Hosting PHP + MySQL ฟรี
-            มีข้อจำกัดเรื่อง CPU และ Bandwidth แต่เพียงพอสำหรับโปรเจกต์นักศึกษา
-            รองรับ PHP 7.4-8.1
+            <strong>Secrets</strong> — เข้ารหัสไว้ใน Cloudflare, ไม่แสดงใน Dashboard หลังตั้งค่า, เหมาะสำหรับ
+            Database URL, API Keys, JWT Secret ที่ไม่ควรเปิดเผย
           </li>
           <li>
-            <strong>000WebHost (Hostinger)</strong> — ฟรี Hosting PHP + MySQL 1GB
-            มีข้อจำกัดเรื่องเวลาทำงาน (Sleep หลังไม่ใช้งานนาน)
+            <strong>Vars (wrangler.toml)</strong> — ตั้งค่าได้ใน <code>wrangler.toml</code> ภายใต้ <code>[vars]</code>
+            เหมาะสำหรับค่าที่ไม่ Sensitive เช่น APP_ENV, MAX_UPLOAD_SIZE
+          </li>
+        </ul>
+
+        <div class="diagram-box"><pre>
+  วิธีเข้าถึง Secrets ใน Hono API
+  ─────────────────────────────────────────────────
+  // ใน Cloudflare Workers (Hono)
+  app.get('/api/services', async (c) => {
+    const supabaseUrl = c.env.SUPABASE_URL;   ← จาก wrangler secret
+    const supabaseKey = c.env.SUPABASE_KEY;   ← จาก wrangler secret
+
+    const client = createClient(supabaseUrl, supabaseKey);
+    const { data } = await client.from('services').select('*');
+    return c.json({ data });
+  });
+  ─────────────────────────────────────────────────</pre></div>
+
+        <!-- 3 -->
+        <h3>3. Vite Build + Deploy Frontend — Cloudflare Pages</h3>
+        <p>
+          <strong>Cloudflare Pages</strong> คือบริการ Static Site Hosting ของ Cloudflare ที่เชื่อมต่อกับ Git Repository
+          ได้โดยตรง หรือ Deploy ผ่าน Wrangler CLI ก็ได้ เหมาะสำหรับ Vite + React App ที่ Build เป็น Static Files
+        </p>
+        <p>
+          ขั้นตอนหลักในการ Deploy Frontend:
+        </p>
+        <ul>
+          <li>
+            <strong>สร้าง .env.production</strong> — ไฟล์นี้ Vite จะโหลดอัตโนมัติเมื่อรัน <code>npm run build</code>
+            ใส่ <code>VITE_API_URL</code> ชี้ไปยัง Workers URL จริง (ไม่ใช่ localhost)
           </li>
           <li>
-            <strong>Railway.app</strong> — รองรับ PHP, MySQL, PostgreSQL ฟรีในระดับ Hobby
-            เหมาะสำหรับนักศึกษาที่ต้องการ Deploy แบบมืออาชีพมากขึ้น
+            <strong>npm run build</strong> — Vite สร้างโฟลเดอร์ <code>dist/</code> ที่มี Optimized HTML, CSS, JS
+            พร้อม Tree Shaking และ Code Splitting อัตโนมัติ
           </li>
           <li>
-            <strong>Render.com</strong> — Web Service ฟรี (sleep หลัง 15 นาทีไม่ใช้งาน)
-            รองรับ PHP ผ่าน Docker หรือ Dockerfile ต้องการความรู้เพิ่มเติม
-          </li>
-          <li>
-            <strong>GitHub Pages + PHP Hosting</strong> — ใช้ GitHub Pages สำหรับ Static Frontend
-            และ Free PHP Hosting สำหรับ API Backend (Split Architecture)
+            <strong>npx wrangler pages deploy dist</strong> — อัปโหลด <code>dist/</code> ขึ้น Cloudflare Pages
+            และได้รับ URL จริงทันที
           </li>
         </ul>
 
         <div class="callout note">
-          <div class="callout-title">หมายเหตุ</div>
+          <div class="callout-title">หมายเหตุ — CORS บน Production</div>
           <p>
-            Free Hosting มักมีข้อจำกัดและอาจไม่ Stable สำหรับโปรเจกต์ Production จริง
-            แต่เพียงพอสำหรับการ Demo และ Portfolio เมื่อต้องการ Deploy จริงๆ ในอนาคต
-            ควรลงทุนกับ Paid Hosting ที่เริ่มต้นที่ประมาณ 50-100 บาท/เดือน
+            เมื่อ Frontend อยู่ที่ <code>bookeasy.pages.dev</code> และ Backend อยู่ที่ <code>bookeasy-api.workers.dev</code>
+            ต้องตั้งค่า CORS ใน Hono ให้ยอมรับ Origin จาก Pages URL จริง
+            ไม่ใช่ <code>*</code> หรือ <code>localhost</code> อีกต่อไป
           </p>
         </div>
 
-        <h3>ความปลอดภัยก่อน Deploy</h3>
+        <!-- 4 -->
+        <h3>4. Testing เบื้องต้นใน JavaScript — Vitest</h3>
         <p>
-          ก่อนให้ผู้ใช้จริงเข้าถึงระบบ ต้องตรวจสอบความปลอดภัยขั้นพื้นฐาน:
+          <strong>Vitest</strong> คือ Testing Framework สำหรับ JavaScript/TypeScript ที่ออกแบบมาให้ทำงานร่วมกับ Vite
+          ได้อย่างสมบูรณ์ ใช้ Syntax เดียวกับ Jest แต่เร็วกว่าเพราะใช้ ESM Native
+          และไม่ต้องตั้งค่า Babel หรือ Transform พิเศษ
+        </p>
+        <p>
+          ประเภทของ Test ที่ควรรู้จัก:
         </p>
         <ul>
           <li>
-            <strong>ลบข้อมูลทดสอบ</strong> — ลบ user ทดสอบ, ข้อมูลตัวอย่างที่ไม่จริง,
-            และ debug output ทั้งหมด
+            <strong>Unit Test</strong> — ทดสอบฟังก์ชันเดียวแบบ Isolated ไม่มี Network, Database, หรือ UI
+            เหมาะสำหรับ Utility Functions เช่น <code>formatPrice()</code>, <code>formatDate()</code>
           </li>
           <li>
-            <strong>เปลี่ยนรหัสผ่าน Default</strong> — MySQL root password, admin account ใน web
-            ห้ามใช้ "password", "1234", "admin" ในระบบ Production
+            <strong>Integration Test</strong> — ทดสอบการทำงานร่วมกันของหลาย Module
+            เช่น ทดสอบว่า API Route ส่งข้อมูลถูกต้องเมื่อรับ Request จริง
           </li>
           <li>
-            <strong>ปิดการแสดง Error</strong> — ตั้ง <code>display_errors = Off</code> ใน php.ini
-            หรือในโค้ด PHP Error message ที่แสดงต่อผู้ใช้อาจเปิดเผยโครงสร้าง DB หรือ Path ระบบ
-          </li>
-          <li>
-            <strong>ใช้ Environment Variables</strong> — แทนที่จะ hardcode credentials ใน config.php
-            ใช้ <code>$_ENV</code> หรือ <code>getenv()</code> ดึงจาก .env file หรือ Hosting Environment
-          </li>
-          <li>
-            <strong>HTTPS เสมอ</strong> — Hosting ทุกแห่งปัจจุบันให้ SSL Certificate ฟรี (Let's Encrypt)
-            บังคับ HTTPS ด้วย <code>.htaccess</code> redirect
-          </li>
-          <li>
-            <strong>Prepared Statements ทุกที่</strong> — ตรวจสอบว่าทุก SQL Query ใช้ Prepared Statements
-            ไม่มี String concatenation ใน SQL เลย
-          </li>
-          <li>
-            <strong>Validate ทุก Input</strong> — ทั้ง Client-side (JavaScript) และ Server-side (PHP)
-            อย่าเชื่อข้อมูลที่ Client ส่งมาโดยไม่ตรวจสอบ
+            <strong>E2E Test (End-to-End)</strong> — ทดสอบแบบ Full Flow ตั้งแต่ผู้ใช้เปิดเบราว์เซอร์
+            จนถึงข้อมูลบันทึกลง Database ใช้เครื่องมืออย่าง Playwright หรือ Cypress
           </li>
         </ul>
 
-        <div class="diagram-box">
-          <pre>
-Security Checklist ก่อน Deploy
+        <div class="diagram-box"><pre>
+  โครงสร้าง Test File — Vitest
+  ─────────────────────────────────────────────────
+  describe('formatPrice', () => {       ← Test Suite
+    it('formats Thai baht', () => {     ← Test Case
+      expect(formatPrice(150))          ← Assertion
+        .toBe('฿150.00');
+    });
 
-  [ ] display_errors = Off ใน Production
-  [ ] ไม่มี var_dump() หรือ print_r() ในโค้ด
-  [ ] ทุก SQL ใช้ Prepared Statements (PDO/MySQLi)
-  [ ] ทุก Output ใช้ htmlspecialchars() (ป้องกัน XSS)
-  [ ] รหัสผ่านเก็บด้วย password_hash() (bcrypt)
-  [ ] Session ใช้ session_regenerate_id() หลัง Login
-  [ ] ไฟล์ config.php ไม่อยู่ใน public_html โดยตรง
-  [ ] โฟลเดอร์ uploads/ ไม่อนุญาต Execute PHP
-  [ ] .htaccess ปิดการเข้าถึงไฟล์ .sql .env .log
-  [ ] HTTPS เปิดใช้งาน (SSL Certificate)
-          </pre>
+    it('handles zero', () => {
+      expect(formatPrice(0)).toBe('฿0.00');
+    });
+  });
+
+  ผลลัพธ์เมื่อ npm test:
+  ─────────────────────────────────────────────────
+  ✓ formatPrice > formats Thai baht
+  ✓ formatPrice > handles zero
+  ✓ formatPrice > handles large numbers
+  Test Files: 1 passed (1)
+  Tests:      3 passed (3)
+  ─────────────────────────────────────────────────</pre></div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — เริ่มต้น Test จาก Utility Functions</div>
+          <p>
+            Utility Functions เช่น <code>formatPrice()</code>, <code>formatDate()</code>, <code>validateEmail()</code>
+            คือจุดเริ่มต้น Testing ที่ดีที่สุด เพราะไม่มี Side Effect และทดสอบง่าย
+            เมื่อ Confidence สูงขึ้นค่อย Test ส่วนที่ซับซ้อนขึ้นอย่าง API Handlers
+          </p>
         </div>
 
-        <h3>สรุปรายวิชา — สิ่งที่ได้เรียนรู้ตลอด 15 สัปดาห์</h3>
+        <!-- 5 -->
+        <h3>5. สรุปรายวิชาและ Next Steps</h3>
         <p>
-          มาดูกันว่าเราเดินทางมาไกลแค่ไหนตั้งแต่สัปดาห์แรก:
+          ตลอด 15 สัปดาห์ที่ผ่านมา เราสร้าง <strong>BookEasy</strong> — Web Application จองบริการ
+          ตั้งแต่ศูนย์จนถึง Production โดยใช้ Stack สมัยใหม่ที่ใช้จริงในอุตสาหกรรม:
         </p>
-        <div class="diagram-box">
-          <pre>
-การเดินทาง 15 สัปดาห์ของนักพัฒนาเว็บ
 
-สัปดาห์  1 — แนะนำรายวิชา: Client-Server, HTTP, เครื่องมือ
-สัปดาห์  2 — HTML & CSS: โครงสร้าง, Styling, Box Model
-สัปดาห์  3 — JavaScript: DOM, Events, Forms
-สัปดาห์  4 — PHP พื้นฐาน: Variables, Functions, Arrays
-สัปดาห์  5 — PHP กับ HTML Forms: GET/POST, Validation
-สัปดาห์  6 — MySQL & SQL: CREATE, SELECT, INSERT, UPDATE, DELETE
-สัปดาห์  7 — PHP + MySQL: PDO, Prepared Statements
-สัปดาห์  8 — CRUD สมบูรณ์: Create, Read, Update, Delete
-สัปดาห์  9 — File Upload: รูปภาพ, ประเภทไฟล์, ความปลอดภัย
-สัปดาห์ 10 — Session & Authentication: Login, Logout, Role-based
-สัปดาห์ 11 — UI/UX & Responsive: Bootstrap, Flexbox, Grid  [หมายเหตุ: เนื้อหาอาจสลับกับสัปดาห์อื่น]
-สัปดาห์ 11 — Code Reusability: DRY, include/require, Template, OOP
-สัปดาห์ 12 — Web Services & REST API: JSON, fetch(), cURL
-สัปดาห์ 13 — โครงงานทีม: Requirements, ER Diagram, Team Work
-สัปดาห์ 14 — นำเสนอโครงงาน: Demo, Documentation, Presentation
-สัปดาห์ 15 — Testing, Deploy, สรุป: Security, Production Ready
-          </pre>
-        </div>
+        <div class="diagram-box"><pre>
+  BookEasy Stack — สรุป 15 สัปดาห์
+  ─────────────────────────────────────────────────
+  W1  — แนะนำรายวิชา: Client-Server, HTTP, Tools
+  W2  — HTML/CSS/JS: โครงสร้างโปรเจกต์ BookEasy
+  W3  — Vite + React: JSX, Components, Props
+  W4  — TanStack Router: File-based Routing
+  W5  — Hono + Cloudflare Workers: REST API
+  W6  — Supabase Database: PostgreSQL + RLS
+  W7  — CRUD สมบูรณ์: GET/POST/PATCH/DELETE
+  W8  — TanStack Query: Data Fetching + Cache
+  W9  — Supabase Auth: Login, Register, Session
+  W10 — Supabase Storage: อัปโหลดรูปบริการ
+  W11 — Shadcn/ui + Tailwind: UI/UX ที่สวยงาม
+  W12 — Custom Hooks: useServices, useBookings
+  W13 — โครงงานทีม: วิเคราะห์ ออกแบบ พัฒนา
+  W14 — นำเสนอ: Demo, Documentation
+  W15 — Deploy + Testing + สรุปรายวิชา ← คุณอยู่ที่นี่
+  ─────────────────────────────────────────────────</pre></div>
+
         <p>
-          ทักษะเหล่านี้คือรากฐานของนักพัฒนาเว็บทุกคน ไม่ว่าจะทำงานใน Startup เล็กๆ หรือบริษัทใหญ่ระดับ Enterprise
-          ทุกเว็บแอปพลิเคชันบน Internet ใช้หลักการเดียวกัน: HTML/CSS/JS สำหรับ Frontend,
-          Backend Language (PHP, Python, Node.js ฯลฯ) สำหรับ Logic, และ Database สำหรับเก็บข้อมูล
-        </p>
-        <p>
-          <strong>เชื่อมโยงกับอุตสาหกรรม:</strong> ทักษะที่เรียนมาสัมพันธ์โดยตรงกับตำแหน่งงาน:
+          ทักษะที่ได้จากรายวิชานี้ตรงกับสิ่งที่อุตสาหกรรม IT ต้องการ:
         </p>
         <ul>
-          <li><strong>Web Developer (Junior)</strong> — สร้างหน้าเว็บ, แก้บัค, ทำงานตาม Spec ที่กำหนด</li>
-          <li><strong>Full Stack Developer</strong> — ทำได้ทั้ง Frontend และ Backend เหมือนที่เรียนมาทั้งหมด</li>
-          <li><strong>PHP Developer</strong> — พัฒนา Backend ด้วย PHP ใช้ Framework เช่น Laravel</li>
-          <li><strong>Database Administrator</strong> — ออกแบบ ดูแล และ Optimize ฐานข้อมูล</li>
+          <li><strong>Frontend Developer</strong> — React, Vite, TanStack Router/Query, Tailwind, Shadcn/ui</li>
+          <li><strong>Backend Developer</strong> — Hono, Cloudflare Workers, REST API, Supabase</li>
+          <li><strong>Full Stack Developer</strong> — ทำได้ทั้งสองฝั่ง ครอบคลุมทุกชั้นของแอปพลิเคชัน</li>
+          <li><strong>DevOps / Deployment</strong> — Wrangler CLI, Cloudflare Pages, Environment Management</li>
+        </ul>
+        <p>
+          <strong>Next Steps ที่แนะนำ</strong> สำหรับการพัฒนาทักษะต่อจากรายวิชานี้:
+        </p>
+        <ul>
+          <li>
+            <strong>TypeScript</strong> — เพิ่ม Type Safety ให้ JavaScript Codebase เดิม
+            Hono และ Vite รองรับ TypeScript ได้ทันทีโดยแทบไม่ต้องเปลี่ยนโครงสร้าง
+          </li>
+          <li>
+            <strong>Testing (Vitest + Playwright)</strong> — เขียน Unit Test ให้ครอบคลุม Utility Functions
+            และ E2E Test สำหรับ User Flows สำคัญ
+          </li>
+          <li>
+            <strong>CI/CD (GitHub Actions)</strong> — ตั้งค่า Pipeline ให้ Run Tests อัตโนมัติทุก Push
+            และ Deploy อัตโนมัติเมื่อ Tests ผ่านทั้งหมด
+          </li>
+          <li>
+            <strong>Drizzle ORM หรือ Prisma</strong> — ใช้ Type-safe ORM แทนการเขียน SQL โดยตรง
+            ทำให้ Query ปลอดภัยขึ้นและ Migrate Schema ได้ง่ายขึ้น
+          </li>
         </ul>
 
         <div class="callout note">
-          <div class="callout-title">หมายเหตุ</div>
+          <div class="callout-title">แหล่งเรียนรู้ต่อ</div>
           <p>
-            การเรียนรู้ไม่ได้จบแค่รายวิชานี้ อุตสาหกรรม IT เปลี่ยนแปลงเร็วมาก สิ่งสำคัญคือ
-            <strong>ทักษะการเรียนรู้ด้วยตัวเอง</strong> — เมื่อเจอ Technology ใหม่หรือปัญหาที่ยังไม่เคยเจอ
-            ให้รู้จักค้นหาจาก Documentation, Stack Overflow, YouTube, และทดลองด้วยตัวเอง
+            <strong>docs.hono.dev</strong> — Official Hono Documentation ครบถ้วน |
+            <strong>vitest.dev</strong> — Vitest Guide และ API Reference |
+            <strong>developers.cloudflare.com</strong> — Workers และ Pages Documentation |
+            <strong>supabase.com/docs</strong> — Supabase Reference ทุก Feature
           </p>
         </div>
 
       </div>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         CODE EXAMPLES
+    ══════════════════════════════════════════ -->
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Bash deployment checklist -->
+      <!-- Snippet 1: Deploy commands -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">deploy-checklist.sh</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">deploy.sh — Deploy BookEasy ขึ้น Cloudflare</span>
           <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-bash">#!/bin/bash
-# deploy-checklist.sh — สคริปต์ตรวจสอบก่อน Deploy
+        <pre><code class="language-bash"># snippet 1: Deploy ครบวงจร
+# --- Deploy Backend (Hono API) ---
+cd bookeasy-api
+# ตั้งค่า secrets บน production
+npx wrangler secret put SUPABASE_URL
+npx wrangler secret put SUPABASE_KEY
 
-echo "=== Pre-Deploy Checklist ==="
+# Deploy
+npx wrangler deploy
+# ✅ Deployed to: https://bookeasy-api.your-name.workers.dev
 
-# ── ตรวจสอบ PHP Syntax ทุกไฟล์ ───────────────────────────────
-echo ""
-echo "1. ตรวจสอบ PHP Syntax..."
-find . -name "*.php" -not -path "./vendor/*" | while read file; do
-    php -l "$file" 2>&1 | grep -v "No syntax errors"
-done
-echo "   เสร็จ!"
+# --- Deploy Frontend (Vite → Cloudflare Pages) ---
+cd bookeasy
+# แก้ .env.production
+echo "VITE_API_URL=https://bookeasy-api.your-name.workers.dev" > .env.production
 
-# ── ตรวจสอบ var_dump / print_r ที่อาจลืมลบ ──────────────────
-echo ""
-echo "2. ตรวจสอบ Debug Output ที่ลืมลบ..."
-DEBUG=$(grep -rn "var_dump\|print_r\|die(\|exit(" --include="*.php" . \
-        --exclude-dir=vendor)
-if [ -n "$DEBUG" ]; then
-    echo "   พบ Debug output:"
-    echo "$DEBUG"
-else
-    echo "   ไม่พบ Debug output ✓"
-fi
+npm run build
+# dist/ folder พร้อม deploy
 
-# ── ตรวจสอบ display_errors ──────────────────────────────────
-echo ""
-echo "3. ตรวจสอบ display_errors..."
-DE=$(grep -rn "display_errors\s*=\s*On\|display_errors\s*=\s*1" \
-     --include="*.php" .)
-if [ -n "$DE" ]; then
-    echo "   พบ display_errors = On — ต้องปิดก่อน Deploy:"
-    echo "$DE"
-else
-    echo "   display_errors ถูกปิด หรือไม่ได้ตั้งค่าชัดเจน ✓"
-fi
-
-# ── ตรวจสอบ File Permissions ─────────────────────────────────
-echo ""
-echo "4. ตรวจสอบ Permissions..."
-if [ -d "uploads" ]; then
-    UPLOADS_PERM=$(stat -c "%a" uploads/ 2>/dev/null || stat -f "%p" uploads/)
-    echo "   uploads/ permission: $UPLOADS_PERM"
-    echo "   แนะนำ: 755 (Apache สามารถเขียนได้, ผู้ใช้อื่นอ่านได้)"
-fi
-
-# ── ตรวจสอบ Hardcoded Credentials ───────────────────────────
-echo ""
-echo "5. ตรวจสอบ Hardcoded Credentials..."
-CREDS=$(grep -rn "password.*=.*['\"][^'\"]*['\"]" --include="*.php" . \
-        | grep -v "password_hash\|password_verify\|config.php")
-if [ -n "$CREDS" ]; then
-    echo "   อาจพบ Hardcoded password (ตรวจสอบด้วยตนเอง):"
-    echo "$CREDS" | head -5
-else
-    echo "   ไม่พบ Hardcoded password ชัดเจน ✓"
-fi
-
-echo ""
-echo "=== Checklist เสร็จสิ้น ==="
-echo "ตรวจสอบผลลัพธ์ด้านบนและแก้ไขปัญหาก่อน Deploy"</code></pre>
+npx wrangler pages deploy dist --project-name bookeasy
+# ✅ Deployed to: https://bookeasy.pages.dev</code></pre>
       </div>
 
-      <!-- PHP Production config -->
+      <!-- Snippet 2: Vitest unit test -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">config/config.php (Production-ready)</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/utils/formatPrice.test.js — Unit Test ด้วย Vitest</span>
+          <span class="code-lang">JavaScript</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// config/config.php — Production-ready Configuration
-
-// ─── ตรวจจับ Environment (Development vs Production) ────────
-$isProduction = !in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1']);
-
-// ─── Error Reporting ─────────────────────────────────────────
-if ($isProduction) {
-    // Production: ซ่อน Error จากผู้ใช้ แต่บันทึกลง Log
-    error_reporting(E_ALL);
-    ini_set('display_errors', '0');         // ไม่แสดง Error บนหน้าเว็บ
-    ini_set('display_startup_errors', '0');
-    ini_set('log_errors', '1');
-    ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
-} else {
-    // Development: แสดง Error ทั้งหมดเพื่อ Debug
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
+        <pre><code class="language-javascript">// snippet 2: Vitest — unit test เบื้องต้น
+// src/utils/formatPrice.js
+export function formatPrice(price) {
+  return new Intl.NumberFormat('th-TH', {
+    style: 'currency',
+    currency: 'THB',
+  }).format(price);
 }
 
-// ─── Database Configuration ──────────────────────────────────
-// ลำดับการตรวจสอบ: Environment Variables → ค่า Default (dev)
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: 'myapp_db');
-define('DB_PORT', getenv('DB_PORT') ?: '3306');
+// src/utils/formatPrice.test.js
+import { describe, it, expect } from 'vitest';
+import { formatPrice } from './formatPrice';
 
-// ─── Site Configuration ─────────────────────────────────────
-define('SITE_NAME', 'เว็บแอปพลิเคชันของฉัน');
-define('SITE_URL',  $isProduction
-    ? 'https://www.mysite.com'
-    : 'http://localhost/myapp');
-define('UPLOAD_DIR', __DIR__ . '/../uploads/');
-define('UPLOAD_MAX_SIZE', 5 * 1024 * 1024); // 5MB
+describe('formatPrice', () => {
+  it('formats Thai baht correctly', () => {
+    expect(formatPrice(150)).toBe('฿150.00');
+  });
 
-// ─── Session Configuration ──────────────────────────────────
-ini_set('session.cookie_httponly', '1');   // ป้องกัน XSS ขโมย Cookie
-ini_set('session.cookie_secure',   $isProduction ? '1' : '0'); // HTTPS only
-ini_set('session.use_strict_mode', '1');   // ป้องกัน Session Fixation
-ini_set('session.gc_maxlifetime',  '3600'); // Session หมดอายุใน 1 ชั่วโมง
+  it('handles zero', () => {
+    expect(formatPrice(0)).toBe('฿0.00');
+  });
 
-// ─── Database Connection (PDO) ──────────────────────────────
-try {
-    $dsn = sprintf(
-        'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
-        DB_HOST, DB_PORT, DB_NAME
-    );
-    $pdo = new PDO($dsn, DB_USER, DB_PASS, [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,  // ใช้ Native Prepared Statements
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci",
-    ]);
-} catch (PDOException $e) {
-    // Production: แสดง error ที่เป็นมิตร ไม่เปิดเผยรายละเอียด
-    if ($isProduction) {
-        error_log('DB Connection failed: ' . $e->getMessage());
-        http_response_code(503);
-        die('ขณะนี้ระบบไม่พร้อมให้บริการ กรุณาลองใหม่ในภายหลัง');
-    }
-    // Development: แสดง error จริงเพื่อ Debug
-    throw $e;
-}
-
-// ─── Start Session ──────────────────────────────────────────
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// ─── Security: ป้องกัน Clickjacking ─────────────────────────
-header('X-Frame-Options: SAMEORIGIN');
-header('X-Content-Type-Options: nosniff');
-header('X-XSS-Protection: 1; mode=block');
-if ($isProduction) {
-    header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
-}</code></pre>
+  it('handles large numbers', () => {
+    expect(formatPrice(1500)).toBe('฿1,500.00');
+  });
+});</code></pre>
       </div>
 
-      <!-- Simple testing script -->
+      <!-- Snippet 3: npm test + build -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">tests/smoke-test.php</span>
-          <span class="code-lang">PHP</span>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">terminal — รัน Tests และ Build Check</span>
+          <span class="code-lang">Bash</span>
           <button class="copy-btn">คัดลอก</button>
         </div>
-        <pre><code class="language-php"><?php
-// tests/smoke-test.php — ทดสอบ Route และ Feature พื้นฐาน
-// ใช้งาน: เปิด http://localhost/project/tests/smoke-test.php
-// ลบออกก่อน Deploy จริง!
+        <pre><code class="language-bash"># snippet 3: รัน tests และ build check
+# ติดตั้ง Vitest
+npm install -D vitest
 
-require_once '../config/config.php';
+# เพิ่มใน package.json
+# "test": "vitest run"
 
-$tests  = [];
-$passed = 0;
-$failed = 0;
+# รัน tests
+npm test
+# ✅ 3 tests passed
 
-/**
- * ฟังก์ชัน assert สำหรับทดสอบ
- */
-function test(string $name, bool $condition, string $detail = ''): void {
-    global $tests, $passed, $failed;
-    $status = $condition ? 'PASS' : 'FAIL';
-    if ($condition) $passed++; else $failed++;
-    $tests[] = compact('name', 'status', 'detail');
-}
+# ตรวจ build ก่อน deploy จริง
+npm run build
+# ✅ dist/index.html  xx kB
+# ✅ dist/assets/index-xxx.js  xx kB
 
-// ─── ทดสอบ Database Connection ────────────────────────────
-try {
-    $pdo->query("SELECT 1");
-    test("Database Connection", true, "PDO connected to " . DB_NAME);
-} catch (Exception $e) {
-    test("Database Connection", false, $e->getMessage());
-}
-
-// ─── ทดสอบว่า Tables มีอยู่จริง ──────────────────────────
-$requiredTables = ['users', 'products', 'categories', 'orders'];
-foreach ($requiredTables as $table) {
-    try {
-        $count = $pdo->query("SELECT COUNT(*) FROM `{$table}`")->fetchColumn();
-        test("Table '{$table}' exists", true, "{$count} rows");
-    } catch (Exception $e) {
-        test("Table '{$table}' exists", false, "Table not found");
-    }
-}
-
-// ─── ทดสอบ Admin User ──────────────────────────────────────
-$adminExists = $pdo->query(
-    "SELECT COUNT(*) FROM users WHERE role = 'admin'"
-)->fetchColumn();
-test("Admin user exists", $adminExists > 0, "{$adminExists} admin(s) found");
-
-// ─── ทดสอบ Upload Directory ────────────────────────────────
-$uploadDir = UPLOAD_DIR;
-test(
-    "Upload directory exists",
-    is_dir($uploadDir),
-    $uploadDir
-);
-test(
-    "Upload directory is writable",
-    is_writable($uploadDir),
-    $uploadDir
-);
-
-// ─── ทดสอบ PHP Extensions ─────────────────────────────────
-$requiredExtensions = ['pdo', 'pdo_mysql', 'mbstring', 'json', 'gd', 'curl'];
-foreach ($requiredExtensions as $ext) {
-    test("PHP extension: {$ext}", extension_loaded($ext));
-}
-
-// ─── ทดสอบ password_hash ────────────────────────────────
-$hash = password_hash('testpassword', PASSWORD_BCRYPT);
-test(
-    "password_hash() works",
-    password_verify('testpassword', $hash),
-    "bcrypt hashing functional"
-);
-
-// ─── แสดงผลการทดสอบ ───────────────────────────────────────
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>Smoke Test Results</title>
-  <style>
-    body { font-family: monospace; padding: 20px; }
-    .PASS { color: green; }
-    .FAIL { color: red; font-weight: bold; }
-    .summary { margin-top: 20px; font-size: 1.2em; }
-  </style>
-</head>
-<body>
-<h2>Smoke Test Results — <?php echo DB_NAME; ?></h2>
-<table border="1" cellpadding="8" cellspacing="0">
-  <tr><th>Test</th><th>Status</th><th>Detail</th></tr>
-  <?php foreach ($tests as $t): ?>
-  <tr>
-    <td><?php echo htmlspecialchars($t['name']); ?></td>
-    <td class="<?php echo $t['status']; ?>"><?php echo $t['status']; ?></td>
-    <td><?php echo htmlspecialchars($t['detail']); ?></td>
-  </tr>
-  <?php endforeach; ?>
-</table>
-<div class="summary">
-  Total: <?php echo count($tests); ?> |
-  <span class="PASS">Passed: <?php echo $passed; ?></span> |
-  <span class="FAIL">Failed: <?php echo $failed; ?></span>
-</div>
-<?php if ($failed === 0): ?>
-  <p class="PASS">✓ ระบบพร้อม Deploy!</p>
-<?php else: ?>
-  <p class="FAIL">✗ พบปัญหา <?php echo $failed; ?> จุด — แก้ไขก่อน Deploy</p>
-<?php endif; ?>
-</body>
-</html></code></pre>
+# Preview build ในเครื่อง
+npm run preview
+# เปิด http://localhost:4173</code></pre>
       </div>
 
     </div>
 
-    <div id="next-steps">
-      <div class="callout tip">
-        <div class="callout-title">ก้าวต่อไป (What's Next)</div>
-        <p>ท่านเรียนรู้ทักษะพื้นฐานของการพัฒนาเว็บแบบ Full Stack แล้ว! ขั้นตอนต่อไปที่แนะนำ:</p>
-        <ul>
-          <li><strong>Laravel</strong> — PHP Framework ที่ได้รับความนิยมสูงสุด ทำทุกอย่างที่เรียนมาได้เร็วกว่าและปลอดภัยกว่า: Routing, ORM (Eloquent), Authentication สำเร็จรูป, Queue, Mail, ฯลฯ</li>
-          <li><strong>React.js</strong> — JavaScript Library สำหรับ Front-end สมัยใหม่ สร้าง UI แบบ Component-based ทำงานร่วมกับ REST API ที่เรียนมาได้ทันที</li>
-          <li><strong>Git &amp; GitHub</strong> — ระบบควบคุมเวอร์ชัน จำเป็นสำหรับนักพัฒนาทุกคน ทำงานเป็นทีมได้อย่างมีประสิทธิภาพ, Portfolio บน GitHub คือ Resume ที่ดีที่สุด</li>
-          <li><strong>Docker</strong> — Containerization สำหรับ Deploy แบบมืออาชีพ แก้ปัญหา "ทำงานบนเครื่องฉันได้แต่บน Server ไม่ได้" ได้ถาวร</li>
-          <li><strong>Vue.js หรือ Next.js</strong> — ทางเลือกอื่นของ JavaScript Framework ที่ได้รับความนิยมสูง</li>
-          <li><strong>Linux / Command Line</strong> — นักพัฒนาส่วนใหญ่ทำงานบน Linux Server ความชำนาญ Terminal ช่วยได้มาก</li>
-        </ul>
+    <!-- ══════════════════════════════════════════
+         LAB 15
+    ══════════════════════════════════════════ -->
+    <div class="lab-container" id="lab">
+      <div class="lab-header">
+        <h2>🧪 ปฏิบัติการ Lab 15 — BookEasy LIVE: Deploy จริง</h2>
+        <p>นำ BookEasy ที่สร้างมาตลอด 14 สัปดาห์ Deploy ขึ้น Cloudflare จริง และเขียน Test ชุดแรก</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 11</div>
+          <p>ต่อยอดจากทุก Lab — นำ BookEasy ที่สร้างมาทั้งหมด Deploy ขึ้น Cloudflare จริง</p>
+        </div>
       </div>
+      <div class="lab-body">
 
-      <div class="callout note">
-        <div class="callout-title">แหล่งเรียนรู้ที่แนะนำ</div>
-        <ul>
-          <li><strong>php.net</strong> — Official PHP Documentation ครบถ้วนและมี Examples ดี</li>
-          <li><strong>laracasts.com</strong> — วิดีโอสอน Laravel และ PHP Modern ที่ดีที่สุด</li>
-          <li><strong>w3schools.com</strong> — Reference สำหรับ HTML, CSS, JS, PHP, SQL</li>
-          <li><strong>stackoverflow.com</strong> — ถาม-ตอบปัญหา Programming ที่ใหญ่ที่สุดในโลก</li>
-          <li><strong>freecodecamp.org</strong> — คอร์สเรียน Web Development ฟรีที่มีคุณภาพสูง</li>
-          <li><strong>youtube.com/Traversy Media</strong> — วิดีโอสอน Web Development ภาษาอังกฤษที่ดีมาก</li>
-        </ul>
+        <!-- Task 1 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">1</div>
+            <div class="task-title">เตรียม Production Environment (CORS + .env.production)</div>
+          </div>
+          <div class="task-body">
+            <p>
+              ก่อน Deploy ต้องปรับ Config ทั้ง Backend และ Frontend ให้พร้อมสำหรับ Production:
+            </p>
+            <ol>
+              <li>
+                แก้ไข CORS ใน Hono API (<code>bookeasy-api/src/index.js</code>):
+                <ul>
+                  <li>เปลี่ยน <code>origin: 'http://localhost:5173'</code> เป็น URL จริงของ Cloudflare Pages
+                    เช่น <code>'https://bookeasy.pages.dev'</code></li>
+                  <li>ถ้ายังไม่รู้ URL Pages ให้ใช้ <code>origin: '*'</code> ชั่วคราวก่อน แล้วเปลี่ยนหลัง Deploy Frontend</li>
+                </ul>
+              </li>
+              <li>
+                สร้างไฟล์ <code>bookeasy/.env.production</code>:
+                <ul>
+                  <li>เพิ่มบรรทัด <code>VITE_API_URL=https://bookeasy-api.your-name.workers.dev</code></li>
+                  <li>แทนที่ <code>your-name</code> ด้วยชื่อจริงที่จะใช้ใน Cloudflare</li>
+                  <li>ตรวจสอบว่า <code>.env.production</code> อยู่ใน <code>.gitignore</code></li>
+                </ul>
+              </li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                ไฟล์ <code>bookeasy-api/src/index.js</code> มี CORS ที่ชี้ไป Pages URL จริง
+                และไฟล์ <code>bookeasy/.env.production</code> มี <code>VITE_API_URL</code> ที่ถูกต้อง
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ใช้ <code>app.use('*', cors({ origin: 'https://bookeasy.pages.dev' }))</code> ใน Hono
+                ตรวจสอบ URL ให้ถูกต้องทั้ง Protocol (https) และ Domain ก่อน Deploy
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">2</div>
+            <div class="task-title">Deploy Backend (wrangler secret + wrangler deploy + curl test)</div>
+          </div>
+          <div class="task-body">
+            <p>
+              Deploy Hono API ขึ้น Cloudflare Workers จริงตามขั้นตอนต่อไปนี้:
+            </p>
+            <ol>
+              <li>
+                ตั้งค่า Production Secrets ด้วย Wrangler:
+                <ul>
+                  <li>รัน <code>npx wrangler secret put SUPABASE_URL</code> — กรอก URL จาก Supabase Dashboard</li>
+                  <li>รัน <code>npx wrangler secret put SUPABASE_KEY</code> — กรอก <code>anon</code> key</li>
+                </ul>
+              </li>
+              <li>
+                Deploy:
+                <ul>
+                  <li>รัน <code>npx wrangler deploy</code> จากโฟลเดอร์ <code>bookeasy-api</code></li>
+                  <li>บันทึก URL ที่ได้รับ เช่น <code>https://bookeasy-api.your-name.workers.dev</code></li>
+                </ul>
+              </li>
+              <li>
+                ทดสอบ API จริงด้วย curl:
+                <ul>
+                  <li><code>curl https://bookeasy-api.your-name.workers.dev/api/services</code></li>
+                  <li>ต้องได้รับ JSON Response ที่มี <code>data</code> array จาก Supabase</li>
+                </ul>
+              </li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                รัน <code>curl</code> ไปยัง Workers URL จริงแล้วได้ข้อมูลบริการ (Services) จาก Supabase
+                Status Code เป็น 200 และ Body เป็น JSON ที่ถูกต้อง
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้า curl ได้ Error 500 ให้รัน <code>npx wrangler tail</code> เพื่อดู Real-time Logs
+                มักเกิดจาก Secrets ที่ตั้งค่าผิด หรือ Supabase URL ที่พิมพ์ผิด
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">3</div>
+            <div class="task-title">Deploy Frontend (npm run build + wrangler pages deploy + browser test)</div>
+          </div>
+          <div class="task-body">
+            <p>
+              Deploy Vite + React Frontend ขึ้น Cloudflare Pages:
+            </p>
+            <ol>
+              <li>
+                Build Frontend:
+                <ul>
+                  <li>รัน <code>npm run build</code> จากโฟลเดอร์ <code>bookeasy</code></li>
+                  <li>ตรวจสอบว่าไม่มี Error ใดๆ และโฟลเดอร์ <code>dist/</code> ถูกสร้างขึ้น</li>
+                  <li>Vite จะอ่าน <code>.env.production</code> อัตโนมัติ ทำให้ API URL ในโค้ดชี้ไป Workers จริง</li>
+                </ul>
+              </li>
+              <li>
+                Deploy บน Cloudflare Pages:
+                <ul>
+                  <li>รัน <code>npx wrangler pages deploy dist --project-name bookeasy</code></li>
+                  <li>บันทึก URL ที่ได้รับ เช่น <code>https://bookeasy.pages.dev</code></li>
+                </ul>
+              </li>
+              <li>
+                ทดสอบในเบราว์เซอร์:
+                <ul>
+                  <li>เปิด URL จริงในเบราว์เซอร์ ทดสอบ Login ด้วย Supabase Auth</li>
+                  <li>ตรวจสอบว่าหน้าแสดงบริการโหลดได้จาก Workers API จริง</li>
+                  <li>ทดสอบการจองบริการให้ครบ Flow</li>
+                </ul>
+              </li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                เปิด <code>https://bookeasy.pages.dev</code> ในเบราว์เซอร์ และสามารถ Login, ดูบริการ, และจองบริการ
+                ได้ครบทุก Feature โดยข้อมูลมาจาก Supabase จริงผ่าน Cloudflare Workers
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้า Frontend โหลดได้แต่ข้อมูลไม่ขึ้น ให้เปิด Browser DevTools → Network
+                ตรวจสอบว่า Request ไปยัง Workers URL ถูกต้อง และ CORS Header ในใน Response มี
+                <code>Access-Control-Allow-Origin</code> ชี้ไปยัง Pages Domain
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">4</div>
+            <div class="task-title">เขียน Test 1 ชุด (Vitest + formatPrice + npm test)</div>
+          </div>
+          <div class="task-body">
+            <p>
+              เพิ่ม Testing ให้กับโปรเจกต์ BookEasy โดยเริ่มจาก Utility Function:
+            </p>
+            <ol>
+              <li>
+                ติดตั้ง Vitest:
+                <ul>
+                  <li>รัน <code>npm install -D vitest</code> ในโฟลเดอร์ <code>bookeasy</code></li>
+                  <li>เพิ่ม <code>"test": "vitest run"</code> ใน <code>package.json</code> ภายใต้ <code>scripts</code></li>
+                </ul>
+              </li>
+              <li>
+                สร้าง Utility Function และ Test File:
+                <ul>
+                  <li>สร้าง <code>src/utils/formatPrice.js</code> ตาม Snippet 2 ด้านบน</li>
+                  <li>สร้าง <code>src/utils/formatPrice.test.js</code> พร้อม Test Cases อย่างน้อย 3 กรณี</li>
+                </ul>
+              </li>
+              <li>
+                รัน Tests:
+                <ul>
+                  <li>รัน <code>npm test</code> — ต้องผ่านทั้ง 3 Test Cases</li>
+                  <li>ลอง Edit ค่า Expected ให้ผิด เพื่อดูว่า Vitest แสดง Error อย่างไร</li>
+                  <li>แก้กลับให้ถูกต้องและ Confirm ว่า Tests ผ่านทั้งหมด</li>
+                </ul>
+              </li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>
+                รัน <code>npm test</code> แล้วเห็นผลลัพธ์ <code>3 tests passed</code>
+                ไม่มี Test ที่ Fail และ Terminal แสดง <code>Test Files: 1 passed</code>
+              </p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>
+                ถ้า <code>Intl.NumberFormat</code> ให้ผลลัพธ์ต่างจากที่คาด ให้ตรวจสอบว่า Node.js Version
+                ที่ใช้รองรับ <code>th-TH</code> Locale โดยทดสอบใน Node.js Console ก่อน:
+                <code>new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(150)</code>
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-14.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">นำเสนอโครงงาน</div>
+        <div class="wn-name">นำเสนอโครงงานและจัดทำเอกสารประกอบ</div>
       </a>
       <a href="#" class="wn-btn wn-next disabled">
-        <div class="wn-sub">สิ้นสุดรายวิชา</div>
-        <div class="wn-name">สิ้นสุดรายวิชา</div>
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">จบรายวิชา — ยินดีด้วย! 🎉</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
-        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
-        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
         integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
-        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
         crossorigin="anonymous"></script>
 </body>
 </html>
