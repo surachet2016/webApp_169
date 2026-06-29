@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 8 — Session & Cookie — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 8</span>
+    <span class="sep">›</span>
+    <span>Session &amp; Cookie</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 8</div>
+    <h1 class="wh-title">Session &amp; Cookie — จัดการสถานะผู้ใช้</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO3</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+        <li><a href="#lab">ปฏิบัติการ Lab 7</a></li>
+      </ul>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         THEORY
+    ══════════════════════════════════════════ -->
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <!-- 1 -->
+        <h3>1. HTTP เป็น Stateless — ปัญหาคืออะไร?</h3>
+        <p>HTTP (HyperText Transfer Protocol) เป็นโปรโตคอลแบบ <strong>Stateless</strong> หมายความว่าทุก Request เป็นอิสระต่อกัน เซิร์ฟเวอร์จำไม่ได้ว่า Request ก่อนหน้านี้มาจากใคร เหมือนกับการโทรศัพท์ที่เมื่อวางสายแล้วทุกอย่างก็จบ ครั้งต่อไปที่โทรมาต้องแนะนำตัวใหม่ทั้งหมด</p>
+        <p>ปัญหานี้ทำให้ระบบเว็บที่ต้องการ "จำ" ผู้ใช้ เช่น ระบบ Login, ตะกร้าสินค้า, การตั้งค่าส่วนตัว ทำงานไม่ได้หากไม่มีกลไกพิเศษ เพราะทุกครั้งที่กด Link หรือ Refresh หน้า เซิร์ฟเวอร์มองว่าเป็นผู้ใช้ใหม่ที่ไม่รู้จักทุกครั้ง</p>
+        <p>แนวทางแก้ปัญหาหลักมี 2 วิธี: <strong>Session</strong> (เก็บข้อมูลบนเซิร์ฟเวอร์) และ <strong>Cookie</strong> (เก็บข้อมูลในเบราว์เซอร์ของผู้ใช้) ทั้งสองวิธีทำงานร่วมกัน โดย Session ใช้ Cookie เก็บ Session ID เพื่อเชื่อมผู้ใช้กับข้อมูลที่อยู่บนเซิร์ฟเวอร์</p>
+
+        <div class="callout note"><div class="callout-title">หมายเหตุ</div><p>HTTP/2 และ HTTP/3 ยังคงเป็น Stateless อยู่เหมือนเดิม แม้จะมีการปรับปรุงด้านประสิทธิภาพ การจัดการ State ยังคงต้องใช้ Session หรือ Cookie เหมือนเดิม</p></div>
+
+        <!-- 2 -->
+        <h3>2. Session — จดจำสถานะผู้ใช้ฝั่งเซิร์ฟเวอร์</h3>
+        <p>Session ทำงานโดยเซิร์ฟเวอร์สร้าง <strong>Session ID</strong> ที่ไม่ซ้ำกัน (เช่น <code>abc123xyz789</code>) แล้วส่ง Cookie ชื่อ <code>PHPSESSID</code> ไปเก็บในเบราว์เซอร์ของผู้ใช้ ทุกครั้งที่ผู้ใช้ส่ง Request มา เบราว์เซอร์จะส่ง Cookie นี้ไปด้วยอัตโนมัติ เซิร์ฟเวอร์จึงสามารถระบุตัวผู้ใช้และดึงข้อมูล Session ได้</p>
+        <p>ใน PHP การเริ่มใช้ Session ต้องเรียก <code>session_start()</code> เป็นบรรทัดแรกสุด <strong>ก่อน</strong> มีการ Output ใด ๆ (รวมถึง whitespace) มิฉะนั้นจะเกิด Error "Cannot send session cache limiter" ข้อมูล Session เก็บใน <code>$_SESSION</code> ซึ่งเป็น Superglobal Array ที่เข้าถึงได้ทุกหน้า และข้อมูลเก็บบนเซิร์ฟเวอร์ (โดยปกติในโฟลเดอร์ <code>/tmp</code>)</p>
+        <p>การทำลาย Session ทำได้ด้วย <code>session_destroy()</code> แต่ต้องล้าง <code>$_SESSION</code> ด้วย <code>$_SESSION = []</code> ก่อน และลบ Cookie ด้วย <code>setcookie(session_name(), '', time() - 3600)</code> เพื่อให้ Log Out สมบูรณ์</p>
+
+        <div class="diagram-box"><pre>
+  เบราว์เซอร์                      PHP Server
+  ──────────                      ──────────
+  Request: GET /cart.php
+  Cookie: PHPSESSID=abc123  ────► session_start()
+                                   ดึงข้อมูล Session ID: abc123
+                                   $_SESSION = ['cart' => [...], 'user_id' => 5]
+                                          │
+                             ◄────  ส่ง HTML กลับพร้อมข้อมูลตะกร้า
+        </pre></div>
+
+        <!-- 3 -->
+        <h3>3. Cookie — จัดเก็บข้อมูลฝั่ง Client</h3>
+        <p>Cookie เป็นข้อมูลขนาดเล็กที่เซิร์ฟเวอร์ส่งให้เบราว์เซอร์เก็บไว้ และเบราว์เซอร์จะส่งกลับมาทุกครั้งที่ Request ไปยัง Domain เดิม ใน PHP สร้าง Cookie ด้วย <code>setcookie(name, value, expire, path, domain, secure, httponly)</code></p>
+        <p>Parameter ที่สำคัญ: <strong>expire</strong> คือเวลาหมดอายุเป็น Unix Timestamp เช่น <code>time() + 86400 * 7</code> = 7 วัน, <strong>secure</strong> = true หมายถึงส่ง Cookie ผ่าน HTTPS เท่านั้น, <strong>httponly</strong> = true หมายถึง JavaScript ไม่สามารถอ่าน Cookie นี้ได้ (ป้องกัน XSS ขโมย Cookie)</p>
+        <p>Cookie มีข้อจำกัดด้านขนาด (ประมาณ 4 KB ต่อ Cookie) และเบราว์เซอร์สามารถลบหรือปิดการรับ Cookie ได้ ดังนั้นอย่าเก็บข้อมูลสำคัญใน Cookie ใช้เก็บเพียงข้อมูลที่ไม่เป็นความลับ เช่น การตั้งค่า Theme หรือภาษา</p>
+
+        <div class="callout tip"><div class="callout-title">เคล็ดลับ</div><p>ตั้งค่า <code>httponly: true</code> และ <code>secure: true</code> เสมอสำหรับ Cookie ที่เกี่ยวกับ Authentication เพื่อป้องกัน JavaScript ขโมย Session ID</p></div>
+
+        <!-- 4 -->
+        <h3>4. ความแตกต่างระหว่าง Session และ Cookie</h3>
+        <p>การเลือกใช้ Session หรือ Cookie ขึ้นอยู่กับประเภทของข้อมูลและระดับความปลอดภัยที่ต้องการ ดูตารางเปรียบเทียบด้านล่าง:</p>
+
+        <div class="diagram-box"><pre>
+  คุณสมบัติ          Session                      Cookie
+  ─────────────────────────────────────────────────────────
+  ที่เก็บข้อมูล      เซิร์ฟเวอร์                  เบราว์เซอร์ผู้ใช้
+  ความปลอดภัย       สูงกว่า (ไม่ส่งข้อมูลจริง)    ต่ำกว่า (ข้อมูลอยู่ที่ Client)
+  อายุการใช้งาน      จนปิด Browser หรือ Timeout   กำหนดได้ (วัน/เดือน/ปี)
+  ขนาดข้อมูล        ไม่จำกัด (เก็บในไฟล์เซิร์ฟเวอร์) จำกัด ~4 KB ต่อ Cookie
+  การใช้งาน         Login, Cart, User State       Remember Me, Preferences
+  การเข้าถึงด้วย JS  ไม่ได้โดยตรง                 ได้ (เว้นแต่ httponly)
+        </pre></div>
+
+        <!-- 5 -->
+        <h3>5. ความปลอดภัยของ Session</h3>
+        <p><strong>Session Fixation Attack</strong> คือการที่ผู้โจมตีส่ง Session ID ที่รู้จักไปให้เหยื่อ หากเหยื่อ Login ด้วย Session ID นั้น ผู้โจมตีก็สามารถเข้าถึง Session ได้ วิธีป้องกันคือเรียก <code>session_regenerate_id(true)</code> ทันทีหลัง Login สำเร็จ เพื่อสร้าง Session ID ใหม่และลบ ID เก่าทิ้ง</p>
+        <p>ควรกำหนด Session Timeout เพื่อ Log Out อัตโนมัติเมื่อไม่มีการใช้งานนาน เช่น 30 นาที โดยเก็บเวลา Last Activity ไว้ใน <code>$_SESSION['last_activity']</code> แล้วเช็คทุก Request ว่าผ่านไปนานแค่ไหน นอกจากนี้ควรใช้ HTTPS สำหรับทุก Session ที่เกี่ยวกับ Authentication</p>
+
+        <div class="callout warning"><div class="callout-title">ข้อควรระวัง</div><p>อย่าเก็บรหัสผ่านหรือข้อมูลบัตรเครดิตใน <code>$_SESSION</code> แม้ Session จะปลอดภัยกว่า Cookie แต่หากเซิร์ฟเวอร์ถูกเข้าถึง ข้อมูลเหล่านั้นก็รั่วได้</p></div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CODE EXAMPLES
+    ══════════════════════════════════════════ -->
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <!-- Example 1: Shopping Cart Session -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">cart.php — ตะกร้าสินค้าด้วย Session</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// cart.php — ตะกร้าสินค้าด้วย Session
+session_start();
+
+// เริ่มต้น Session cart หากยังไม่มี
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// เพิ่มสินค้าลงตะกร้า
+if (isset($_POST['add_item'])) {
+    $id    = (int)$_POST['product_id'];
+    $name  = htmlspecialchars($_POST['product_name'], ENT_QUOTES, 'UTF-8');
+    $price = (float)$_POST['product_price'];
+
+    if (isset($_SESSION['cart'][$id])) {
+        // สินค้ามีอยู่แล้ว เพิ่มจำนวน
+        $_SESSION['cart'][$id]['qty']++;
+    } else {
+        // เพิ่มสินค้าใหม่
+        $_SESSION['cart'][$id] = ['name' => $name, 'price' => $price, 'qty' => 1];
+    }
+    header('Location: cart.php');
+    exit;
+}
+
+// ลบสินค้าออกจากตะกร้า
+if (isset($_POST['remove_item'])) {
+    $id = (int)$_POST['product_id'];
+    unset($_SESSION['cart'][$id]);
+    header('Location: cart.php');
+    exit;
+}
+
+// ล้างตะกร้าทั้งหมด
+if (isset($_POST['clear_cart'])) {
+    $_SESSION['cart'] = [];
+    header('Location: cart.php');
+    exit;
+}
+
+// คำนวณยอดรวม
+$total = 0;
+foreach ($_SESSION['cart'] as $item) {
+    $total += $item['price'] * $item['qty'];
+}
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head><meta charset="UTF-8"><title>ตะกร้าสินค้า</title></head>
+<body>
+  <h1>ตะกร้าสินค้า (Session ID: <?= htmlspecialchars(session_id()) ?>)</h1>
+
+  <!-- ฟอร์มทดสอบเพิ่มสินค้า -->
+  <form method="POST">
+    <input type="hidden" name="product_id" value="1">
+    <input type="hidden" name="product_name" value="สมุดโน้ต">
+    <input type="hidden" name="product_price" value="45">
+    <button type="submit" name="add_item">+ เพิ่มสมุดโน้ต (45 บาท)</button>
+  </form>
+
+  <h2>รายการในตะกร้า:</h2>
+  <?php if (empty($_SESSION['cart'])): ?>
+    <p>ตะกร้าว่างเปล่า</p>
+  <?php else: ?>
+    <table border="1" cellpadding="8">
+      <tr><th>สินค้า</th><th>ราคา</th><th>จำนวน</th><th>รวม</th><th>ลบ</th></tr>
+      <?php foreach ($_SESSION['cart'] as $id => $item): ?>
+        <tr>
+          <td><?= $item['name'] ?></td>
+          <td><?= number_format($item['price'], 2) ?></td>
+          <td><?= $item['qty'] ?></td>
+          <td><?= number_format($item['price'] * $item['qty'], 2) ?></td>
+          <td>
+            <form method="POST" style="display:inline">
+              <input type="hidden" name="product_id" value="<?= $id ?>">
+              <button type="submit" name="remove_item">ลบ</button>
+            </form>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+    <p><strong>ยอดรวม: <?= number_format($total, 2) ?> บาท</strong></p>
+    <form method="POST">
+      <button type="submit" name="clear_cart">ล้างตะกร้า</button>
+    </form>
+  <?php endif; ?>
+</body>
+</html></code></pre>
+      </div>
+
+      <!-- Example 2: Cookie Preference -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">preference.php — บันทึกการตั้งค่าด้วย Cookie</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// preference.php — บันทึก Theme และ Items Per Page ด้วย Cookie
+
+// บันทึกการตั้งค่า
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $theme    = in_array($_POST['theme'] ?? '', ['light', 'dark']) ? $_POST['theme'] : 'light';
+    $perPage  = in_array((int)($_POST['per_page'] ?? 10), [10, 25, 50]) ? (int)$_POST['per_page'] : 10;
+
+    // Cookie อายุ 30 วัน
+    $expire = time() + (86400 * 30);
+    setcookie('theme',    $theme,   $expire, '/', '', false, true);
+    setcookie('per_page', $perPage, $expire, '/', '', false, true);
+
+    header('Location: preference.php?saved=1');
+    exit;
+}
+
+// อ่านการตั้งค่าจาก Cookie (ถ้ามี)
+$currentTheme   = $_COOKIE['theme']    ?? 'light';
+$currentPerPage = $_COOKIE['per_page'] ?? 10;
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>การตั้งค่า</title>
+  <style>
+    body { background: <?= $currentTheme === 'dark' ? '#1a1a2e' : '#ffffff' ?>;
+           color: <?= $currentTheme === 'dark' ? '#e0e0e0' : '#333333' ?>; }
+  </style>
+</head>
+<body>
+  <h1>การตั้งค่า</h1>
+  <?php if (isset($_GET['saved'])): ?><p style="color:green">บันทึกสำเร็จ!</p><?php endif; ?>
+
+  <form method="POST">
+    <label>Theme:
+      <select name="theme">
+        <option value="light" <?= $currentTheme === 'light' ? 'selected' : '' ?>>Light</option>
+        <option value="dark"  <?= $currentTheme === 'dark'  ? 'selected' : '' ?>>Dark</option>
+      </select>
+    </label><br><br>
+    <label>แสดงรายการต่อหน้า:
+      <select name="per_page">
+        <?php foreach ([10, 25, 50] as $n): ?>
+          <option value="<?= $n ?>" <?= $currentPerPage == $n ? 'selected' : '' ?>><?= $n ?></option>
+        <?php endforeach; ?>
+      </select>
+    </label><br><br>
+    <button type="submit">บันทึกการตั้งค่า (จำ 30 วัน)</button>
+  </form>
+
+  <p>Cookie ปัจจุบัน: theme=<?= htmlspecialchars($currentTheme) ?>, per_page=<?= $currentPerPage ?></p>
+</body>
+</html></code></pre>
+      </div>
+
+      <!-- Example 3: Session Auth Guard -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">auth_guard.php — ป้องกันหน้าด้วย Session</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// auth_guard.php — include ไฟล์นี้ที่ต้นของทุกหน้าที่ต้อง Login
+session_start();
+
+// ตรวจสอบว่า Login แล้วหรือยัง
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    // บันทึก URL ปัจจุบันเพื่อ Redirect กลับหลัง Login
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+    header('Location: /login.php?error=auth_required');
+    exit;
+}
+
+// ตรวจสอบ Session Timeout (30 นาที)
+$timeout = 30 * 60; // 1800 วินาที
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout) {
+    session_unset();
+    session_destroy();
+    header('Location: /login.php?error=session_expired');
+    exit;
+}
+
+// อัปเดตเวลา Last Activity
+$_SESSION['last_activity'] = time();
+
+// หน้าที่ต้องการ Login สามารถใช้ข้อมูลเหล่านี้ได้
+// $_SESSION['user_id']   — ID ของผู้ใช้
+// $_SESSION['username']  — ชื่อผู้ใช้
+// $_SESSION['user_role'] — บทบาท (admin, user, ...)
+
+// ──────────────────────────────────────────────────────
+// ตัวอย่างการใช้งานในหน้าที่ต้องการ Login
+// ──────────────────────────────────────────────────────
+// <?php
+// require 'auth_guard.php'; // บรรทัดแรกสุด
+// // ... โค้ดที่เหลือของหน้า ...
+// echo "ยินดีต้อนรับ " . htmlspecialchars($_SESSION['username']);
+// ?></code></pre>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         LAB 7
+    ══════════════════════════════════════════ -->
+    <div class="lab-container" id="lab">
+      <div class="lab-header">
+        <h2>🧪 ปฏิบัติการ Lab 7 — Session &amp; Cookie</h2>
+        <p>ทดลองใช้ Session และ Cookie เพื่อจัดการสถานะผู้ใช้ สร้างตะกร้าสินค้า และป้องกันหน้าเว็บ</p>
+      </div>
+      <div class="lab-body">
+
+        <!-- Task 1 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">1</div>
+            <div class="task-title">ทดลอง Session พื้นฐาน</div>
+          </div>
+          <div class="task-body">
+            <p>สร้าง 3 ไฟล์เพื่อทดสอบ Session: <code>session_set.php</code> (ตั้งค่า Session หลายตัว), <code>session_read.php</code> (อ่านและแสดง Session), <code>session_destroy.php</code> (ทำลาย Session ทั้งหมด)</p>
+            <p>ใน session_set.php ให้ตั้ง: <code>$_SESSION['name'] = 'นักศึกษา'</code>, <code>$_SESSION['score'] = 100</code>, <code>$_SESSION['login_time'] = date('H:i:s')</code> จากนั้นเปิด Developer Tools → Application → Cookies เพื่อดู PHPSESSID</p>
+            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>session_read.php แสดงค่าที่ตั้งไว้ได้ถูกต้องทั้ง 3 ค่า / เห็น PHPSESSID ใน Browser DevTools / session_destroy.php ทำลาย Session แล้ว session_read.php แสดงว่าไม่มีข้อมูล</p></div>
+            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>เรียก <code>session_start()</code> เป็นบรรทัดแรกสุดของทุกไฟล์ที่ใช้ Session <strong>ก่อน</strong> echo หรือ HTML ใด ๆ มิฉะนั้นจะเกิด Warning "Cannot send session cache limiter"</p></div>
+          </div>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">2</div>
+            <div class="task-title">สร้างตะกร้าสินค้าด้วย Session</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างระบบตะกร้าสินค้า 2 หน้า: <code>products.php</code> (แสดงรายการสินค้าพร้อมปุ่ม "เพิ่มลงตะกร้า") และ <code>cart.php</code> (แสดงสินค้าในตะกร้า ยอดรวม และปุ่ม "ล้างตะกร้า")</p>
+            <p>เมื่อกด "เพิ่มลงตะกร้า" หลาย ๆ ครั้งสำหรับสินค้าชิ้นเดิม ให้เพิ่มจำนวน (qty) แทนที่จะเพิ่มรายการใหม่ ข้อมูลตะกร้าต้องคงอยู่เมื่อ Refresh หน้า</p>
+            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>เพิ่มสินค้า → เห็นใน cart.php / กด Refresh → ตะกร้ายังอยู่ / เพิ่มสินค้าชิ้นเดิม 3 ครั้ง → qty = 3 ไม่ใช่ 3 rows / ล้างตะกร้า → ตะกร้าว่าง</p></div>
+            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ Product ID เป็น Key ของ <code>$_SESSION['cart']</code> เช่น <code>$_SESSION['cart'][$productId]['qty']++</code> และใช้ PRG Pattern หลัง POST เสมอเพื่อป้องกัน Double Submit</p></div>
+          </div>
+        </div>
+
+        <!-- Task 3 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">3</div>
+            <div class="task-title">นับจำนวนการเข้าชมหน้าด้วย Session</div>
+          </div>
+          <div class="task-body">
+            <p>สร้าง <code>counter.php</code> ที่นับจำนวนครั้งที่ผู้ใช้เข้าชมหน้านั้นใน Session ปัจจุบัน แสดงจำนวนและเวลาที่เริ่ม Session แรก และมีปุ่ม "รีเซ็ต" ที่ทำลาย Session และเริ่มนับใหม่</p>
+            <p>แสดงข้อมูล Session เพิ่มเติม เช่น Session ID, เวลาที่เหลือก่อนหมดอายุ (session.gc_maxlifetime)</p>
+            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>Refresh หน้าหลาย ๆ ครั้ง → ตัวเลขเพิ่มขึ้น / กด "รีเซ็ต" → กลับเป็น 1 และ Session ID เปลี่ยน / ปิด Browser แล้วเปิดใหม่ → นับใหม่จาก 1</p></div>
+            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>$_SESSION['visit_count'] = ($_SESSION['visit_count'] ?? 0) + 1</code> และ <code>$_SESSION['first_visit'] = $_SESSION['first_visit'] ?? date('H:i:s')</code> เพื่อบันทึกเวลาแรก</p></div>
+          </div>
+        </div>
+
+        <!-- Task 4 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">4</div>
+            <div class="task-title">ทดลอง Cookie — จดจำชื่อผู้ใช้</div>
+          </div>
+          <div class="task-body">
+            <p>สร้าง <code>remember.php</code> ที่มีช่อง input ชื่อ และ Checkbox "จดจำชื่อของฉัน 7 วัน" เมื่อ Submit และติ๊ก Checkbox ให้บันทึกชื่อใน Cookie อายุ 7 วัน เมื่อกลับมาหน้านี้อีกครั้งให้แสดงชื่อที่จำไว้อัตโนมัติ</p>
+            <p>มีปุ่ม "ลืมชื่อฉัน" ที่ลบ Cookie โดยตั้ง Expire เป็นอดีต (<code>time() - 3600</code>) และแสดงวันหมดอายุของ Cookie</p>
+            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>กรอกชื่อ + ติ๊ก "จดจำ" → ปิด Browser → เปิดใหม่ → ชื่อยังอยู่ / กด "ลืมชื่อ" → เปิดใหม่ → ไม่มีชื่อ / DevTools Cookies แสดง Cookie อายุ 7 วัน</p></div>
+            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>Cookie ต้อง set ก่อนมี Output HTML ใด ๆ เหมือน session_start() ใช้ <code>isset($_COOKIE['username'])</code> ตรวจสอบว่ามี Cookie อยู่ก่อนอ่าน</p></div>
+          </div>
+        </div>
+
+        <!-- Task 5 -->
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">5</div>
+            <div class="task-title">ป้องกันหน้าด้วย Session</div>
+          </div>
+          <div class="task-body">
+            <p>สร้าง Mock Login System: <code>fake_login.php</code> (ฟอร์ม Username + Password อย่างง่าย — ตรวจสอบแค่ว่าไม่ว่างเปล่า ไม่ต้องต่อ DB) และ <code>protected.php</code> (หน้าที่เข้าได้เฉพาะผู้ที่ "Login" แล้วเท่านั้น)</p>
+            <p>ถ้าพยายามเปิด protected.php โดยตรง (ไม่ได้ Login) ต้อง Redirect ไป fake_login.php อัตโนมัติ เมื่อ Login แล้วให้ set <code>$_SESSION['logged_in'] = true</code> และมีปุ่ม "Logout" ที่ทำลาย Session</p>
+            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>เปิด protected.php โดยตรง → Redirect ไป fake_login.php / Login → เห็นเนื้อหาของ protected.php / กด Logout → กลับไป protected.php → Redirect ไป Login อีกครั้ง</p></div>
+            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใส่โค้ดตรวจสอบ Session ที่ต้น protected.php ก่อนโค้ดอื่น: <code>if (!isset($_SESSION['logged_in'])) { header('Location: fake_login.php'); exit; }</code></p></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <a href="week-07.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">อัปโหลดไฟล์ &amp; จัดการไฟล์</div>
+      </a>
+      <a href="week-09.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">ระบบสมาชิก &amp; Authentication</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
+        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
+        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

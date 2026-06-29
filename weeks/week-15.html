@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 15 — Testing, Deploy & สรุปรายวิชา — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 15</span>
+    <span class="sep">›</span>
+    <span>Testing, Deploy &amp; สรุป</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 15</div>
+    <h1 class="wh-title">Testing, Deploy &amp; สรุปรายวิชา</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO3</span>
+      <span class="wh-clo">CLO7</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+        <li><a href="#next-steps">ก้าวต่อไป</a></li>
+      </ul>
+    </div>
+
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>การทดสอบเว็บแอปพลิเคชัน (Testing)</h3>
+        <p>
+          ก่อน Deploy ระบบขึ้นสู่สาธารณะ สิ่งสำคัญที่สุดคือการทดสอบอย่างรอบคอบ
+          บัคที่หาไม่เจอตอนพัฒนาอาจกลายเป็นปัญหาใหญ่เมื่อผู้ใช้จริงเจอมัน
+          ประเภทของการทดสอบที่ควรทำ:
+        </p>
+        <ul>
+          <li>
+            <strong>Functional Testing (ทดสอบฟังก์ชันการทำงาน)</strong> — ระบบทำงานได้ตาม Requirement หรือไม่?
+            ทดสอบทุก Feature: Login, CRUD, Upload, Search, ฯลฯ
+          </li>
+          <li>
+            <strong>Usability Testing (ทดสอบความสะดวกในการใช้)</strong> — ให้คนอื่นที่ไม่ได้ทำโปรเจกต์ลองใช้
+            แล้วสังเกตว่าเขาสับสนตรงไหน ปุ่มหรือเมนูไม่ชัดเจนตรงไหน
+          </li>
+          <li>
+            <strong>Security Testing (ทดสอบความปลอดภัย)</strong> — ลอง SQL Injection ในช่องค้นหา,
+            ลอง XSS ในช่อง Comment, ลองเข้าหน้า Admin โดยไม่ Login
+          </li>
+          <li>
+            <strong>Browser Compatibility Testing</strong> — ทดสอบบน Chrome, Firefox, Edge, Safari
+            และบน Mobile (iOS Safari, Android Chrome)
+          </li>
+          <li>
+            <strong>Performance Testing</strong> — ระบบช้าหรือเปล่าเมื่อมีข้อมูลมาก? ลองใส่สินค้า 1,000 รายการ
+            แล้วดูว่าหน้าโหลดเร็วพอไหม
+          </li>
+        </ul>
+        <p>
+          <strong>Checklist สิ่งที่ต้องทดสอบก่อน Deploy:</strong>
+        </p>
+        <div class="diagram-box">
+          <pre>
+การทดสอบก่อน Deploy — Checklist
+
+Authentication:
+  [ ] Login ด้วย username/password ถูก → เข้าได้
+  [ ] Login ด้วย password ผิด → แสดง error ที่เหมาะสม
+  [ ] เข้าหน้า Admin โดยไม่ Login → Redirect ไป Login
+  [ ] Session Timeout ทำงานหรือไม่?
+
+Form & Input:
+  [ ] Submit form ว่างเปล่า → แสดง validation error
+  [ ] ใส่ตัวอักษรพิเศษ/HTML ในช่อง input → ไม่ทำให้หน้าพัง
+  [ ] อัปโหลดไฟล์ขนาดใหญ่เกินกำหนด → แสดง error ที่ชัดเจน
+  [ ] อัปโหลดไฟล์นามสกุลไม่ถูกต้อง → ปฏิเสธและแจ้งเตือน
+
+Database:
+  [ ] บันทึกข้อมูลลง DB → ข้อมูลถูกต้องใน phpMyAdmin
+  [ ] แก้ไขข้อมูล → อัปเดตใน DB จริง
+  [ ] ลบข้อมูล → หายจาก DB และไม่แสดงในหน้าเว็บ
+  [ ] ค้นหาด้วยคำที่ไม่มีในระบบ → แสดง "ไม่พบข้อมูล"
+
+Mobile:
+  [ ] แสดงผลถูกต้องบน Mobile (ไม่ overflow, ไม่ตัดข้อความ)
+  [ ] ปุ่มกดได้ง่ายบน touch screen
+  [ ] Form กรอกได้สะดวกบน keyboard ของ mobile
+          </pre>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ</div>
+          <p>
+            ให้เพื่อนหรือคนในครอบครัวที่ไม่รู้เรื่อง Web ลองใช้ระบบของคุณ แล้วสังเกตว่าเขาสับสนตรงไหน
+            นักพัฒนามักมองข้าม UX ที่แย่เพราะคุ้นชินกับระบบของตัวเอง ผู้ใช้จริงจะพบปัญหาที่คุณไม่เคยนึกถึง
+          </p>
+        </div>
+
+        <h3>การ Deploy ขึ้น Shared Hosting</h3>
+        <p>
+          <strong>Shared Hosting</strong> คือบริการ Hosting ที่ผู้ให้บริการมีเซิร์ฟเวอร์ขนาดใหญ่
+          และแบ่งพื้นที่ให้ลูกค้าหลายรายใช้ร่วมกัน เป็นตัวเลือกราคาถูกที่เหมาะสำหรับเว็บขนาดเล็กถึงกลาง
+          ผู้ให้บริการยอดนิยม: Hostinger, SiteGround, Namecheap, หรือ HostArmada
+        </p>
+        <p>
+          <strong>ขั้นตอนการ Deploy บน Shared Hosting:</strong>
+        </p>
+        <ol>
+          <li>
+            <strong>อัปโหลดไฟล์ด้วย FTP</strong> — ดาวน์โหลด FileZilla (ฟรี) เชื่อมต่อด้วย
+            FTP credentials จาก Hosting Panel แล้ว Upload ไฟล์ทั้งหมดไปยัง <code>public_html/</code>
+          </li>
+          <li>
+            <strong>สร้าง Database บน Hosting</strong> — ใน cPanel หรือ Hosting Panel
+            ไปที่ MySQL Databases สร้าง Database ใหม่, User ใหม่, และกำหนด privileges
+          </li>
+          <li>
+            <strong>Import Database</strong> — ใน phpMyAdmin บน Hosting เลือก Import
+            แล้วเลือกไฟล์ database.sql ที่เตรียมไว้
+          </li>
+          <li>
+            <strong>แก้ไข config.php</strong> — เปลี่ยน DB_HOST, DB_USER, DB_PASS, DB_NAME
+            เป็นค่าของ Hosting (ไม่ใช่ localhost อีกต่อไป) โดย Hosting มักให้ HOST เป็น <code>localhost</code>
+            หรือ IP ภายใน
+          </li>
+          <li>
+            <strong>ตรวจสอบ PHP Version</strong> — Hosting บางแห่งใช้ PHP เวอร์ชันเก่า ตรวจสอบใน cPanel
+            ว่า PHP version ตรงกับที่พัฒนา (แนะนำ PHP 8.0+)
+          </li>
+          <li>
+            <strong>ตั้งค่า File Permissions</strong> — โฟลเดอร์ <code>uploads/</code> ต้องให้ Web Server เขียนได้
+            ตั้งเป็น 755 หรือ 775 ผ่าน FTP client หรือ File Manager ใน cPanel
+          </li>
+        </ol>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง</div>
+          <p>
+            ห้ามอัปโหลด config.php ที่มีรหัสผ่านจริงขึ้น Public Repository (GitHub)
+            ให้ใช้ FTP อัปโหลดโดยตรง หรือ เก็บ credentials ใน <code>.env</code> file
+            และเพิ่ม <code>config.php</code> ใน <code>.gitignore</code>
+          </p>
+        </div>
+
+        <h3>การ Deploy บน Free Platforms</h3>
+        <p>
+          สำหรับนักศึกษาที่ต้องการ Deploy โดยไม่เสียค่าใช้จ่าย มีตัวเลือกดังนี้:
+        </p>
+        <ul>
+          <li>
+            <strong>InfinityFree (infinityfree.net)</strong> — Hosting PHP + MySQL ฟรี
+            มีข้อจำกัดเรื่อง CPU และ Bandwidth แต่เพียงพอสำหรับโปรเจกต์นักศึกษา
+            รองรับ PHP 7.4-8.1
+          </li>
+          <li>
+            <strong>000WebHost (Hostinger)</strong> — ฟรี Hosting PHP + MySQL 1GB
+            มีข้อจำกัดเรื่องเวลาทำงาน (Sleep หลังไม่ใช้งานนาน)
+          </li>
+          <li>
+            <strong>Railway.app</strong> — รองรับ PHP, MySQL, PostgreSQL ฟรีในระดับ Hobby
+            เหมาะสำหรับนักศึกษาที่ต้องการ Deploy แบบมืออาชีพมากขึ้น
+          </li>
+          <li>
+            <strong>Render.com</strong> — Web Service ฟรี (sleep หลัง 15 นาทีไม่ใช้งาน)
+            รองรับ PHP ผ่าน Docker หรือ Dockerfile ต้องการความรู้เพิ่มเติม
+          </li>
+          <li>
+            <strong>GitHub Pages + PHP Hosting</strong> — ใช้ GitHub Pages สำหรับ Static Frontend
+            และ Free PHP Hosting สำหรับ API Backend (Split Architecture)
+          </li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            Free Hosting มักมีข้อจำกัดและอาจไม่ Stable สำหรับโปรเจกต์ Production จริง
+            แต่เพียงพอสำหรับการ Demo และ Portfolio เมื่อต้องการ Deploy จริงๆ ในอนาคต
+            ควรลงทุนกับ Paid Hosting ที่เริ่มต้นที่ประมาณ 50-100 บาท/เดือน
+          </p>
+        </div>
+
+        <h3>ความปลอดภัยก่อน Deploy</h3>
+        <p>
+          ก่อนให้ผู้ใช้จริงเข้าถึงระบบ ต้องตรวจสอบความปลอดภัยขั้นพื้นฐาน:
+        </p>
+        <ul>
+          <li>
+            <strong>ลบข้อมูลทดสอบ</strong> — ลบ user ทดสอบ, ข้อมูลตัวอย่างที่ไม่จริง,
+            และ debug output ทั้งหมด
+          </li>
+          <li>
+            <strong>เปลี่ยนรหัสผ่าน Default</strong> — MySQL root password, admin account ใน web
+            ห้ามใช้ "password", "1234", "admin" ในระบบ Production
+          </li>
+          <li>
+            <strong>ปิดการแสดง Error</strong> — ตั้ง <code>display_errors = Off</code> ใน php.ini
+            หรือในโค้ด PHP Error message ที่แสดงต่อผู้ใช้อาจเปิดเผยโครงสร้าง DB หรือ Path ระบบ
+          </li>
+          <li>
+            <strong>ใช้ Environment Variables</strong> — แทนที่จะ hardcode credentials ใน config.php
+            ใช้ <code>$_ENV</code> หรือ <code>getenv()</code> ดึงจาก .env file หรือ Hosting Environment
+          </li>
+          <li>
+            <strong>HTTPS เสมอ</strong> — Hosting ทุกแห่งปัจจุบันให้ SSL Certificate ฟรี (Let's Encrypt)
+            บังคับ HTTPS ด้วย <code>.htaccess</code> redirect
+          </li>
+          <li>
+            <strong>Prepared Statements ทุกที่</strong> — ตรวจสอบว่าทุก SQL Query ใช้ Prepared Statements
+            ไม่มี String concatenation ใน SQL เลย
+          </li>
+          <li>
+            <strong>Validate ทุก Input</strong> — ทั้ง Client-side (JavaScript) และ Server-side (PHP)
+            อย่าเชื่อข้อมูลที่ Client ส่งมาโดยไม่ตรวจสอบ
+          </li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+Security Checklist ก่อน Deploy
+
+  [ ] display_errors = Off ใน Production
+  [ ] ไม่มี var_dump() หรือ print_r() ในโค้ด
+  [ ] ทุก SQL ใช้ Prepared Statements (PDO/MySQLi)
+  [ ] ทุก Output ใช้ htmlspecialchars() (ป้องกัน XSS)
+  [ ] รหัสผ่านเก็บด้วย password_hash() (bcrypt)
+  [ ] Session ใช้ session_regenerate_id() หลัง Login
+  [ ] ไฟล์ config.php ไม่อยู่ใน public_html โดยตรง
+  [ ] โฟลเดอร์ uploads/ ไม่อนุญาต Execute PHP
+  [ ] .htaccess ปิดการเข้าถึงไฟล์ .sql .env .log
+  [ ] HTTPS เปิดใช้งาน (SSL Certificate)
+          </pre>
+        </div>
+
+        <h3>สรุปรายวิชา — สิ่งที่ได้เรียนรู้ตลอด 15 สัปดาห์</h3>
+        <p>
+          มาดูกันว่าเราเดินทางมาไกลแค่ไหนตั้งแต่สัปดาห์แรก:
+        </p>
+        <div class="diagram-box">
+          <pre>
+การเดินทาง 15 สัปดาห์ของนักพัฒนาเว็บ
+
+สัปดาห์  1 — แนะนำรายวิชา: Client-Server, HTTP, เครื่องมือ
+สัปดาห์  2 — HTML & CSS: โครงสร้าง, Styling, Box Model
+สัปดาห์  3 — JavaScript: DOM, Events, Forms
+สัปดาห์  4 — PHP พื้นฐาน: Variables, Functions, Arrays
+สัปดาห์  5 — PHP กับ HTML Forms: GET/POST, Validation
+สัปดาห์  6 — MySQL & SQL: CREATE, SELECT, INSERT, UPDATE, DELETE
+สัปดาห์  7 — PHP + MySQL: PDO, Prepared Statements
+สัปดาห์  8 — CRUD สมบูรณ์: Create, Read, Update, Delete
+สัปดาห์  9 — File Upload: รูปภาพ, ประเภทไฟล์, ความปลอดภัย
+สัปดาห์ 10 — Session & Authentication: Login, Logout, Role-based
+สัปดาห์ 11 — UI/UX & Responsive: Bootstrap, Flexbox, Grid  [หมายเหตุ: เนื้อหาอาจสลับกับสัปดาห์อื่น]
+สัปดาห์ 11 — Code Reusability: DRY, include/require, Template, OOP
+สัปดาห์ 12 — Web Services & REST API: JSON, fetch(), cURL
+สัปดาห์ 13 — โครงงานทีม: Requirements, ER Diagram, Team Work
+สัปดาห์ 14 — นำเสนอโครงงาน: Demo, Documentation, Presentation
+สัปดาห์ 15 — Testing, Deploy, สรุป: Security, Production Ready
+          </pre>
+        </div>
+        <p>
+          ทักษะเหล่านี้คือรากฐานของนักพัฒนาเว็บทุกคน ไม่ว่าจะทำงานใน Startup เล็กๆ หรือบริษัทใหญ่ระดับ Enterprise
+          ทุกเว็บแอปพลิเคชันบน Internet ใช้หลักการเดียวกัน: HTML/CSS/JS สำหรับ Frontend,
+          Backend Language (PHP, Python, Node.js ฯลฯ) สำหรับ Logic, และ Database สำหรับเก็บข้อมูล
+        </p>
+        <p>
+          <strong>เชื่อมโยงกับอุตสาหกรรม:</strong> ทักษะที่เรียนมาสัมพันธ์โดยตรงกับตำแหน่งงาน:
+        </p>
+        <ul>
+          <li><strong>Web Developer (Junior)</strong> — สร้างหน้าเว็บ, แก้บัค, ทำงานตาม Spec ที่กำหนด</li>
+          <li><strong>Full Stack Developer</strong> — ทำได้ทั้ง Frontend และ Backend เหมือนที่เรียนมาทั้งหมด</li>
+          <li><strong>PHP Developer</strong> — พัฒนา Backend ด้วย PHP ใช้ Framework เช่น Laravel</li>
+          <li><strong>Database Administrator</strong> — ออกแบบ ดูแล และ Optimize ฐานข้อมูล</li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            การเรียนรู้ไม่ได้จบแค่รายวิชานี้ อุตสาหกรรม IT เปลี่ยนแปลงเร็วมาก สิ่งสำคัญคือ
+            <strong>ทักษะการเรียนรู้ด้วยตัวเอง</strong> — เมื่อเจอ Technology ใหม่หรือปัญหาที่ยังไม่เคยเจอ
+            ให้รู้จักค้นหาจาก Documentation, Stack Overflow, YouTube, และทดลองด้วยตัวเอง
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <!-- Bash deployment checklist -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">deploy-checklist.sh</span>
+          <span class="code-lang">Bash</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-bash">#!/bin/bash
+# deploy-checklist.sh — สคริปต์ตรวจสอบก่อน Deploy
+
+echo "=== Pre-Deploy Checklist ==="
+
+# ── ตรวจสอบ PHP Syntax ทุกไฟล์ ───────────────────────────────
+echo ""
+echo "1. ตรวจสอบ PHP Syntax..."
+find . -name "*.php" -not -path "./vendor/*" | while read file; do
+    php -l "$file" 2>&1 | grep -v "No syntax errors"
+done
+echo "   เสร็จ!"
+
+# ── ตรวจสอบ var_dump / print_r ที่อาจลืมลบ ──────────────────
+echo ""
+echo "2. ตรวจสอบ Debug Output ที่ลืมลบ..."
+DEBUG=$(grep -rn "var_dump\|print_r\|die(\|exit(" --include="*.php" . \
+        --exclude-dir=vendor)
+if [ -n "$DEBUG" ]; then
+    echo "   พบ Debug output:"
+    echo "$DEBUG"
+else
+    echo "   ไม่พบ Debug output ✓"
+fi
+
+# ── ตรวจสอบ display_errors ──────────────────────────────────
+echo ""
+echo "3. ตรวจสอบ display_errors..."
+DE=$(grep -rn "display_errors\s*=\s*On\|display_errors\s*=\s*1" \
+     --include="*.php" .)
+if [ -n "$DE" ]; then
+    echo "   พบ display_errors = On — ต้องปิดก่อน Deploy:"
+    echo "$DE"
+else
+    echo "   display_errors ถูกปิด หรือไม่ได้ตั้งค่าชัดเจน ✓"
+fi
+
+# ── ตรวจสอบ File Permissions ─────────────────────────────────
+echo ""
+echo "4. ตรวจสอบ Permissions..."
+if [ -d "uploads" ]; then
+    UPLOADS_PERM=$(stat -c "%a" uploads/ 2>/dev/null || stat -f "%p" uploads/)
+    echo "   uploads/ permission: $UPLOADS_PERM"
+    echo "   แนะนำ: 755 (Apache สามารถเขียนได้, ผู้ใช้อื่นอ่านได้)"
+fi
+
+# ── ตรวจสอบ Hardcoded Credentials ───────────────────────────
+echo ""
+echo "5. ตรวจสอบ Hardcoded Credentials..."
+CREDS=$(grep -rn "password.*=.*['\"][^'\"]*['\"]" --include="*.php" . \
+        | grep -v "password_hash\|password_verify\|config.php")
+if [ -n "$CREDS" ]; then
+    echo "   อาจพบ Hardcoded password (ตรวจสอบด้วยตนเอง):"
+    echo "$CREDS" | head -5
+else
+    echo "   ไม่พบ Hardcoded password ชัดเจน ✓"
+fi
+
+echo ""
+echo "=== Checklist เสร็จสิ้น ==="
+echo "ตรวจสอบผลลัพธ์ด้านบนและแก้ไขปัญหาก่อน Deploy"</code></pre>
+      </div>
+
+      <!-- PHP Production config -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">config/config.php (Production-ready)</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// config/config.php — Production-ready Configuration
+
+// ─── ตรวจจับ Environment (Development vs Production) ────────
+$isProduction = !in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1']);
+
+// ─── Error Reporting ─────────────────────────────────────────
+if ($isProduction) {
+    // Production: ซ่อน Error จากผู้ใช้ แต่บันทึกลง Log
+    error_reporting(E_ALL);
+    ini_set('display_errors', '0');         // ไม่แสดง Error บนหน้าเว็บ
+    ini_set('display_startup_errors', '0');
+    ini_set('log_errors', '1');
+    ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
+} else {
+    // Development: แสดง Error ทั้งหมดเพื่อ Debug
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+}
+
+// ─── Database Configuration ──────────────────────────────────
+// ลำดับการตรวจสอบ: Environment Variables → ค่า Default (dev)
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'myapp_db');
+define('DB_PORT', getenv('DB_PORT') ?: '3306');
+
+// ─── Site Configuration ─────────────────────────────────────
+define('SITE_NAME', 'เว็บแอปพลิเคชันของฉัน');
+define('SITE_URL',  $isProduction
+    ? 'https://www.mysite.com'
+    : 'http://localhost/myapp');
+define('UPLOAD_DIR', __DIR__ . '/../uploads/');
+define('UPLOAD_MAX_SIZE', 5 * 1024 * 1024); // 5MB
+
+// ─── Session Configuration ──────────────────────────────────
+ini_set('session.cookie_httponly', '1');   // ป้องกัน XSS ขโมย Cookie
+ini_set('session.cookie_secure',   $isProduction ? '1' : '0'); // HTTPS only
+ini_set('session.use_strict_mode', '1');   // ป้องกัน Session Fixation
+ini_set('session.gc_maxlifetime',  '3600'); // Session หมดอายุใน 1 ชั่วโมง
+
+// ─── Database Connection (PDO) ──────────────────────────────
+try {
+    $dsn = sprintf(
+        'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+        DB_HOST, DB_PORT, DB_NAME
+    );
+    $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,  // ใช้ Native Prepared Statements
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci",
+    ]);
+} catch (PDOException $e) {
+    // Production: แสดง error ที่เป็นมิตร ไม่เปิดเผยรายละเอียด
+    if ($isProduction) {
+        error_log('DB Connection failed: ' . $e->getMessage());
+        http_response_code(503);
+        die('ขณะนี้ระบบไม่พร้อมให้บริการ กรุณาลองใหม่ในภายหลัง');
+    }
+    // Development: แสดง error จริงเพื่อ Debug
+    throw $e;
+}
+
+// ─── Start Session ──────────────────────────────────────────
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// ─── Security: ป้องกัน Clickjacking ─────────────────────────
+header('X-Frame-Options: SAMEORIGIN');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+if ($isProduction) {
+    header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+}</code></pre>
+      </div>
+
+      <!-- Simple testing script -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">tests/smoke-test.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// tests/smoke-test.php — ทดสอบ Route และ Feature พื้นฐาน
+// ใช้งาน: เปิด http://localhost/project/tests/smoke-test.php
+// ลบออกก่อน Deploy จริง!
+
+require_once '../config/config.php';
+
+$tests  = [];
+$passed = 0;
+$failed = 0;
+
+/**
+ * ฟังก์ชัน assert สำหรับทดสอบ
+ */
+function test(string $name, bool $condition, string $detail = ''): void {
+    global $tests, $passed, $failed;
+    $status = $condition ? 'PASS' : 'FAIL';
+    if ($condition) $passed++; else $failed++;
+    $tests[] = compact('name', 'status', 'detail');
+}
+
+// ─── ทดสอบ Database Connection ────────────────────────────
+try {
+    $pdo->query("SELECT 1");
+    test("Database Connection", true, "PDO connected to " . DB_NAME);
+} catch (Exception $e) {
+    test("Database Connection", false, $e->getMessage());
+}
+
+// ─── ทดสอบว่า Tables มีอยู่จริง ──────────────────────────
+$requiredTables = ['users', 'products', 'categories', 'orders'];
+foreach ($requiredTables as $table) {
+    try {
+        $count = $pdo->query("SELECT COUNT(*) FROM `{$table}`")->fetchColumn();
+        test("Table '{$table}' exists", true, "{$count} rows");
+    } catch (Exception $e) {
+        test("Table '{$table}' exists", false, "Table not found");
+    }
+}
+
+// ─── ทดสอบ Admin User ──────────────────────────────────────
+$adminExists = $pdo->query(
+    "SELECT COUNT(*) FROM users WHERE role = 'admin'"
+)->fetchColumn();
+test("Admin user exists", $adminExists > 0, "{$adminExists} admin(s) found");
+
+// ─── ทดสอบ Upload Directory ────────────────────────────────
+$uploadDir = UPLOAD_DIR;
+test(
+    "Upload directory exists",
+    is_dir($uploadDir),
+    $uploadDir
+);
+test(
+    "Upload directory is writable",
+    is_writable($uploadDir),
+    $uploadDir
+);
+
+// ─── ทดสอบ PHP Extensions ─────────────────────────────────
+$requiredExtensions = ['pdo', 'pdo_mysql', 'mbstring', 'json', 'gd', 'curl'];
+foreach ($requiredExtensions as $ext) {
+    test("PHP extension: {$ext}", extension_loaded($ext));
+}
+
+// ─── ทดสอบ password_hash ────────────────────────────────
+$hash = password_hash('testpassword', PASSWORD_BCRYPT);
+test(
+    "password_hash() works",
+    password_verify('testpassword', $hash),
+    "bcrypt hashing functional"
+);
+
+// ─── แสดงผลการทดสอบ ───────────────────────────────────────
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Smoke Test Results</title>
+  <style>
+    body { font-family: monospace; padding: 20px; }
+    .PASS { color: green; }
+    .FAIL { color: red; font-weight: bold; }
+    .summary { margin-top: 20px; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+<h2>Smoke Test Results — <?php echo DB_NAME; ?></h2>
+<table border="1" cellpadding="8" cellspacing="0">
+  <tr><th>Test</th><th>Status</th><th>Detail</th></tr>
+  <?php foreach ($tests as $t): ?>
+  <tr>
+    <td><?php echo htmlspecialchars($t['name']); ?></td>
+    <td class="<?php echo $t['status']; ?>"><?php echo $t['status']; ?></td>
+    <td><?php echo htmlspecialchars($t['detail']); ?></td>
+  </tr>
+  <?php endforeach; ?>
+</table>
+<div class="summary">
+  Total: <?php echo count($tests); ?> |
+  <span class="PASS">Passed: <?php echo $passed; ?></span> |
+  <span class="FAIL">Failed: <?php echo $failed; ?></span>
+</div>
+<?php if ($failed === 0): ?>
+  <p class="PASS">✓ ระบบพร้อม Deploy!</p>
+<?php else: ?>
+  <p class="FAIL">✗ พบปัญหา <?php echo $failed; ?> จุด — แก้ไขก่อน Deploy</p>
+<?php endif; ?>
+</body>
+</html></code></pre>
+      </div>
+
+    </div>
+
+    <div id="next-steps">
+      <div class="callout tip">
+        <div class="callout-title">ก้าวต่อไป (What's Next)</div>
+        <p>ท่านเรียนรู้ทักษะพื้นฐานของการพัฒนาเว็บแบบ Full Stack แล้ว! ขั้นตอนต่อไปที่แนะนำ:</p>
+        <ul>
+          <li><strong>Laravel</strong> — PHP Framework ที่ได้รับความนิยมสูงสุด ทำทุกอย่างที่เรียนมาได้เร็วกว่าและปลอดภัยกว่า: Routing, ORM (Eloquent), Authentication สำเร็จรูป, Queue, Mail, ฯลฯ</li>
+          <li><strong>React.js</strong> — JavaScript Library สำหรับ Front-end สมัยใหม่ สร้าง UI แบบ Component-based ทำงานร่วมกับ REST API ที่เรียนมาได้ทันที</li>
+          <li><strong>Git &amp; GitHub</strong> — ระบบควบคุมเวอร์ชัน จำเป็นสำหรับนักพัฒนาทุกคน ทำงานเป็นทีมได้อย่างมีประสิทธิภาพ, Portfolio บน GitHub คือ Resume ที่ดีที่สุด</li>
+          <li><strong>Docker</strong> — Containerization สำหรับ Deploy แบบมืออาชีพ แก้ปัญหา "ทำงานบนเครื่องฉันได้แต่บน Server ไม่ได้" ได้ถาวร</li>
+          <li><strong>Vue.js หรือ Next.js</strong> — ทางเลือกอื่นของ JavaScript Framework ที่ได้รับความนิยมสูง</li>
+          <li><strong>Linux / Command Line</strong> — นักพัฒนาส่วนใหญ่ทำงานบน Linux Server ความชำนาญ Terminal ช่วยได้มาก</li>
+        </ul>
+      </div>
+
+      <div class="callout note">
+        <div class="callout-title">แหล่งเรียนรู้ที่แนะนำ</div>
+        <ul>
+          <li><strong>php.net</strong> — Official PHP Documentation ครบถ้วนและมี Examples ดี</li>
+          <li><strong>laracasts.com</strong> — วิดีโอสอน Laravel และ PHP Modern ที่ดีที่สุด</li>
+          <li><strong>w3schools.com</strong> — Reference สำหรับ HTML, CSS, JS, PHP, SQL</li>
+          <li><strong>stackoverflow.com</strong> — ถาม-ตอบปัญหา Programming ที่ใหญ่ที่สุดในโลก</li>
+          <li><strong>freecodecamp.org</strong> — คอร์สเรียน Web Development ฟรีที่มีคุณภาพสูง</li>
+          <li><strong>youtube.com/Traversy Media</strong> — วิดีโอสอน Web Development ภาษาอังกฤษที่ดีมาก</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <a href="week-14.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">นำเสนอโครงงาน</div>
+      </a>
+      <a href="#" class="wn-btn wn-next disabled">
+        <div class="wn-sub">สิ้นสุดรายวิชา</div>
+        <div class="wn-name">สิ้นสุดรายวิชา</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

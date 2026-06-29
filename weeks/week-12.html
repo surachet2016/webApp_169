@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 12 — Web Services & REST API — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 12</span>
+    <span class="sep">›</span>
+    <span>Web Services &amp; REST API</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 12</div>
+    <h1 class="wh-title">Web Services &amp; REST API</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO2</span>
+      <span class="wh-clo">CLO3</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+        <li><a href="#lab">ปฏิบัติการ Lab 11</a></li>
+      </ul>
+    </div>
+
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>Web Service คืออะไร?</h3>
+        <p>
+          <strong>Web Service</strong> คือระบบซอฟต์แวร์ที่ออกแบบมาเพื่อให้เครื่องคอมพิวเตอร์หรือโปรแกรมต่างๆ
+          สามารถสื่อสารและแลกเปลี่ยนข้อมูลกันผ่านเครือข่ายได้โดยอัตโนมัติ (Machine-to-Machine Communication)
+          แทนที่จะเป็นมนุษย์ที่เข้าไปคลิกหน้าเว็บเอง
+        </p>
+        <p>
+          ในอดีต Web Service ยุคแรกใช้โปรโตคอล <strong>SOAP (Simple Object Access Protocol)</strong> ซึ่งมีความซับซ้อนสูง
+          ใช้ XML เป็นรูปแบบข้อมูล และต้องการ WSDL เพื่ออธิบาย API ปัจจุบันโลกเปลี่ยนมาใช้
+          <strong>REST (Representational State Transfer)</strong> เกือบทั้งหมด เพราะง่ายกว่า เบากว่า และใช้ JSON
+          ซึ่งอ่านและประมวลผลได้ง่ายกว่า XML มาก
+        </p>
+        <p>
+          ตัวอย่างการใช้ Web Service ในชีวิตจริง:
+        </p>
+        <ul>
+          <li>แอปบน iPhone เรียก API ของ Server เพื่อดึงข้อมูลโปรไฟล์ผู้ใช้</li>
+          <li>เว็บ E-Commerce เรียก API ธนาคารเพื่อตรวจสอบการชำระเงิน</li>
+          <li>แอปพยากรณ์อากาศดึงข้อมูลจาก Weather API</li>
+          <li>แอป Ride-sharing เรียก Google Maps API เพื่อแสดงเส้นทาง</li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            JSON (JavaScript Object Notation) คือรูปแบบข้อมูลที่ได้รับความนิยมสูงสุดสำหรับ REST API
+            มีโครงสร้างคล้าย Object ใน JavaScript และ Array ใน PHP ทุกภาษาโปรแกรมมีไลบรารีสำหรับ parse JSON
+            ทำให้เหมาะสำหรับการสื่อสารระหว่างระบบที่ต่างภาษากัน
+          </p>
+        </div>
+
+        <h3>REST API หลักการ</h3>
+        <p>
+          <strong>REST</strong> ไม่ใช่โปรโตคอล แต่เป็นชุดข้อจำกัด (Constraints) สำหรับการออกแบบ API ที่ดี หลักการสำคัญ:
+        </p>
+        <ul>
+          <li><strong>Stateless</strong> — แต่ละ Request ต้องมีข้อมูลครบถ้วนในตัวเอง Server ไม่เก็บ "สถานะ" ของ Client ระหว่าง Request</li>
+          <li><strong>Client-Server</strong> — แยก Frontend และ Backend ออกจากกันชัดเจน สื่อสารผ่าน API เท่านั้น</li>
+          <li><strong>Uniform Interface</strong> — ใช้ URL มาตรฐานเพื่อระบุ Resource และ HTTP Methods เพื่อกำหนด Action</li>
+          <li><strong>Resource-based</strong> — ทุกอย่างเป็น "Resource" ที่มี URL เฉพาะ เช่น <code>/api/products</code>, <code>/api/users/5</code></li>
+        </ul>
+        <p>
+          <strong>HTTP Methods และความหมายใน REST:</strong>
+        </p>
+        <ul>
+          <li><strong>GET</strong> <code>/api/products</code> — อ่านรายการสินค้าทั้งหมด (Read)</li>
+          <li><strong>GET</strong> <code>/api/products/5</code> — อ่านสินค้า ID 5 (Read One)</li>
+          <li><strong>POST</strong> <code>/api/products</code> — สร้างสินค้าใหม่ (Create)</li>
+          <li><strong>PUT</strong> <code>/api/products/5</code> — อัปเดตสินค้า ID 5 ทั้งหมด (Update)</li>
+          <li><strong>PATCH</strong> <code>/api/products/5</code> — อัปเดตสินค้า ID 5 บางฟิลด์ (Partial Update)</li>
+          <li><strong>DELETE</strong> <code>/api/products/5</code> — ลบสินค้า ID 5 (Delete)</li>
+        </ul>
+        <p>
+          <strong>HTTP Status Codes ที่ใช้บ่อยใน API:</strong>
+        </p>
+        <ul>
+          <li><code>200 OK</code> — สำเร็จ (GET, PUT, PATCH, DELETE)</li>
+          <li><code>201 Created</code> — สร้างข้อมูลสำเร็จ (POST)</li>
+          <li><code>400 Bad Request</code> — ข้อมูลที่ส่งมาไม่ถูกต้องหรือไม่ครบ</li>
+          <li><code>401 Unauthorized</code> — ต้องยืนยันตัวตนก่อน (ไม่มี Token)</li>
+          <li><code>403 Forbidden</code> — ไม่มีสิทธิ์เข้าถึง (มี Token แต่ไม่ใช่ Admin)</li>
+          <li><code>404 Not Found</code> — ไม่พบ Resource ที่ขอ</li>
+          <li><code>500 Internal Server Error</code> — เกิดข้อผิดพลาดบน Server</li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+[Browser JS fetch()]  ──GET /api/products──►  [PHP API: api/products.php]
+                      ◄──JSON response──────  [PHP API]  ──SQL──►  [MySQL]
+
+ตัวอย่าง JSON Response:
+{
+  "status": "success",
+  "data": [
+    { "id": 1, "name": "เสื้อยืด", "price": 250, "stock": 50 },
+    { "id": 2, "name": "กางเกง",  "price": 890, "stock": 12 }
+  ],
+  "total": 2
+}
+          </pre>
+        </div>
+
+        <h3>สร้าง REST API ด้วย PHP</h3>
+        <p>
+          การสร้าง REST API ด้วย PHP ไม่ซับซ้อน เพียงแค่:
+        </p>
+        <ol>
+          <li>ตั้งค่า Content-Type เป็น <code>application/json</code> ด้วย <code>header()</code></li>
+          <li>ตรวจสอบ HTTP Method ที่ส่งมาด้วย <code>$_SERVER['REQUEST_METHOD']</code></li>
+          <li>ประมวลผลตาม Method และส่ง JSON กลับด้วย <code>json_encode()</code></li>
+          <li>ตั้ง HTTP Status Code ด้วย <code>http_response_code()</code></li>
+        </ol>
+        <p>
+          ในโปรเจกต์ขนาดเล็ก เราสามารถสร้างไฟล์ API แต่ละไฟล์ตาม Resource เช่น
+          <code>api/products.php</code>, <code>api/users.php</code>, <code>api/orders.php</code>
+          แต่ละไฟล์จะจัดการ Methods ต่างๆ (GET, POST, PUT, DELETE) สำหรับ Resource นั้น
+        </p>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ</div>
+          <p>
+            เพิ่ม CORS headers ให้ API ถ้าต้องการให้ Frontend อื่น (เช่น React app บน port อื่น) เรียกได้:
+            <code>header('Access-Control-Allow-Origin: *');</code>
+            สำหรับ Production ให้กำหนด domain ที่เฉพาะเจาะจงแทน * เพื่อความปลอดภัย
+          </p>
+        </div>
+
+        <h3>เรียกใช้ API ด้วย JavaScript fetch()</h3>
+        <p>
+          <strong>fetch()</strong> คือ Web API ของ Browser ที่ใช้สำหรับเรียก HTTP Request แบบ Asynchronous
+          ทำให้เราโหลดข้อมูลจาก API และแสดงผลโดยไม่ต้อง Reload หน้า วิธีนี้เรียกว่า
+          <strong>AJAX (Asynchronous JavaScript And XML)</strong> แม้ปัจจุบันจะใช้ JSON แทน XML แล้ว
+        </p>
+        <p>
+          fetch() ทำงานแบบ Promise-based และเราใช้ <code>async/await</code> ทำให้โค้ดอ่านง่ายขึ้น:
+        </p>
+        <ul>
+          <li><code>await fetch(url)</code> — ส่ง HTTP Request และรอ Response</li>
+          <li><code>response.ok</code> — true ถ้า Status Code อยู่ระหว่าง 200-299</li>
+          <li><code>await response.json()</code> — Parse JSON จาก Response Body</li>
+          <li>ใช้ <code>try/catch</code> จัดการ Error เช่น Network Error หรือ API Error</li>
+        </ul>
+        <p>
+          <strong>CORS (Cross-Origin Resource Sharing)</strong> — เมื่อ JavaScript บน domain A
+          พยายามเรียก API บน domain B Browser จะบล็อกคำขอถ้า Server B ไม่อนุญาต
+          ต้องตั้ง <code>Access-Control-Allow-Origin</code> header บน Server API
+        </p>
+
+        <h3>เรียกใช้ API จาก PHP</h3>
+        <p>
+          บางครั้ง Backend PHP ของเราต้องเรียก API ภายนอก เช่น Weather API, Exchange Rate API, SMS Gateway
+          PHP มีสองวิธีหลัก:
+        </p>
+        <ul>
+          <li>
+            <strong>file_get_contents() + stream_context_create()</strong> — ง่าย เหมาะสำหรับ GET request
+            บาง Hosting อาจปิด <code>allow_url_fopen</code> ทำให้ใช้ไม่ได้
+          </li>
+          <li>
+            <strong>cURL</strong> — ยืดหยุ่นกว่า รองรับทุก HTTP Method, Header, Authentication
+            ทำงานได้กับทุก Hosting แนะนำให้ใช้เป็นหลักสำหรับ Production
+          </li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง</div>
+          <p>
+            อย่าเก็บ API Key หรือ Secret Token ไว้ใน Code ที่ Push ขึ้น Git เพราะจะถูกเห็นโดยสาธารณะ
+            ให้เก็บใน config.php หรือ .env file และเพิ่ม config.php ใน .gitignore
+            API Key ที่หลุดออกไปอาจทำให้เกิดค่าใช้จ่ายหรือการละเมิดความปลอดภัย
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <!-- Example 1: PHP REST API -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">api/products.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// api/products.php — REST API สำหรับ Resource "products"
+
+require_once '../config/config.php';
+
+// ตั้งค่า Headers
+header('Content-Type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
+// จัดการ OPTIONS request (CORS Preflight)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+// ─── GET: ดึงข้อมูลสินค้าทั้งหมด ────────────────────────
+if ($method === 'GET') {
+    try {
+        $stmt = $pdo->query(
+            "SELECT id, name, price, stock, created_at FROM products ORDER BY id DESC"
+        );
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // แปลง price เป็นตัวเลขจริง (ไม่ใช่ string)
+        foreach ($products as &$p) {
+            $p['price'] = (float) $p['price'];
+            $p['stock'] = (int)   $p['stock'];
+        }
+
+        http_response_code(200);
+        echo json_encode([
+            'status' => 'success',
+            'data'   => $products,
+            'total'  => count($products)
+        ], JSON_UNESCAPED_UNICODE);
+
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'Database error']);
+    }
+    exit;
+}
+
+// ─── POST: สร้างสินค้าใหม่ ─────────────────────────────
+if ($method === 'POST') {
+    // รับ JSON จาก Request Body
+    $body = json_decode(file_get_contents('php://input'), true);
+
+    // Validate ข้อมูล
+    if (empty($body['name']) || !isset($body['price'])) {
+        http_response_code(400);
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'กรุณาระบุ name และ price'
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    try {
+        $stmt = $pdo->prepare(
+            "INSERT INTO products (name, price, stock) VALUES (:name, :price, :stock)"
+        );
+        $stmt->execute([
+            ':name'  => trim($body['name']),
+            ':price' => (float) $body['price'],
+            ':stock' => (int)   ($body['stock'] ?? 0),
+        ]);
+
+        $newId = $pdo->lastInsertId();
+
+        http_response_code(201);
+        echo json_encode([
+            'status'  => 'success',
+            'message' => 'สร้างสินค้าสำเร็จ',
+            'id'      => (int) $newId
+        ], JSON_UNESCAPED_UNICODE);
+
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'Database error']);
+    }
+    exit;
+}
+
+// ─── Method ที่ไม่รองรับ ───────────────────────────────
+http_response_code(405);
+echo json_encode([
+    'status'  => 'error',
+    'message' => 'Method Not Allowed'
+], JSON_UNESCAPED_UNICODE);</code></pre>
+      </div>
+
+      <!-- Example 2: JavaScript fetch() -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">js/products.js</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">// js/products.js — เรียก API ด้วย fetch() และแสดงผลบนหน้าเว็บ
+
+const API_URL = '/api/products.php';
+
+// ─── โหลดรายการสินค้า ─────────────────────────────────
+async function loadProducts() {
+    const container = document.getElementById('product-list');
+    container.innerHTML = '<p>กำลังโหลด...</p>';
+
+    try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status !== 'success') {
+            throw new Error(result.message || 'เกิดข้อผิดพลาด');
+        }
+
+        renderProducts(result.data);
+        document.getElementById('total-count').textContent = result.total;
+
+    } catch (error) {
+        container.innerHTML = `<p class="error">ไม่สามารถโหลดข้อมูลได้: ${error.message}</p>`;
+        console.error('loadProducts error:', error);
+    }
+}
+
+// ─── แสดงผล HTML ──────────────────────────────────────
+function renderProducts(products) {
+    const container = document.getElementById('product-list');
+
+    if (products.length === 0) {
+        container.innerHTML = '<p>ยังไม่มีสินค้า</p>';
+        return;
+    }
+
+    const html = products.map(p => `
+        <div class="product-card" data-id="${p.id}">
+            <h3>${escapeHtml(p.name)}</h3>
+            <p class="price">฿${p.price.toLocaleString('th-TH', {minimumFractionDigits: 2})}</p>
+            <p class="stock ${p.stock > 0 ? 'in-stock' : 'out-stock'}">
+                ${p.stock > 0 ? `คงเหลือ: ${p.stock} ชิ้น` : 'หมดสต็อก'}
+            </p>
+            <button onclick="deleteProduct(${p.id})" class="btn-delete">ลบ</button>
+        </div>
+    `).join('');
+
+    container.innerHTML = html;
+}
+
+// ─── เพิ่มสินค้าใหม่ผ่าน POST ─────────────────────────
+async function addProduct(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const data = {
+        name:  form.name.value.trim(),
+        price: parseFloat(form.price.value),
+        stock: parseInt(form.stock.value, 10) || 0,
+    };
+
+    if (!data.name || isNaN(data.price)) {
+        alert('กรุณากรอกชื่อสินค้าและราคาให้ครบถ้วน');
+        return;
+    }
+
+    try {
+        const response = await fetch(API_URL, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            form.reset();
+            await loadProducts(); // โหลดรายการใหม่
+            showMessage('เพิ่มสินค้าสำเร็จ!', 'success');
+        } else {
+            showMessage(result.message, 'error');
+        }
+    } catch (error) {
+        showMessage('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+    }
+}
+
+// ─── Utility Functions ────────────────────────────────
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
+function showMessage(msg, type) {
+    const el = document.getElementById('message');
+    el.textContent = msg;
+    el.className = `message ${type}`;
+    setTimeout(() => el.textContent = '', 3000);
+}
+
+// โหลดข้อมูลเมื่อหน้าพร้อม
+document.addEventListener('DOMContentLoaded', loadProducts);
+document.getElementById('add-form')?.addEventListener('submit', addProduct);</code></pre>
+      </div>
+
+      <!-- Example 3: PHP cURL calling external API -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">api/exchange-rate.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php"><?php
+// api/exchange-rate.php — เรียก API ภายนอกด้วย cURL
+// ใช้ https://api.frankfurter.app สำหรับอัตราแลกเปลี่ยน (ฟรี ไม่ต้อง Key)
+
+header('Content-Type: application/json; charset=UTF-8');
+
+/**
+ * เรียก HTTP GET Request ด้วย cURL
+ * @param string $url
+ * @return array ['success' => bool, 'data' => mixed, 'http_code' => int]
+ */
+function curlGet(string $url): array {
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL            => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_TIMEOUT        => 10,
+        CURLOPT_USERAGENT      => 'PHP Web Application',
+        CURLOPT_SSL_VERIFYPEER => true,
+    ]);
+
+    $response  = curl_exec($ch);
+    $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+
+    if ($curlError) {
+        return ['success' => false, 'data' => $curlError, 'http_code' => 0];
+    }
+
+    return [
+        'success'   => ($httpCode >= 200 && $httpCode < 300),
+        'data'      => json_decode($response, true),
+        'http_code' => $httpCode,
+    ];
+}
+
+// ─── ดึงอัตราแลกเปลี่ยน USD → THB ──────────────────────
+$result = curlGet('https://api.frankfurter.app/latest?from=USD&to=THB');
+
+if (!$result['success']) {
+    http_response_code(502);
+    echo json_encode([
+        'status'  => 'error',
+        'message' => 'ไม่สามารถดึงข้อมูลอัตราแลกเปลี่ยนได้'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$data = $result['data'];
+$rate = $data['rates']['THB'] ?? null;
+
+echo json_encode([
+    'status' => 'success',
+    'from'   => $data['base'],
+    'to'     => 'THB',
+    'rate'   => $rate,
+    'date'   => $data['date'],
+    'note'   => "1 USD = {$rate} THB ณ วันที่ {$data['date']}"
+], JSON_UNESCAPED_UNICODE);</code></pre>
+      </div>
+
+      <!-- Example 4: Complete Mini SPA -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">products-ajax.html (Mini SPA)</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">// ─── HTML structure (ส่วน body) ──────────────────────────
+/*
+<div id="message"></div>
+
+<form id="add-form">
+  <input name="name"  type="text"   placeholder="ชื่อสินค้า" required>
+  <input name="price" type="number" placeholder="ราคา" step="0.01" required>
+  <input name="stock" type="number" placeholder="สต็อก" value="0">
+  <button type="submit">เพิ่มสินค้า</button>
+</form>
+
+<p>สินค้าทั้งหมด: <strong id="total-count">0</strong> รายการ</p>
+<div id="product-list"></div>
+*/
+
+// ─── JavaScript — ทำงานทั้งหมดผ่าน API โดยไม่ Reload ────
+const API = '/api/products.php';
+
+async function api(method, body = null) {
+    const options = {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+    };
+    if (body) options.body = JSON.stringify(body);
+
+    const res  = await fetch(API, options);
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || `HTTP ${res.status}`);
+    return json;
+}
+
+async function refresh() {
+    const result = await api('GET');
+    const list   = document.getElementById('product-list');
+    document.getElementById('total-count').textContent = result.total;
+
+    list.innerHTML = result.data.map(p => `
+      <div class="card">
+        <strong>${p.name}</strong>
+        <span>฿${Number(p.price).toFixed(2)}</span>
+        <em>${p.stock > 0 ? p.stock + ' ชิ้น' : 'หมด'}</em>
+      </div>
+    `).join('') || '<p>ยังไม่มีสินค้า</p>';
+}
+
+document.getElementById('add-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    try {
+        await api('POST', {
+            name:  f.name.value,
+            price: +f.price.value,
+            stock: +f.stock.value,
+        });
+        f.reset();
+        await refresh();
+        document.getElementById('message').textContent = 'เพิ่มสำเร็จ!';
+        setTimeout(() => document.getElementById('message').textContent = '', 2000);
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+});
+
+window.addEventListener('DOMContentLoaded', refresh);</code></pre>
+      </div>
+
+    </div>
+
+    <!-- LAB SECTION -->
+    <div class="lab-container" id="lab">
+      <div class="lab-header">
+        <h2>🧪 ปฏิบัติการ Lab 11 — Web Services &amp; REST API</h2>
+        <p>สร้าง REST API ด้วย PHP และเรียกใช้ด้วย JavaScript fetch() รวมถึงการเรียก API ภายนอก</p>
+      </div>
+      <div class="lab-body">
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">1</div>
+            <div class="task-title">สร้าง REST API พื้นฐาน</div>
+          </div>
+          <div class="task-body">
+            <p>
+              สร้างไฟล์ <code>api/products.php</code> ที่รองรับ 2 Methods:
+            </p>
+            <ol>
+              <li>สร้างโฟลเดอร์ <code>api/</code> ในโปรเจกต์และสร้างไฟล์ <code>api/products.php</code></li>
+              <li>ตั้งค่า Content-Type เป็น <code>application/json</code> และ CORS headers</li>
+              <li><strong>GET Request</strong>: ดึงสินค้าทั้งหมดจากตาราง products และคืน JSON ในรูปแบบ <code>{"status":"success","data":[...],"total":N}</code></li>
+              <li><strong>POST Request</strong>: รับ JSON จาก Request Body (<code>php://input</code>), Validate ว่ามี name และ price, INSERT เข้า DB, คืน 201 พร้อม id ที่สร้างใหม่</li>
+              <li>ถ้า Method ไม่รองรับ คืน 405 Method Not Allowed</li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>GET /api/products.php คืน JSON array ของสินค้า, POST ที่ส่ง {"name":"ทดสอบ","price":100} สร้างสินค้าใหม่และคืน 201 พร้อม id ที่ถูกต้อง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>อ่าน Request Body ด้วย <code>$body = json_decode(file_get_contents('php://input'), true);</code> และตรวจสอบ Method ด้วย <code>$_SERVER['REQUEST_METHOD']</code></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">2</div>
+            <div class="task-title">ทดสอบ API ด้วย curl</div>
+          </div>
+          <div class="task-body">
+            <p>
+              ทดสอบ API ที่สร้างขึ้นด้วย curl ใน Terminal (Command Prompt / Git Bash / Terminal):
+            </p>
+            <ol>
+              <li>เปิด XAMPP ให้ Apache และ MySQL ทำงานอยู่</li>
+              <li>ทดสอบ GET: <code>curl -i http://localhost/your-project/api/products.php</code></li>
+              <li>ตรวจสอบว่า Response มี Header <code>Content-Type: application/json</code> และ Status Code 200</li>
+              <li>ทดสอบ POST: <code>curl -i -X POST -H "Content-Type: application/json" -d '{"name":"สินค้าทดสอบ","price":150,"stock":10}' http://localhost/your-project/api/products.php</code></li>
+              <li>ตรวจสอบว่า Response มี Status Code 201 และ JSON ที่มี id</li>
+              <li>ทดสอบ POST ที่ไม่มี name: ต้องได้ Status 400 พร้อม error message</li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>ทดสอบได้ทั้ง 3 กรณีและได้ Status Code ถูกต้อง (200, 201, 400) พร้อม JSON Response ที่มีรูปแบบสมบูรณ์</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>บน Windows ถ้าใช้ CMD ให้ใช้เครื่องหมายคำพูดคู่ (") แทน (' ) ใน JSON: <code>-d "{\"name\":\"test\",\"price\":100}"</code> หรือใช้ PowerShell / Git Bash ที่รองรับ single quote</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">3</div>
+            <div class="task-title">เรียก API ด้วย JavaScript fetch()</div>
+          </div>
+          <div class="task-body">
+            <p>
+              สร้างหน้า HTML ที่โหลดข้อมูลสินค้าจาก API โดยไม่ Reload หน้า:
+            </p>
+            <ol>
+              <li>สร้างไฟล์ <code>products-spa.php</code> หรือ <code>products-spa.html</code></li>
+              <li>เพิ่ม <code>&lt;div id="product-list"&gt;&lt;/div&gt;</code> สำหรับแสดงสินค้า</li>
+              <li>เขียน JavaScript ใช้ <code>async function loadProducts()</code> ที่เรียก <code>fetch('/api/products.php')</code></li>
+              <li>แปลง Response เป็น JSON ด้วย <code>response.json()</code></li>
+              <li>วนลูปแสดงสินค้าทุกชิ้นใน <code>#product-list</code> ในรูปแบบ Card</li>
+              <li>เรียก <code>loadProducts()</code> เมื่อ <code>DOMContentLoaded</code></li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>เปิดหน้า products-spa ในเบราว์เซอร์แล้วเห็นรายการสินค้าแสดงโดยไม่ต้อง Reload หน้า ตรวจสอบใน DevTools Network tab ว่ามี Request ไปยัง api/products.php</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ใช้ try/catch รอบ fetch() เสมอ และตรวจสอบ <code>response.ok</code> ก่อน parse JSON เพื่อจัดการกรณีที่ API คืน Error Status Code</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">4</div>
+            <div class="task-title">สร้างฟอร์ม AJAX</div>
+          </div>
+          <div class="task-body">
+            <p>
+              เพิ่มฟอร์มเพิ่มสินค้าในหน้า products-spa ที่ส่งข้อมูลผ่าน fetch() โดยไม่ Reload หน้า:
+            </p>
+            <ol>
+              <li>เพิ่มฟอร์ม HTML: input สำหรับ name, price, stock และปุ่ม Submit</li>
+              <li>เพิ่ม Event Listener <code>submit</code> บนฟอร์ม และเรียก <code>event.preventDefault()</code></li>
+              <li>อ่านค่าจากฟอร์มและสร้าง Object JSON</li>
+              <li>เรียก <code>fetch(API_URL, { method: 'POST', body: JSON.stringify(data) })</code></li>
+              <li>หลังเพิ่มสำเร็จ: clear form, เรียก <code>loadProducts()</code> ใหม่, แสดง success message</li>
+              <li>ถ้า API คืน error: แสดง error message โดยไม่ Reload หน้า</li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>กรอกฟอร์มและกด Submit แล้วเห็นสินค้าใหม่ปรากฏในรายการโดยไม่ Reload หน้า ตรวจสอบฐานข้อมูลว่าข้อมูลถูกบันทึกจริง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>อย่าลืมตั้ง Header <code>'Content-Type': 'application/json'</code> ใน fetch options ไม่เช่นนั้น PHP จะไม่สามารถ parse <code>php://input</code> เป็น JSON ได้</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">5</div>
+            <div class="task-title">เรียก API ภายนอก</div>
+          </div>
+          <div class="task-body">
+            <p>
+              ทดลองเรียก Public API ที่ไม่ต้องใช้ API Key และแสดงผลบนหน้าเว็บ:
+            </p>
+            <ol>
+              <li>เลือก API หนึ่งในนี้ (ล้วนฟรีและไม่ต้อง Key):
+                <ul>
+                  <li><code>https://restcountries.com/v3.1/name/thailand</code> — ข้อมูลประเทศไทย</li>
+                  <li><code>https://jsonplaceholder.typicode.com/posts?_limit=5</code> — ข้อมูล Mock posts</li>
+                  <li><code>https://api.frankfurter.app/latest?from=USD&amp;to=THB</code> — อัตราแลกเปลี่ยน</li>
+                </ul>
+              </li>
+              <li>สร้างไฟล์ PHP ที่ใช้ cURL เรียก API ที่เลือก</li>
+              <li>Parse JSON Response และแสดงข้อมูลที่น่าสนใจบนหน้าเว็บ</li>
+              <li>จัดการ Error กรณีที่ API ภายนอกไม่ตอบสนอง (cURL error หรือ HTTP error)</li>
+            </ol>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>หน้าเว็บแสดงข้อมูลจาก External API ได้สำเร็จ มีการจัดการ Error กรณี API ล้มเหลว และข้อมูลที่แสดงถูกต้องตาม Response จริง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ตั้ง <code>CURLOPT_TIMEOUT</code> เสมอ (เช่น 10 วินาที) เพื่อป้องกันหน้าเว็บค้างถ้า External API ตอบช้า และตรวจสอบ <code>curl_errno($ch)</code> ก่อนใช้งาน Response</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <a href="week-11.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">Code Reusability &amp; Template</div>
+      </a>
+      <a href="week-13.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">โครงงานเว็บ (ทีม)</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 4 — ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 4</span>
+    <span class="sep">›</span>
+    <span>ตัวแปร, ฟังก์ชัน & ฟอร์ม</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 4</div>
+    <h1 class="wh-title">ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO3</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+        <li><a href="#lab">ปฏิบัติการ Lab 3</a></li>
+      </ul>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>ตัวแปรและโครงสร้างควบคุม PHP</h3>
+        <p>
+          PHP มีโครงสร้างควบคุม (Control Structures) เพื่อกำหนดทิศทางการทำงานของโปรแกรมตามเงื่อนไข
+          และทำซ้ำการทำงานบางส่วน ซึ่งเป็นพื้นฐานสำคัญของทุกโปรแกรม
+        </p>
+        <p>
+          <strong>เงื่อนไข (Conditional Statements)</strong>:
+        </p>
+        <ul>
+          <li>
+            <code>if / elseif / else</code> — ตรวจสอบเงื่อนไขตามลำดับ ใช้ <code>===</code> เพื่อเปรียบเทียบ
+            ทั้งค่าและชนิดข้อมูล (Strict Comparison) แทน <code>==</code> ที่ทำ Type Coercion
+          </li>
+          <li>
+            <code>switch</code> — เปรียบเทียบค่าตัวแปรกับหลาย Cases เหมาะเมื่อมีหลายตัวเลือก
+            อย่าลืม <code>break;</code> ในแต่ละ case ไม่เช่นนั้นจะ Fall-through ไป case ถัดไป
+          </li>
+          <li>
+            <strong>Ternary Operator</strong>: <code>$result = $condition ? 'yes' : 'no';</code>
+            ใช้แทน if/else แบบสั้นเมื่อมีเงื่อนไขเดียว
+          </li>
+          <li>
+            <strong>Null Coalescing Operator</strong>: <code>$name = $_GET['name'] ?? 'ผู้เยี่ยมชม';</code>
+            ส่งคืนค่าด้านซ้ายหากมีค่าและไม่ใช่ null ไม่เช่นนั้นส่งคืนค่าด้านขวา (PHP 7+)
+          </li>
+        </ul>
+        <p>
+          <strong>ลูป (Loops)</strong>:
+        </p>
+        <ul>
+          <li><code>for ($i = 0; $i &lt; 10; $i++)</code> — วนซ้ำที่รู้จำนวนรอบล่วงหน้า</li>
+          <li><code>foreach ($array as $item)</code> — วนซ้ำทุก Element ใน Array (แนะนำสำหรับ Array)</li>
+          <li><code>foreach ($array as $key => $value)</code> — วนซ้ำพร้อมดึง Key และ Value</li>
+          <li><code>while ($condition)</code> — วนซ้ำขณะที่เงื่อนไขเป็น true</li>
+          <li><code>do { ... } while ($condition);</code> — รันอย่างน้อยหนึ่งครั้งก่อนตรวจเงื่อนไข</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — Alternative Syntax</div>
+          <p>
+            เมื่อผสม PHP กับ HTML ใช้ Alternative Syntax เพื่อให้อ่านง่ายขึ้น:
+            <code>if (...): ... elseif (...): ... else: ... endif;</code>
+            และ <code>foreach (...): ... endforeach;</code>
+            แทนการใช้ <code>{ }</code> แบบปกติ
+          </p>
+        </div>
+
+        <h3>ฟังก์ชันใน PHP</h3>
+        <p>
+          <strong>ฟังก์ชัน (Functions)</strong> คือบล็อกโค้ดที่ตั้งชื่อไว้เพื่อนำกลับมาใช้ซ้ำ
+          ช่วยลดการเขียนโค้ดซ้ำ (DRY: Don't Repeat Yourself) และทำให้โค้ดอ่านง่ายขึ้น
+        </p>
+        <ul>
+          <li>ประกาศด้วย <code>function functionName($param1, $param2 = 'default') { ... }</code></li>
+          <li>พารามิเตอร์ที่มีค่าเริ่มต้น (Default Value) ต้องอยู่ท้ายสุดเสมอ</li>
+          <li>ใช้ <code>return</code> เพื่อส่งค่ากลับ ฟังก์ชันจะหยุดทำงานเมื่อพบ <code>return</code></li>
+          <li>PHP 7+ รองรับการกำหนดชนิดของ Parameter และ Return type: <code>function add(int $a, int $b): int</code></li>
+        </ul>
+        <p>
+          <strong>Built-in Functions</strong> ที่ใช้บ่อย:
+        </p>
+        <ul>
+          <li>String: <code>strlen()</code>, <code>strtolower()</code>, <code>strtoupper()</code>, <code>trim()</code>, <code>str_replace()</code>, <code>substr()</code>, <code>strpos()</code></li>
+          <li>Array: <code>count()</code>, <code>array_push()</code>, <code>array_pop()</code>, <code>implode()</code>, <code>explode()</code>, <code>array_map()</code>, <code>array_filter()</code>, <code>sort()</code>, <code>in_array()</code></li>
+          <li>Math: <code>abs()</code>, <code>round()</code>, <code>ceil()</code>, <code>floor()</code>, <code>rand()</code>, <code>pow()</code>, <code>sqrt()</code></li>
+          <li>Date: <code>date()</code>, <code>time()</code>, <code>mktime()</code>, <code>strtotime()</code></li>
+        </ul>
+
+        <h3>การรับข้อมูลจากฟอร์ม HTML</h3>
+        <p>
+          HTML Form ใช้ส่งข้อมูลจากผู้ใช้ไปยัง PHP โดยมี 2 วิธีหลัก คือ <strong>GET</strong> และ <strong>POST</strong>
+          กำหนดด้วย attribute <code>method</code> บน <code>&lt;form&gt;</code> และ
+          <code>action</code> กำหนด URL ปลายทาง:
+        </p>
+
+        <div class="diagram-box">
+          <pre>
+┌────────────────────────────────────────────────────────────────┐
+│              GET vs POST                                        │
+├─────────────────────────┬──────────────────────────────────────┤
+│          GET            │              POST                    │
+├─────────────────────────┼──────────────────────────────────────┤
+│ ข้อมูลใน URL            │ ข้อมูลใน Request Body               │
+│ ?name=สมชาย&age=20     │ (ซ่อนจาก URL)                       │
+├─────────────────────────┼──────────────────────────────────────┤
+│ เห็นได้ใน Address Bar   │ ไม่เห็นใน Address Bar               │
+│ สามารถ Bookmark ได้     │ Bookmark ไม่ได้                     │
+├─────────────────────────┼──────────────────────────────────────┤
+│ จำกัดความยาว ~2KB       │ ไม่จำกัดขนาด (เหมาะ Upload ไฟล์)  │
+├─────────────────────────┼──────────────────────────────────────┤
+│ เหมาะสำหรับ: ค้นหา,    │ เหมาะสำหรับ: Login, Register,       │
+│ filter, pagination      │ บันทึกข้อมูล, Upload                 │
+├─────────────────────────┼──────────────────────────────────────┤
+│ PHP: $_GET['key']       │ PHP: $_POST['key']                  │
+└─────────────────────────┴──────────────────────────────────────┘
+          </pre>
+        </div>
+
+        <p>
+          <strong>Superglobals</strong> คือตัวแปรพิเศษของ PHP ที่เข้าถึงได้จากทุกที่ในโปรแกรม:
+        </p>
+        <ul>
+          <li><code>$_GET</code> — ข้อมูลจาก Query String ใน URL</li>
+          <li><code>$_POST</code> — ข้อมูลจาก Form ที่ใช้ method="POST"</li>
+          <li><code>$_REQUEST</code> — รวมทั้ง GET และ POST (ไม่แนะนำ ใช้เฉพาะเจาะจงดีกว่า)</li>
+          <li><code>$_SESSION</code> — ข้อมูลที่เก็บไว้ตลอด Session (ใช้หลัง <code>session_start()</code>)</li>
+          <li><code>$_COOKIE</code> — ข้อมูล Cookie จากเบราว์เซอร์</li>
+          <li><code>$_FILES</code> — ไฟล์ที่ Upload ผ่านฟอร์ม</li>
+          <li><code>$_SERVER</code> — ข้อมูล Server เช่น <code>$_SERVER['REQUEST_METHOD']</code></li>
+        </ul>
+
+        <h3>การตรวจสอบและกรองข้อมูล (Validation & Sanitization)</h3>
+        <p>
+          <strong>ห้ามเชื่อถือข้อมูลจากผู้ใช้โดยตรง</strong> ผู้ใช้อาจส่งข้อมูลที่เป็นอันตรายมา
+          เช่น HTML Tags, SQL Injection, หรือ Script ที่เป็นอันตราย เราต้องตรวจสอบและกรองข้อมูลทุกครั้ง:
+        </p>
+        <ul>
+          <li>
+            <strong>isset()</strong> — ตรวจสอบว่าตัวแปรถูกกำหนดค่าและไม่เป็น null
+            เช่น <code>if (isset($_POST['name'])) { ... }</code>
+          </li>
+          <li>
+            <strong>empty()</strong> — ตรวจสอบว่าตัวแปรว่างเปล่า (<code>""</code>, <code>0</code>, <code>null</code>, <code>[]</code>)
+          </li>
+          <li>
+            <strong>htmlspecialchars()</strong> — แปลง Special Characters เป็น HTML Entities
+            ป้องกัน XSS: <code>&lt;</code> → <code>&amp;lt;</code>, <code>&gt;</code> → <code>&amp;gt;</code>
+          </li>
+          <li>
+            <strong>trim()</strong> — ลบ Whitespace หัวท้ายข้อความ ควรทำก่อน Validate ทุกครั้ง
+          </li>
+          <li>
+            <strong>filter_input()</strong> — กรองข้อมูลจาก Input: <code>filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)</code>
+          </li>
+          <li>
+            <strong>filter_var()</strong> — กรองและ Validate ค่าตัวแปร: <code>filter_var($email, FILTER_VALIDATE_EMAIL)</code>
+          </li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — XSS Attack</div>
+          <p>
+            หากไม่ใช้ <code>htmlspecialchars()</code> ผู้ใช้อาจส่ง <code>&lt;script&gt;alert('Hacked!')&lt;/script&gt;</code>
+            มาในฟอร์ม และ PHP จะแสดงโค้ดนั้นในหน้าเว็บ ทำให้ Script ทำงานและอาจขโมย Cookie หรือ Session ของผู้ใช้อื่นได้
+            ใช้ <code>htmlspecialchars($input, ENT_QUOTES, 'UTF-8')</code> เสมอ
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CODE EXAMPLES SECTION -->
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">control-structures.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// Control Structures ใน PHP
+// ============================
+
+$score = 78;
+$grade = '';
+
+// if / elseif / else
+if ($score >= 80) {
+    $grade = 'A';
+} elseif ($score >= 70) {
+    $grade = 'B';
+} elseif ($score >= 60) {
+    $grade = 'C';
+} elseif ($score >= 50) {
+    $grade = 'D';
+} else {
+    $grade = 'F';
+}
+echo "คะแนน: $score → เกรด: $grade<br>"; // B
+
+// Ternary Operator
+$status = $score >= 50 ? 'ผ่าน' : 'ไม่ผ่าน';
+echo "สถานะ: $status<br>"; // ผ่าน
+
+// Null Coalescing
+$name = $_GET['name'] ?? 'ผู้เยี่ยมชม';
+echo "สวัสดี, $name!<br>";
+
+// switch
+$day = date('N'); // 1=จันทร์, 7=อาทิตย์
+switch ($day) {
+    case 1: echo "วันจันทร์"; break;
+    case 2: echo "วันอังคาร"; break;
+    case 3: echo "วันพุธ";    break;
+    case 4: echo "วันพฤหัสบดี"; break;
+    case 5: echo "วันศุกร์";  break;
+    case 6: echo "วันเสาร์ (หยุด!)"; break;
+    case 7: echo "วันอาทิตย์ (หยุด!)"; break;
+    default: echo "ไม่ทราบวัน";
+}
+echo "<br>";
+
+// ============================
+// Loops
+// ============================
+
+// for loop: สูตรคูณ 3
+echo "<h3>สูตรคูณ 3</h3>";
+for ($i = 1; $i <= 10; $i++) {
+    echo "3 × $i = " . (3 * $i) . "<br>";
+}
+
+// foreach: วนตาม Array
+$fruits = ['แอปเปิ้ล', 'กล้วย', 'มะม่วง', 'สับปะรด'];
+echo "<h3>รายการผลไม้</h3><ul>";
+foreach ($fruits as $index => $fruit) {
+    echo "<li>$index. $fruit</li>";
+}
+echo "</ul>";
+
+// foreach: Associative Array
+$student = ['name' => 'สมชาย', 'id' => '6601001', 'gpa' => 3.75];
+echo "<h3>ข้อมูลนักศึกษา</h3>";
+foreach ($student as $key => $value) {
+    echo "<b>$key</b>: $value<br>";
+}
+
+// while loop: นับจาก 1 ถึง 5
+echo "<h3>while loop</h3>";
+$count = 1;
+while ($count <= 5) {
+    echo "รอบที่ $count<br>";
+    $count++;
+}
+?>
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">functions.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// Functions ใน PHP
+// ============================
+
+// ฟังก์ชันพื้นฐาน
+function greet(string $name, string $title = 'คุณ'): string {
+    return "สวัสดี, $title $name!";
+}
+echo greet('สมชาย') . "<br>";          // สวัสดี, คุณ สมชาย!
+echo greet('สมหญิง', 'น.ส.') . "<br>"; // สวัสดี, น.ส. สมหญิง!
+
+// ฟังก์ชันคำนวณ BMI
+function calculateBMI(float $weight, float $height): array {
+    if ($height <= 0) {
+        return ['error' => 'ส่วนสูงต้องมากกว่า 0'];
+    }
+    $bmi = $weight / ($height * $height);
+    $bmi = round($bmi, 2);
+
+    if ($bmi < 18.5)     $category = 'น้ำหนักน้อย';
+    elseif ($bmi < 25.0) $category = 'ปกติ';
+    elseif ($bmi < 30.0) $category = 'น้ำหนักเกิน';
+    else                  $category = 'อ้วน';
+
+    return ['bmi' => $bmi, 'category' => $category];
+}
+
+$result = calculateBMI(70, 1.75);
+echo "BMI: {$result['bmi']} ({$result['category']})<br>"; // BMI: 22.86 (ปกติ)
+
+// ฟังก์ชันให้เกรด
+function gradeScore(int $score): string {
+    return match(true) {
+        $score >= 80 => 'A',
+        $score >= 70 => 'B',
+        $score >= 60 => 'C',
+        $score >= 50 => 'D',
+        default      => 'F',
+    };
+}
+$scores = [92, 78, 65, 55, 40];
+foreach ($scores as $s) {
+    echo "คะแนน $s = เกรด " . gradeScore($s) . "<br>";
+}
+
+// ============================
+// Built-in String Functions
+// ============================
+$text = "  Hello, ภาษาไทย and PHP!  ";
+echo strlen($text) . "<br>";                    // ความยาว
+echo strtolower("HELLO WORLD") . "<br>";        // hello world
+echo strtoupper("hello world") . "<br>";        // HELLO WORLD
+echo trim($text) . "<br>";                      // ตัด whitespace
+echo str_replace('PHP', 'PHP 8.3', $text) . "<br>"; // แทนที่คำ
+echo substr("Hello World", 6, 5) . "<br>";     // World
+
+// ============================
+// Built-in Array Functions
+// ============================
+$numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5];
+echo count($numbers) . "<br>";          // 9 (จำนวน elements)
+sort($numbers);
+echo implode(', ', $numbers) . "<br>"; // เรียงจากน้อย-มาก
+
+$csv = "สมชาย,สมหญิง,สมศักดิ์";
+$names = explode(',', $csv);            // แยก String เป็น Array
+print_r($names);
+
+array_push($names, 'สมปอง');           // เพิ่มท้าย Array
+echo count($names) . " คน<br>";
+
+echo in_array('สมชาย', $names) ? "พบ สมชาย<br>" : "ไม่พบ<br>";
+
+// array_map: คำนวณกับทุก element
+$prices = [100, 250, 80, 500];
+$discounted = array_map(fn($p) => $p * 0.9, $prices); // ลด 10%
+print_r($discounted);
+?>
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">contact-form.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// Contact Form ด้วย POST Method
+// ============================
+
+$errors   = [];
+$success  = false;
+$formData = ['name' => '', 'email' => '', 'message' => ''];
+
+// ตรวจสอบว่า Form ถูก Submit แล้วหรือยัง
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // ดึงข้อมูลจาก $_POST และ Sanitize
+    $name    = trim($_POST['name']    ?? '');
+    $email   = trim($_POST['email']   ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    // เก็บค่าเดิมไว้แสดงในฟอร์ม (กรณีมี Error)
+    $formData = compact('name', 'email', 'message');
+
+    // Validation
+    if (empty($name)) {
+        $errors['name'] = 'กรุณากรอกชื่อ-นามสกุล';
+    } elseif (strlen($name) < 3) {
+        $errors['name'] = 'ชื่อต้องมีอย่างน้อย 3 ตัวอักษร';
+    }
+
+    if (empty($email)) {
+        $errors['email'] = 'กรุณากรอก Email';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'รูปแบบ Email ไม่ถูกต้อง';
+    }
+
+    if (empty($message)) {
+        $errors['message'] = 'กรุณากรอกข้อความ';
+    } elseif (strlen($message) < 10) {
+        $errors['message'] = 'ข้อความต้องมีอย่างน้อย 10 ตัวอักษร';
+    }
+
+    // ถ้าไม่มี Error ให้ประมวลผล (บันทึก DB, ส่งอีเมล ฯลฯ)
+    if (empty($errors)) {
+        $success = true;
+        $formData = ['name' => '', 'email' => '', 'message' => ''];
+        // ในงานจริง: บันทึกลง Database หรือส่งอีเมล
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ติดต่อเรา</title>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: 600; margin-bottom: 4px; }
+    input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+    input.error, textarea.error { border-color: #e74c3c; }
+    .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 4px; }
+    .success-box { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 16px; border-radius: 8px; margin-bottom: 20px; }
+    button { background: #2c3e50; color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #34495e; }
+  </style>
+</head>
+<body>
+
+  <h1>ติดต่อเรา</h1>
+
+  <?php if ($success): ?>
+    <div class="success-box">
+      ✅ ส่งข้อความสำเร็จ! เราจะติดต่อกลับภายใน 24 ชั่วโมง
+    </div>
+  <?php endif; ?>
+
+  <form method="POST" action="">
+
+    <div class="form-group">
+      <label for="name">ชื่อ-นามสกุล *</label>
+      <input type="text" id="name" name="name"
+             value="<?= htmlspecialchars($formData['name'], ENT_QUOTES, 'UTF-8') ?>"
+             class="<?= isset($errors['name']) ? 'error' : '' ?>">
+      <?php if (isset($errors['name'])): ?>
+        <div class="error-msg"><?= $errors['name'] ?></div>
+      <?php endif; ?>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email"
+             value="<?= htmlspecialchars($formData['email'], ENT_QUOTES, 'UTF-8') ?>"
+             class="<?= isset($errors['email']) ? 'error' : '' ?>">
+      <?php if (isset($errors['email'])): ?>
+        <div class="error-msg"><?= $errors['email'] ?></div>
+      <?php endif; ?>
+    </div>
+
+    <div class="form-group">
+      <label for="message">ข้อความ *</label>
+      <textarea id="message" name="message" rows="5"
+                class="<?= isset($errors['message']) ? 'error' : '' ?>"><?= htmlspecialchars($formData['message'], ENT_QUOTES, 'UTF-8') ?></textarea>
+      <?php if (isset($errors['message'])): ?>
+        <div class="error-msg"><?= $errors['message'] ?></div>
+      <?php endif; ?>
+    </div>
+
+    <button type="submit">ส่งข้อความ</button>
+
+  </form>
+
+</body>
+</html>
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">search.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// GET Method: ฟอร์มค้นหา
+// URL จะเปลี่ยนเป็น: search.php?q=PHP&category=programming
+// ============================
+
+$query    = htmlspecialchars(trim($_GET['q']        ?? ''), ENT_QUOTES, 'UTF-8');
+$category = htmlspecialchars(trim($_GET['category'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+// ข้อมูลตัวอย่างสำหรับค้นหา
+$allItems = [
+    ['title' => 'PHP เบื้องต้น',        'category' => 'programming', 'views' => 1520],
+    ['title' => 'MySQL สำหรับผู้เริ่มต้น', 'category' => 'database',    'views' => 980],
+    ['title' => 'HTML & CSS',            'category' => 'programming', 'views' => 2100],
+    ['title' => 'JavaScript Modern',    'category' => 'programming', 'views' => 1750],
+    ['title' => 'Linux Command Line',   'category' => 'sysadmin',    'views' => 650],
+    ['title' => 'Git & GitHub',          'category' => 'devtools',    'views' => 1200],
+];
+
+// กรองข้อมูลตาม Query และ Category
+$results = array_filter($allItems, function($item) use ($query, $category) {
+    $matchQuery    = empty($query)    || stripos($item['title'], $query) !== false;
+    $matchCategory = empty($category) || $item['category'] === $category;
+    return $matchQuery && $matchCategory;
+});
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ค้นหา</title>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; }
+    .search-form { display: flex; gap: 8px; margin-bottom: 20px; }
+    .search-form input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .search-form select, .search-form button { padding: 10px 16px; border-radius: 6px; border: 1px solid #ccc; }
+    .search-form button { background: #2c3e50; color: white; border-color: #2c3e50; cursor: pointer; }
+    .result-count { color: #666; margin-bottom: 12px; }
+    .result-item { padding: 12px; border-bottom: 1px solid #eee; }
+    .result-item:hover { background: #f8f9fa; }
+    .result-title { font-weight: 600; color: #2c3e50; }
+    .result-meta { font-size: 0.85rem; color: #999; margin-top: 4px; }
+    .badge { background: #e9ecef; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <h1>ค้นหาบทเรียน</h1>
+
+  <!-- GET Form: ข้อมูลจะแสดงใน URL -->
+  <form method="GET" action="" class="search-form">
+    <input type="text" name="q" placeholder="ค้นหาบทเรียน..."
+           value="<?= $query ?>">
+    <select name="category">
+      <option value="">ทุกหมวดหมู่</option>
+      <option value="programming" <?= $category === 'programming' ? 'selected' : '' ?>>Programming</option>
+      <option value="database"    <?= $category === 'database'    ? 'selected' : '' ?>>Database</option>
+      <option value="sysadmin"    <?= $category === 'sysadmin'    ? 'selected' : '' ?>>SysAdmin</option>
+      <option value="devtools"    <?= $category === 'devtools'    ? 'selected' : '' ?>>Dev Tools</option>
+    </select>
+    <button type="submit">🔍 ค้นหา</button>
+  </form>
+
+  <div class="result-count">พบ <?= count($results) ?> รายการ</div>
+
+  <?php if (empty($results)): ?>
+    <p>ไม่พบผลลัพธ์ที่ตรงกับ "<?= $query ?>"</p>
+  <?php else: ?>
+    <?php foreach ($results as $item): ?>
+      <div class="result-item">
+        <div class="result-title"><?= htmlspecialchars($item['title']) ?></div>
+        <div class="result-meta">
+          <span class="badge"><?= htmlspecialchars($item['category']) ?></span>
+          👁️ <?= number_format($item['views']) ?> ครั้ง
+        </div>
+      </div>
+    <?php endforeach; ?>
+  <?php endif; ?>
+
+  <!-- แสดง URL Parameters เพื่อการศึกษา -->
+  <?php if (!empty($_GET)): ?>
+    <div style="margin-top:24px; padding:12px; background:#f8f9fa; border-radius:8px;">
+      <strong>URL Parameters ที่ได้รับ:</strong>
+      <pre><?= htmlspecialchars(print_r($_GET, true)) ?></pre>
+    </div>
+  <?php endif; ?>
+
+</body>
+</html>
+        </code></pre>
+      </div>
+
+    </div>
+
+    <!-- LAB SECTION -->
+    <div class="lab-container" id="lab">
+      <div class="lab-header">
+        <h2>🧪 ปฏิบัติการ Lab 3 — ตัวแปร, ฟังก์ชัน & รับข้อมูลฟอร์ม</h2>
+        <p>ฝึกเขียนฟังก์ชัน PHP, ใช้ลูปสร้าง HTML, รับข้อมูลจาก GET/POST, และป้องกัน XSS</p>
+      </div>
+      <div class="lab-body">
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">1</div>
+            <div class="task-title">เขียนฟังก์ชันคำนวณ</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ <code>functions_lab.php</code> ที่มีฟังก์ชันคำนวณต่าง ๆ และทดสอบการเรียกใช้</p>
+            <ul>
+              <li>เขียนฟังก์ชัน <code>calculateBMI(float $weight, float $height): array</code> ที่ส่งคืน array ที่มี <code>bmi</code> และ <code>category</code></li>
+              <li>เขียนฟังก์ชัน <code>gradeScore(int $score): string</code> ที่ส่งคืนเกรด A/B/C/D/F</li>
+              <li>เขียนฟังก์ชัน <code>calculateDiscount(float $price, float $percent): float</code> คืนราคาหลังลด</li>
+              <li>ทดสอบทุกฟังก์ชันด้วยข้อมูลหลาย ๆ ชุด และแสดงผลในตาราง HTML</li>
+              <li>เพิ่ม Type Declarations ให้ทุกฟังก์ชัน (parameter types และ return type)</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>ฟังก์ชันทุกตัวทำงานถูกต้องกับ Input ที่หลากหลาย เช่น <code>gradeScore(95)</code> คืน 'A',
+                 <code>calculateBMI(70, 1.75)</code> คืน BMI ราว 22.86 หมวด 'ปกติ'
+                 ผลลัพธ์แสดงในตาราง HTML อย่างน้อย 5 แถวต่อฟังก์ชัน</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ใช้ <code>match</code> expression (PHP 8+) แทน <code>switch</code> สำหรับ gradeScore:
+                 <code>return match(true) { $score >= 80 => 'A', $score >= 70 => 'B', ... };</code>
+                 ง่ายกว่าและไม่ต้องเขียน <code>break</code></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">2</div>
+            <div class="task-title">ใช้ลูปสร้างตารางสูตรคูณ</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ <code>multiplication.php</code> ที่ใช้ <code>for</code> loop สร้างตารางสูตรคูณ 1-12 เป็น HTML Table</p>
+            <ul>
+              <li>แถวแรก (Header Row): แสดงตัวเลข 1-12 เป็น column headers</li>
+              <li>แถวต่อ ๆ ไป: แต่ละแถวคือสูตรคูณของตัวเลขนั้น (เช่น แถว 3 แสดง 3×1=3, 3×2=6, ...)</li>
+              <li>ใช้ nested loop: <code>for ($row = 1; $row <= 12; $row++)</code> และ <code>for ($col = 1; $col <= 12; $col++)</code></li>
+              <li>Highlight เซลล์ที่ผลคูณเป็น Perfect Square (1, 4, 9, 16, ...) ด้วยสีพื้นหลังต่างกัน</li>
+              <li>เพิ่ม CSS ให้ตารางสวยงาม: Border, Alternating row colors, Font</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>ตารางแสดงผลถูกต้องทุกช่อง (12×12 = 144 เซลล์) มี Header ทั้งแถวและคอลัมน์
+                 เซลล์ Perfect Square (เช่น 3×3=9, 4×4=16) มีสีพื้นหลังต่างออกไป</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ตรวจสอบ Perfect Square ด้วย: <code>sqrt($row * $col) == floor(sqrt($row * $col))</code>
+                 หมายความว่าผลคูณของ row × col นั้นมีรากที่สองเป็นจำนวนเต็มพอดี</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">3</div>
+            <div class="task-title">สร้างฟอร์มลงทะเบียน GET</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ <code>register_get.php</code> ที่มีฟอร์มลงทะเบียนโดยใช้ method GET</p>
+            <ul>
+              <li>ฟอร์มมีช่อง: ชื่อ (<code>name</code>), อายุ (<code>age</code>), คณะ (<code>faculty</code> เป็น select)</li>
+              <li>ใช้ <code>method="GET"</code> ข้อมูลจะปรากฏใน URL หลัง Submit</li>
+              <li>รับค่าด้วย <code>$_GET</code> และแสดงผล: "สวัสดี [ชื่อ] จากคณะ [คณะ] อายุ [อายุ] ปี"</li>
+              <li>ตรวจสอบว่ามีการ Submit ก่อนแสดงผล (ใช้ <code>isset($_GET['name'])</code>)</li>
+              <li>แสดง URL ที่สมบูรณ์ด้วย <code>$_SERVER['REQUEST_URI']</code> เพื่อให้เห็นว่า GET ต่อ Query String</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>หลัง Submit ข้อมูลปรากฏใน URL เช่น <code>?name=สมชาย&age=20&faculty=engineering</code>
+                 และหน้าเว็บแสดงผลที่ถูกต้อง หน้าก่อน Submit ต้องแสดงแค่ฟอร์ม ไม่มีข้อความแสดงผล</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>เหมาะสำหรับ: ฟอร์มค้นหา, กรองข้อมูล, pagination เพราะผู้ใช้สามารถ Bookmark URL หรือ Copy & Share ได้
+                 ไม่เหมาะสำหรับข้อมูลส่วนตัว (รหัสผ่าน, บัตรเครดิต) เพราะ URL บันทึกใน Browser History</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">4</div>
+            <div class="task-title">สร้างฟอร์มติดต่อ POST</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ <code>contact.php</code> ที่มีฟอร์มติดต่อด้วย method POST พร้อม Validation ครบถ้วน</p>
+            <ul>
+              <li>ฟอร์มมีช่อง: ชื่อ, Email, เบอร์โทร, หัวข้อ, ข้อความ ทุกช่องบังคับกรอก</li>
+              <li>Validate: ชื่อ (ไม่ว่าง), Email (format ถูกต้อง ด้วย <code>filter_var</code>), เบอร์โทร (10 หลัก), ข้อความ (อย่างน้อย 20 ตัวอักษร)</li>
+              <li>แสดง Error ใต้แต่ละ field ที่ผิดพลาด (สีแดง)</li>
+              <li>เมื่อ Submit สำเร็จ แสดงข้อมูลที่รับมาทั้งหมด และคงค่าเดิมไว้ในฟอร์มเมื่อมี Error</li>
+              <li>ใช้ <code>htmlspecialchars()</code> กับทุกค่าที่แสดงกลับในหน้าเว็บ</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>ทดสอบ: (1) Submit ว่าง — ต้องเห็น Error ทุก field, (2) กรอกถูกต้องทั้งหมด — แสดงผลสำเร็จ,
+                 (3) กรอก Email ผิด format — เห็น Error แค่ Email field อื่นผ่านปกติ</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>Pattern สำหรับฟอร์ม PHP: ตรวจสอบด้วย <code>if ($_SERVER['REQUEST_METHOD'] === 'POST')</code>
+                 แทนการใช้ <code>isset($_POST['submit'])</code> เพราะผู้ใช้อาจลบ name attribute ออกจากปุ่ม Submit ได้</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">5</div>
+            <div class="task-title">ป้องกัน XSS ด้วย htmlspecialchars</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ <code>xss-demo.php</code> เพื่อสาธิตความแตกต่างระหว่างการแสดงผลที่มีและไม่มีการป้องกัน XSS</p>
+            <ul>
+              <li>สร้างฟอร์มง่าย ๆ: ช่องกรอกชื่อ 1 ช่อง และปุ่ม Submit</li>
+              <li>แสดงผลแบบ <strong>ไม่ปลอดภัย</strong>: <code>echo "สวัสดี " . $_POST['name'];</code> (ไม่ใช้ htmlspecialchars)</li>
+              <li>แสดงผลแบบ <strong>ปลอดภัย</strong>: <code>echo "สวัสดี " . htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');</code></li>
+              <li>ทดสอบโดยกรอก: <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code> ในช่องชื่อ</li>
+              <li>แสดงคำอธิบายผลที่ได้ทั้งสองกรณีในหน้าเว็บ</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>เมื่อกรอก <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code>:
+                 (1) แบบไม่ปลอดภัย — Script รันและเห็น Alert popup หรือเห็นว่า HTML ถูก Render เป็น Script tag ใน Source,
+                 (2) แบบปลอดภัย — แสดงข้อความ literal <code>&lt;script&gt;alert('XSS!')&lt;/script&gt;</code> โดยไม่รัน Script</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ดู HTML Source ด้วย <code>Ctrl+U</code> (View Page Source) เพื่อเห็นความแตกต่าง
+                 แบบไม่ปลอดภัยจะเห็น <code>&lt;script&gt;</code> จริง ๆ ใน Source
+                 แบบปลอดภัยจะเห็น <code>&amp;lt;script&amp;gt;</code> ซึ่งเบราว์เซอร์จะแสดงเป็นข้อความ ไม่รันเป็น Script</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- WEEK NAVIGATION -->
+    <div class="week-nav">
+      <a href="week-03.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">PHP เบื้องต้น & ติดตั้งสภาพแวดล้อม</div>
+      </a>
+      <a href="week-05.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">ออกแบบฐานข้อมูล & MySQL</div>
+      </a>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
+        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

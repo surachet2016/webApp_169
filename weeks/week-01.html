@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 1 — แนะนำรายวิชา & สถาปัตยกรรมเว็บ — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 1</span>
+    <span class="sep">›</span>
+    <span>แนะนำรายวิชา & สถาปัตยกรรมเว็บ</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 1</div>
+    <h1 class="wh-title">แนะนำรายวิชา & สถาปัตยกรรมเว็บ</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO1</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+      </ul>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>ภาพรวมของการพัฒนาเว็บแอปพลิเคชัน</h3>
+        <p>
+          การพัฒนาเว็บแอปพลิเคชัน (Web Application Development) คือกระบวนการสร้างโปรแกรมที่ทำงานผ่านเว็บเบราว์เซอร์
+          โดยผู้ใช้งานสามารถเข้าถึงได้ผ่านอินเทอร์เน็ตหรือเครือข่ายภายใน (Intranet) โดยไม่ต้องติดตั้งซอฟต์แวร์เพิ่มเติม
+          บนเครื่องของตนเอง
+        </p>
+        <p>
+          ความแตกต่างระหว่าง <strong>เว็บไซต์ (Website)</strong> และ <strong>เว็บแอปพลิเคชัน (Web Application)</strong>
+          อยู่ที่ระดับของการโต้ตอบกับผู้ใช้ เว็บไซต์ทั่วไปมักแสดงข้อมูลแบบ Static เช่น หน้าโบรชัวร์บริษัทหรือบล็อก
+          ในขณะที่เว็บแอปพลิเคชันมีการโต้ตอบสูง ผู้ใช้สามารถป้อนข้อมูล บันทึก แก้ไข และดำเนินการต่าง ๆ ได้
+        </p>
+        <p>
+          ตัวอย่างเว็บแอปพลิเคชันในชีวิตประจำวัน ได้แก่:
+        </p>
+        <ul>
+          <li><strong>E-Commerce</strong> — Shopee, Lazada, Amazon: ผู้ใช้สามารถค้นหาสินค้า เพิ่มลงตะกร้า ชำระเงิน และติดตามพัสดุ</li>
+          <li><strong>Social Media</strong> — Facebook, Instagram, Twitter: ผู้ใช้โพสต์ข้อความ รูปภาพ แสดงความคิดเห็น</li>
+          <li><strong>Internet Banking</strong> — KBank, SCB Online: โอนเงิน ตรวจสอบยอด จ่ายบิล</li>
+          <li><strong>Learning Management System (LMS)</strong> — ระบบลงทะเบียนเรียน ดาวน์โหลดเอกสาร ส่งงาน</li>
+          <li><strong>Google Docs / Gmail</strong> — แก้ไขเอกสารและส่งอีเมลผ่านเบราว์เซอร์โดยตรง</li>
+        </ul>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            รายวิชานี้จะสอนให้คุณสร้างเว็บแอปพลิเคชันจริงตั้งแต่พื้นฐาน โดยเริ่มจาก HTML/CSS/JavaScript
+            ไปจนถึงการเชื่อมต่อฐานข้อมูล MySQL ด้วย PHP และการ Deploy ขึ้น Server
+          </p>
+        </div>
+
+        <h3>สถาปัตยกรรม Client-Server</h3>
+        <p>
+          การทำงานของเว็บแอปพลิเคชันพึ่งพาโมเดล <strong>Client-Server</strong> ซึ่งแบ่งการทำงานออกเป็นสองฝั่งหลัก:
+          <strong>Client</strong> คือเบราว์เซอร์ของผู้ใช้ และ <strong>Server</strong> คือเครื่องคอมพิวเตอร์ที่เก็บโปรแกรมและข้อมูล
+        </p>
+        <p>
+          เมื่อผู้ใช้พิมพ์ URL ในเบราว์เซอร์ (เช่น <code>https://www.example.com</code>) เบราว์เซอร์จะส่ง
+          <strong>HTTP Request</strong> ไปยัง Web Server ซึ่ง Server จะประมวลผลและส่ง <strong>HTTP Response</strong>
+          กลับมา โดยทั่วไปจะเป็นไฟล์ HTML, CSS, JavaScript หรือข้อมูล JSON
+        </p>
+
+        <div class="diagram-box">
+          <pre>
+┌─────────────────────────┐                    ┌─────────────────────────┐
+│      Client Browser     │                    │       Web Server        │
+│                         │                    │                         │
+│  ผู้ใช้พิมพ์ URL         │                    │  Apache / Nginx         │
+│  หรือกดปุ่ม Submit       │                    │  ประมวลผล PHP           │
+│                         │  ──HTTP Request──► │  เชื่อมต่อ MySQL        │
+│  เบราว์เซอร์แสดงผล HTML  │  ◄──HTTP Response─ │  ส่งผลลัพธ์กลับ         │
+│  รัน JavaScript         │                    │                         │
+└─────────────────────────┘                    └─────────────────────────┘
+          </pre>
+        </div>
+
+        <p>
+          ฝั่ง <strong>Client (Front-end)</strong> รับผิดชอบสิ่งที่ผู้ใช้มองเห็นและโต้ตอบ ประกอบด้วย:
+          HTML (โครงสร้าง), CSS (รูปแบบ), JavaScript (ลอจิกฝั่ง Client)
+          ส่วนฝั่ง <strong>Server (Back-end)</strong> รับผิดชอบการประมวลผลข้อมูล การเข้าถึงฐานข้อมูล
+          และความปลอดภัยของระบบ
+        </p>
+
+        <h3>โพรโทคอล HTTP</h3>
+        <p>
+          <strong>HTTP (HyperText Transfer Protocol)</strong> คือโพรโทคอลหลักที่ใช้สื่อสารระหว่าง Client และ Server
+          บนเว็บ โดย HTTP กำหนดรูปแบบของ Request และ Response รวมถึง <strong>HTTP Methods</strong> ต่าง ๆ ที่บ่งบอกจุดประสงค์ของการร้องขอ:
+        </p>
+        <ul>
+          <li><strong>GET</strong> — ขอข้อมูลจาก Server (เช่น โหลดหน้าเว็บ ค้นหาข้อมูล) ข้อมูลจะแสดงใน URL</li>
+          <li><strong>POST</strong> — ส่งข้อมูลไปให้ Server (เช่น ส่งฟอร์มลงทะเบียน) ข้อมูลซ่อนอยู่ใน Request Body</li>
+          <li><strong>PUT / PATCH</strong> — อัปเดตข้อมูลที่มีอยู่แล้วบน Server</li>
+          <li><strong>DELETE</strong> — ลบข้อมูลบน Server</li>
+        </ul>
+        <p>
+          <strong>HTTP Status Codes</strong> คือรหัสตัวเลขที่ Server ส่งกลับมาพร้อม Response เพื่อบอกสถานะของการร้องขอ:
+        </p>
+        <ul>
+          <li><strong>200 OK</strong> — สำเร็จ ปกติ</li>
+          <li><strong>201 Created</strong> — สร้างข้อมูลใหม่สำเร็จ</li>
+          <li><strong>301 / 302</strong> — Redirect ไปยัง URL อื่น</li>
+          <li><strong>400 Bad Request</strong> — Request ไม่ถูกต้อง (ข้อมูลไม่ครบ)</li>
+          <li><strong>401 Unauthorized</strong> — ต้อง Login ก่อน</li>
+          <li><strong>403 Forbidden</strong> — ไม่มีสิทธิ์เข้าถึง</li>
+          <li><strong>404 Not Found</strong> — ไม่พบหน้าที่ร้องขอ</li>
+          <li><strong>500 Internal Server Error</strong> — เกิดข้อผิดพลาดบน Server</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ</div>
+          <p>
+            เปิด Chrome DevTools (กด F12) แล้วไปที่แท็บ <strong>Network</strong> จากนั้นโหลดหน้าเว็บใดก็ได้
+            คุณจะเห็น HTTP Requests และ Responses ทั้งหมดที่เกิดขึ้น รวมถึง Status Code, Headers, และ Response Body
+            นี่เป็นเครื่องมือสำคัญที่นักพัฒนาใช้ Debug ปัญหาเว็บ
+          </p>
+        </div>
+
+        <h3>เทคโนโลยีที่ใช้ในรายวิชา</h3>
+        <p>
+          ในรายวิชานี้เราจะใช้เทคโนโลยีหลัก 4 กลุ่มที่ทำงานร่วมกันเพื่อสร้างเว็บแอปพลิเคชันครบวงจร:
+        </p>
+        <ul>
+          <li>
+            <strong>HTML / CSS / JavaScript (Front-end)</strong> —
+            HTML กำหนดโครงสร้างหน้าเว็บ, CSS ตกแต่งรูปลักษณ์,
+            JavaScript เพิ่มการโต้ตอบและดึงข้อมูลแบบ Dynamic ทั้งสามทำงานบนเบราว์เซอร์ของผู้ใช้
+          </li>
+          <li>
+            <strong>PHP (Server-side Scripting)</strong> —
+            ภาษาโปรแกรมฝั่ง Server ที่รันบน Web Server ใช้ประมวลผลข้อมูลจากฟอร์ม
+            เชื่อมต่อฐานข้อมูล สร้างหน้า HTML แบบ Dynamic เป็นที่นิยมมากสำหรับเว็บแอปพลิเคชัน
+          </li>
+          <li>
+            <strong>MySQL (Relational Database)</strong> —
+            ระบบจัดการฐานข้อมูลที่เก็บข้อมูลในรูปแบบตาราง ใช้คำสั่ง SQL (SELECT, INSERT, UPDATE, DELETE)
+            ในการจัดการข้อมูล ทำงานร่วมกับ PHP ได้อย่างราบรื่น
+          </li>
+          <li>
+            <strong>XAMPP (Local Development Server)</strong> —
+            ซอฟต์แวร์ที่รวม Apache (Web Server), MySQL, PHP, และ phpMyAdmin ไว้ในชุดเดียว
+            ติดตั้งง่าย ใช้สำหรับพัฒนาและทดสอบเว็บบนเครื่องของตนเอง ก่อน Deploy ขึ้น Server จริง
+          </li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+┌──────────────────────────────────────────────────────────────┐
+│                    Web Application Stack                      │
+├──────────────────────────────────────────────────────────────┤
+│  Front-end (Browser)        │  Back-end (Server)             │
+│  ─────────────────────────  │  ───────────────────────────── │
+│  HTML  — โครงสร้าง          │  PHP    — ประมวลผล Logic       │
+│  CSS   — รูปลักษณ์          │  MySQL  — จัดเก็บข้อมูล        │
+│  JS    — โต้ตอบ Dynamic     │  Apache — ให้บริการ HTTP       │
+└──────────────────────────────────────────────────────────────┘
+          </pre>
+        </div>
+
+        <h3>เครื่องมือที่จำเป็น</h3>
+        <p>
+          ก่อนเริ่มพัฒนาเว็บแอปพลิเคชัน คุณต้องเตรียมเครื่องมือพื้นฐาน 3 อย่างดังนี้:
+        </p>
+        <ul>
+          <li>
+            <strong>VS Code (Visual Studio Code)</strong> — Text Editor ที่ได้รับความนิยมสูงสุดในหมู่นักพัฒนา
+            ดาวน์โหลดได้ฟรีจาก <code>code.visualstudio.com</code> มี Extensions มากมาย เช่น
+            PHP Intelephense, Live Server, Prettier สำหรับช่วยพัฒนา
+          </li>
+          <li>
+            <strong>Google Chrome + DevTools</strong> — เบราว์เซอร์สำหรับทดสอบ พร้อม Developer Tools
+            ที่ช่วย Inspect HTML/CSS, Debug JavaScript, ดู Network Requests, และตรวจสอบ Performance
+            เปิดได้โดยกด F12 หรือ Ctrl+Shift+I (Mac: Cmd+Option+I)
+          </li>
+          <li>
+            <strong>XAMPP</strong> — ดาวน์โหลดจาก <code>apachefriends.org</code> ใช้สำหรับรัน PHP และ MySQL
+            บนเครื่องของตนเอง หลังติดตั้ง ให้เปิด XAMPP Control Panel และ Start Apache กับ MySQL
+            จากนั้นวางไฟล์ PHP ใน folder <code>htdocs</code> และเข้าถึงได้ที่ <code>http://localhost/</code>
+          </li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง</div>
+          <p>
+            XAMPP เหมาะสำหรับการพัฒนาบนเครื่องส่วนตัวเท่านั้น ห้ามใช้บน Production Server เนื่องจากการตั้งค่าเริ่มต้น
+            ไม่มีความปลอดภัยเพียงพอ เช่น ไม่มีรหัสผ่านสำหรับ MySQL root user
+          </p>
+        </div>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ — เกี่ยวกับ Lab</div>
+          <p>
+            สัปดาห์นี้ยังไม่มีปฏิบัติการ Lab เนื่องจากเป็นการปูพื้นฐานทฤษฎีและเตรียมความพร้อม
+            ตั้งแต่สัปดาห์ที่ 2 เป็นต้นไป ทุกสัปดาห์จะมี Lab ให้ฝึกปฏิบัติหลังจากเรียนทฤษฎี
+            นักศึกษาควรเตรียมติดตั้ง VS Code และ XAMPP ให้เรียบร้อยก่อนเรียนสัปดาห์ที่ 2
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CODE EXAMPLES SECTION -->
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">http-request-example.txt</span>
+          <span class="code-lang">HTTP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-bash">
+# ตัวอย่าง HTTP GET Request ที่เบราว์เซอร์ส่งไปยัง Server
+GET /index.php HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0
+Accept: text/html,application/xhtml+xml
+Accept-Language: th-TH,th;q=0.9,en;q=0.8
+Connection: keep-alive
+
+# ──────────────────────────────────────────────────────
+# ตัวอย่าง HTTP Response ที่ Server ส่งกลับมา
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1523
+Date: Sat, 28 Jun 2026 09:00:00 GMT
+Server: Apache/2.4.57
+
+<!DOCTYPE html>
+<html lang="th">
+  <head><title>ยินดีต้อนรับ</title></head>
+  <body><h1>สวัสดี!</h1></body>
+</html>
+
+# ──────────────────────────────────────────────────────
+# ตัวอย่าง HTTP POST Request (ส่งข้อมูลฟอร์ม Login)
+POST /login.php HTTP/1.1
+Host: www.example.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 35
+
+username=student01&password=pass123
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">index.html</span>
+          <span class="code-lang">HTML</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-html">
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หน้าเว็บแรกของฉัน</title>
+  <!-- เบราว์เซอร์โหลดไฟล์นี้ แล้วแสดงผล HTML ให้ผู้ใช้เห็น -->
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #2c3e50; }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>สวัสดีโลก! 🌏</h1>
+
+  <div class="card">
+    <h2>นี่คือหน้าเว็บแรกของฉัน</h2>
+    <p>HTML ถูก Render โดยเบราว์เซอร์ ผู้ใช้มองเห็นผลลัพธ์นี้</p>
+    <p>Server ส่งไฟล์ HTML นี้มาผ่าน HTTP Response</p>
+    <ul>
+      <li>HTML = โครงสร้าง (Structure)</li>
+      <li>CSS = รูปลักษณ์ (Presentation)</li>
+      <li>JavaScript = พฤติกรรม (Behavior)</li>
+    </ul>
+  </div>
+
+  <script>
+    // JavaScript ทำงานบนเบราว์เซอร์ (Client-side)
+    console.log('หน้าเว็บโหลดสำเร็จ!');
+    document.querySelector('h1').addEventListener('click', function() {
+      alert('คุณคลิกที่หัวข้อ!');
+    });
+  </script>
+
+</body>
+</html>
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">devtools-demo.js</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">
+// ======================================================
+// การใช้งาน Chrome DevTools — Console Tab
+// กด F12 แล้วคลิก "Console" เพื่อทดลองโค้ดด้านล่างนี้
+// ======================================================
+
+// 1. แสดงข้อความใน Console
+console.log('สวัสดี นี่คือ Console!');
+console.warn('นี่คือ Warning (สีเหลือง)');
+console.error('นี่คือ Error (สีแดง)');
+
+// 2. ดูข้อมูล Object
+const student = { name: 'สมชาย', id: '6601001', gpa: 3.75 };
+console.log('ข้อมูลนักศึกษา:', student);
+console.table([student]); // แสดงแบบตาราง
+
+// 3. ตรวจสอบ element ใน DOM
+const heading = document.querySelector('h1');
+console.log('พบ Element:', heading);
+console.log('ข้อความ:', heading.textContent);
+
+// 4. วัดเวลาประมวลผล
+console.time('ทดสอบเวลา');
+let sum = 0;
+for (let i = 0; i < 1000000; i++) sum += i;
+console.timeEnd('ทดสอบเวลา');
+console.log('ผลรวม:', sum);
+
+// ======================================================
+// Network Tab — ดู HTTP Requests
+// ======================================================
+// วิธีใช้: เปิด Network tab ก่อน แล้วโหลดหน้าใหม่ (F5)
+// คุณจะเห็น:
+//   - ทุก Request ที่เบราว์เซอร์ส่ง (HTML, CSS, JS, รูปภาพ)
+//   - Status Code ของแต่ละ Request (200, 404, ฯลฯ)
+//   - เวลาที่ใช้ในการโหลด
+//   - Headers ของ Request และ Response
+
+// ทดลอง fetch ข้อมูลจาก API แล้วดูใน Network tab
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => {
+    console.log('Status:', response.status); // 200
+    console.log('Headers:', response.headers);
+    return response.json();
+  })
+  .then(data => {
+    console.log('ข้อมูลที่ได้:', data);
+    // { userId: 1, id: 1, title: "...", completed: false }
+  })
+  .catch(error => console.error('เกิดข้อผิดพลาด:', error));
+        </code></pre>
+      </div>
+
+    </div>
+
+    <!-- WEEK NAVIGATION -->
+    <div class="week-nav">
+      <a href="#" class="wn-btn disabled">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">ไม่มีสัปดาห์ก่อนหน้า</div>
+      </a>
+      <a href="week-02.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">HTML, CSS, JavaScript (ทบทวน)</div>
+      </a>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
+        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

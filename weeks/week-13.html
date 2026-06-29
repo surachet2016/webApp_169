@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 13 — โครงงานเว็บแอปพลิเคชัน (ทีม) — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 13</span>
+    <span class="sep">›</span>
+    <span>โครงงานเว็บ (ทีม)</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 13</div>
+    <h1 class="wh-title">โครงงานเว็บแอปพลิเคชัน (ทีม)</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO1</span>
+      <span class="wh-clo">CLO2</span>
+      <span class="wh-clo">CLO6</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">เทมเพลตและตัวอย่าง</a></li>
+        <li><a href="#deliverables">งานที่ต้องส่ง</a></li>
+      </ul>
+    </div>
+
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>ภาพรวมโครงงาน</h3>
+        <p>
+          ถึงเวลาที่น่าตื่นเต้นที่สุดของรายวิชา — โครงงานจริง! นักศึกษาจะทำงานเป็นทีม ทีมละ 3-4 คน
+          เพื่อสร้างเว็บแอปพลิเคชันธุรกิจจริงๆ ขึ้นมา โดยนำทุกสิ่งที่เรียนมาตลอด 12 สัปดาห์มาประยุกต์ใช้:
+        </p>
+        <ul>
+          <li>HTML, CSS, JavaScript — สร้าง Interface ที่ใช้งานง่าย</li>
+          <li>PHP — ประมวลผลฝั่ง Server</li>
+          <li>MySQL — จัดเก็บและจัดการข้อมูล</li>
+          <li>CRUD — Create, Read, Update, Delete ข้อมูล</li>
+          <li>Authentication — ระบบเข้าสู่ระบบและสิทธิ์การใช้งาน</li>
+          <li>File Upload — อัปโหลดรูปภาพหรือเอกสาร</li>
+          <li>REST API (optional) — เพิ่มคะแนนถ้ามีการใช้ API</li>
+        </ul>
+        <p>
+          <strong>ไทม์ไลน์:</strong> สัปดาห์ที่ 13 — วางแผนและเริ่มพัฒนา | สัปดาห์ที่ 14 — นำเสนอโครงงาน
+        </p>
+
+        <div class="callout note">
+          <div class="callout-title">หมายเหตุ</div>
+          <p>
+            โครงงานต้องเป็นระบบที่มีการโต้ตอบจริง (ไม่ใช่แค่หน้าเว็บแสดงข้อมูลอย่างเดียว)
+            ต้องมีฐานข้อมูล MySQL อย่างน้อย 3 ตาราง มีระบบ Login และมี CRUD อย่างน้อย 2 ชุด
+            โปรเจกต์ที่ซับซ้อนกว่าจะได้คะแนนสูงกว่า แต่ความถูกต้องและการทำงานได้จริงสำคัญกว่าจำนวน Feature
+          </p>
+        </div>
+
+        <h3>การวิเคราะห์ความต้องการ (Requirements Analysis)</h3>
+        <p>
+          ก่อนเขียนโค้ดแม้แต่บรรทัดเดียว ทีมต้องตอบคำถามเหล่านี้ให้ชัดเจน:
+        </p>
+        <ul>
+          <li><strong>ปัญหาคืออะไร?</strong> — ระบบนี้แก้ปัญหาอะไรในโลกจริง?</li>
+          <li><strong>ใครคือผู้ใช้?</strong> — Admin, ลูกค้า, พนักงาน, สมาชิก?</li>
+          <li><strong>ต้องการ Feature อะไรบ้าง?</strong> — แยกระหว่าง "ต้องมี" กับ "อยากมี"</li>
+        </ul>
+        <p>
+          ใช้รูปแบบ <strong>User Stories</strong> เพื่ออธิบาย Requirement อย่างเป็นระบบ:
+        </p>
+        <div class="diagram-box">
+          <pre>
+รูปแบบ User Story:
+  "ในฐานะ [ประเภทผู้ใช้] ฉันต้องการ [สิ่งที่ต้องการทำ] เพื่อที่จะ [ประโยชน์ที่ได้รับ]"
+
+ตัวอย่าง (ระบบหอพัก):
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ ในฐานะ "ผู้เช่าห้อง" ฉันต้องการ "ดูรายการค่าใช้จ่ายประจำเดือน"       │
+  │ เพื่อที่จะ "วางแผนการชำระเงินได้ล่วงหน้า"                             │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │ ในฐานะ "ผู้ดูแลระบบ" ฉันต้องการ "เพิ่ม/แก้ไข/ลบข้อมูลห้องพัก"       │
+  │ เพื่อที่จะ "จัดการห้องว่างและห้องที่มีผู้เช่าได้อย่างมีประสิทธิภาพ"  │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │ ในฐานะ "ผู้เช่าห้อง" ฉันต้องการ "แจ้งซ่อมแซมห้องผ่านระบบออนไลน์"    │
+  │ เพื่อที่จะ "ไม่ต้องเดินไปหาผู้ดูแลด้วยตนเอง"                         │
+  └─────────────────────────────────────────────────────────────────────────┘
+          </pre>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ</div>
+          <p>
+            แบ่ง Requirements เป็น 2 ระดับ: <strong>Must Have</strong> (จำเป็น — ทำให้ได้ใน 2 สัปดาห์)
+            และ <strong>Nice to Have</strong> (ถ้ามีเวลาเหลือ) เพื่อป้องกัน Scope Creep ที่ทำให้โปรเจกต์ไม่เสร็จทันเวลา
+          </p>
+        </div>
+
+        <h3>การออกแบบระบบ (System Design)</h3>
+        <p>
+          เมื่อรู้ Requirement แล้ว ต้องออกแบบระบบก่อนเริ่มเขียนโค้ด:
+        </p>
+        <p>
+          <strong>1. ER Diagram (Entity-Relationship Diagram)</strong> — แผนภาพที่แสดงตารางในฐานข้อมูล
+          และความสัมพันธ์ระหว่างตาราง ประกอบด้วย Entities (ตาราง), Attributes (คอลัมน์), และ Relationships (FK)
+        </p>
+        <div class="diagram-box">
+          <pre>
+ตัวอย่าง ER Diagram (ระบบขายสินค้า):
+
+[users]              [products]           [categories]
+──────               ─────────            ────────────
+id (PK)              id (PK)              id (PK)
+username             name                 name
+email                price                description
+password             stock
+role                 image
+created_at           category_id (FK)──────►[categories.id]
+
+[orders]             [order_items]
+────────             ─────────────
+id (PK)              id (PK)
+user_id (FK)─────────►[users.id]
+status               order_id (FK)────────►[orders.id]
+total_price          product_id (FK)──────►[products.id]
+created_at           quantity
+                     unit_price
+          </pre>
+        </div>
+        <p>
+          <strong>2. Page Flow Diagram / Wireframe</strong> — แผนผังที่แสดงว่ามีหน้าอะไรบ้าง และผู้ใช้ไหลจากหน้าหนึ่งไปยังอีกหน้าอย่างไร
+        </p>
+        <div class="diagram-box">
+          <pre>
+ตัวอย่าง Page Flow (ระบบขายสินค้า):
+
+[หน้าหลัก] ──► [รายการสินค้า] ──► [รายละเอียดสินค้า]
+                                            │
+                                     [ตะกร้าสินค้า]
+                                            │
+                        ┌──────────────[Login]
+                        ▼
+                  [ชำระเงิน] ──► [ยืนยันคำสั่งซื้อ]
+
+[Admin Panel] ──► [จัดการสินค้า] (CRUD)
+              └──► [จัดการคำสั่งซื้อ]
+              └──► [จัดการผู้ใช้]
+          </pre>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง</div>
+          <p>
+            อย่าข้ามขั้นตอนการออกแบบ หลายทีมรีบเขียนโค้ดเลยโดยไม่มี ER Diagram หรือ Wireframe
+            แล้วพบว่าต้องแก้โครงสร้างฐานข้อมูลกลางคัน ซึ่งทำให้เสียเวลามากกว่าการวางแผนตั้งแต่ต้น
+            ใช้เวลาอย่างน้อย 1-2 ชั่วโมงวางแผนให้ดีก่อน
+          </p>
+        </div>
+
+        <h3>การแบ่งงานในทีม (Team Work)</h3>
+        <p>
+          การทำงานเป็นทีมที่ดีต้องมีการจัดการที่ชัดเจน:
+        </p>
+        <ul>
+          <li>
+            <strong>Team Leader</strong> — ประสานงาน ติดตามความคืบหน้า แก้ปัญหาความขัดแย้ง
+            และเป็นตัวแทนทีมในการนำเสนอ
+          </li>
+          <li>
+            <strong>Frontend Developer</strong> — รับผิดชอบ HTML, CSS, JavaScript
+            ออกแบบและสร้าง UI ที่ใช้งานง่าย
+          </li>
+          <li>
+            <strong>Backend Developer</strong> — รับผิดชอบ PHP Logic, API Endpoints
+            การ Validate ข้อมูล และความปลอดภัย
+          </li>
+          <li>
+            <strong>Database Designer</strong> — ออกแบบโครงสร้างฐานข้อมูล สร้างตาราง เขียน SQL Queries
+            ดูแลความสมบูรณ์ของข้อมูล
+          </li>
+        </ul>
+        <p>
+          แนะนำวิธีติดตามความคืบหน้า:
+        </p>
+        <ul>
+          <li><strong>Daily Standup (15 นาที)</strong> — ทุกคนบอก: ทำอะไรเสร็จแล้ว, กำลังทำอะไร, มีปัญหาอะไร</li>
+          <li><strong>Task Board</strong> — ใช้กระดาษหรือ Google Sheet แบ่ง Tasks เป็น To Do / In Progress / Done</li>
+          <li><strong>Git (optional)</strong> — ใช้ Git สำหรับ Version Control ป้องกัน Code ชนกัน</li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+Task Board ตัวอย่าง:
+
+To Do              In Progress         Done
+─────────────      ──────────────      ──────────────────────
+สร้าง DB schema    หน้า Login (สมชาย)  ออกแบบ ER Diagram ✓
+หน้า Register      หน้าสินค้า (สมหญิง) กำหนด Requirements ✓
+ระบบ Cart                              สร้างตาราง users ✓
+หน้า Admin
+ระบบ Upload รูป
+          </pre>
+        </div>
+
+        <h3>ไอเดียโครงงานที่แนะนำ</h3>
+        <p>
+          เลือกโครงงานที่ทีมสนใจและสามารถทำเสร็จได้ใน 2 สัปดาห์ ต่อไปนี้คือไอเดียที่เหมาะสม:
+        </p>
+        <ul>
+          <li>
+            <strong>ระบบขายสินค้าออนไลน์ (E-Commerce)</strong> — จัดการสินค้า (ชื่อ ราคา รูป สต็อก),
+            ตะกร้าสินค้า, ระบบคำสั่งซื้อ, หน้า Admin สำหรับจัดการสินค้าและออเดอร์
+          </li>
+          <li>
+            <strong>ระบบจัดการหอพัก (Dormitory Management)</strong> — ข้อมูลห้อง ผู้เช่า
+            ค่าเช่า/ค่าน้ำ/ค่าไฟ, แจ้งซ่อม, รายงานรายรับ-รายจ่าย
+          </li>
+          <li>
+            <strong>ระบบลงทะเบียนกิจกรรม (Event Registration)</strong> — สร้างกิจกรรม,
+            ลงทะเบียนเข้าร่วม, จัดการผู้เข้าร่วม, แสดง QR Code, รายงาน
+          </li>
+          <li>
+            <strong>ระบบห้องสมุด (Library Management)</strong> — จัดการหนังสือ,
+            ยืม-คืน, แจ้งเตือนหนังสือเกินกำหนด, ค้นหาและจอง
+          </li>
+          <li>
+            <strong>เว็บไซต์ข่าวสารชุมชน (Community News)</strong> — โพสต์ข่าว/บทความ,
+            หมวดหมู่, ความคิดเห็น, ระบบสมาชิก, Admin จัดการเนื้อหา
+          </li>
+          <li>
+            <strong>ระบบจองห้องประชุม (Meeting Room Booking)</strong> — ห้องประชุมหลายห้อง,
+            จองช่วงเวลา, ตรวจสอบห้องว่าง, ยกเลิกการจอง, Dashboard
+          </li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ</div>
+          <p>
+            เลือกโครงงานที่ทีมเข้าใจ Domain (ความรู้ด้านนั้น) ดี เพราะจะทำให้การออกแบบฐานข้อมูล
+            และ Feature ถูกต้องและสมจริงกว่า เช่น ถ้าเคยอยู่หอพักก็ทำระบบหอพัก ถ้าชอบขายของก็ทำ E-Commerce
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="code">
+      <span class="sec-badge code">💻 เทมเพลตและตัวอย่าง</span>
+
+      <!-- Project file structure -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">โครงสร้างไฟล์โปรเจกต์ที่แนะนำ</span>
+          <span class="code-lang">STRUCTURE</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-bash">project-name/
+├── config/
+│   └── config.php          # DB connection, constants, session_start()
+├── includes/
+│   ├── header.php          # DOCTYPE, head, nav (top of every page)
+│   ├── footer.php          # closing tags, scripts (bottom of every page)
+│   └── functions.php       # helper functions
+├── classes/                # PHP Classes (optional, ถ้าใช้ OOP)
+│   ├── User.php
+│   └── Product.php
+├── api/                    # REST API endpoints (optional)
+│   └── products.php
+├── admin/                  # หน้า Admin (ป้องกันด้วย session check)
+│   ├── index.php           # Dashboard
+│   ├── products.php        # จัดการสินค้า
+│   └── orders.php          # จัดการออเดอร์
+├── uploads/                # ไฟล์ที่ผู้ใช้ Upload (images, docs)
+│   └── .gitkeep
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── logo.png
+├── index.php               # หน้าหลัก
+├── login.php               # เข้าสู่ระบบ
+├── register.php            # สมัครสมาชิก
+├── logout.php              # ออกจากระบบ
+├── products.php            # รายการสินค้า (ตัวอย่าง)
+├── product-detail.php      # รายละเอียดสินค้า
+└── database.sql            # SQL สำหรับสร้างตารางทั้งหมด</code></pre>
+      </div>
+
+      <!-- Database SQL template -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">database.sql (ตัวอย่างระบบ E-Commerce)</span>
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-sql">-- database.sql — โครงสร้างฐานข้อมูลสำหรับระบบขายสินค้า
+-- นำเข้าด้วย: phpMyAdmin → Import หรือ mysql -u root -p < database.sql
+
+CREATE DATABASE IF NOT EXISTS `ecommerce_db`
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE `ecommerce_db`;
+
+-- ─── ตารางผู้ใช้ ───────────────────────────────────────────
+CREATE TABLE `users` (
+  `id`         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `username`   VARCHAR(50)  NOT NULL UNIQUE,
+  `email`      VARCHAR(100) NOT NULL UNIQUE,
+  `password`   VARCHAR(255) NOT NULL,             -- bcrypt hash
+  `role`       ENUM('customer','admin') DEFAULT 'customer',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── ตารางหมวดหมู่สินค้า ───────────────────────────────────
+CREATE TABLE `categories` (
+  `id`          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `name`        VARCHAR(100) NOT NULL,
+  `description` TEXT,
+  `created_at`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── ตารางสินค้า ────────────────────────────────────────────
+CREATE TABLE `products` (
+  `id`          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `category_id` INT UNSIGNED,
+  `name`        VARCHAR(200) NOT NULL,
+  `description` TEXT,
+  `price`       DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `stock`       INT NOT NULL DEFAULT 0,
+  `image`       VARCHAR(255),
+  `active`      TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── ตารางคำสั่งซื้อ ──────────────────────────────────────
+CREATE TABLE `orders` (
+  `id`          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `user_id`     INT UNSIGNED NOT NULL,
+  `status`      ENUM('pending','processing','shipped','delivered','cancelled')
+                DEFAULT 'pending',
+  `total_price` DECIMAL(10,2) NOT NULL,
+  `note`        TEXT,
+  `created_at`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── ตารางรายการสินค้าในคำสั่งซื้อ ───────────────────────
+CREATE TABLE `order_items` (
+  `id`         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `order_id`   INT UNSIGNED NOT NULL,
+  `product_id` INT UNSIGNED NOT NULL,
+  `quantity`   INT NOT NULL DEFAULT 1,
+  `unit_price` DECIMAL(10,2) NOT NULL,  -- ราคา ณ เวลาที่สั่งซื้อ
+  FOREIGN KEY (`order_id`)   REFERENCES `orders`(`id`)   ON DELETE CASCADE,
+  FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── ข้อมูลเริ่มต้น ────────────────────────────────────────
+INSERT INTO `categories` (`name`) VALUES
+  ('เสื้อผ้า'), ('อิเล็กทรอนิกส์'), ('หนังสือ'), ('อาหารและเครื่องดื่ม');
+
+INSERT INTO `users` (`username`, `email`, `password`, `role`) VALUES
+  ('admin', 'admin@example.com', '$2y$12$exampleHashHere', 'admin'),
+  ('customer1', 'customer1@example.com', '$2y$12$exampleHashHere', 'customer');
+
+INSERT INTO `products` (`category_id`, `name`, `price`, `stock`) VALUES
+  (1, 'เสื้อยืดสีขาว', 250.00, 100),
+  (1, 'กางเกงยีนส์', 890.00, 50),
+  (2, 'หูฟังบลูทูธ', 1290.00, 30),
+  (3, 'คู่มือ PHP พื้นฐาน', 350.00, 20);</code></pre>
+      </div>
+
+      <!-- Git workflow -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span class="code-filename">Git Workflow สำหรับทีม</span>
+          <span class="code-lang">Bash</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-bash"># ─── Team Leader: ตั้งค่า Repository ─────────────────────────
+git init
+git add .
+git commit -m "initial project structure"
+# สร้าง repo บน GitHub แล้ว push
+git remote add origin https://github.com/username/project-name.git
+git push -u origin main
+
+# ─── สมาชิกอื่น: Clone โปรเจกต์ ──────────────────────────────
+git clone https://github.com/username/project-name.git
+cd project-name
+
+# ─── Workflow ทุกวัน ───────────────────────────────────────────
+# 1. ดึงโค้ดล่าสุดจากทีม
+git pull origin main
+
+# 2. สร้าง Branch ใหม่สำหรับ Feature ที่กำลังทำ
+git checkout -b feature/login-page
+
+# 3. เขียนโค้ด...
+
+# 4. บันทึกงาน
+git add login.php includes/auth.php
+git commit -m "add user login with session management"
+
+# 5. Push ขึ้น GitHub
+git push origin feature/login-page
+
+# 6. สร้าง Pull Request บน GitHub เพื่อให้ Team Leader Review
+
+# ─── ไฟล์ .gitignore (ควรสร้างก่อน push แรก) ─────────────────
+# สร้างไฟล์ .gitignore:
+# config/config.php     (ซ่อนรหัสผ่าน DB)
+# uploads/              (ไม่ push ไฟล์ที่ user upload)
+# .env                  (ถ้าใช้)
+# *.log
+# .DS_Store             (Mac)
+# Thumbs.db             (Windows)
+
+# ─── แก้ Conflict กรณีโค้ดชนกัน ──────────────────────────────
+git pull origin main        # ดึงโค้ดล่าสุด
+# ถ้ามี conflict: เปิดไฟล์ที่ conflict แก้ไข แล้ว:
+git add conflicted-file.php
+git commit -m "resolve merge conflict in conflicted-file.php"</code></pre>
+      </div>
+
+    </div>
+
+    <div id="deliverables">
+      <div class="callout warning">
+        <div class="callout-title">งานที่ต้องส่ง (Deliverables) — สัปดาห์ที่ 13</div>
+        <ul>
+          <li>1. <strong>เอกสารวิเคราะห์ความต้องการ (Requirements Document)</strong> — รายชื่อสมาชิกทีม, ชื่อโปรเจกต์, ปัญหาที่แก้, รายการ User Stories อย่างน้อย 8 ข้อ</li>
+          <li>2. <strong>ER Diagram ของฐานข้อมูล</strong> — แสดงตารางทั้งหมด (อย่างน้อย 3 ตาราง), คอลัมน์สำคัญ, และ Foreign Keys ที่เชื่อมตารางกัน</li>
+          <li>3. <strong>Wireframe/Mockup อย่างน้อย 3 หน้า</strong> — วาดด้วยมือ, PowerPoint, หรือโปรแกรม เช่น Figma/Canva ให้เห็น Layout และ Navigation</li>
+          <li>4. <strong>แผนการแบ่งงานในทีม</strong> — ตารางแสดงชื่อสมาชิก, Role, Tasks ที่รับผิดชอบ, และ Timeline (จะเสร็จเมื่อไร)</li>
+        </ul>
+      </div>
+
+      <div class="callout note">
+        <div class="callout-title">เกณฑ์การประเมิน Deliverables สัปดาห์ 13</div>
+        <p>เอกสารครบทั้ง 4 ส่วน (25 คะแนน) + ER Diagram มีตารางและความสัมพันธ์ที่สมบูรณ์ (25 คะแนน) + Wireframe ครอบคลุมหน้าหลัก (25 คะแนน) + แผนงานทีมมีรายละเอียดชัดเจน (25 คะแนน)</p>
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <a href="week-12.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">Web Services &amp; REST API</div>
+      </a>
+      <a href="week-14.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">นำเสนอโครงงาน</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+        integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

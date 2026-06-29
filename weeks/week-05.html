@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 5 — ออกแบบฐานข้อมูล & MySQL — 07-034-233</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- Sidebar injected by js/main.js -->
+<div class="main">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">หน้าหลัก</a>
+    <span class="sep">›</span>
+    <span>สัปดาห์ที่ 5</span>
+    <span class="sep">›</span>
+    <span>ออกแบบฐานข้อมูล & MySQL</span>
+  </nav>
+
+  <div class="week-hero">
+    <div class="wh-eyebrow">สัปดาห์ที่ 5</div>
+    <h1 class="wh-title">ออกแบบฐานข้อมูล & MySQL</h1>
+    <div class="wh-clos">
+      <span class="wh-clo">CLO2</span>
+      <span class="wh-clo">CLO3</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc-box">
+      <div class="toc-title">📑 สารบัญ</div>
+      <ul class="toc-list">
+        <li><a href="#theory">ทฤษฎี</a></li>
+        <li><a href="#code">โค้ดตัวอย่าง</a></li>
+        <li><a href="#lab">ปฏิบัติการ Lab 4</a></li>
+      </ul>
+    </div>
+
+    <!-- THEORY SECTION -->
+    <div id="theory">
+      <span class="sec-badge theory">📖 ทฤษฎี</span>
+      <div class="theory-wrap">
+
+        <h3>พื้นฐานฐานข้อมูล Relational Database</h3>
+        <p>
+          <strong>ฐานข้อมูลเชิงสัมพันธ์ (Relational Database)</strong> เก็บข้อมูลในรูปแบบ <strong>ตาราง (Table)</strong>
+          ซึ่งประกอบด้วย <strong>แถว (Row/Record)</strong> และ <strong>คอลัมน์ (Column/Field)</strong>
+          แต่ละตารางจะมีชื่อเฉพาะ และเชื่อมโยงกับตารางอื่นผ่าน <strong>Key</strong>
+        </p>
+        <p>
+          แนวคิดสำคัญของ Relational Database:
+        </p>
+        <ul>
+          <li>
+            <strong>Primary Key (PK)</strong> — คอลัมน์ที่ระบุ Record อย่างเป็นเอกลักษณ์ ห้ามซ้ำและห้ามเป็น NULL
+            นิยมใช้คอลัมน์ <code>id</code> แบบ INT AUTO_INCREMENT
+          </li>
+          <li>
+            <strong>Foreign Key (FK)</strong> — คอลัมน์ที่อ้างอิง Primary Key ของตารางอื่น
+            ใช้สร้างความสัมพันธ์ระหว่างตาราง เช่น <code>orders.user_id</code> อ้างอิง <code>users.id</code>
+          </li>
+          <li>
+            <strong>Index</strong> — โครงสร้างข้อมูลพิเศษที่ช่วยให้ค้นหาข้อมูลเร็วขึ้น
+            (คล้ายดัชนีหนังสือ) Primary Key จะมี Index อัตโนมัติ
+          </li>
+          <li>
+            <strong>Constraint</strong> — กฎที่บังคับกับข้อมูล เช่น NOT NULL, UNIQUE, DEFAULT, CHECK
+          </li>
+        </ul>
+        <p>
+          <strong>ชนิดข้อมูล MySQL ที่ใช้บ่อย:</strong>
+        </p>
+        <ul>
+          <li><code>INT</code> — จำนวนเต็ม (-2 ล้าน ถึง +2 ล้าน), <code>BIGINT</code> — จำนวนเต็มขนาดใหญ่</li>
+          <li><code>VARCHAR(n)</code> — ข้อความความยาวแปรผัน ไม่เกิน n ตัวอักษร (เหมาะสำหรับ ชื่อ, Email)</li>
+          <li><code>TEXT</code> — ข้อความยาว ไม่จำกัด (เหมาะสำหรับ รายละเอียด, เนื้อหา)</li>
+          <li><code>DECIMAL(p,s)</code> — ทศนิยมแม่นยำสูง (เช่น <code>DECIMAL(10,2)</code> สำหรับราคา)</li>
+          <li><code>FLOAT / DOUBLE</code> — ทศนิยม (ความแม่นยำน้อยกว่า DECIMAL)</li>
+          <li><code>BOOLEAN / TINYINT(1)</code> — จริง/เท็จ (0 หรือ 1)</li>
+          <li><code>DATE</code> — วันที่ (YYYY-MM-DD), <code>TIME</code> — เวลา, <code>DATETIME</code> — วันที่และเวลา</li>
+          <li><code>TIMESTAMP</code> — เหมือน DATETIME แต่อ้างอิง UTC อัปเดตอัตโนมัติได้</li>
+          <li><code>ENUM('val1','val2',...)</code> — ค่าที่กำหนดไว้ล่วงหน้า (เช่น สถานะ)</li>
+        </ul>
+
+        <h3>การออกแบบ ER Diagram</h3>
+        <p>
+          <strong>ER Diagram (Entity-Relationship Diagram)</strong> คือแผนภาพที่แสดง Entity (ตาราง),
+          Attribute (คอลัมน์), และ Relationship (ความสัมพันธ์) ระหว่าง Entity
+          ใช้ออกแบบโครงสร้างฐานข้อมูลก่อนสร้างจริง
+        </p>
+        <p>
+          <strong>ประเภทของ Relationship:</strong>
+        </p>
+        <ul>
+          <li><strong>1:1 (One-to-One)</strong> — หนึ่ง Record ใน Table A สัมพันธ์กับหนึ่ง Record ใน Table B เท่านั้น
+            เช่น ผู้ใช้หนึ่งคนมีโปรไฟล์หนึ่งชุด</li>
+          <li><strong>1:N (One-to-Many)</strong> — หนึ่ง Record ใน Table A สัมพันธ์กับหลาย Record ใน Table B
+            เช่น ผู้ใช้หนึ่งคนมีหลายคำสั่งซื้อ (คุณสัมพันธ์ที่พบบ่อยที่สุด)</li>
+          <li><strong>N:M (Many-to-Many)</strong> — หลาย Record ใน Table A สัมพันธ์กับหลาย Record ใน Table B
+            เช่น นักศึกษาหนึ่งคนลงทะเบียนหลายวิชา และหนึ่งวิชามีหลายคนลงทะเบียน
+            ต้องแก้ด้วยตาราง Junction (ตารางกลาง)</li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+ตัวอย่าง ER Diagram: ระบบลงทะเบียนนักศึกษา
+
+┌──────────────────┐       ┌──────────────────────┐       ┌────────────────┐
+│    students      │       │   enrollments (N:M)  │       │    courses     │
+├──────────────────┤       ├──────────────────────┤       ├────────────────┤
+│ PK id            │ 1   N │ PK id                │ N   1 │ PK id          │
+│    student_code  │──────►│ FK student_id        │◄──────│    code        │
+│    first_name    │       │ FK course_id         │       │    name        │
+│    last_name     │       │    enrolled_date      │       │    credits     │
+│    email         │       │    grade             │       │    FK dept_id  │
+│    faculty       │       └──────────────────────┘       └────────────────┘
+│    created_at    │
+└──────────────────┘
+
+Relationship:
+  students (1) ────── (N) enrollments (N) ────── (1) courses
+  ผู้ใช้สามารถลงหลายวิชา, แต่ละวิชามีหลายคนลง
+          </pre>
+        </div>
+
+        <h3>MySQL ผ่าน phpMyAdmin</h3>
+        <p>
+          <strong>phpMyAdmin</strong> คือ Web Interface สำหรับจัดการ MySQL ที่มาพร้อมกับ XAMPP
+          เข้าถึงได้ที่ <code>http://localhost/phpmyadmin</code> โดยไม่ต้องใช้รหัสผ่านเริ่มต้น
+        </p>
+        <p>
+          การดำเนินการหลักผ่าน phpMyAdmin:
+        </p>
+        <ul>
+          <li><strong>สร้างฐานข้อมูล</strong>: คลิก "New" ที่แถบซ้าย → ตั้งชื่อ → เลือก Collation <code>utf8mb4_unicode_ci</code> → Create</li>
+          <li><strong>สร้างตาราง</strong>: เลือก Database → "Create table" → ตั้งชื่อตาราง → กำหนดจำนวนคอลัมน์ → Go</li>
+          <li><strong>กำหนดโครงสร้าง</strong>: ตั้งชื่อคอลัมน์, เลือก Type, กำหนด Length, Null/Not Null, Default, Index</li>
+          <li><strong>เพิ่มข้อมูล</strong>: แท็บ "Insert" → กรอกข้อมูล → Go</li>
+          <li><strong>ดูข้อมูล</strong>: แท็บ "Browse" แสดง Records ทั้งหมด</li>
+          <li><strong>รัน SQL</strong>: แท็บ "SQL" สำหรับเขียนคำสั่ง SQL โดยตรง</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — Collation</div>
+          <p>
+            ตั้ง Collation เป็น <strong>utf8mb4_unicode_ci</strong> เสมอเมื่อสร้าง Database หรือ Table
+            <code>utf8mb4</code> รองรับ Emoji และอักขระพิเศษ, <code>unicode_ci</code> ทำให้ค้นหาแบบ
+            Case-Insensitive และรองรับภาษาไทยได้อย่างถูกต้อง
+          </p>
+        </div>
+
+        <h3>SQL พื้นฐาน</h3>
+        <p>
+          <strong>SQL (Structured Query Language)</strong> คือภาษามาตรฐานสำหรับจัดการฐานข้อมูล Relational
+          แบ่งเป็น 4 กลุ่มหลัก (CRUD):
+        </p>
+        <ul>
+          <li><strong>DDL (Data Definition Language)</strong>: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code> — กำหนดโครงสร้าง</li>
+          <li><strong>DML (Data Manipulation Language)</strong>: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> — จัดการข้อมูล</li>
+          <li><strong>DQL (Data Query Language)</strong>: <code>SELECT</code> — ดึงข้อมูล</li>
+          <li><strong>DCL (Data Control Language)</strong>: <code>GRANT</code>, <code>REVOKE</code> — จัดการสิทธิ์</li>
+        </ul>
+        <p>
+          คำสั่ง SELECT ที่ใช้บ่อย:
+        </p>
+        <ul>
+          <li><code>SELECT * FROM users</code> — ดึงทุก Record และทุก Column</li>
+          <li><code>SELECT name, email FROM users WHERE id = 5</code> — เลือก Column ที่ต้องการ + กรอง</li>
+          <li><code>SELECT * FROM products WHERE price > 500 ORDER BY price DESC LIMIT 10</code></li>
+          <li><code>SELECT COUNT(*) AS total FROM users</code> — นับจำนวน Record</li>
+          <li><code>SELECT * FROM users WHERE email LIKE '%@gmail.com'</code> — ค้นหาแบบ Pattern</li>
+        </ul>
+
+        <h3>เชื่อมต่อ MySQL กับ PHP</h3>
+        <p>
+          PHP มี 2 วิธีหลักสำหรับเชื่อมต่อ MySQL:
+        </p>
+        <ul>
+          <li>
+            <strong>MySQLi (MySQL Improved)</strong> — API แบบ Procedural และ Object-Oriented
+            ใช้งานง่าย แต่ผูกกับ MySQL เท่านั้น (<code>mysqli_connect()</code>)
+          </li>
+          <li>
+            <strong>PDO (PHP Data Objects)</strong> — Object-Oriented Interface รองรับหลาย Database
+            (MySQL, PostgreSQL, SQLite) ด้วย Prepared Statements ที่ป้องกัน SQL Injection ได้ดีกว่า
+            <strong>แนะนำให้ใช้ PDO</strong>
+          </li>
+        </ul>
+
+        <div class="diagram-box">
+          <pre>
+การเชื่อมต่อ PHP → MySQL ด้วย PDO:
+
+  PHP Script
+      │
+      ├─ new PDO("mysql:host=localhost;dbname=mydb;charset=utf8mb4", $user, $pass)
+      │
+      ▼
+  PDO Object
+      │
+      ├─ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+      ├─ $stmt->execute([$id]);  ← Prepared Statement ป้องกัน SQL Injection
+      └─ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      │
+      ▼
+  Array ของข้อมูล → แสดงใน HTML
+          </pre>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — SQL Injection</div>
+          <p>
+            ห้ามนำตัวแปรจากผู้ใช้ใส่ใน SQL Query โดยตรง เช่น <code>"SELECT * FROM users WHERE id = " . $_GET['id']</code>
+            ผู้ใช้อาจส่ง <code>1 OR 1=1</code> ซึ่งจะ Return ทุก Record ในตาราง หรือ <code>1; DROP TABLE users;</code>
+            ป้องกันด้วยการใช้ <strong>Prepared Statements</strong> ของ PDO หรือ MySQLi เสมอ
+          </p>
+        </div>
+
+        <p>
+          <strong>Prepared Statements</strong> ทำงานโดยแยกโครงสร้าง SQL ออกจากข้อมูล:
+          <code>?</code> หรือ <code>:name</code> เป็น Placeholder ที่ PDO จะ Bind ข้อมูลให้อัตโนมัติ
+          พร้อม Escape อักขระอันตรายทั้งหมด ทำให้ SQL Injection เป็นไปไม่ได้
+        </p>
+
+      </div>
+    </div>
+
+    <!-- CODE EXAMPLES SECTION -->
+    <div id="code">
+      <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">create_tables.sql</span>
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-sql">
+-- ============================
+-- สร้างฐานข้อมูลและตาราง
+-- ============================
+
+-- สร้าง Database
+CREATE DATABASE IF NOT EXISTS mywebapp_db
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+-- เลือกใช้ Database นี้
+USE mywebapp_db;
+
+-- ============================
+-- ตาราง users: ข้อมูลผู้ใช้งาน
+-- ============================
+CREATE TABLE IF NOT EXISTS users (
+  id          INT UNSIGNED     NOT NULL AUTO_INCREMENT,
+  username    VARCHAR(50)      NOT NULL,
+  email       VARCHAR(100)     NOT NULL,
+  password    VARCHAR(255)     NOT NULL,  -- เก็บ Hashed password (bcrypt)
+  first_name  VARCHAR(50)      NOT NULL,
+  last_name   VARCHAR(50)      NOT NULL,
+  role        ENUM('user','admin','moderator') NOT NULL DEFAULT 'user',
+  is_active   TINYINT(1)       NOT NULL DEFAULT 1,
+  created_at  DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_username (username),
+  UNIQUE KEY uk_email    (email),
+  KEY idx_role (role)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================
+-- ตาราง categories: หมวดหมู่สินค้า
+-- ============================
+CREATE TABLE IF NOT EXISTS categories (
+  id          INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  name        VARCHAR(100)  NOT NULL,
+  slug        VARCHAR(100)  NOT NULL,
+  description TEXT,
+  created_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_slug (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================
+-- ตาราง products: สินค้า
+-- ============================
+CREATE TABLE IF NOT EXISTS products (
+  id           INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  name         VARCHAR(200)    NOT NULL,
+  description  TEXT,
+  price        DECIMAL(10, 2)  NOT NULL DEFAULT 0.00,
+  stock        INT             NOT NULL DEFAULT 0,
+  image_name   VARCHAR(255),
+  category_id  INT UNSIGNED,              -- Foreign Key ไปยัง categories
+  is_active    TINYINT(1)      NOT NULL DEFAULT 1,
+  created_at   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  KEY idx_category (category_id),
+  KEY idx_price    (price),
+  CONSTRAINT fk_product_category
+    FOREIGN KEY (category_id) REFERENCES categories (id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================
+-- ตาราง orders: คำสั่งซื้อ (1:N กับ users)
+-- ============================
+CREATE TABLE IF NOT EXISTS orders (
+  id           INT UNSIGNED   NOT NULL AUTO_INCREMENT,
+  user_id      INT UNSIGNED   NOT NULL,
+  total_price  DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+  status       ENUM('pending','paid','shipped','completed','cancelled') NOT NULL DEFAULT 'pending',
+  note         TEXT,
+  created_at   DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  KEY idx_user   (user_id),
+  KEY idx_status (status),
+  CONSTRAINT fk_order_user
+    FOREIGN KEY (user_id) REFERENCES users (id)
+    ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">queries.sql</span>
+          <span class="code-lang">SQL</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-sql">
+-- ============================
+-- INSERT: เพิ่มข้อมูล
+-- ============================
+USE mywebapp_db;
+
+-- เพิ่มหมวดหมู่
+INSERT INTO categories (name, slug, description) VALUES
+  ('อิเล็กทรอนิกส์', 'electronics', 'สินค้าอิเล็กทรอนิกส์ทุกประเภท'),
+  ('เสื้อผ้า',        'clothing',    'เสื้อผ้าแฟชั่น'),
+  ('อาหาร & เครื่องดื่ม', 'food',   'อาหารและเครื่องดื่ม');
+
+-- เพิ่มผู้ใช้ (password ที่นี่เป็น placeholder, จริง ๆ ต้อง hash ด้วย bcrypt)
+INSERT INTO users (username, email, password, first_name, last_name) VALUES
+  ('somchai01',  'somchai@example.com',   '$2y$10$...', 'สมชาย',  'ใจดี'),
+  ('somying02',  'somying@example.com',   '$2y$10$...', 'สมหญิง', 'รักเรียน'),
+  ('prayuth03',  'prayuth@example.com',   '$2y$10$...', 'ประยุทธ์','ขยันดี');
+
+-- เพิ่มสินค้า
+INSERT INTO products (name, description, price, stock, category_id) VALUES
+  ('โน้ตบุ๊ค Dell Inspiron 15', 'Intel Core i5, RAM 8GB, SSD 512GB', 25900.00, 5,  1),
+  ('เมาส์ Logitech MX Master 3', 'Wireless, 7 ปุ่ม, ชาร์จ USB-C',    3290.00,  20, 1),
+  ('คีย์บอร์ด Keychron K2',      'Mechanical, Bluetooth/Wired',        3490.00,  8,  1),
+  ('เสื้อยืด Polo',              'Cotton 100%, มีหลายสี',               390.00,   100, 2),
+  ('กาแฟ Doi Chang 250g',        'Arabica 100% จากดอยช้าง',             280.00,   50, 3);
+
+-- ============================
+-- SELECT: ดึงข้อมูล
+-- ============================
+
+-- ดึงทุก Record
+SELECT * FROM users;
+SELECT * FROM products;
+
+-- เลือก Column ที่ต้องการ
+SELECT id, username, email, created_at FROM users;
+
+-- กรองด้วย WHERE
+SELECT * FROM products WHERE price > 1000;
+SELECT * FROM users WHERE email LIKE '%@gmail.com';
+SELECT * FROM products WHERE stock = 0;
+
+-- เรียงลำดับ
+SELECT * FROM products ORDER BY price DESC;
+SELECT * FROM products ORDER BY price ASC LIMIT 3;
+
+-- JOIN: รวมข้อมูลจากหลายตาราง
+SELECT
+  p.id,
+  p.name          AS product_name,
+  p.price,
+  c.name          AS category_name
+FROM products p
+INNER JOIN categories c ON p.category_id = c.id
+ORDER BY c.name, p.price;
+
+-- Aggregate Functions
+SELECT COUNT(*) AS total_products FROM products;
+SELECT AVG(price) AS avg_price FROM products;
+SELECT MIN(price) AS cheapest, MAX(price) AS most_expensive FROM products;
+SELECT category_id, COUNT(*) AS product_count, AVG(price) AS avg_price
+FROM products
+GROUP BY category_id
+ORDER BY product_count DESC;
+
+-- ============================
+-- UPDATE: แก้ไขข้อมูล
+-- ============================
+UPDATE products SET price = 24900.00, stock = 4 WHERE id = 1;
+UPDATE users SET is_active = 0 WHERE id = 3; -- ระงับบัญชี
+
+-- ============================
+-- DELETE: ลบข้อมูล
+-- ============================
+DELETE FROM products WHERE stock = 0 AND is_active = 0;
+-- ระวัง! ไม่มี WHERE จะลบทุก Record
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">db_connect.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// PHP PDO Connection to MySQL
+// ============================
+// ไฟล์นี้: config/db_connect.php
+// require_once จากไฟล์อื่นเพื่อใช้ $pdo
+
+define('DB_HOST',    'localhost');
+define('DB_NAME',    'mywebapp_db');
+define('DB_USER',    'root');          // XAMPP default
+define('DB_PASS',    '');              // XAMPP default (ไม่มีรหัสผ่าน)
+define('DB_CHARSET', 'utf8mb4');
+
+try {
+    // สร้าง DSN (Data Source Name)
+    $dsn = sprintf(
+        'mysql:host=%s;dbname=%s;charset=%s',
+        DB_HOST,
+        DB_NAME,
+        DB_CHARSET
+    );
+
+    // ตัวเลือก PDO ที่แนะนำ
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,  // โยน Exception เมื่อเกิด Error
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,         // ดึงเป็น Associative Array
+        PDO::ATTR_EMULATE_PREPARES   => false,                    // ใช้ Prepared Statements จริง
+    ];
+
+    // สร้าง Connection
+    $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+
+} catch (PDOException $e) {
+    // ใน Production: Log error และแสดงข้อความกว้าง ๆ ให้ผู้ใช้
+    // ใน Development: แสดง Error เพื่อ Debug
+    error_log('Database connection failed: ' . $e->getMessage());
+
+    // ห้าม echo $e->getMessage() ใน Production เพราะเปิดเผยข้อมูล Server
+    die('ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาลองใหม่ภายหลัง');
+}
+        </code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">list_users.php</span>
+          <span class="code-lang">PHP</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-php">
+<?php
+// ============================
+// ดึงข้อมูลจาก MySQL และแสดงเป็น HTML Table
+// ============================
+
+require_once 'config/db_connect.php'; // $pdo พร้อมใช้
+
+// ============================
+// SELECT ด้วย Prepared Statement
+// ============================
+$search = trim($_GET['search'] ?? '');
+$page   = max(1, (int)($_GET['page'] ?? 1));
+$limit  = 10;
+$offset = ($page - 1) * $limit;
+
+if (!empty($search)) {
+    // ค้นหาแบบ LIKE
+    $stmt = $pdo->prepare(
+        "SELECT id, username, email, first_name, last_name, role, created_at
+         FROM users
+         WHERE username LIKE ? OR email LIKE ? OR first_name LIKE ?
+         ORDER BY created_at DESC
+         LIMIT ? OFFSET ?"
+    );
+    $searchParam = "%$search%";
+    $stmt->execute([$searchParam, $searchParam, $searchParam, $limit, $offset]);
+
+    // นับทั้งหมดสำหรับ Pagination
+    $countStmt = $pdo->prepare(
+        "SELECT COUNT(*) FROM users WHERE username LIKE ? OR email LIKE ? OR first_name LIKE ?"
+    );
+    $countStmt->execute([$searchParam, $searchParam, $searchParam]);
+} else {
+    $stmt = $pdo->prepare(
+        "SELECT id, username, email, first_name, last_name, role, created_at
+         FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?"
+    );
+    $stmt->execute([$limit, $offset]);
+
+    $countStmt = $pdo->query("SELECT COUNT(*) FROM users");
+}
+
+$users     = $stmt->fetchAll();       // ดึงทุก Row เป็น Array
+$totalRows = $countStmt->fetchColumn(); // ดึงค่าแรก
+$totalPages = ceil($totalRows / $limit);
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>รายชื่อผู้ใช้งาน</title>
+  <style>
+    body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+    .container { max-width: 960px; margin: 0 auto; }
+    h1 { color: #2c3e50; }
+    .search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+    .search-bar input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+    .search-bar button { padding: 10px 20px; background: #2c3e50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    .info-bar { color: #666; margin-bottom: 12px; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
+    td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:hover td { background: #f8f9fa; }
+    .badge { padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
+    .badge-admin { background: #fee2e2; color: #dc2626; }
+    .badge-user  { background: #dbeafe; color: #1d4ed8; }
+    .badge-mod   { background: #fef3c7; color: #d97706; }
+    .pagination { display: flex; gap: 6px; margin-top: 16px; justify-content: center; }
+    .pagination a, .pagination span { padding: 8px 14px; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #2c3e50; }
+    .pagination .active { background: #2c3e50; color: white; border-color: #2c3e50; }
+    .no-data { text-align: center; padding: 40px; color: #999; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>รายชื่อผู้ใช้งาน</h1>
+
+  <!-- ค้นหา -->
+  <form method="GET" class="search-bar">
+    <input type="text" name="search" placeholder="ค้นหาชื่อหรือ Email..."
+           value="<?= htmlspecialchars($search) ?>">
+    <button type="submit">🔍 ค้นหา</button>
+    <?php if (!empty($search)): ?>
+      <a href="?" style="padding:10px; color:#666;">✕ ล้าง</a>
+    <?php endif; ?>
+  </form>
+
+  <div class="info-bar">
+    พบ <?= number_format($totalRows) ?> ผู้ใช้งาน
+    <?= !empty($search) ? "| ค้นหา: \"$search\"" : '' ?>
+    | หน้า <?= $page ?> / <?= $totalPages ?>
+  </div>
+
+  <?php if (empty($users)): ?>
+    <div class="no-data">ไม่พบผู้ใช้งาน</div>
+  <?php else: ?>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Username</th>
+        <th>ชื่อ-นามสกุล</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>วันที่สมัคร</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($users as $i => $user): ?>
+        <tr>
+          <td><?= $offset + $i + 1 ?></td>
+          <td><?= htmlspecialchars($user['username']) ?></td>
+          <td><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></td>
+          <td><?= htmlspecialchars($user['email']) ?></td>
+          <td>
+            <span class="badge badge-<?= $user['role'] === 'admin' ? 'admin' : ($user['role'] === 'moderator' ? 'mod' : 'user') ?>">
+              <?= htmlspecialchars($user['role']) ?>
+            </span>
+          </td>
+          <td><?= date('d/m/Y', strtotime($user['created_at'])) ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <?php if ($totalPages > 1): ?>
+    <div class="pagination">
+      <?php if ($page > 1): ?>
+        <a href="?page=<?= $page-1 ?>&search=<?= urlencode($search) ?>">← ก่อนหน้า</a>
+      <?php endif; ?>
+
+      <?php for ($p = max(1, $page-2); $p <= min($totalPages, $page+2); $p++): ?>
+        <?php if ($p == $page): ?>
+          <span class="active"><?= $p ?></span>
+        <?php else: ?>
+          <a href="?page=<?= $p ?>&search=<?= urlencode($search) ?>"><?= $p ?></a>
+        <?php endif; ?>
+      <?php endfor; ?>
+
+      <?php if ($page < $totalPages): ?>
+        <a href="?page=<?= $page+1 ?>&search=<?= urlencode($search) ?>">ถัดไป →</a>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php endif; ?>
+
+</div>
+</body>
+</html>
+        </code></pre>
+      </div>
+
+    </div>
+
+    <!-- LAB SECTION -->
+    <div class="lab-container" id="lab">
+      <div class="lab-header">
+        <h2>🧪 ปฏิบัติการ Lab 4 — ออกแบบฐานข้อมูลและ MySQL</h2>
+        <p>ฝึกสร้างฐานข้อมูลด้วย phpMyAdmin, เขียน SQL, เพิ่มข้อมูลทดสอบ, และเชื่อมต่อ PHP กับ MySQL</p>
+      </div>
+      <div class="lab-body">
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">1</div>
+            <div class="task-title">สร้างฐานข้อมูลด้วย phpMyAdmin</div>
+          </div>
+          <div class="task-body">
+            <p>เปิด phpMyAdmin แล้วสร้างฐานข้อมูลและตารางพื้นฐานสำหรับเว็บแอปพลิเคชัน</p>
+            <ul>
+              <li>เปิด <code>http://localhost/phpmyadmin</code></li>
+              <li>คลิก "New" ที่แถบซ้าย → ตั้งชื่อ <strong>mywebapp_db</strong> → Collation: <strong>utf8mb4_unicode_ci</strong> → Create</li>
+              <li>เลือก Database <strong>mywebapp_db</strong> → แท็บ "Structure" → "Create table"</li>
+              <li>สร้างตาราง <strong>users</strong>: id (INT AUTO_INCREMENT PK), username (VARCHAR 50 UNIQUE NOT NULL), email (VARCHAR 100 UNIQUE NOT NULL), password (VARCHAR 255 NOT NULL), created_at (DATETIME DEFAULT CURRENT_TIMESTAMP)</li>
+              <li>สร้างตาราง <strong>products</strong>: id (INT AUTO_INCREMENT PK), name (VARCHAR 200 NOT NULL), price (DECIMAL 10,2 NOT NULL), stock (INT DEFAULT 0), image_name (VARCHAR 255)</li>
+              <li>ถ่ายภาพหน้าจอโครงสร้างทั้งสองตาราง</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>ใน phpMyAdmin แสดงฐานข้อมูล mywebapp_db พร้อมตาราง users และ products
+                 เมื่อคลิก "Structure" ของแต่ละตารางต้องเห็น Columns ครบตามที่กำหนด
+                 Primary Key และ Constraints ถูกต้อง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>เมื่อสร้างตาราง ให้คลิกที่ช่อง "Index" ของ id และเลือก "PRIMARY" พร้อมติ๊ก "AUTO_INCREMENT"
+                 สำหรับ username และ email ให้เลือก "UNIQUE" ใน Index เพื่อป้องกันค่าซ้ำ</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">2</div>
+            <div class="task-title">เขียน SQL สร้างตาราง</div>
+          </div>
+          <div class="task-body">
+            <p>เขียนคำสั่ง SQL สำหรับสร้างตาราง users และ products ด้วยตนเองใน phpMyAdmin SQL tab</p>
+            <ul>
+              <li>ใน phpMyAdmin คลิก Database mywebapp_db → แท็บ "SQL"</li>
+              <li>เขียนคำสั่ง <code>DROP TABLE IF EXISTS products, users;</code> เพื่อลบตารางเดิมก่อน (ถ้ามี)</li>
+              <li>เขียนคำสั่ง <code>CREATE TABLE users (...)</code> ด้วย Constraints ครบถ้วน: NOT NULL, UNIQUE, DEFAULT, PRIMARY KEY</li>
+              <li>เขียนคำสั่ง <code>CREATE TABLE products (...)</code> พร้อม FOREIGN KEY อ้างอิง users.id (ถ้าต้องการ)</li>
+              <li>เพิ่มคอลัมน์ <code>updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</code> ในทั้งสองตาราง</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>รัน SQL แล้วไม่มี Error, ดูโครงสร้างตารางใน phpMyAdmin และ Export SQL ออกมาเก็บไว้
+                 SQL ที่เขียนต้องมี Comment อธิบายแต่ละ Column ว่าทำหน้าที่อะไร</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ลำดับสำคัญ: ถ้า products มี FOREIGN KEY ไปยัง users ต้องสร้าง users ก่อน
+                 และ DROP products ก่อน DROP users ใช้ <code>SET FOREIGN_KEY_CHECKS = 0;</code>
+                 ก่อน DROP เพื่อปิดการตรวจสอบชั่วคราว</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">3</div>
+            <div class="task-title">เพิ่มข้อมูลทดสอบ</div>
+          </div>
+          <div class="task-body">
+            <p>เขียนคำสั่ง INSERT เพื่อเพิ่มข้อมูลทดสอบในทั้งสองตาราง</p>
+            <ul>
+              <li>INSERT ผู้ใช้อย่างน้อย 5 คน ด้วย username, email, และ password (ใช้ค่า placeholder เช่น 'hashed_password')</li>
+              <li>INSERT สินค้าอย่างน้อย 5 ชิ้น ด้วยชื่อ ราคา และจำนวน Stock ที่หลากหลาย</li>
+              <li>ทำให้ข้อมูลสมจริง: ราคาสินค้าบางชิ้นเกิน 1000 บาท บางชิ้นน้อยกว่า</li>
+              <li>สินค้าบางชิ้น Stock = 0 (สินค้าหมด)</li>
+              <li>ใช้ <code>INSERT INTO table (col1, col2) VALUES (v1, v2), (v1, v2), ...</code> แบบ Multi-row</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>แท็บ Browse ของ users แสดงอย่างน้อย 5 Records และ products แสดงอย่างน้อย 5 Records
+                 ข้อมูลแต่ละ Record ครบทุก Field ที่กำหนด NOT NULL</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ถ้า INSERT แล้วได้ Error "Duplicate entry" แสดงว่าค่า username หรือ email ซ้ำ
+                 (เพราะตั้ง UNIQUE) ให้ใช้ค่าที่ไม่ซ้ำกัน หรือ <code>TRUNCATE TABLE users;</code>
+                 เพื่อลบข้อมูลเก่าทั้งหมดก่อน</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">4</div>
+            <div class="task-title">ฝึก SQL SELECT</div>
+          </div>
+          <div class="task-body">
+            <p>เขียนคำสั่ง SELECT หลายรูปแบบเพื่อดึงข้อมูลตามเงื่อนไขต่าง ๆ</p>
+            <ul>
+              <li>ดึงผู้ใช้ทั้งหมด: <code>SELECT * FROM users;</code></li>
+              <li>ดึงผู้ใช้ที่ email มี @gmail: <code>SELECT * FROM users WHERE email LIKE '%@gmail.com';</code></li>
+              <li>ดึงสินค้าที่ราคา > 100 เรียงจากแพงสุด: <code>SELECT * FROM products WHERE price > 100 ORDER BY price DESC;</code></li>
+              <li>ดึงสินค้าที่ Stock = 0 (หมด): <code>SELECT * FROM products WHERE stock = 0;</code></li>
+              <li>นับจำนวนสินค้าทั้งหมดและราคาเฉลี่ย: <code>SELECT COUNT(*) AS total, AVG(price) AS avg_price FROM products;</code></li>
+              <li>ดึงเฉพาะ username และ email จาก users 3 คนแรก: <code>SELECT username, email FROM users LIMIT 3;</code></li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>รันคำสั่ง SELECT ทุกข้อใน phpMyAdmin SQL tab และได้ผลลัพธ์ที่ถูกต้อง
+                 บันทึก Screenshot ผลลัพธ์แต่ละคำสั่งพร้อม SQL ที่ใช้</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ใน phpMyAdmin สามารถคลิกชื่อ Column ในผลลัพธ์เพื่อเรียงลำดับได้เลย
+                 หรือใช้แท็บ "Browse" แล้วคลิก Filter icon เพื่อกรองข้อมูลโดยไม่ต้องเขียน SQL</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-task">
+          <div class="task-head">
+            <div class="task-num">5</div>
+            <div class="task-title">เชื่อมต่อ PHP กับ MySQL และแสดงผล</div>
+          </div>
+          <div class="task-body">
+            <p>สร้างไฟล์ PHP ที่เชื่อมต่อ MySQL ผ่าน PDO และดึงข้อมูลมาแสดงเป็นตาราง HTML</p>
+            <ul>
+              <li>สร้าง <code>htdocs/mywebapp/config/db.php</code> ที่มีโค้ด PDO Connection</li>
+              <li>สร้าง <code>htdocs/mywebapp/users.php</code> ที่ <code>require_once</code> ไฟล์ config แล้วรัน SELECT query</li>
+              <li>แสดงข้อมูล users ทั้งหมดเป็น HTML Table พร้อม Header: #, Username, Email, วันที่สมัคร</li>
+              <li>แสดงจำนวน Record ทั้งหมดที่ดึงมา</li>
+              <li>ใช้ <code>htmlspecialchars()</code> กับทุกค่าที่แสดงใน HTML</li>
+              <li>เพิ่ม Styling CSS ให้ตารางสวยงาม</li>
+            </ul>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>เปิด <code>http://localhost/mywebapp/users.php</code> แล้วเห็นตารางที่แสดงข้อมูลจาก Database จริง ๆ
+                 ข้อมูลตรงกับที่ INSERT ไว้ในตาราง users และไม่มี PHP Error หรือ PDO Exception แสดงในหน้า</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>หาก PDO ต่อไม่ได้ ให้ตรวจสอบ: (1) MySQL ใน XAMPP Control Panel เปิดอยู่หรือไม่,
+                 (2) ชื่อ Database ถูกต้องหรือไม่ (case-sensitive บน Linux), (3) Password ถูกต้องหรือไม่
+                 (XAMPP default: user=root, password=ว่าง)
+                 เปิด Error Reporting ด้วย <code>ini_set('display_errors', 1);</code> ที่บรรทัดแรกชั่วคราว</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- WEEK NAVIGATION -->
+    <div class="week-nav">
+      <a href="week-04.html" class="wn-btn">
+        <div class="wn-sub">← สัปดาห์ก่อน</div>
+        <div class="wn-name">ตัวแปร, ฟังก์ชัน & ฟอร์ม GET/POST</div>
+      </a>
+      <a href="week-06.html" class="wn-btn wn-next">
+        <div class="wn-sub">สัปดาห์ถัดไป →</div>
+        <div class="wn-name">CRUD Operations</div>
+      </a>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+        integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
+        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+        crossorigin="anonymous"></script>
+</body>
+</html>

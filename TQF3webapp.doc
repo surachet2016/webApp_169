@@ -1,0 +1,3023 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html xmlns:office="urn:schemas-microsoft-com:office:office"
+      xmlns:word="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40"><head><style>
+         @page WordSection1 {size:595.45pt 841.7pt; margin:1.0in 1.0in 1.0in 1.0in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;}
+         div.WordSection1 {page:WordSection1;}
+         @page WordSection2 {size:841.7pt 595.45pt; mso-page-orientation:landscape; margin:1.0in 1.0in 1.0in 1.0in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0;}
+         div.WordSection2 {page:WordSection2;}
+      </style></head>
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 1 ข้อมูลโดยทั่วไป</title>
+         <style type="text/css">
+         /*
+      @page WordSection2
+         {size:841.7pt 595.45pt;
+         mso-page-orientation:landscape;
+         margin:1.0in 1.0in 1.0in 1.0in;
+         mso-header-margin:.5in;
+         mso-footer-margin:.5in;
+         mso-paper-source:0;}
+
+      @page WordSection1
+         {size:595.45pt 841.7pt;
+         margin:1.0in 1.0in 1.0in 1.0in;
+         mso-page-orientation:portrait;
+         mso-header-margin:.5in;
+         mso-footer-margin:.5in;
+         mso-paper-source:0;}
+         
+
+      div.WordSection2
+         {page:WordSection2;}
+         
+      div.WordSection1
+         {page:WordSection1;}
+*/
+      </style>
+      <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+      }
+
+      td.firstParagraph {
+         padding-left: 10mm;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm" class="WordSection1">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td colspan="2" align="center">
+                  <h1>รายละเอียดของรายวิชา มคอ. 3</h1>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left" width="30%"><strong>&nbsp;ชื่อสถาบันอุดมศึกษา</strong></td>
+               <td align="left">&nbsp;มหาวิทยาลัยนราธิวาสราชนครินทร์ </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>&nbsp;คณะ/ภาควิชา/สาขาวิชา</strong></td>
+               <td align="left">&nbsp;คณะวิทยาการจัดการ <!--/ --></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="center">
+                  <h2>หมวดที่ 1 ข้อมูลโดยทั่วไป</h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. ชื่อรายวิชา</strong>และรหัสรายวิชา
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tbody>
+                        <tr>
+                           <td width="30%" align="left" class="firstParagraph">รหัสรายวิชา</td>
+                           <td>07-034-233</td>
+                        </tr>
+                        <tr>
+                           <td align="left" class="firstParagraph">ชื่อรายวิชา (ไทย)</td>
+                           <td>การพัฒนาเว็บแอปพลิเคชั่น</td>
+                        </tr>
+                        <tr>
+                           <td align="left" class="firstParagraph">ชื่อรายวิชา (อังกฤษ)</td>
+                           <td>&nbsp;Development Of Web Application</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tbody>
+                        <tr>
+                           <td width="30%" align="left"><strong>2. จำนวนหน่วยกิต</strong></td>
+                           <td>3.0 (2-2-5) &nbsp;จำนวนหน่วยกิต (บรรยาย-ปฏิบัติ-ศึกษาด้วยตนเอง)</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>3. หลักสูตรและประเภทของรายวิชา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">หมวดวิชาชีพเฉพาะ กลุ่มวิชาชีพบังคับ&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>4. อาจารย์ผู้รับผิดชอบรายวิชาและอาจารย์ผู้สอน</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tbody>
+                                                   <tr>
+                              <td width="10%" align="right">4.1&nbsp;</td>
+                              <td width="40%" align="left"> อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์ </td>
+                              <td>ผู้รับผิดชอบรายวิชาและอาจารย์ผู้สอน</td>
+                           </tr>
+                                             </tbody>
+                  </table>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>5. ชั้นปีที่เรียน/ภาคการศึกษา/ปีการศึกษา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">ชั้นปีที่ 5 ปีการศึกษา 2569/ภาคการศึกษาต้น&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>6.  รายวิชาที่ต้องเรียนมาก่อน  (Pre-requisite)</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                                       <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">&nbsp;ไม่มี</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>7.  รายวิชาที่ต้องเรียนพร้อมกัน  (Co-requisites)</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">&nbsp;ไม่มี</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+            
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">
+                  <p><strong>8.  สถานที่เรียน</strong></p>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">ตึกคณะวิทยาการจัดการ FMS504&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">
+                  <p><strong>9.  วันที่จัดทำหรือปรับปรุงรายละเอียดของรายวิชาครั้งล่าสุด</strong><strong> </strong></p>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="right">
+                  <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                     <tbody>
+                        <tr>
+                           <td align="left">19/06/2569&nbsp;</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+         <pre><br clear=all style='mso-special-character:line-break;page-break-before:always'></pre>
+   </body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 2 จุดมุ่งหมายและวัตถุประสงค์</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+      }
+
+      td.firstParagraph {
+         padding-left: 10mm;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <!--               <td align="left"><h2>หมวดที่ 2 ผลลัพธ์การเรียนรู้ที่คาดหวังของรายวิชาและหลักสูตร</h2></td>-->
+               <td align="center">
+                  <h2>หมวดที่ 2 จุดมุ่งหมายและวัตถุประสงค์</h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. จุดมุ่งหมายของรายวิชา (Course Goals)</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO1  วิเคราะห์ความต้องการทางธุรกิจและผู้ใช้ และนำความรู้มาประยุกต์ในการออกแบบเว็บแอปพลิเคชัน (PLO1) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO2  วิเคราะห์ความต้องการของระบบ และออกแบบฐานข้อมูลและสถาปัตยกรรมของเว็บแอปพลิเคชัน (PLO2) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO3  พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส (PLO3) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO4  ออกแบบส่วนติดต่อผู้ใช้ (UI/UX) และสื่อประกอบเว็บให้น่าใช้และตอบสนองต่อผู้ใช้ (PLO4) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO5  นำเสนอและจัดทำเอกสารโครงงานเว็บแอปพลิเคชันได้อย่างมีประสิทธิภาพ (PLO5) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO6  ทำงานเป็นทีมในการพัฒนาเว็บ โดยแสดงภาวะผู้นำและผู้ตามที่ดี (PLO6) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">CLO7  แสดงออกถึงความซื่อสัตย์ มีวินัย และจรรยาบรรณวิชาชีพ โดยคำนึงถึงความปลอดภัยของข้อมูลและลิขสิทธิ์ (PLO7)&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>2. วัตถุประสงค์ของรายวิชา (Course Objectives)</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">ปรับปรุงเนื้อหา เครื่องมือ และกรณีศึกษาให้สอดคล้องกับเทคโนโลยีการพัฒนาเว็บสมัยใหม่และความต้องการของตลาดแรงงานดิจิทัล&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>3. ผลลัพธ์การเรียนรู้ที่คาดหวังระดับหลักสูตร (PLOs) ที่รับผิดชอบรายวิชา</strong></td>
+               <!--               <td align="left"><strong>1. จุดมุ่งหมายของรายวิชา </strong></td>-->
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO1  วิเคราะห์องค์ความรู้ด้านบริหารธุรกิจ และนำไปประยุกต์ใช้งานเทคโนโลยีดิจิทัล </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO2   วิเคราะห์ความต้องการทางธุรกิจโดยนำเทคโนโลยีดิจิทัลมาประยุกต์ใช้ 
+</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO3   พัฒนาแอปพลิเคชันทางธุรกิจที่ตอบสนองต่อความต้องการของชุมชน สังคม และเรียนรู้ได้ด้วยตนเองอย่างต่อเนื่อง 
+</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO4   พัฒนามัลติมีเดียทางธุรกิจที่ตอบสนองต่อความต้องการของชุมชน สังคม และเรียนรู้ได้ด้วยตนเองอย่างต่อเนื่อง 
+</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO5   สื่อสารภาษาไทย และภาษาอื่นๆ ภายใต้ความหลากหลายของวัฒนธรรม 
+</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO6   แสดงออกถึงการมีภาวะผู้นำและผู้ตามที่ดี 
+</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">PLO7   แสดงออกถึงการมีความซื่อสัตย์สุจริต มีวินัย และจรรยาบรรณวิชาชีพ เพื่อรับผิดชอบต่อชุมชนและสังคม </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>4. ผลลัพธ์การเรียนรู้ระดับรายวิชา CLOs</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO1 วิเคราะห์ความต้องการทางธุรกิจและผู้ใช้ และนำความรู้มาประยุกต์ในการออกแบบเว็บแอปพลิเคชัน PLO1</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO2 วิเคราะห์ความต้องการของระบบ และออกแบบฐานข้อมูลและสถาปัตยกรรมของเว็บแอปพลิเคชัน PLO2</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO3 พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO3</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO4 พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO4</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO5 นำเสนอและจัดทำเอกสารโครงงานเว็บแอปพลิเคชันได้อย่างมีประสิทธิภาพ PLO5 </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO6 ทำงานเป็นทีมในการพัฒนาเว็บ โดยแสดงภาวะผู้นำและผู้ตามที่ดี PLO6</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td class="firstParagraph" align="left">CLO7 แสดงออกถึงความซื่อสัตย์ มีวินัย และจรรยาบรรณวิชาชีพ คำนึงถึงความปลอดภัยข้อมูลและลิขสิทธิ์ PLO7</td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>5. วัตถุประสงค์ในการพัฒนา/ปรับปรุงรายวิชา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">5.1 ปรับปรุงเครื่องมือและเฟรมเวิร์กการพัฒนาเว็บให้ทันสมัย &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">5.2 เพิ่มการฝึกปฏิบัติพัฒนาเว็บแอปพลิเคชันที่เชื่อมต่อฐานข้อมูลและเว็บเซอร์วิสจริง &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">5.3 ส่งเสริมการพัฒนาเว็บแอปพลิเคชันที่ตอบโจทย์ธุรกิจและชุมชนในพื้นที่ &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                     </tbody>
+      </table>
+
+   </div>
+</body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 3 ลักษณะและการดำเนินการ</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 13pt;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">
+                  <h2>หมวดที่ 3 <strong>ลักษณะและการดำเนินการ</strong></h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. คำอธิบายของรายวิชา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left"><u>ภาษาไทย</u> &nbsp;&nbsp;&nbsp;หลักการเขียนโปรแกรมบนเว็บด้วยโปรแกรมฝั่งเครื่องให้บริการ (Server side script) เพื่อติดต่อกับฐานข้อมูลจากหลากหลายผู้ผลิต การสร้างโปรแกรมเพื่อเพิ่ม แก้ไขและลบข้อมูลในฐานข้อมูล การสร้างการทำงานที่มีการ Upload files การใช้งาน Session และการประยุกต์ใช้กับระบบชื่อผู้ใช้  หลักการนำบางส่วนของโปรแกรมมาใช้ใหม่ พื้นฐานของเว็บเซอร์วิสและการนำเว็บเซอร์วิสไปใช้ให้เกิดประโยชน์&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr><td colspan='3' style='height:2mm;'><td></tr>               <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left"><u>ภาษาอังกฤษ</u> &nbsp;&nbsp;&nbsp;&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>2. จํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th width="20%" rowspan="2" scope="col"><strong>หน่วยกิต</strong></th>
+               <th colspan="4" scope="col"><strong>จำนวนชั่วโมงต่อภาคการศึกษา</strong></th>
+            </tr>
+            <tr>
+               <th width="20%" scope="col"><strong>บรรยาย</strong></th>
+               <th width="20%" scope="col"><strong>การฝึกปฏิบัติ/<br />การฝึกงาน</strong></th>
+               <th width="20%" scope="col"><strong>การศึกษาด้วย<br />ตนเอง</strong></th>
+               <th width="20%" scope="col"><strong>สอนเสริมรายวิชา</strong></th>
+            </tr>
+
+         </thead>
+         <tbody>
+            <tr>
+               <td align="center">3.0 (2-2-5)</td>
+               <td align="center">30.00</td>
+               <td align="center">30.00</td>
+               <td align="center">70.00</td>
+               <td align="center">0.00</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="center"></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left"><strong>3. จำนวนชั่วโมงต่อสัปดาห์ที่อาจารย์ให้คำปรึกษาและแนะนำทางวิชาการแก่นักศึกษาเป็นรายบุคคล</strong></td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="90%" border="0" align="center" cellpadding="2" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th width="6%" scope="col">ลำดับ</th>
+               <th scope="col"><strong>อาจารย์ผู้สอน/<br />อาจารย์ผู้รับผิดชอบรายวิชา</strong></th>
+               <th width="10%" scope="col"><strong>วัน-เวลา ให้<br>
+                     คำปรึกษา</strong></th>
+               <th width="20%" scope="col"><strong>สถานที่หรือ<br>
+                     หมายเลขห้อง<br>
+                  </strong><strong>ผู้สอน</strong></th>
+               <th width="10%" scope="col"><strong>หมายเลข<br>
+                     โทรศัพท์ <br>
+                     ผู้สอน</strong></th>
+               <th width="15%" scope="col"><strong>ที่อยู่<br>ของ</strong><strong> </strong><strong>E-mail ผู้สอน</strong></th>
+               <th width="15%" scope="col"><strong>รวมจำนวน</strong><strong> </strong><br><strong>ชั่วโมงต่อ<br>
+                     สัปดาห์</strong><strong> </strong><strong>ที่ให้คำปรึกษา</strong></th>
+            </tr>
+         </thead>
+         <tbody>
+                           <tr>
+                  <td align="center" valign="top">1</td>
+                  <td align="center" valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+                  <td valign="top">วันศุกร์ 13:00-15:00 น.</td>
+                  <td valign="top">ห้องพักอาจารย์ชั้น 2</td>
+                  <td valign="top">0818972515</td>
+                  <td valign="top">surachet.sa@pnu.ac.th</td>
+                  <td align="center" valign="top">2.00</td>
+               </tr>
+                     </tbody>
+      </table>
+               <pre><br clear=all style='mso-special-character:line-break;page-break-before:always'></pre>
+         </div>
+</body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 4 การพัฒนาการเรียนรู้ของนักศึกษา</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 14pt;
+      }
+
+      .tabBorder tbody tr td {
+         border-right: 0.01em solid black;
+         border-left: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 14pt;
+      }
+
+      .tabBorder tfoot tr td {
+         border-top: 0.01em solid black;
+      }
+
+      .tabBorder_a4 thead tr th,
+      .tabBorder_a4 tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">
+                  <h2>หมวดที่ 4<strong> การพัฒนาการเรียนรู้ของนักศึกษา</strong></h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">การจัดประสบการณ์การเรียนรู้เพื่อพัฒนาความรู้หรือทักษะและการวัดผลลัพธ์การเรียนรู้ของรายวิชา</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="3" align="center"></td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th colspan="4" align="left" scope="col" style="border:none;">&nbsp;</th>
+            </tr>
+            <tr>
+               <th width="20%" scope="col">CLOs</th>
+               <th width="30%" scope="col">กลยุทธ์/วิธีการสอน</th>
+               <th width="35%" scope="col">กลยุทธ์/วิธีการวัดและ<br>ประเมินผล</th>
+               <th width="35%" scope="col">เครื่องมือในการวัด/<br>ประเมินผล</th>
+            </tr>
+         </thead>
+         <tbody>
+                           <tr>
+                  <td align="center" valign="top">CLO1 </td>
+                  <td align="left" valign="top"> <br />
+บรรยาย วิเคราะห์กรณีศึกษาความต้องการของธุรกิจ/ผู้ใช้ <br />
+</td>
+                  <td align="left" valign="top">สอบและการวิเคราะห์กรณีศึกษา </td>
+                  <td align="left" valign="top">ข้อสอบ, แบบประเมินกรณีศึกษา </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO2 </td>
+                  <td align="left" valign="top"> <br />
+ฝึกออกแบบฐานข้อมูลและสถาปัตยกรรมระบบ <br />
+</td>
+                  <td align="left" valign="top">ประเมินการออกแบบ ER/โครงสร้างระบบ </td>
+                  <td align="left" valign="top">ใบงาน, เกณฑ์ประเมิน (Rubric) </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO3 </td>
+                  <td align="left" valign="top"> <br />
+ปฏิบัติการพัฒนาเว็บในห้องแล็บ และการเรียนรู้แบบโครงงาน <br />
+</td>
+                  <td align="left" valign="top">ประเมินชิ้นงานเว็บและโครงงาน </td>
+                  <td align="left" valign="top">เกณฑ์ประเมินปฏิบัติการ/โครงงาน </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO4 </td>
+                  <td align="left" valign="top"> <br />
+ฝึกออกแบบ UI/UX และสื่อประกอบเว็บ <br />
+</td>
+                  <td align="left" valign="top">ประเมินงานออกแบบส่วนติดต่อผู้ใช้ </td>
+                  <td align="left" valign="top">เกณฑ์ประเมินการออกแบบ </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO5</td>
+                  <td align="left" valign="top"> มอบหมายการนำเสนอและจัดทำเอกสารโครงงาน </td>
+                  <td align="left" valign="top">ประเมินการนำเสนอและเอกสาร </td>
+                  <td align="left" valign="top">เกณฑ์ประเมินการนำเสนอ/รายงาน </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO6</td>
+                  <td align="left" valign="top"> งานกลุ่มและการแบ่งบทบาทหน้าที่ในการพัฒนา </td>
+                  <td align="left" valign="top">ประเมินการทำงานร่วมกันและภาวะผู้นำ/ผู้ตาม </td>
+                  <td align="left" valign="top">แบบประเมินการทำงานกลุ่ม (peer/self) </td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">CLO7</td>
+                  <td align="left" valign="top"> สอดแทรกจรรยาบรรณ ความปลอดภัยข้อมูล และสังเกตพฤติกรรม </td>
+                  <td align="left" valign="top">สังเกตและประเมินพฤติกรรม วินัย และความซื่อสัตย์ </td>
+                  <td align="left" valign="top">แบบสังเกตพฤติกรรม, แบบประเมินการมีส่วนร่วม </td>
+               </tr>
+            
+         </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="3" align="center"></td>
+            </tr>
+         </tbody>
+      </table>
+
+   </div>
+      <!--<div width="297mm" style="width: 297mm">   
+          <!--<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabBorder">
+      <thead>
+      <tr>
+         <th rowspan="2" scope="col" >หมวดวิชา รหัสและชื่อรายวิชาxx</th>
+         <th colspan="4" scope="col">1. คุณธรรมจริยธรรม</th>
+         <th colspan="4" scope="col">2. ความรู้</th>
+         <th colspan="4" scope="col">3. ทักษะทางปัญญา</th>
+         <th colspan="5" scope="col">4. ทักษะความสัมพันธ์<br>
+            ระหว่างบุคคลและความ<br>
+            รับผิดชอบ</th>
+         <th colspan="5" scope="col">5. ทักษะการวิเคราะห์เชิง<br>
+            ตัวเลข การสื่อสาร และการ<br>
+            ใช้เทคโนโลยี</th>
+         </tr>
+      <tr>
+         <th scope="col">1.1</th>
+         <th scope="col">1.2</th>
+         <th scope="col">1.3</th>
+         <th scope="col">1.4</th>
+         <th scope="col">2.1</th>
+         <th scope="col">2.2</th>
+         <th scope="col">2.3</th>
+         <th scope="col">2.4</th>
+         <th scope="col">3.1</th>
+         <th scope="col">3.2</th>
+         <th scope="col">3.3</th>
+         <th scope="col">3.4</th>
+         <th scope="col">4.1</th>
+         <th scope="col">4.2</th>
+         <th scope="col">4.3</th>
+         <th scope="col">4.4</th>
+         <th scope="col">4.5</th>
+         <th scope="col">5.1</th>
+         <th scope="col">5.2</th>
+         <th scope="col">5.3</th>
+         <th scope="col">5.4</th>
+         <th scope="col">5.5</th>
+         </tr>
+      </thead>
+      <tfoot>
+      <tr>
+         <td colspan="23">&nbsp;</td>
+         </tr>
+      </tfoot>
+      <tbody>
+      <tr>
+         <td>หมวดวิชาศึกษาทั่วไป<br>
+            10-034-108 ชีวสถิติ <br>
+            (Biostatistics) <br></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle"><input type="radio"></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle"><input type="radio"></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle"><input type="radio"></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         <td align="center" valign="middle"><input type="radio"></td>
+         <td align="center" valign="middle">&nbsp;</td>
+         <td align="center" valign="middle"><img src="images/icn-symbol-black1.png" width="14" height="14" alt=""/></td>
+         </tr>
+
+      </tbody>
+</table>
+
+       </div>-->
+</body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 5 แผนการสอนและการประเมินผล</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 13pt;
+      }
+
+      .tabGrade thead tr th,
+      .tabGrade tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 13pt;
+      }
+
+      td.paragraph1 {
+         padding-left: 10mm;
+      }
+
+      td.paragraph2 {
+         padding-left: 20mm;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="center">
+                  <h2>หมวดที่ 5 <strong>แผนการสอนและการประเมินผล</strong></h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. แผนการสอน </strong>(จัดทำแผนการสอนไม่น้อยกว่า 15 สัปดาห์)</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th style="width: 15mm;" rowspan="2" scope="col"><strong>สัปดาห์<br>ที่/<br>
+                     คาบที่</strong></th>
+               <th rowspan="2" scope="col"><strong>หัวข้อ/รายละเอียด</strong></th>
+               <th colspan="2" scope="col"><strong>ชั่วโมงสอนต่อสัปดาห์</strong></th>
+               <th style="width: 15mm;" rowspan="2" scope="col"><strong>ความ<br>สอดคล้อง<br>กับ CLOs</strong></th>
+               <th style="width: 15mm;" rowspan="2" scope="col"><strong>กิจกรรม<br>
+                     การสอน</strong></th>
+               <th style="width: 15mm;" rowspan="2" scope="col"><strong>สื่อที่ใช้ในการ<br>
+                     สอน</strong></th>
+               <th style="width: 40mm;" rowspan="2" scope="col"><strong>อาจารย์<br>ผู้สอน</strong></th>
+            </tr>
+            <tr>
+               <th style="width:15mm;" scope="col"><strong>ทฤษฎี</strong></th>
+               <th style="width:15mm;" scope="col"><strong>ปฏิบัติ</strong></th>
+            </tr>
+         </thead>
+         <tbody>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;1</td>
+                  <td valign="top">แนะนำรายวิชา ภาพรวมการพัฒนาเว็บแอปพลิเคชัน สถาปัตยกรรม Client-Server และโพรโทคอล HTTP </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO1 </td>
+                  <td valign="top">บรรยาย, อภิปราย </td>
+                  <td valign="top">สไลด์ </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;2</td>
+                  <td valign="top">ทบทวน HTML, CSS, JavaScript และการจัดวางหน้าเว็บ (Front-end) [ปฏิบัติ 1] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO4 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;3</td>
+                  <td valign="top">พื้นฐานภาษาฝั่งเซิร์ฟเวอร์ (Server-side script) และการติดตั้งสภาพแวดล้อม [ปฏิบัติ 2] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, Web Server </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;4</td>
+                  <td valign="top">ตัวแปร โครงสร้างควบคุม ฟังก์ชันฝั่งเซิร์ฟเวอร์ และการรับส่งข้อมูลฟอร์ม (GET/POST) [ปฏิบัติ 3] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;5</td>
+                  <td valign="top">การออกแบบและเชื่อมต่อฐานข้อมูล (SQL) [ปฏิบัติ 4] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO2, CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, ฐานข้อมูล </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;6</td>
+                  <td valign="top">การเพิ่ม อ่าน แก้ไข และลบข้อมูล (CRUD) ในฐานข้อมูล [ปฏิบัติ 5] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, ฐานข้อมูล </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;7</td>
+                  <td valign="top">การอัปโหลดไฟล์ (Upload files) และการจัดการไฟล์ [ปฏิบัติ 6] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;8</td>
+                  <td valign="top">การจัดการสถานะผู้ใช้: Session และ Cookie [ปฏิบัติ 7] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3</td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;9</td>
+                  <td valign="top">ระบบสมาชิก/ชื่อผู้ใช้ การยืนยันตัวตน (Authentication) และความปลอดภัยเบื้องต้น [ปฏิบัติ 8] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3, CLO7 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;10</td>
+                  <td valign="top">การออกแบบ UI/UX และเว็บแบบ Responsive [ปฏิบัติ 9] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO4 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, เครื่องมือออกแบบ </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;11</td>
+                  <td valign="top">หลักการนำโค้ดกลับมาใช้ใหม่ (Reusability) Template/Component [ปฏิบัติ 10] </td>
+                  <td align="center" valign="top">2</td>
+                  <td align="center" valign="top">2</td>
+                  <td valign="top">CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, IDE </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;12</td>
+                  <td valign="top">เว็บเซอร์วิส (Web Services) พื้นฐานและการเรียกใช้ API [ปฏิบัติ 11] </td>
+                  <td align="center" valign="top"></td>
+                  <td align="center" valign="top"></td>
+                  <td valign="top">CLO2, CLO3 </td>
+                  <td valign="top">ปฏิบัติการ </td>
+                  <td valign="top">ใบงาน, API </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;13</td>
+                  <td valign="top">โครงงานเว็บแอปพลิเคชันทางธุรกิจ: วิเคราะห์ ออกแบบ และพัฒนา (ทีม) </td>
+                  <td align="center" valign="top"></td>
+                  <td align="center" valign="top"></td>
+                  <td valign="top">CLO1, CLO2, CLO6 </td>
+                  <td valign="top">โครงงานกลุ่ม </td>
+                  <td valign="top">อุปกรณ์โครงงาน </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;14</td>
+                  <td valign="top">นำเสนอโครงงานเว็บและจัดทำเอกสารประกอบ </td>
+                  <td align="center" valign="top"></td>
+                  <td align="center" valign="top"></td>
+                  <td valign="top">CLO5, CLO6 </td>
+                  <td valign="top">นำเสนอ </td>
+                  <td valign="top">สื่อนำเสนอ </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                           <tr>
+                  <td align="center" valign="top">&nbsp;15</td>
+                  <td valign="top">การทดสอบ ปรับปรุง และการนำขึ้นใช้งาน (Deploy) และสรุปรายวิชา </td>
+                  <td align="center" valign="top"></td>
+                  <td align="center" valign="top"></td>
+                  <td valign="top">CLO3, CLO7 </td>
+                  <td valign="top">ปฏิบัติการ, อภิปราย </td>
+                  <td valign="top">สไลด์, โฮสติ้ง </td>
+                  <td valign="top">อาจารย์ ดร.สุรเชษฐ์ สังขพันธ์</td>
+               </tr>
+                                       <tr>
+                  <td colspan="2" align="center">รวมชั่วโมงตลอดภาคการศึกษา</td>
+                  <td align="center" valign="top">22</td>
+                  <td align="center" valign="top">22</td>
+                  <td colspan="4" valign="top">SDL = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ชม. </td>
+               </tr>
+                     </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>2. แผนการประเมินผลลัพธ์การเรียนรู้ที่คาดหวังระดับรายวิชา CLOSs</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left" class="paragraph1">2.1 การวัดและประเมินผลสัมฤทธิ์ในการเรียนรู้</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left" class="paragraph2">2.1.1 การประเมินเพื่อพัฒนาการเรียนรู้ (Formative Assessment)</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left" class="paragraph1">CLO1 <br />
+สอบกลางภาค (ภาคทฤษฎี/วิเคราะห์ความต้องการ) <br />
+CLO2 <br />
+การออกแบบฐานข้อมูลและสถาปัตยกรรมระบบ <br />
+CLO3 <br />
+ปฏิบัติการ Lab 1-11 (25%) + โครงงานเว็บ (10%) <br />
+CLO4 <br />
+ชิ้นงานออกแบบ UI/UX และสื่อประกอบเว็บ <br />
+CLO5 <br />
+การนำเสนอและเอกสารโครงงาน <br />
+CLO6 <br />
+การทำงานเป็นทีมและการมีส่วนร่วม <br />
+CLO7 <br />
+ความซื่อสัตย์ วินัย จรรยาบรรณ และความปลอดภัยข้อมูล <br />
+</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left" class="paragraph2">2.1.2 การประเมินเพื่อตัดสินผลการเรียนรู้ (Summative Assessment)</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="3" align="center" style="height: 1mm;"></td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th rowspan="2" scope="col">ผลลัพธ์การเรียนรู้<br>CLOs</th>
+                              <th colspan="7" scope="col">วิธีการวัดผล (ร้อยละ)</th>
+               <th style="width:15mm;" rowspan="2" scope="col">น้ำหนัก<br>(%)</th>
+            </tr>
+
+            <tr>
+               <th scope="col" style="width:15mm;">สอบกลางภาค</th>
+               <th scope="col" style="width:15mm;">สอบปลายภาค</th>               <th scope="col" style="width:15mm;">แบบฝึกหัด</th>               <th scope="col" style="width:15mm;">โครงงาน</th>               <th scope="col" style="width:15mm;">นำเสนอ</th>               <th scope="col" style="width:15mm;">รายงาน</th>               <th scope="col" style="width:15mm;">จิตพิสัย</th>            </tr>
+         </thead>
+         <tbody>
+                           <tr>
+                  <td align="left" valign="top">วิเคราะห์ความต้องการทางธุรกิจและผู้ใช้ และนำความรู้มาประยุกต์ในการออกแบบเว็บแอปพลิเคชัน PLO1</td>
+                  <td align="center" valign="top">5.00</td>
+                  <td align="center" valign="top">4.00</td>                  <td align="center" valign="top">1.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">วิเคราะห์ความต้องการของระบบ และออกแบบฐานข้อมูลและสถาปัตยกรรมของเว็บแอปพลิเคชัน PLO2</td>
+                  <td align="center" valign="top">5.00</td>
+                  <td align="center" valign="top">4.00</td>                  <td align="center" valign="top">1.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO3</td>
+                  <td align="center" valign="top">6.00</td>
+                  <td align="center" valign="top">10.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO4</td>
+                  <td align="center" valign="top">4.00</td>
+                  <td align="center" valign="top">12.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">นำเสนอและจัดทำเอกสารโครงงานเว็บแอปพลิเคชันได้อย่างมีประสิทธิภาพ PLO5 </td>
+                  <td align="center" valign="top">0.00</td>
+                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">5.00</td>                  <td align="center" valign="top">5.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">ทำงานเป็นทีมในการพัฒนาเว็บ โดยแสดงภาวะผู้นำและผู้ตามที่ดี PLO6</td>
+                  <td align="center" valign="top">0.00</td>
+                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">6.00</td>                  <td align="center" valign="top">4.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="left" valign="top">แสดงออกถึงความซื่อสัตย์ มีวินัย และจรรยาบรรณวิชาชีพ คำนึงถึงความปลอดภัยข้อมูลและลิขสิทธิ์ PLO7</td>
+                  <td align="center" valign="top">0.00</td>
+                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">2.00</td>                  <td align="center" valign="top">0.00</td>                  <td align="center" valign="top">0.00</td>
+               </tr>
+                           <tr>
+                  <td align="center">รวมทั้งหมด</td>
+                  <td colspan="7">&nbsp;</td>
+                  <td align="center"></td>
+               </tr>
+                     </tbody>
+      </table>
+      <pagebreak></pagebreak>
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">
+                  <p><strong>การให้เกรดและการตัดสินผล</strong> </p>
+               </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>ระบบเกรด</strong> </td>
+               <td align="center">&nbsp;</td>
+            </tr>
+         </tbody>
+      </table>
+      <table width="40%" border="0" align="center" cellpadding="0" cellspacing="0" class="tabGrade">
+         <thead>
+            <tr>
+               <th width="60%" scope="col">ระดับคะแนน</th>
+               <th scope="col"><strong>เกรด</strong></th>
+            </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                  </tbody>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>3. การยื่นคำร้องและการอุทรณ์ผลการศึกษา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ในรายวิชานี้มุ่งเน้นการติดตามและส่งเสริมพัฒนาการของผู้เรียนอย่างต่อเนื่องตลอดภาคการศึกษา มากกว่าการตัดสินผลปลายทางเพียงอย่างเดียว โดยผู้สอนจะใช้การประเมินรูปแบบนี้เป็นเครื่องมือในการสะท้อนความเข้าใจของผู้เรียน วินิจฉัยจุดที่ยังบกพร่อง และให้ข้อมูลย้อนกลับ (Feedback) ที่ชัดเจนและทันท่วงที เพื่อให้ผู้เรียนสามารถปรับปรุงและพัฒนาทักษะการพัฒนาเว็บแอปพลิเคชันได้อย่างมีประสิทธิภาพ</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td colspan="3" align="center" style="height: 1mm;"></td>
+            </tr>
+         </tbody>
+      </table>
+               <pre><br clear=all style='mso-special-character:line-break;page-break-before:always'></pre>
+         </div>
+</body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 6 ทรัพยากรประกอบการเรียนการสอน</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 14px;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="center">
+                  <h2>หมวดที่ 6 <strong>ทรัพยากรประกอบการเรียนการสอน</strong></h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. ตำราและเอกสารหลัก</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">บัญชา ปะสีละเตสัง. (2562). พัฒนาเว็บแอปพลิเคชันด้วย PHP ร่วมกับ MySQL. กรุงเทพฯ: ซีเอ็ดยูเคชั่น. &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">&nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>2. เอกสารและข้อมูลสำคัญ</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">MDN Web Docs: https://developer.mozilla.org &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">PHP Documentation: https://www.php.net/docs.php &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">W3Schools Online Web Tutorials: https://www.w3schools.com &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>3. เอกสารและข้อมูลแนะนำ</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">เครื่องมือและบริการสำหรับพัฒนาและนำเว็บขึ้นใช้งาน (GitHub, Visual Studio Code, ระบบโฮสติ้ง) &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">สื่อการเรียนรู้บนระบบ Google Classroom และตัวอย่างโค้ดที่อาจารย์ผู้สอนมอบหมาย &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                     </tbody>
+      </table>
+               <pre><br clear=all style='mso-special-character:line-break;page-break-before:always'></pre>
+         </div>
+</body>
+
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3 หมวดที่ 7 การประเมินและปรับปรุงการดำเนินการของรายวิชา</title>
+   <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 18px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 14px;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+   <div width="210mm" style="width: 210mm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td width="10%" align="center">&nbsp;</td>
+               <td align="center">
+                  <h2>หมวดที่ 7 <strong>การประเมินและปรับปรุงการดำเนินการของรายวิชา</strong></h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>1. กลยุทธ์การประเมินประสิทธิผลของรายวิชาโดยนักศึกษา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">1.1 การสนทนากลุ่มระหว่างผู้สอนและผู้เรียน &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">1.2 การสังเกตการณ์จากพฤติกรรมของผู้เรียน &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">1.3 แบบประเมินผู้สอนและแบบประเมินรายวิชาผ่านระบบออนไลน์ของมหาวิทยาลัย &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+            
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>2. กลยุทธ์การประเมินการสอน</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">2.1 คณะกำหนดให้มีการประเมินการสอนโดยคณะกรรมการประเมินการสอนที่แต่งตั้งโดยผู้บริหารคณะวิทยาการจัดการ &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">2.2 การตรวจสอบผลการเรียนรู้ของนักศึกษาเทียบกับ CLOs ที่กำหนด &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>3.  การปรับปรุงการสอน</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">3.1 จัดกิจกรรมระดมสมองและหาข้อมูลเพิ่มเติมเพื่อปรับปรุงการสอน &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">3.2 ปรับปรุงเครื่องมือ เฟรมเวิร์ก และตัวอย่างโครงงานให้ทันสมัยตามเทคโนโลยีการพัฒนาเว็บ &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>4. การทวนสอบมาตรฐานผลสัมฤทธิ์ของนักศึกษาในรายวิชา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">4.1 ทวนสอบผลสัมฤทธิ์รายหัวข้อจากการสุ่มตรวจชิ้นงานเว็บ ใบงาน และผลการทดสอบย่อย &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">4.2 ตั้งคณะกรรมการในสาขาวิชาตรวจสอบผลการประเมิน ข้อสอบ รายงาน และวิธีการให้คะแนน &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                        <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="left"><strong>5.  การดำเนินการทบทวนและการวางแผนปรับปรุงประสิทธิผลของรายวิชา</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">5.1 ปรับปรุงรายวิชาทุก 3 ปี หรือตามข้อเสนอแนะและผลการทวนสอบมาตรฐานผลสัมฤทธิ์ตามข้อ 4 &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                           <tr>
+                  <td align="center">&nbsp;</td>
+                  <td align="right">
+                     <table width="95%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                           <tr>
+                              <td align="left">5.2 ปรับปรุงเนื้อหาและกิจกรรมให้สอดคล้องกับพัฒนาการของเทคโนโลยีเว็บและความต้องการของอุตสาหกรรม &nbsp;</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+                  <td align="center">&nbsp;</td>
+               </tr>
+                     </tbody>
+      </table>
+
+   </div>
+</body>
+
+
+
+
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>มคอ.3</title>         <style>
+         @page {
+            margin: 1.0in 1.0in 1.0in 1.0in;
+         }
+
+         @page WordSection1 {
+            size: 595.45pt 841.7pt;
+            margin: 1.0in 1.0in 1.0in 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+         }
+
+         div.WordSection1 {
+            page: WordSection1;
+         }
+
+         @page WordSection2 {
+            size: 841.7pt 595.45pt;
+            mso-page-orientation: landscape;
+            margin: 1.0in 1.0in 1.0in 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+         }
+
+         div.WordSection2 {
+            page: WordSection2;
+         }
+      </style>
+
+      <style type="text/css">
+      body {
+         font-family: "TH SarabunPSK", THSarabun, Tahoma;
+         font-size: 20px;
+      }
+
+      table {
+         overflow: wrap;
+      }
+
+      h1 {
+         font-size: 32px;
+         font-weight: bold;
+      }
+
+      h2 {
+         font-size: 24px;
+         font-weight: bold;
+         margin-bottom: 0.01em;
+      }
+
+      h3 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      h4 {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      .tabBorder thead tr th,
+      .tabBorder tbody tr td {
+         border: 0.01em solid black;
+         padding: 0.2em;
+         font-size: 20px;
+      }
+   </style>
+         <style type="text/css">
+          body{
+    font-family: "TH SarabunPSK", THSarabun;
+    font-size: 20px;
+ }
+table{
+    overflow: wrap;
+ }
+h1 {
+   font-size: 32px;
+   font-weight: bold;
+}
+h2 {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 0.01em;
+}
+h3 {
+   font-size: 20px;
+   font-weight: bold;
+}
+h4 {
+   font-size: 20px;
+   font-weight: bold;
+}
+
+ div.A4_P {
+   width: 210mm;
+}
+
+div.A4_L {
+   width: 297mm;
+}
+
+.tabBorder thead tr th,  .tabBorder tbody tr td,  .tabBorder tfoot tr td {
+   border: 0.01em solid black;
+}
+td.cellMargin {
+   width: 5%;
+}
+
+table.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+
+td.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+th.border-around {
+    border-collapse: collapse;
+    border: 0.01em solid black;
+}
+ .underline {
+    border-bottom: 0.01em dotted black;
+ }
+ .top-buttom-row{
+    height:10px;
+ }
+
+ .bg_black{
+    background: black;
+ }
+ .bg_gray{
+    background: gray;
+ }
+ .border_top, .border_top td{
+    border-top: solid 0.01em black !important;
+ }
+ .border_top_bottom, .border_top_bottom td{
+    border-top: solid 0.01em black !important;
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_bottom, .border_bottom td{
+    border-bottom: solid 0.01em black !important;
+ }
+ .border_left, .border_left td{
+    border-left: solid 0.01em black !important;
+ }
+ .border_left_right, .border_left_right td{
+    border-left: solid 0.01em black !important;
+    border-right: solid 0.01em black !important;
+ }
+ .border_right, .border_right td{
+    border-right: solid 0.01em black !important;
+ }
+
+.border_no, .border_no tbody tr td, .border_no thead tr th{
+   border: none !important;
+}
+
+table.tableBorderAround {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+div.must_same_page{
+   /* บังคับให้ เนื้อหาใน div ต้องอยู่หน้าเดียวกัน และแก้ปัญหา การย่อ font อัตโนมัต*/
+   page-break-inside: avoid;
+   
+}
+      </style>
+   </head>
+
+<body>
+         <br clear=all style='page-break-before:always;mso-break-type:section-break'>
+      <div width="297mm" style="width: 297mm" class="WordSection2">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <tbody>
+            <tr>
+               <td align="left">
+                  <h2>ภาคผนวก</h2>
+               </td>
+               <td width="10%" align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="center">&nbsp;</td>
+               <td align="center">&nbsp;</td>
+            </tr>
+            <tr>
+               <td align="left" style="padding-left:20mm;"><strong>ตารางแสดงความสัมพันธ์ระหว่างผลลัพธ์การเรียนรู้ระดับรายวิชา (CLOs) และผลลัพธ์การเรียนรู้ระดับหลักสูตร (PLOs)</strong></td>
+               <td align="center">&nbsp;</td>
+            </tr>
+
+         </tbody>
+      </table>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabBorder">
+         <thead>
+            <tr>
+               <th rowspan="2" scope="col">รายวิชา 07-034-233</th>
+               <th align="center" colspan='7' scope="col" style="white-space: nowrap">ผลลัพธ์การเรียนรู้ระดับหลักสูตร (PLOs)</th>
+            </tr>
+            <tr>
+                                 <th width="10%" scope="col">PLO1</th>
+                                 <th width="10%" scope="col">PLO2 </th>
+                                 <th width="10%" scope="col">PLO3</th>
+                                 <th width="10%" scope="col">PLO4</th>
+                                 <th width="10%" scope="col">PLO5</th>
+                                 <th width="10%" scope="col">PLO6</th>
+                                 <th width="10%" scope="col">PLO7 </th>
+                           </tr>
+         </thead>
+         <tbody>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO1 วิเคราะห์ความต้องการทางธุรกิจและผู้ใช้ และนำความรู้มาประยุกต์ในการออกแบบเว็บแอปพลิเคชัน PLO1</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO2 วิเคราะห์ความต้องการของระบบ และออกแบบฐานข้อมูลและสถาปัตยกรรมของเว็บแอปพลิเคชัน PLO2</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO3 พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO3</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO4 พัฒนาเว็บแอปพลิเคชันด้วยภาษาฝั่งเซิร์ฟเวอร์ เชื่อมต่อฐานข้อมูล (CRUD) อัปโหลดไฟล์ จัดการ Session ระบบสมาชิก และเว็บเซอร์วิส PLO4</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO5 นำเสนอและจัดทำเอกสารโครงงานเว็บแอปพลิเคชันได้อย่างมีประสิทธิภาพ PLO5 </td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO6 ทำงานเป็นทีมในการพัฒนาเว็บ โดยแสดงภาวะผู้นำและผู้ตามที่ดี PLO6</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                           <tr>
+                  <td>&nbsp;&nbsp;&nbsp;CLO7 แสดงออกถึงความซื่อสัตย์ มีวินัย และจรรยาบรรณวิชาชีพ คำนึงถึงความปลอดภัยข้อมูลและลิขสิทธิ์ PLO7</td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                       <td align="center"></td>
+                                 </tr>
+                     </tbody>
+      </table>
+
+   </div>
+
+   
+      </div>
+</body>
+
+</html>
