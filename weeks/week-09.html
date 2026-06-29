@@ -650,10 +650,10 @@ export function ProtectedRoute({ children }) {
                   <span class="dot-g"></span>
                 </div>
                 <span class="code-filename">SQL — RLS Policies สำหรับ bookings</span>
-                <span class="code-lang">JavaScript</span>
+                <span class="code-lang">SQL</span>
                 <button class="copy-btn">คัดลอก</button>
               </div>
-              <pre><code class="language-javascript">// รัน SQL นี้ใน Supabase SQL Editor
+              <pre><code class="language-sql">-- รัน SQL นี้ใน Supabase SQL Editor
 
 -- เปิด RLS
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
@@ -718,6 +718,9 @@ WITH CHECK (auth.uid() = user_id);</code></pre>
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"
         integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
         crossorigin="anonymous"></script>
 </body>
 </html>
