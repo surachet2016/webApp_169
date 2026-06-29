@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สัปดาห์ที่ 7 — อัปโหลดไฟล์ & จัดการไฟล์ — 07-034-233</title>
+  <title>สัปดาห์ที่ 7 — CRUD ครบวงจร — Hono + Supabase — 07-034-233</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
         integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkSFWOoGGJgS2CW70VK5dQM5Oh+7ne47s74VTg=="
@@ -18,12 +18,12 @@
     <span class="sep">›</span>
     <span>สัปดาห์ที่ 7</span>
     <span class="sep">›</span>
-    <span>อัปโหลดไฟล์</span>
+    <span>CRUD ครบวงจร — Hono + Supabase</span>
   </nav>
 
   <div class="week-hero">
     <div class="wh-eyebrow">สัปดาห์ที่ 7</div>
-    <h1 class="wh-title">อัปโหลดไฟล์ &amp; จัดการไฟล์ด้วย PHP</h1>
+    <h1 class="wh-title">CRUD ครบวงจร — Hono + Supabase</h1>
     <div class="wh-clos">
       <span class="wh-clo">CLO3</span>
     </div>
@@ -31,6 +31,7 @@
 
   <div class="content">
 
+    <!-- TABLE OF CONTENTS -->
     <div class="toc-box">
       <div class="toc-title">📑 สารบัญ</div>
       <ul class="toc-list">
@@ -40,300 +41,323 @@
       </ul>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         THEORY
-    ══════════════════════════════════════════ -->
+    <!-- THEORY SECTION -->
     <div id="theory">
       <span class="sec-badge theory">📖 ทฤษฎี</span>
       <div class="theory-wrap">
 
-        <!-- 1 -->
-        <h3>1. การอัปโหลดไฟล์ใน PHP</h3>
-        <p>เมื่อผู้ใช้อัปโหลดไฟล์ผ่านฟอร์ม PHP จะเก็บข้อมูลไฟล์ทั้งหมดใน Superglobal <code>$_FILES</code> ซึ่งมีโครงสร้างแบบ Array หลายมิติ โดยมี Key ที่สำคัญดังนี้: <code>$_FILES['field']['name']</code> คือชื่อไฟล์ต้นฉบับ, <code>$_FILES['field']['type']</code> คือ MIME Type ที่ Browser ส่งมา, <code>$_FILES['field']['tmp_name']</code> คือ Path ของไฟล์ที่เก็บไว้ชั่วคราวบนเซิร์ฟเวอร์, <code>$_FILES['field']['error']</code> คือ Error Code และ <code>$_FILES['field']['size']</code> คือขนาดไฟล์ในหน่วย bytes</p>
-        <p>สิ่งที่ขาดไม่ได้สำหรับ HTML Form ที่ต้องการรับไฟล์คือ Attribute <code>enctype="multipart/form-data"</code> บน tag <code>&lt;form&gt;</code> ถ้าลืมใส่ <code>$_FILES</code> จะว่างเปล่าและอัปโหลดไม่ได้เลย นอกจากนี้ Method ต้องเป็น <code>POST</code> เท่านั้น เพราะ GET ไม่รองรับการส่งข้อมูลไฟล์</p>
-        <p>กระบวนการอัปโหลดไฟล์มี 4 ขั้นตอนหลัก: (1) ผู้ใช้เลือกไฟล์จาก Browser, (2) Browser ส่งไฟล์ไปยัง Server ผ่าน HTTP POST, (3) PHP เก็บไฟล์ไว้ที่ Temporary Directory (โดยปกติคือ <code>/tmp</code>), (4) Script PHP ย้ายไฟล์ไปยังตำแหน่งถาวรด้วย <code>move_uploaded_file()</code></p>
+        <h3>1. ทบทวน REST API Verbs กับ CRUD Operations</h3>
+        <p>
+          <strong>CRUD</strong> (Create, Read, Update, Delete) คือ 4 ปฏิบัติการพื้นฐานที่ทุกระบบจัดการข้อมูลต้องมี
+          ใน REST API แต่ละปฏิบัติการจะแมปกับ HTTP Method ที่เหมาะสม เพื่อให้ API มีความหมายชัดเจนและสอดคล้องกับ
+          มาตรฐานสากล
+        </p>
+        <ul>
+          <li>
+            <strong>GET</strong> — Read: ดึงข้อมูล ไม่เปลี่ยนแปลง State บน Server
+            เช่น <code>GET /api/services</code> ดึงรายการบริการทั้งหมด
+            หรือ <code>GET /api/services/:id</code> ดึงบริการรายการเดียว
+          </li>
+          <li>
+            <strong>POST</strong> — Create: สร้างข้อมูลใหม่ ส่ง Body เป็น JSON
+            เช่น <code>POST /api/bookings</code> สร้างการจองใหม่
+          </li>
+          <li>
+            <strong>PUT / PATCH</strong> — Update: แก้ไขข้อมูลที่มีอยู่
+            PUT แทนที่ทั้ง Resource, PATCH แก้ไขเฉพาะ Field ที่ส่งมา
+            เช่น <code>PATCH /api/bookings/:id</code> เปลี่ยน status การจอง
+          </li>
+          <li>
+            <strong>DELETE</strong> — Delete: ลบข้อมูล
+            เช่น <code>DELETE /api/services/:id</code> ลบบริการ
+          </li>
+        </ul>
 
-        <div class="diagram-box"><pre>
-  Browser                          PHP Server
-  ───────                          ──────────
-  [เลือกไฟล์] ──── HTTP POST ────► $_FILES['file']
-                  multipart/form-data    │
-                                         │  ตรวจสอบ error, size, type
-                                         │
-                                    /tmp/phpXXXXXX  (ชั่วคราว)
-                                         │
-                                    move_uploaded_file()
-                                         │
-                                    /uploads/ไฟล์ถาวร ✓
-        </pre></div>
+        <div class="diagram-box">
+          <pre>
+CRUD → REST HTTP Method Mapping:
 
-        <!-- 2 -->
-        <h3>2. การตรวจสอบไฟล์ที่อัปโหลด</h3>
-        <p>การตรวจสอบไฟล์ที่ถูกต้องเป็นขั้นตอนที่ขาดไม่ได้ก่อนบันทึกไฟล์ ต้องตรวจสอบอย่างน้อย 4 อย่าง: (1) <strong>Error Code</strong> — ค่า <code>$_FILES['file']['error']</code> ต้องเป็น <code>UPLOAD_ERR_OK</code> (ค่า 0) ถึงจะอัปโหลดสำเร็จ, (2) <strong>ขนาดไฟล์</strong> — ตรวจสอบ <code>size</code> ว่าไม่เกินขีดจำกัดที่กำหนด เช่น 2 MB = 2 * 1024 * 1024 bytes, (3) <strong>MIME Type</strong> — ใช้ <code>mime_content_type()</code> หรือ <code>getimagesize()</code> ตรวจสอบประเภทไฟล์จาก Content จริง ไม่ใช่จาก <code>$_FILES['type']</code> ที่ Browser ส่งมา, (4) <strong>นามสกุลไฟล์</strong> — ตรวจสอบ Extension ว่าอยู่ใน Whitelist</p>
-        <p>เหตุผลที่ห้ามเชื่อ <code>$_FILES['type']</code> จาก Browser เพราะ Client สามารถปลอมแปลงค่านี้ได้ง่ายมาก เช่น ผู้โจมตีอาจส่งไฟล์ .php แต่ระบุ type เป็น "image/jpeg" เพื่อหลอกอัปโหลดขึ้นไปบนเซิร์ฟเวอร์แล้วเรียกใช้งาน ดังนั้นต้องตรวจสอบจากฝั่ง Server เสมอ</p>
+  CRUD      │ HTTP Method │ URL ตัวอย่าง              │ Status Code
+  ──────────┼─────────────┼───────────────────────────┼─────────────
+  Create    │ POST        │ /api/bookings              │ 201 Created
+  Read All  │ GET         │ /api/services              │ 200 OK
+  Read One  │ GET         │ /api/services/:id          │ 200 OK
+  Update    │ PATCH/PUT   │ /api/bookings/:id          │ 200 OK
+  Delete    │ DELETE      │ /api/services/:id          │ 200 OK
+  Not Found │ —           │ /api/services/:id (ไม่มี) │ 404 Not Found
+  Error     │ —           │ —                          │ 500 Internal Error
+          </pre>
+        </div>
 
-        <div class="callout warning"><div class="callout-title">ข้อควรระวัง</div><p>อย่าให้ผู้ใช้อัปโหลดไฟล์ PHP หรือไฟล์ปฏิบัติการ (.php, .sh, .exe) — อาจทำให้แฮ็กเกอร์รันโค้ดบนเซิร์ฟเวอร์ได้! ควรใช้ Whitelist ของประเภทไฟล์ที่อนุญาตเท่านั้น</p></div>
+        <h3>2. Supabase JS Client: .select(), .insert(), .update(), .delete()</h3>
+        <p>
+          <strong>@supabase/supabase-js</strong> คือ Official JavaScript SDK ที่ช่วยให้เชื่อมต่อกับ Supabase
+          ได้สะดวกโดยไม่ต้องเขียน HTTP Request เอง SDK ใช้ <strong>Query Builder Pattern</strong>
+          ที่สามารถต่อ Method แบบ Chaining ได้ ทำให้อ่านโค้ดง่าย
+        </p>
+        <p>
+          Method หลักที่ต้องรู้จักมี 4 ตัวที่ตรงกับ CRUD:
+        </p>
+        <ul>
+          <li>
+            <strong>.select()</strong> — ดึงข้อมูลจากตาราง รับ Column List เป็น Parameter
+            เช่น <code>.select('id, name, price')</code> หรือ <code>.select('*')</code> สำหรับทุก Column
+            ต่อด้วย <code>.eq('id', value)</code> เพื่อกรอง และ <code>.single()</code> เพื่อรับแถวเดียว
+          </li>
+          <li>
+            <strong>.insert()</strong> — เพิ่มแถวใหม่ รับ Object หรือ Array ของ Object
+            ต้องต่อด้วย <code>.select().single()</code> เพื่อรับข้อมูลที่เพิ่งสร้างกลับมา
+          </li>
+          <li>
+            <strong>.update()</strong> — แก้ไขข้อมูล รับ Object ที่มีเฉพาะ Field ที่ต้องการแก้ไข
+            ต้องระบุ Filter ด้วย <code>.eq()</code> เสมอ ไม่เช่นนั้นจะ Update ทุกแถวในตาราง
+          </li>
+          <li>
+            <strong>.delete()</strong> — ลบแถว ต้องระบุ Filter ด้วย <code>.eq()</code> เสมอ
+            ไม่เช่นนั้นจะลบทุกแถว
+          </li>
+        </ul>
 
-        <!-- 3 -->
-        <h3>3. การย้ายและจัดเก็บไฟล์</h3>
-        <p>ฟังก์ชัน <code>move_uploaded_file($tmp_name, $destination)</code> ใช้สำหรับย้ายไฟล์จาก Temporary Directory ไปยังตำแหน่งถาวร ฟังก์ชันนี้ปลอดภัยกว่า <code>rename()</code> เพราะตรวจสอบว่าไฟล์มาจากการอัปโหลดจริง ไม่ใช่ไฟล์ที่สร้างขึ้นใน Server</p>
-        <p>ปัญหาที่พบบ่อยคือชื่อไฟล์ชนกัน เช่น ผู้ใช้ 2 คนอัปโหลดไฟล์ชื่อ "photo.jpg" พร้อมกัน วิธีแก้คือสร้างชื่อไฟล์ที่ไม่ซ้ำกัน เช่น ใช้ <code>uniqid()</code>, <code>time()</code>, <code>md5()</code>, หรือ <code>random_bytes()</code> ผสมกับ Extension เดิม เช่น <code>uniqid('img_', true) . '.jpg'</code></p>
-        <p>ควรจัดโครงสร้าง Folder อัปโหลดให้เป็นระเบียบ เช่น แบ่งตามปี/เดือน (<code>uploads/2025/06/</code>) เพื่อป้องกันไม่ให้ไฟล์กองรวมอยู่ใน Folder เดียวจนมีจำนวนมากเกินไป ซึ่งอาจทำให้ระบบไฟล์ช้าลง และต้องตรวจสอบ Permission ของ Folder ด้วย <code>chmod 755</code> หรือ <code>chmod 775</code></p>
+        <div class="callout warning">
+          <div class="callout-title">ข้อควรระวัง — อย่าลืม Filter</div>
+          <p>
+            <code>.update()</code> และ <code>.delete()</code> โดยไม่มี <code>.eq()</code> หรือ Filter อื่น
+            จะแก้ไขหรือลบ <strong>ทุกแถว</strong> ในตาราง เป็นหนึ่งในอุบัติเหตุที่เกิดขึ้นบ่อยที่สุดใน Production
+            ควรตรวจสอบ Filter ก่อนรัน Query ทุกครั้ง
+          </p>
+        </div>
 
-        <div class="callout tip"><div class="callout-title">เคล็ดลับ</div><p>ตั้งชื่อไฟล์ใหม่เสมอแทนการใช้ชื่อเดิมจากผู้ใช้ เพราะชื่อไฟล์ต้นฉบับอาจมีอักขระพิเศษหรือ Path Traversal เช่น <code>../../etc/passwd</code> ที่เป็นอันตราย</p></div>
+        <h3>3. เชื่อม Hono Routes กับ Supabase Queries</h3>
+        <p>
+          ใน Hono API แต่ละ Route Handler จะสร้าง Supabase Client ใหม่โดยใช้ Credentials จาก
+          <code>c.env</code> ซึ่งเป็น Environment Variables ที่ Cloudflare Workers ส่งให้
+          Pattern นี้ทำให้แต่ละ Request มี Client ของตัวเอง ปลอดภัยและไม่มีปัญหา State แชร์กัน
+        </p>
+        <p>
+          Flow การทำงานของแต่ละ Request มี 4 ขั้นตอน:
+        </p>
+        <ul>
+          <li>
+            Client ส่ง HTTP Request มายัง Hono Route เช่น <code>POST /api/bookings</code>
+          </li>
+          <li>
+            Route Handler สร้าง Supabase Client ด้วย <code>createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY)</code>
+          </li>
+          <li>
+            ส่ง Query ไปยัง Supabase ผ่าน SDK และรับผลลัพธ์ <code>{ data, error }</code>
+          </li>
+          <li>
+            ถ้ามี <code>error</code> ให้ return JSON Error Response, ถ้าสำเร็จให้ return <code>data</code>
+          </li>
+        </ul>
 
-        <!-- 4 -->
-        <h3>4. ความปลอดภัยของการอัปโหลด</h3>
-        <p>การอัปโหลดไฟล์เป็นหนึ่งในช่องโหว่ที่แฮ็กเกอร์มักโจมตีมากที่สุด เพราะหากอนุญาตให้อัปโหลดไฟล์ PHP ขึ้นไปบน Web Root และเรียกผ่าน URL ได้ แฮ็กเกอร์จะสามารถรันคำสั่งใด ๆ บนเซิร์ฟเวอร์ได้ทันที (Remote Code Execution) มาตรการป้องกันสำคัญได้แก่:</p>
-        <p>1. <strong>ตรวจสอบ MIME Type จากเซิร์ฟเวอร์</strong> ด้วย <code>mime_content_type()</code> หรือ <code>getimagesize()</code> ซึ่งอ่านจาก Magic Bytes ของไฟล์จริง ไม่ใช่ Header ที่ Browser ส่งมา 2. <strong>เก็บไฟล์นอก Web Root</strong> เช่นที่ <code>/var/uploads/</code> แทน <code>/var/www/html/uploads/</code> เพื่อป้องกันการเรียกไฟล์ผ่าน URL โดยตรง แล้วให้ PHP เป็นตัวส่งไฟล์ให้ผ่าน <code>readfile()</code> 3. <strong>สร้าง .htaccess</strong> ใน uploads/ เพื่อบล็อก PHP Execution</p>
+        <div class="diagram-box">
+          <pre>
+Request Flow — Hono + Supabase:
 
-        <div class="callout note"><div class="callout-title">หมายเหตุ — .htaccess บล็อก PHP ใน uploads/</div><p>สร้างไฟล์ <code>uploads/.htaccess</code> ที่มีเนื้อหา: <code>php_flag engine off</code> เพื่อป้องกันไม่ให้ไฟล์ PHP ใน uploads/ ถูก Execute แม้ว่าแฮ็กเกอร์จะอัปโหลดขึ้นไปได้</p></div>
+  Client (Browser/curl)
+       │
+       │  HTTP Request (GET/POST/PATCH/DELETE)
+       ▼
+  Cloudflare Workers (Hono)
+  ┌────────────────────────────────────────────┐
+  │  Route Handler                             │
+  │  1. createClient(env.SUPABASE_URL, KEY)    │
+  │  2. supabase.from('table').select/insert.. │
+  │  3. if (error) return c.json(error, 500)   │
+  │  4. return c.json({ success: true, data }) │
+  └────────────────────────────────────────────┘
+       │
+       │  HTTPS (PostgREST API)
+       ▼
+  Supabase PostgreSQL
+          </pre>
+        </div>
+
+        <h3>4. Environment Variables ใน Wrangler (wrangler.toml)</h3>
+        <p>
+          Cloudflare Workers ใช้ <strong>wrangler.toml</strong> เป็น Configuration File สำหรับ Deploy
+          Environment Variables แบ่งเป็น 2 ประเภทที่สำคัญ:
+        </p>
+        <ul>
+          <li>
+            <strong>[vars]</strong> — ค่าที่เขียนตรงใน wrangler.toml ได้ เช่น URL ที่ไม่เป็นความลับ
+            ค่าเหล่านี้จะถูก Commit เข้า Git ดังนั้นห้ามใส่ค่าที่เป็น Secret
+          </li>
+          <li>
+            <strong>wrangler secret put</strong> — ใช้สำหรับค่าที่เป็น Secret เช่น API Key หรือ Password
+            ค่านี้จะถูกเข้ารหัสและเก็บใน Cloudflare โดยไม่ถูก Commit ลง Git
+          </li>
+        </ul>
+        <p>
+          ใน Worker Code เข้าถึงทั้ง vars และ secrets ผ่าน <code>c.env.VARIABLE_NAME</code>
+          โดย Hono จะส่ง <code>Env</code> Object มาใน Context ของแต่ละ Request อัตโนมัติ
+        </p>
+
+        <div class="callout tip">
+          <div class="callout-title">เคล็ดลับ — Secret Management</div>
+          <p>
+            ใช้ <code>npx wrangler secret put SUPABASE_KEY</code> เพื่อตั้งค่า anon key
+            แทนการเขียนใน wrangler.toml เพราะ anon key แม้จะไม่ใช่ service_role key
+            แต่ก็ควรเก็บเป็น Secret เพื่อป้องกันการนำไปใช้เกิน Quota หรือโจมตี Rate Limit
+          </p>
+        </div>
+
+        <h3>5. Error Handling ใน API Layer</h3>
+        <p>
+          การจัดการ Error ที่ดีใน API Layer มีความสำคัญมากเพราะ Client ต้องรู้ว่าเกิดอะไรขึ้น
+          Supabase SDK จะ return <code>{ data, error }</code> เสมอ ไม่ throw Exception
+          ดังนั้นต้องตรวจสอบ <code>error</code> ทุกครั้งหลัง await
+        </p>
+        <p>
+          HTTP Status Code ที่ใช้บ่อยใน CRUD API:
+        </p>
+        <ul>
+          <li><strong>200 OK</strong> — Request สำเร็จ (GET, PATCH, DELETE)</li>
+          <li><strong>201 Created</strong> — สร้างข้อมูลสำเร็จ (POST)</li>
+          <li><strong>400 Bad Request</strong> — ข้อมูลที่ส่งมาไม่ถูกต้อง เช่น Missing Field</li>
+          <li><strong>404 Not Found</strong> — ไม่พบ Resource ที่ระบุ เช่น id ไม่มีใน DB</li>
+          <li><strong>500 Internal Server Error</strong> — เกิดปัญหาฝั่ง Server เช่น DB Connection ล้มเหลว</li>
+        </ul>
+        <p>
+          Pattern ที่แนะนำ: ตรวจสอบ <code>error</code> จาก Supabase ก่อนเสมอ
+          ถ้ามี error ให้ return ทันทีพร้อม Status Code ที่เหมาะสม
+          ไม่ควรปล่อยให้โค้ดทำงานต่อเมื่อ query ล้มเหลว
+        </p>
 
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         CODE EXAMPLES
-    ══════════════════════════════════════════ -->
+    <!-- CODE EXAMPLES SECTION -->
     <div id="code">
       <span class="sec-badge code">💻 โค้ดตัวอย่าง</span>
 
-      <!-- Example 1: upload.php -->
+      <!-- Snippet 1: Supabase CRUD operations -->
       <div class="code-block">
         <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">upload.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// upload.php — อัปโหลดไฟล์รูปภาพ
-
-define('UPLOAD_DIR', __DIR__ . '/uploads/');
-define('MAX_SIZE',   2 * 1024 * 1024); // 2 MB
-$ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-$ALLOWED_EXTS  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-
-$message = '';
-$error   = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-    $file = $_FILES['image'];
-
-    // 1. ตรวจสอบ Upload Error
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        $error = 'เกิดข้อผิดพลาดในการอัปโหลด (Error code: ' . $file['error'] . ')';
-
-    // 2. ตรวจสอบขนาดไฟล์
-    } elseif ($file['size'] > MAX_SIZE) {
-        $error = 'ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB)';
-
-    } else {
-        // 3. ตรวจสอบ MIME Type จากเนื้อหาไฟล์จริง (ไม่ใช่จาก Browser)
-        $mime = mime_content_type($file['tmp_name']);
-        if (!in_array($mime, $ALLOWED_TYPES)) {
-            $error = 'ประเภทไฟล์ไม่ถูกต้อง อนุญาตเฉพาะรูปภาพ (JPEG, PNG, GIF, WebP)';
-        } else {
-            // 4. ตรวจสอบนามสกุลไฟล์
-            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            if (!in_array($ext, $ALLOWED_EXTS)) {
-                $error = 'นามสกุลไฟล์ไม่อนุญาต';
-            } else {
-                // 5. สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกัน
-                $newName = uniqid('img_', true) . '.' . $ext;
-                $dest    = UPLOAD_DIR . $newName;
-
-                if (move_uploaded_file($file['tmp_name'], $dest)) {
-                    $message = 'อัปโหลดสำเร็จ! ชื่อไฟล์: ' . $newName;
-                } else {
-                    $error = 'ไม่สามารถบันทึกไฟล์ได้ ตรวจสอบ Permission ของโฟลเดอร์ uploads/';
-                }
-            }
-        }
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head><meta charset="UTF-8"><title>อัปโหลดรูปภาพ</title></head>
-<body>
-  <h1>อัปโหลดรูปภาพ</h1>
-
-  <?php if ($message): ?>
-    <div style="background:#d4edda; padding:12px; border-radius:4px; color:#155724;">
-      <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if ($error): ?>
-    <div style="background:#f8d7da; padding:12px; border-radius:4px; color:#721c24;">
-      <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
-    </div>
-  <?php endif; ?>
-
-  <!-- enctype="multipart/form-data" สำคัญมาก! อย่าลืม -->
-  <form method="POST" action="upload.php" enctype="multipart/form-data">
-    <label>เลือกรูปภาพ (สูงสุด 2 MB):
-      <input type="file" name="image" accept="image/*" required>
-    </label><br><br>
-    <button type="submit">อัปโหลด</button>
-  </form>
-</body>
-</html></code></pre>
-      </div>
-
-      <!-- Example 2: validate_image.php -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">validate_image.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-/**
- * ฟังก์ชันตรวจสอบความถูกต้องของไฟล์รูปภาพ
- * คืนค่า array ที่มี 'ok' => bool และ 'error' => string
- */
-function validateImageUpload(array $file, int $maxSize = 2097152): array
-{
-    // ตรวจสอบ Upload Error
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        $messages = [
-            UPLOAD_ERR_INI_SIZE   => 'ไฟล์ใหญ่เกินค่าที่กำหนดใน php.ini',
-            UPLOAD_ERR_FORM_SIZE  => 'ไฟล์ใหญ่เกินค่าที่กำหนดในฟอร์ม',
-            UPLOAD_ERR_PARTIAL    => 'ไฟล์อัปโหลดไม่สมบูรณ์',
-            UPLOAD_ERR_NO_FILE    => 'ไม่มีไฟล์ถูกอัปโหลด',
-            UPLOAD_ERR_NO_TMP_DIR => 'ไม่พบโฟลเดอร์ชั่วคราว',
-            UPLOAD_ERR_CANT_WRITE => 'ไม่สามารถเขียนไฟล์ลง Disk ได้',
-        ];
-        return ['ok' => false, 'error' => $messages[$file['error']] ?? 'ข้อผิดพลาดไม่ทราบสาเหตุ'];
-    }
-
-    // ตรวจสอบขนาด
-    if ($file['size'] > $maxSize) {
-        $mb = number_format($maxSize / 1048576, 0);
-        return ['ok' => false, 'error' => "ไฟล์ต้องไม่เกิน {$mb} MB"];
-    }
-
-    // ตรวจสอบว่าเป็นรูปภาพจริงด้วย getimagesize()
-    $imgInfo = @getimagesize($file['tmp_name']);
-    if ($imgInfo === false) {
-        return ['ok' => false, 'error' => 'ไฟล์ที่อัปโหลดไม่ใช่รูปภาพ'];
-    }
-
-    // ตรวจสอบ MIME จาก Magic Bytes
-    $allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    $mime = mime_content_type($file['tmp_name']);
-    if (!in_array($mime, $allowedMime)) {
-        return ['ok' => false, 'error' => "MIME Type ไม่อนุญาต: {$mime}"];
-    }
-
-    // ตรวจสอบ Extension
-    $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowedExt)) {
-        return ['ok' => false, 'error' => "นามสกุลไฟล์ไม่อนุญาต: .{$ext}"];
-    }
-
-    return [
-        'ok'        => true,
-        'error'     => '',
-        'extension' => $ext,
-        'mime'      => $mime,
-        'width'     => $imgInfo[0],
-        'height'    => $imgInfo[1],
-    ];
-}
-
-// ตัวอย่างการใช้งาน
-if (isset($_FILES['photo'])) {
-    $result = validateImageUpload($_FILES['photo'], 2 * 1024 * 1024);
-    if ($result['ok']) {
-        $newName = uniqid('photo_') . '.' . $result['extension'];
-        move_uploaded_file($_FILES['photo']['tmp_name'], 'uploads/' . $newName);
-        echo "อัปโหลดสำเร็จ: {$newName} ({$result['width']}x{$result['height']} px)";
-    } else {
-        echo "ข้อผิดพลาด: " . htmlspecialchars($result['error']);
-    }
-}</code></pre>
-      </div>
-
-      <!-- Example 3: gallery.php -->
-      <div class="code-block">
-        <div class="code-head">
-          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-          <span class="code-filename">gallery.php</span>
-          <span class="code-lang">PHP</span>
-          <button class="copy-btn">คัดลอก</button>
-        </div>
-        <pre><code class="language-php"><?php
-// gallery.php — แสดงรูปภาพทั้งหมดใน uploads/ เป็น Gallery
-
-$uploadDir = __DIR__ . '/uploads/';
-$webPath   = 'uploads/';
-
-// ดึงรายการไฟล์รูปภาพทั้งหมดด้วย glob()
-$files = glob($uploadDir . '*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
-
-// เรียงตามวันที่แก้ไขล่าสุด (ใหม่สุดก่อน)
-usort($files, fn($a, $b) => filemtime($b) - filemtime($a));
-?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>คลังรูปภาพ</title>
-  <style>
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-    .gallery-item { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-    .gallery-item img { width: 100%; height: 180px; object-fit: cover; display: block; }
-    .gallery-info { padding: 8px; font-size: 0.85rem; }
-  </style>
-</head>
-<body>
-  <h1>คลังรูปภาพ (<?= count($files) ?> ไฟล์)</h1>
-
-  <?php if (empty($files)): ?>
-    <p>ยังไม่มีรูปภาพในคลัง</p>
-  <?php else: ?>
-    <div class="gallery">
-      <?php foreach ($files as $filePath): ?>
-        <?php
-          $filename = basename($filePath);
-          $fileSize = filesize($filePath);
-          $sizeMB   = $fileSize >= 1048576
-                    ? number_format($fileSize / 1048576, 2) . ' MB'
-                    : number_format($fileSize / 1024, 1) . ' KB';
-          $modified = date('d/m/Y H:i', filemtime($filePath));
-        ?>
-        <div class="gallery-item">
-          <img src="<?= $webPath . htmlspecialchars($filename, ENT_QUOTES, 'UTF-8') ?>"
-               alt="<?= htmlspecialchars($filename, ENT_QUOTES, 'UTF-8') ?>"
-               loading="lazy">
-          <div class="gallery-info">
-            <div title="<?= htmlspecialchars($filename, ENT_QUOTES, 'UTF-8') ?>">
-              <?= htmlspecialchars(mb_strimwidth($filename, 0, 25, '...'), ENT_QUOTES, 'UTF-8') ?>
-            </div>
-            <div style="color:#888"><?= $sizeMB ?> · <?= $modified ?></div>
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
           </div>
+          <span class="code-filename">Supabase JS Client — CRUD</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
         </div>
-      <?php endforeach; ?>
-    </div>
-  <?php endif; ?>
-</body>
-</html></code></pre>
+        <pre><code class="language-javascript">// snippet 1: Supabase CRUD operations
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// READ - ดึงทุก services
+const { data: services } = await supabase
+  .from('services').select('*').order('price');
+
+// READ - ดึง service เดียว
+const { data: service } = await supabase
+  .from('services').select('*').eq('id', id).single();
+
+// CREATE - เพิ่ม booking
+const { data: booking } = await supabase
+  .from('bookings')
+  .insert({ user_id, service_id, booking_date, booking_time, notes })
+  .select().single();
+
+// UPDATE - เปลี่ยน status
+const { data } = await supabase
+  .from('bookings').update({ status: 'confirmed' }).eq('id', bookingId);
+
+// DELETE - ลบ service
+const { error } = await supabase
+  .from('services').delete().eq('id', serviceId);</code></pre>
+      </div>
+
+      <!-- Snippet 2: Hono routes เชื่อม Supabase -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">src/index.js</span>
+          <span class="code-lang">JavaScript</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-javascript">// snippet 2: Hono routes เชื่อม Supabase — src/index.js
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { createClient } from '@supabase/supabase-js';
+
+const app = new Hono();
+app.use('/api/*', cors({ origin: '*' }));
+
+// GET /api/services
+app.get('/api/services', async (c) => {
+  const supabase = createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY);
+  const { data, error } = await supabase.from('services').select('*');
+  if (error) return c.json({ error: error.message }, 500);
+  return c.json({ success: true, data });
+});
+
+// POST /api/bookings
+app.post('/api/bookings', async (c) => {
+  const supabase = createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY);
+  const body = await c.req.json();
+  const { data, error } = await supabase
+    .from('bookings').insert(body).select().single();
+  if (error) return c.json({ error: error.message }, 400);
+  return c.json({ success: true, data }, 201);
+});
+
+// DELETE /api/services/:id
+app.delete('/api/services/:id', async (c) => {
+  const supabase = createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY);
+  const { error } = await supabase
+    .from('services').delete().eq('id', c.req.param('id'));
+  if (error) return c.json({ error: error.message }, 400);
+  return c.json({ success: true });
+});
+
+export default app;</code></pre>
+      </div>
+
+      <!-- Snippet 3: wrangler.toml -->
+      <div class="code-block">
+        <div class="code-head">
+          <div class="code-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="code-filename">wrangler.toml</span>
+          <span class="code-lang">TOML</span>
+          <button class="copy-btn">คัดลอก</button>
+        </div>
+        <pre><code class="language-bash"># snippet 3: wrangler.toml — environment variables
+name = "bookeasy-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+SUPABASE_URL = "https://xxxx.supabase.co"
+
+# สำหรับ secret (key ที่ไม่ควรเขียนใน file):
+# npx wrangler secret put SUPABASE_KEY</code></pre>
       </div>
 
     </div>
 
-    <!-- ══════════════════════════════════════════
-         LAB 6
-    ══════════════════════════════════════════ -->
+    <!-- LAB SECTION -->
     <div class="lab-container" id="lab">
       <div class="lab-header">
-        <h2>🧪 ปฏิบัติการ Lab 6 — อัปโหลดไฟล์</h2>
-        <p>สร้างระบบอัปโหลดและจัดการรูปภาพสินค้า ตั้งแต่การรับไฟล์ การตรวจสอบความปลอดภัย จนถึงการเชื่อมโยงกับฐานข้อมูล</p>
+        <h2>🧪 ปฏิบัติการ Lab 6 — BookEasy: เชื่อม Hono กับ Supabase</h2>
+        <p>นำ Hono API ที่สร้างไว้มาเชื่อมต่อกับ Supabase จริง แทนที่ mock data ด้วย Query จาก PostgreSQL และทดสอบ CRUD ครบทุก Operation</p>
+        <div class="callout note">
+          <div class="callout-title">ต่อยอดจาก Lab 5</div>
+          <p>
+            ต่อยอดจาก Lab 5 — นำ Supabase ที่ตั้งค่าไว้มาเชื่อมกับ Hono API แทน mock data
+          </p>
+        </div>
       </div>
       <div class="lab-body">
 
@@ -341,32 +365,44 @@ usort($files, fn($a, $b) => filemtime($b) - filemtime($a));
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">1</div>
-            <div class="task-title">ติดตั้ง uploads/ folder</div>
+            <div class="task-title">เพิ่ม Supabase ใน bookeasy-api</div>
           </div>
           <div class="task-body">
-            <p>สร้างโฟลเดอร์ <code>uploads/</code> ในโปรเจกต์ และทดสอบว่า PHP สามารถเขียนไฟล์เข้าไปได้ สร้างไฟล์ <code>uploads/.htaccess</code> เพื่อป้องกันการ Execute PHP</p>
+            <p>ติดตั้ง <code>@supabase/supabase-js</code> และตั้งค่า Environment Variables ใน Wrangler</p>
+            <ul>
+              <li>เปิด Terminal ใน folder <code>bookeasy-api</code> แล้วรัน <code>npm install @supabase/supabase-js</code></li>
+              <li>เปิดไฟล์ <code>wrangler.toml</code> เพิ่ม Section <code>[vars]</code> และตั้ง <code>SUPABASE_URL</code> ด้วย Project URL จาก Supabase Dashboard</li>
+              <li>รัน <code>npx wrangler secret put SUPABASE_KEY</code> แล้วพิมพ์ anon key เมื่อ Prompt ถาม</li>
+              <li>ตรวจสอบว่า <code>wrangler.toml</code> มี <code>[vars]</code> Section และ <code>SUPABASE_URL</code> ถูกต้อง</li>
+            </ul>
             <div class="code-block">
               <div class="code-head">
-                <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-                <span class="code-filename">ทดสอบการเขียนไฟล์</span>
-                <span class="code-lang">PHP</span>
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">Terminal</span>
+                <span class="code-lang">bash</span>
                 <button class="copy-btn">คัดลอก</button>
               </div>
-              <pre><code class="language-php"><?php
-// test_upload_dir.php
-$dir = __DIR__ . '/uploads/';
-if (!is_dir($dir)) mkdir($dir, 0755, true);
-echo is_writable($dir) ? '✅ โฟลเดอร์ uploads/ พร้อมใช้งาน' : '❌ ไม่สามารถเขียนไฟล์ได้ ตรวจสอบ Permission';
-
-// สร้าง .htaccess ป้องกัน PHP execution
-$htaccess = $dir . '.htaccess';
-if (!file_exists($htaccess)) {
-    file_put_contents($htaccess, "php_flag engine off\n");
-    echo "\n✅ สร้าง .htaccess สำเร็จ";
-}</code></pre>
+              <pre><code class="language-bash">cd bookeasy-api
+npm install @supabase/supabase-js
+npx wrangler secret put SUPABASE_KEY
+# พิมพ์ anon key เมื่อ Prompt ถาม แล้วกด Enter</code></pre>
             </div>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>รัน test_upload_dir.php แล้วเห็น "โฟลเดอร์ uploads/ พร้อมใช้งาน" และ "สร้าง .htaccess สำเร็จ" / โฟลเดอร์ uploads/ มีไฟล์ .htaccess อยู่</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>บน Windows (XAMPP) โฟลเดอร์ปกติมักเขียนได้เลย บน Linux อาจต้องรัน <code>chmod 755 uploads/</code> หรือ <code>chown www-data:www-data uploads/</code></p></div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p><code>npm install</code> สำเร็จและ <code>@supabase/supabase-js</code> อยู่ใน package.json
+                 ไฟล์ <code>wrangler.toml</code> มี <code>SUPABASE_URL</code> ใน <code>[vars]</code>
+                 และรัน <code>npx wrangler secret put SUPABASE_KEY</code> สำเร็จโดยไม่มี Error</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ห้ามเขียน SUPABASE_KEY ลงใน wrangler.toml โดยตรง ให้ใช้ <code>wrangler secret put</code> เท่านั้น
+                 หาก Deploy บน Cloudflare แล้ว Secret จะถูกเข้ารหัสและเข้าถึงได้ผ่าน <code>c.env.SUPABASE_KEY</code>
+                 เหมือนกับ vars ปกติ</p>
+            </div>
           </div>
         </div>
 
@@ -374,13 +410,63 @@ if (!file_exists($htaccess)) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">2</div>
-            <div class="task-title">อัปโหลดรูปภาพพร้อม Validation</div>
+            <div class="task-title">แทนที่ mock data ด้วย Supabase queries</div>
           </div>
           <div class="task-body">
-            <p>สร้างหน้า <code>upload.php</code> ที่มีฟอร์มรับไฟล์รูปภาพ ต้องตรวจสอบ: เฉพาะไฟล์รูปภาพ (jpg, png, gif, webp) เท่านั้น, ขนาดไม่เกิน 2 MB, ตั้งชื่อใหม่ด้วย <code>uniqid()</code> ก่อนบันทึก</p>
-            <p>แสดง Error Message ที่ชัดเจนเมื่อไฟล์ไม่ผ่าน เช่น "ไฟล์ใหญ่เกิน 2 MB" หรือ "ประเภทไฟล์ไม่ถูกต้อง" และแสดงชื่อไฟล์ที่บันทึกแล้วเมื่อสำเร็จ</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>อัปโหลด jpg ปกติ → แสดงข้อความสำเร็จ / อัปโหลดไฟล์ .pdf → แสดง error / อัปโหลดไฟล์เกิน 2 MB → แสดง error / ชื่อไฟล์ใน uploads/ ไม่ใช่ชื่อต้นฉบับจากผู้ใช้</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>mime_content_type($file['tmp_name'])</code> แทน <code>$file['type']</code> เพื่อความปลอดภัย และตรวจสอบ error code ก่อน (<code>UPLOAD_ERR_OK === 0</code>) ก่อนทำขั้นตอนอื่น</p></div>
+            <p>แก้ไข <code>src/index.js</code> ให้ทุก Route ดึงข้อมูลจาก Supabase จริง แทนการใช้ Array mock data</p>
+            <ul>
+              <li>เพิ่ม <code>import { createClient } from '@supabase/supabase-js'</code> ที่ด้านบนของไฟล์</li>
+              <li>แก้ <code>GET /api/services</code> ให้ดึงข้อมูลจากตาราง <code>services</code> ใน Supabase จริง เรียงตาม <code>price</code></li>
+              <li>แก้ <code>GET /api/services/:id</code> ให้ดึง service เดียวจาก Supabase โดยใช้ <code>.eq('id', id).single()</code></li>
+              <li>เพิ่ม <code>POST /api/bookings</code> ที่รับ JSON Body แล้ว insert ลงตาราง <code>bookings</code> ใน Supabase</li>
+              <li>ทุก Route ต้องตรวจสอบ <code>error</code> จาก Supabase และ return Error Response ที่เหมาะสม</li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">src/index.js — แก้ GET /api/services</span>
+                <span class="code-lang">JavaScript</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-javascript">// แก้ไข GET /api/services ให้ดึงจาก Supabase จริง
+app.get('/api/services', async (c) => {
+  const supabase = createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY);
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
+    .order('price', { ascending: true });
+  if (error) return c.json({ error: error.message }, 500);
+  return c.json({ success: true, data });
+});
+
+// เพิ่ม GET /api/services/:id
+app.get('/api/services/:id', async (c) => {
+  const supabase = createClient(c.env.SUPABASE_URL, c.env.SUPABASE_KEY);
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
+    .eq('id', c.req.param('id'))
+    .single();
+  if (error) return c.json({ error: 'ไม่พบบริการ' }, 404);
+  return c.json({ success: true, data });
+});</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>รัน <code>npx wrangler dev</code> แล้วทดสอบด้วย curl หรือ Browser:
+                 <code>GET /api/services</code> ต้องได้ Array 5 รายการจาก Supabase จริง
+                 และ <code>POST /api/bookings</code> ต้องได้ 201 Created พร้อมข้อมูลที่เพิ่งสร้าง</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ถ้าได้ Error <em>"supabase_key is not defined"</em> ให้ตรวจสอบว่า
+                 <code>wrangler secret put SUPABASE_KEY</code> สำเร็จ และชื่อ Environment Variable
+                 ใน code ตรงกับชื่อ Secret ที่ตั้งไว้ (case-sensitive)</p>
+            </div>
           </div>
         </div>
 
@@ -388,76 +474,91 @@ if (!file_exists($htaccess)) {
         <div class="lab-task">
           <div class="task-head">
             <div class="task-num">3</div>
-            <div class="task-title">แสดงรูปภาพที่อัปโหลดเป็น Gallery</div>
+            <div class="task-title">ทดสอบ CRUD ครบ</div>
           </div>
           <div class="task-body">
-            <p>สร้างหน้า <code>gallery.php</code> ที่ใช้ <code>glob()</code> ดึงรายการไฟล์รูปภาพทั้งหมดใน <code>uploads/</code> แล้วแสดงเป็น Grid Gallery ที่มีรูปภาพ ชื่อไฟล์ และขนาดไฟล์</p>
-            <p>เรียงรายการจากใหม่ไปเก่า (<code>usort</code> + <code>filemtime</code>) และแสดงจำนวนรูปทั้งหมดที่ Header</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>หลังอัปโหลดรูปใน Task 2 เปิด gallery.php → เห็นรูปภาพแสดงเป็น Grid / แสดงชื่อไฟล์และขนาดใต้รูป / รูปล่าสุดแสดงก่อน</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>glob('uploads/*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE)</code> เพื่อดึงทุก Extension ในครั้งเดียว และ <code>loading="lazy"</code> บน img tag เพื่อประสิทธิภาพ</p></div>
-          </div>
-        </div>
+            <p>ทดสอบ CRUD Operations ครบทั้ง 4 ปฏิบัติการผ่าน curl เพื่อยืนยันว่า API ทำงานถูกต้องกับ Supabase จริง</p>
+            <ul>
+              <li>curl GET services → ต้องได้ data 5 รายการจาก Supabase</li>
+              <li>curl POST booking → ตรวจใน Supabase Table Editor ว่ามี row ใหม่</li>
+              <li>ทดสอบ error case: ส่ง id ที่ไม่มี → ต้องได้ 404</li>
+            </ul>
+            <div class="code-block">
+              <div class="code-head">
+                <div class="code-dots">
+                  <span class="dot-r"></span>
+                  <span class="dot-y"></span>
+                  <span class="dot-g"></span>
+                </div>
+                <span class="code-filename">Terminal — ทดสอบด้วย curl</span>
+                <span class="code-lang">bash</span>
+                <button class="copy-btn">คัดลอก</button>
+              </div>
+              <pre><code class="language-bash"># GET ทุก services (ต้องได้ 5 รายการ)
+curl http://localhost:8787/api/services
 
-        <!-- Task 4 -->
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">4</div>
-            <div class="task-title">เชื่อมรูปภาพกับฐานข้อมูล (Products)</div>
-          </div>
-          <div class="task-body">
-            <p>เพิ่ม Column <code>image_name VARCHAR(255)</code> ในตาราง products จากนั้นแก้ไข <code>create.php</code> ให้มีช่องอัปโหลดรูปสินค้าด้วย บันทึกชื่อไฟล์ (ไม่ใช่ Path เต็ม) ลงใน Column image_name</p>
-            <p>แก้ไข <code>list.php</code> ให้แสดงรูปสินค้าในตาราง โดยถ้า image_name ว่างให้แสดงรูป Placeholder แทน</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>เพิ่มสินค้าพร้อมรูป → list.php แสดงรูปสินค้าถูกต้อง / เพิ่มสินค้าไม่มีรูป → list.php แสดง Placeholder แทน / ตาราง products มี Column image_name</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>เพิ่ม Column ด้วย SQL: <code>ALTER TABLE products ADD COLUMN image_name VARCHAR(255) DEFAULT NULL;</code> และบันทึกเฉพาะชื่อไฟล์ เช่น "img_abc123.jpg" ไม่ใช่ Path เต็ม เพื่อให้ยืดหยุ่นเมื่อย้าย Server</p></div>
-          </div>
-        </div>
+# GET service เดียว (ใส่ UUID จริงจาก Supabase)
+curl http://localhost:8787/api/services/&lt;uuid&gt;
 
-        <!-- Task 5 -->
-        <div class="lab-task">
-          <div class="task-head">
-            <div class="task-num">5</div>
-            <div class="task-title">ลบไฟล์พร้อมกับการลบสินค้า</div>
-          </div>
-          <div class="task-body">
-            <p>แก้ไข <code>delete.php</code> ให้เมื่อลบสินค้า ให้ตรวจสอบว่าสินค้านั้นมี image_name หรือไม่ ถ้ามีให้ลบไฟล์รูปออกจาก uploads/ ด้วย <code>unlink()</code> พร้อมกัน</p>
-            <p>ต้องตรวจสอบว่าไฟล์มีอยู่จริงด้วย <code>file_exists()</code> ก่อน unlink เพื่อป้องกัน Warning เมื่อไฟล์ถูกลบไปก่อนหน้าแล้ว</p>
-            <div class="task-accept"><div class="ta-title">เกณฑ์การผ่าน</div><p>ลบสินค้าที่มีรูป → รูปหายออกจาก uploads/ ด้วย / ลบสินค้าที่ไม่มีรูป → ไม่เกิด Error / ตรวจสอบด้วย gallery.php ว่ารูปหายจริง</p></div>
-            <div class="task-hint"><div class="th-title">คำแนะนำ</div><p>ใช้ <code>if ($product['image_name'] &amp;&amp; file_exists($path)) { unlink($path); }</code> ลบ Record จากฐานข้อมูลก่อน แล้วค่อยลบไฟล์ เพื่อป้องกัน Orphan files กรณีที่ DELETE SQL ล้มเหลว</p></div>
+# GET service ที่ไม่มี (ต้องได้ 404)
+curl http://localhost:8787/api/services/00000000-0000-0000-0000-000000000000
+
+# POST สร้าง booking ใหม่
+curl -X POST http://localhost:8787/api/bookings \
+  -H "Content-Type: application/json" \
+  -d '{
+    "service_id": "&lt;service-uuid&gt;",
+    "booking_date": "2025-07-01",
+    "booking_time": "10:00",
+    "notes": "ทดสอบจาก curl"
+  }'</code></pre>
+            </div>
+            <div class="task-accept">
+              <div class="ta-title">เกณฑ์การผ่าน</div>
+              <p>GET <code>/api/services</code> ตอบกลับ JSON ที่มี Array 5 รายการจาก Supabase จริง
+                 POST <code>/api/bookings</code> ตอบกลับ 201 Created และใน Supabase Table Editor
+                 เมนู <strong>bookings</strong> มี row ใหม่ปรากฏขึ้น
+                 GET service id ที่ไม่มีอยู่ต้องได้ Status Code 404</p>
+            </div>
+            <div class="task-hint">
+              <div class="th-title">คำแนะนำ</div>
+              <p>ใช้ <code>npx wrangler dev</code> เพื่อรัน Local Development Server ที่ Port 8787
+                 ถ้าต้องการทดสอบผ่าน Browser ให้เปิด <code>http://localhost:8787/api/services</code>
+                 ส่วน POST ต้องใช้ curl หรือ Tool เช่น Postman / Bruno เพราะ Browser ส่ง POST ตรงจาก URL Bar ไม่ได้</p>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- WEEK NAVIGATION -->
     <div class="week-nav">
       <a href="week-06.html" class="wn-btn">
         <div class="wn-sub">← สัปดาห์ก่อน</div>
-        <div class="wn-name">CRUD Operations</div>
+        <div class="wn-name">Supabase: ออกแบบ DB + SQL เบื้องต้น</div>
       </a>
       <a href="week-08.html" class="wn-btn wn-next">
         <div class="wn-sub">สัปดาห์ถัดไป →</div>
-        <div class="wn-name">Session &amp; Cookie</div>
+        <div class="wn-name">TanStack Query: useQuery, useMutation &amp; Server State Management</div>
       </a>
     </div>
 
-  </div>
-</div>
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <script src="../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
         integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg=="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"
-        integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
-        integrity="sha512-Ei5Vokmnc/f7vIt31aodVMuavT/xp2Lt5vGDYLgCzgBX/z5ghbZQfxt/9FkNs+RyG8IfBKAkdRsQQk4PZyHq5g=="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
-        integrity="sha512-uMdVuOpm+9lNPCT7mV/YaMb9YQ/R4+eeON7aEMj6Ig/f4BoU+Q5k6iaZkDsX7LH9cjTHZt0CuKxbzd0/fndrWA=="
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+        integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ=="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
         integrity="sha512-jwrwRWZWW9J6bjmBOJxPcbRvEBSQeY4Ad0NEXSfP0vwYi/Yu9x5VhDBl3wz6Pnxs8Rx/t1P8r9/OHCRciHcT7Q=="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+        integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
         crossorigin="anonymous"></script>
 </body>
 </html>
